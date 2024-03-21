@@ -29,13 +29,14 @@
 #ifndef __IMGBGI_H
 #define __IMGBGI_H
 
-
 #include <stdio.h>
 #include <dos.h>
 #include <string.h>
+#include <algorithm>
+#include <string>
 
 #ifndef __GRAPHICS_H
-#include <graphics.h>
+#include "graphics.h"
 #endif
 
 class IMG
@@ -57,8 +58,8 @@ class IMG
   char nombre[64];
   int bytes_por_linea;
 
-  void Paleta(void);
-  void CorrerPaleta(void);
+  //void Paleta(void);
+  //void CorrerPaleta(void);
  public:
   //Carga un PCX
   int leer_cabeceraPCX( const char * );
@@ -67,8 +68,9 @@ class IMG
   int leer_cabeceraBMP( const char * );
   int DibujarBMP( int, int );
   //Detecta el tipo de imagen seg£n la extenci¢n del fichero
-  int leer_cabecera( const char * );
+  int leer_cabecera( const std::string& );
   int Dibujar( int, int );
+  int getRGBFromPalette(unsigned char cColor);
 
 };
 
@@ -83,18 +85,18 @@ IMG::~IMG()
 
 }
 
-void IMG::Paleta(void)
+/*void IMG::Paleta(void)
 {
- int i,j;
+	 int i,j;
 
- //El c¢digo que sigue a continuaci¢n pasa el contenido del array "Paleta"
- //a la paleta de la VGA
- for (i=0;i<256;i++)
- {
-  outportb (0x03c8,i);
-  for (j=0;j<3;j++)
-   outportb (0x03c9,paleta[i][j]);
- }
+	 //El c¢digo que sigue a continuaci¢n pasa el contenido del array "Paleta"
+	 //a la paleta de la VGA
+	 for (i=0;i<256;i++)
+	 {
+	  outportb (0x03c8,i);
+	  for (j=0;j<3;j++)
+	   outportb (0x03c9,paleta[i][j]);
+	 }
 }
 
 
@@ -110,28 +112,40 @@ void IMG::CorrerPaleta( void)
   for(j=0;j<3;j++)
     paleta[i][j]>>=2;
 
-}
+}*/
 
-int IMG::leer_cabecera( const char *_nombre ){
+int IMG::leer_cabecera( const std::string& _nombre ){
 
- if( strstr( strupr((char*)_nombre), ".PCX")!=NULL )
-  return leer_cabeceraPCX( _nombre );
- else
-  if( strstr( strupr((char*)_nombre), ".BMP")!=NULL )
-   return leer_cabeceraBMP( _nombre );
-  else return 0;
+	std::string snombre(_nombre);
+	std::transform(snombre.begin(), snombre.end(), snombre.begin(), ::toupper);
 
+	if(snombre.find(".PCX") != std::string::npos) {
+		return leer_cabeceraPCX(snombre.c_str());
+	}else if(snombre.find(".BMP") != std::string::npos) {
+		return leer_cabeceraBMP(snombre.c_str());
+	}else 
+		return 0;
 }
 
 int IMG::Dibujar( int x, int y ){
 
- if( strstr( strupr(nombre), ".PCX")!=NULL )
+ if( strstr( _strupr(nombre), ".PCX")!=NULL )
   return DibujarPCX( x, y );
  else
-  if( strstr( strupr(nombre), ".BMP")!=NULL )
+  if( strstr( _strupr(nombre), ".BMP")!=NULL )
    return DibujarBMP( x, y );
  else return 0;
 
+}
+
+// Converts a palette index (cColor) to an RGB color, using the palette loaded from the image
+int IMG::getRGBFromPalette(unsigned char cColor)
+{
+	int rgb = paleta[cColor][2];
+	rgb = (rgb << 8) + paleta[cColor][1];
+	rgb = (rgb << 8) + paleta[cColor][0];
+	
+	return rgb;
 }
 
 
@@ -148,8 +162,8 @@ int IMG::leer_cabeceraPCX( const char * _nombre)
 
 	fseek(fp,-768L,SEEK_END);  // Nos situamos en el comienzo de la paleta
 	fread(paleta,768,1,fp);    // Leemos los bytes componentes del RGB
-	CorrerPaleta();
-	Paleta();
+	//CorrerPaleta();
+	//Paleta();
 
 	//Leemos sus dimensiones
 	fseek (fp,8L,SEEK_SET);
@@ -194,10 +208,12 @@ int IMG::DibujarPCX( int x, int y )
 	 data = fgetc(fp);  // Leemos el color que se repite
 
 	 while(num_bytes-- > 0)  //Pintamos el color que se repite num_bytes veces
-	      putpixel(i++,j,data);
+	      //putpixel(i++,j,data);
+	      putpixel(i++, j, getRGBFromPalette(data));
 	}
        else  //si no hay repeticion de color pintamos una vez
-	putpixel(i++,j,data);
+		  //putpixel(i++,j,data);
+		  putpixel(i++, j, getRGBFromPalette(data));	
     }
 
 	//se vuelve al puerto por defecto
@@ -243,8 +259,8 @@ int IMG::leer_cabeceraBMP( const char * _nombre)
    fgetc(fp);
   }
 
-  CorrerPaleta();
-  Paleta();
+  //CorrerPaleta();
+  //Paleta();
 
 
   fclose(fp);
@@ -271,8 +287,10 @@ int IMG::DibujarBMP( int x, int y ){
   for (j=alto-1;j>=0;j--){
 
 
-   for(i=0;i<ancho;i++)
-    putpixel(x+i,y+j,(unsigned char)fgetc(fp));
+	  for (i = 0; i < ancho; i++) {
+		  //putpixel(x + i, y + j, (unsigned char)fgetc(fp));	
+		  putpixel(x + i, y + j, getRGBFromPalette(fgetc(fp)));
+	  }
 
    for(k=0;k<ex_ancho;k++)
     fgetc(fp);

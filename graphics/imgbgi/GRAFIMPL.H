@@ -1,6 +1,6 @@
 //IMPLEMENTACION GRAFICA
 #ifndef __GRAPHICS_H
-#include <graphics.h>
+#include "graphics.h"
 #endif
 
 //se definen todos los modos de resolucion grafica
@@ -10,7 +10,7 @@
 #define  _800x600 3
 #define _1024x768 4
 
-int huge detec0(void)
+/*int huge detec0(void)
 {
  return _320x200; //resolucion grafica alto x ancho pixeles
 }
@@ -33,36 +33,40 @@ int huge detec3(void)
 int huge detec4(void)
 {
  return _1024x768; //resolucion grafica alto x ancho pixeles
-}
+}*/
 
-void IniciarSVGA( int resolucion )
+void IniciarSVGA(int resolucion)
 {
- int controlador=0,modo=0;
+	std::string sTittle = "The world of chaos in C++ - Unlimited Programming";
+	
+	//se instala la resolucion deseada
+	switch (resolucion)
+	{
+	case _320x200:
+		//installuserdriver("Svga256",detec0);
+		initwindow(320, 200, sTittle.c_str());
+		break;
+	case _640x400:
+		//installuserdriver("Svga256",detec1);
+		initwindow(640, 400, sTittle.c_str());
+		break;
+	case _640x480:
+		//installuserdriver("Svga256",detec2);
+		initwindow(640, 480, sTittle.c_str());
+		break;
+	case _800x600:
+		//installuserdriver("Svga256",detec3);
+		initwindow(800, 600, sTittle.c_str());
+		break;
+	case _1024x768:
+		//installuserdriver("Svga256",detec4);
+		initwindow(1024, 768, sTittle.c_str());
+	}
 
- //se instala la resolucion deseada
- switch(resolucion)
- {
- case _320x200:
-  installuserdriver("Svga256",detec0);
-  break;
- case _640x400:
-  installuserdriver("Svga256",detec1);
-  break;
- case _640x480:
-  installuserdriver("Svga256",detec2);
-  break;
- case _800x600:
-  installuserdriver("Svga256",detec3);
-  break;
- case _1024x768:
-  installuserdriver("Svga256",detec4);
- }
-
- controlador=DETECT;
- initgraph(&controlador,&modo,"");  //se busca el controlador bgi en la ruta de la carpeta especificada
-
-
+	//int gdriver = VGA, gmode = VGAHI;
+	//initgraph(&gdriver,&gmode,(char*)"");  //se busca el controlador bgi en la ruta de la carpeta especificada
 }
+
 
 ///////////////////////////////////////////////////////////////////////////
 //Dibuja un cuadro con efecto 3D

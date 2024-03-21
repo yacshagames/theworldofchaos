@@ -17,10 +17,10 @@
 
 #include "grafimpl.h" //modos de video SVGA de la BGI
 #include "imgbgi.h"   //clase para cargar im genes
-#include <conio.h>    //getch();
+#include "conio.h"    //getch();
 
 
-void main(void)
+int main(void)
 {
 
  IMG pcx,bmp;
@@ -33,7 +33,7 @@ void main(void)
   IniciarSVGA( modo ); //cambia de modo de video
 
 
-  sprintf( msg,"Test a resoluci¢n de %ix%i...",getmaxx()+1, getmaxy()+1 );
+  sprintf( msg,"Test at a resolution of %ix%i...",getmaxx()+1, getmaxy()+1 );
 
   cleardevice();
 
@@ -45,21 +45,21 @@ void main(void)
   // carga PCX
   if( pcx.leer_cabecera( "bella.pcx") ){
 
-   ventana(10,10,30+pcx.ancho,40+pcx.alto); //ventana de marco
+   ventana(10,20,30+pcx.ancho,40+pcx.alto); //ventana de marco
    pcx.Dibujar( 20, 30 ); //dibuja el pcx
 
-   outtextxy(0,0,"PCX cargado exitosamente!!! Presione una tecla para continuar...");
+   outtextxy(0,0,"PCX loaded successfully!!! Press a key to continue...");
    getch();
    cleardevice();
   }
 
   // carga BMP
   if( bmp.leer_cabecera( "bella.bmp") ){
-   ventana(10,10,30+bmp.ancho,40+bmp.alto); //ventana de marco
+   ventana(10,20,30+bmp.ancho,40+bmp.alto); //ventana de marco
    bmp.Dibujar( 20, 30 ); //dibuja el bmp
 
 
-   outtextxy(0,0,"BMP cargado exitosamente!!! Presione una tecla para continuar...");
+   outtextxy(0,0, "BMP loaded successfully!!! Press a key to continue...");
    getch();
   }
 
@@ -67,5 +67,6 @@ void main(void)
 
  closegraph();
 
+ return 1;
 
 }
