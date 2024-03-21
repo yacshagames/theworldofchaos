@@ -13,37 +13,45 @@ Pagina Web ( EL MUNDO DEL CAOS ):
  http://www.geocities.com/joseluisdl
 
 ***************************************************/
-#include <conio.h> //getch()
 
+#define _CRT_SECURE_NO_WARNINGS
+#include "graphics.h"
+
+//#include <conio.h> //getch()
 #include "grafxy.h"
 
-void main()
-{
+using namespace std;
 
- //se ingresa como argumento la ruta de la carpeta bgi
- autoini("");//inicia el modo grafico, por defecto 16 colores
+int APIENTRY WinMain
+(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{	
 
- //se declara la regi¢n donde se graficar  la funci¢n
- CRegionXY Region( -5,   //x m¡nimo
-		    5,   //x m ximo
-		    -3,  //y m¡nimo
-		    3 ); //y m ximo
+	//se ingresa como argumento la ruta de la carpeta bgi
+	//autoini("");//inicia el modo grafico, por defecto 16 colores
+	initwindow(1024, 768, "El mundo del caos");
 
- double x, //variable independiente
-	dx=0.01; //partici¢n mas peque¤a de x
 
- Region.Ejes(); //grafica los ejes coordenados
+	//se declara la regiÂ¢n donde se graficarÂ  la funciÂ¢n
+	CRegionXY Region(-5,   //x mÂ¡nimo
+		5,   //x mÂ ximo
+		-3,  //y mÂ¡nimo
+		3); //y mÂ ximo
 
- //se varia x desde su valor m¡nimo a su m ximo, con una partici¢n de dx
- for( x=Region.xmin(); x<Region.xmax(); x+=dx )
-  //grafica un punto de la funci¢n
-  Region.punto( x, // variable independiente
-		x*x, //funci¢n f(x) a graficar (para este caso es una par bola )
-		LIGHTGREEN, //color del trazo (verde claro)
-		CONECTAR ); //argumento opcional; CONECTAR=conectar los puntos de la gr fica, si no se ingresa este argumento no se conecta los puntos
+	double x, //variable independiente
+		dx = 0.01; //particiÂ¢n mas pequeÂ¤a de x
 
- getch();//pone una pausa
+	Region.Ejes(); //grafica los ejes coordenados
 
- closegraph();//cierra el modo gr fico
+	//se varia x desde su valor mÂ¡nimo a su mÂ ximo, con una particiÂ¢n de dx
+	for (x = Region.xmin(); x < Region.xmax(); x += dx)
+		//grafica un punto de la funciÂ¢n
+		Region.punto(x, // variable independiente
+			x*x, //funciÂ¢n f(x) a graficar (para este caso es una parÂ bola )
+			LIGHTGREEN, //color del trazo (verde claro)
+			CONECTAR); //argumento opcional; CONECTAR=conectar los puntos de la grÂ fica, si no se ingresa este argumento no se conecta los puntos
+
+	getch();//pone una pausa
+
+	closegraph();//cierra el modo grÂ fico
 
 }

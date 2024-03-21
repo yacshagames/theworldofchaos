@@ -69,9 +69,9 @@ Funcion:
 Version 1.0 -> 26/11/98
 
 **********************************************************************/
-#ifndef __GRAPHICS_H
+/*#ifndef __GRAPHICS_H
 #include <graphics.h>
-#endif
+#endif*/
 #include <stdio.h>
 
 #define CONECTAR 1
@@ -218,10 +218,10 @@ outtextxy(x, y, str);
 
 }
 
-void autoini(char *ruta)
+/*void autoini(char *ruta)
 {
 int gd=DETECT,gm;
 initgraph(&gd,&gm,ruta);
-}
+}*/
 
 
