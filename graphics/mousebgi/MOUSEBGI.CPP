@@ -8,10 +8,14 @@ programado por:
 JOSE LUIS DE LA CRUZ LAZARO 
 ramondc@hotmail.com
 Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
+
+ >> Version 2 - 21-III-2024
+	- Update graphics/imgbgi - Porting to VC++ 2017 using winbgi
+
 ***************************************************************************/
 
 #include "graphics.h"
-#include "conio.h"
+//#include "conio.h"
 
 #include "grafimpl.h"
 #include "mousebgi.h"
@@ -39,10 +43,8 @@ animaci¢n para asegurar que los cambios se hagan durante el retrace delrayo
 
 }//WaitRetrace
   */
-int APIENTRY WinMain
-(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int main()
 {
-	CreateNewConsole(1024);
 
 	IniciarSVGA(_800x600); //se inicia la supervga (256 colores )
 			//con una resolucion de 800x600
@@ -116,5 +118,5 @@ int APIENTRY WinMain
 
  getch();
 
- return 0;
+ return 1;
 }
