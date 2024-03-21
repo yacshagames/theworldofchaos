@@ -8,6 +8,9 @@ JOSE LUIS DE LA CRUZ LAZARO
 ramondc@hotmail.com
 Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
 
+>> Version 7 21-III-2024
+  - Update graphics/nibles - Porting to VC++ 2017 using winbgi
+
 Version 6.1 ( 29 Dic 1999 )
  - se calibra el joystick en modo texto
  - se utiliza el joystick para controlar al nibble del jugador 1
@@ -247,7 +250,7 @@ int NIBBLE::Muerte(char tecla)
 		setfillstyle(1, color); //estilo:solido, color: del nible
 		bar(getmaxx() / 2 - 50, getmaxy() / 2 - 30, getmaxx() / 2 + 50, getmaxy() / 2 + 30);
 		settextjustify(1, 1);	//justificacion centrada
-		outtextxy(getmaxx() / 2, getmaxy() / 2 - 10, (char*)"MUERE!!!");	     //Mensaje de Muerte
+		outtextxy(getmaxx() / 2, getmaxy() / 2 - 10, "MUERE!!!");	     //Mensaje de Muerte
 		outtextxy(getmaxx() / 2, getmaxy() / 2 + 10, Nombre);	     //Mensaje de Muerte
 		getch();
 		return 1;
@@ -362,15 +365,10 @@ int Cargar_Fase(int num)
 	{
 		closegraph();
 
-		if (CreateNewConsole(1024) == false)
-			return 0;
-
 		clrscr();
 		gotoxy(26, 12);
 		cout << "Error al cargar la fase!!!";
 		getch();
-
-		ReleaseConsole();
 
 		return 0;
 	}
@@ -396,12 +394,8 @@ int Cargar_Fase(int num)
 
 }
 
-int APIENTRY WinMain
-(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int main()
 {
-	
-	if (CreateNewConsole(1024) == false)
-		return 0;
 	
 	int opcion;
 	clrscr();
@@ -432,9 +426,7 @@ int APIENTRY WinMain
 	gotoxy(20, 8);
 	cout << "Ingrese su Velocidad : ";
 	cin >> escala_velocidad;
-
-	ReleaseConsole();
-
+	
 	//Calibrar_Joystick();
 
 

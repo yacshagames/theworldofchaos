@@ -15,40 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Nibles.h">
+    <ClInclude Include="conio.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="graphics.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="conio.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Nibles.rc">
-      <Filter>Archivos de recursos</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>Archivos de recursos</Filter>
-    </Image>
-    <Image Include="Nibles.ico">
-      <Filter>Archivos de recursos</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Nibles61.cpp">
+    <ClCompile Include="nibles61.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
