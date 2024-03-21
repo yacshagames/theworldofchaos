@@ -23,7 +23,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="nibles61.cpp">
+    <ClCompile Include="nibles.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

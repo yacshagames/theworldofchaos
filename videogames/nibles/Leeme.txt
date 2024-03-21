@@ -6,6 +6,9 @@ Agradeceria sus sugerencias a: ramondc@hotmail.com
 
 Para mas información visite mi Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
 
+>> Version 7 - 21-III-2024
+  - Update graphics/nibles - Porting to VC++ 2017 using winbgi
+
 NIBBLES 6.1 BETA 29 Dic 1999
 Se añadio el uso del joystick para controlar al nibble del jugador 1, y al mismo tiempo tambien se lo puede controlar mediante el teclado...esto se debe gracias a las rutinas para controlar el joystick: joystick.h y calijoy.h ... que incluyo con los fuentes
 
