@@ -207,7 +207,7 @@ void NIBBLE::Crecimiento(char tecla)
 	//CARGA DE UNIDADES DE COLA
 	setfillstyle(1, color);
 
-	bar(x, y, x + 9, y + 9);
+	bar(x, y, x + 10, y + 10);
 
 	cola[ucact][0] = xant;
 	cola[ucact][1] = yant;
@@ -224,7 +224,7 @@ void NIBBLE::Crecimiento(char tecla)
 
 		setfillstyle(1, 0);
 
-		bar(i, j, i + 9, j + 9);
+		bar(i, j, i + 10, j + 10);
 
 	}
 	else lcact++;
@@ -385,7 +385,7 @@ int Cargar_Fase(int num)
 		{
 			color = p[k] - 48;
 			setfillstyle(1, color);//Estilo:solido, color:negro o rojo
-			bar(i, j, i + 9, j + 9);
+			bar(i, j, i + 10, j + 10);
 		}
 	}
 
