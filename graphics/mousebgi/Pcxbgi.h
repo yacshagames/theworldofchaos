@@ -18,12 +18,11 @@ Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
 #ifndef __PCXBGI_H
 #define __PCXBGI_H
 
-
 #include <stdio.h>
 #include <dos.h>
 
 #ifndef __GRAPHICS_H
-#include <graphics.h>
+#include "graphics.h"
 #endif
 
 class PCX
@@ -61,7 +60,7 @@ class PCX
   void CorrerPaleta(void);
   public:
   void Dibujar( int, int );
-  void leer_cabecera(int,char*);
+  void leer_cabecera(int,const char*);
 
 };
 
@@ -91,12 +90,12 @@ void PCX::Paleta(void)
 
 	/* El c¢digo que sigue a continuaci¢n pasa el contenido del array "Paleta"
 	a la paleta de la VGA */
-	for (cont=0;cont<64;cont++)
+	/*for (cont=0;cont<64;cont++)
 	{
 		outportb (0x03c8,cont+orden*64+16);
 		for (cont1=0;cont1<3;cont1++)
 			outportb (0x03c9,paleta[cont][cont1]);
-	}
+	}*/
 }
 
 
@@ -115,7 +114,7 @@ void PCX::CorrerPaleta( void)
 
 }
 
-void PCX::leer_cabecera(int _orden, char *nombre)
+void PCX::leer_cabecera(int _orden, const char *nombre)
 {
 
 	if( nombre == NULL ) return;

@@ -1,6 +1,6 @@
 //IMPLEMENTACION GRAFICA
 #ifndef __GRAPHICS_H
-#include <graphics.h>
+#include "graphics.h"
 #endif
 
 #ifndef __MOUSEBGI_H
@@ -13,24 +13,25 @@
 #define  _640x480 2
 #define  _800x600 3
 #define _1024x768 4
-
+/*
 int huge func(void)
 {
  return _640x480; //resolucion grafica que se utilizara por defecto
-}
+}*/
 
 void IniciarSVGA( int resolucion )
 {
  int controlador=0,modo=0;
 
- controlador=DETECT;
+ /*controlador=DETECT;
  installuserdriver("Svga256",func);
- initgraph(&controlador,&modo,"");  //se busca el controlador bgi en la ruta de la carpeta especificada
+ initgraph(&controlador,&modo,"");  //se busca el controlador bgi en la ruta de la carpeta especificada*/
+ initwindow(1024, 768, "El mundo del caos");
 
  setgraphmode( resolucion );
 
- mousesetup(graphics);//inicia el raton
- mousehide(); //oculta el raton
+ //mousesetup(graphics);//inicia el raton
+ //mousehide(); //oculta el raton
 
 }
 

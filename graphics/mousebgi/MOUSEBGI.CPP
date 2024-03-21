@@ -10,8 +10,8 @@ ramondc@hotmail.com
 Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
 ***************************************************************************/
 
-#include <graphics.h>
-#include <conio.h>
+#include "graphics.h"
+#include "conio.h"
 
 #include "grafimpl.h"
 #include "mousebgi.h"
@@ -39,17 +39,19 @@ animaci¢n para asegurar que los cambios se hagan durante el retrace delrayo
 
 }//WaitRetrace
   */
-int main(void)
+int APIENTRY WinMain
+(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	CreateNewConsole(1024);
 
- IniciarSVGA(_800x600); //se inicia la supervga (256 colores )
+	IniciarSVGA(_800x600); //se inicia la supervga (256 colores )
 			//con una resolucion de 800x600
 
  cuadro(0, 0, getmaxx(), getmaxy(), 1); //se dibuja el cuadro de fondo
 
  Evento raton,raton_anterior;
 
- movemouse(100,100); //se mueve el puntero a la posicion (100,100)
+ //movemouse(100,100); //se mueve el puntero a la posicion (100,100)
  mouseshow();//se muestra el raton
 
  PCX freezer,goku; // se crea el objeto grafico
@@ -57,9 +59,9 @@ int main(void)
  freezer.leer_cabecera(0,"freezer.pcx"); // se lee informacion del archivo pcx
  goku.leer_cabecera(1,"goku.pcx");
 
- outtextxy(10,20,"Deja presionado el bot¢n derecho");
- outtextxy(10,30,"y has un arrastre con el mouse para ver a KAKAROTO");
- outtextxy(10,40,"y lo mismo pero con el bot¢n izquierdo para ver a FREEZER");
+ outtextxy(10,20, (char*)"Deja presionado el bot¢n derecho");
+ outtextxy(10,30, (char*)"y has un arrastre con el mouse para ver a KAKAROTO");
+ outtextxy(10,40, (char*)"y lo mismo pero con el bot¢n izquierdo para ver a FREEZER");
 
  raton=Detectar_click_o_tecla();
 
@@ -81,7 +83,7 @@ int main(void)
 
     goku.Dibujar(raton.x+10,raton.y+20); //dibuja a GOKU sobre la ventana en la posicion indicada
 
-    outtextxy(raton.x+30,raton.y+130,"GOKU");
+    outtextxy(raton.x+30,raton.y+130, (char*)"GOKU");
 
     }
 
@@ -96,7 +98,7 @@ int main(void)
 
     freezer.Dibujar(raton.x+10,raton.y+20); //dibuja a freezer sobre la ventana en la posicion indicada
 
-    outtextxy(raton.x+30,raton.y+130,"FREEZER");
+    outtextxy(raton.x+30,raton.y+130, (char*)"FREEZER");
    }
 
 
@@ -108,9 +110,9 @@ int main(void)
 
  closegraph();
 
- textcolor( GREEN+BLINK );
+ //textcolor( GREEN+BLINK );
 
- cprintf("DBZ CARDS -- programado por Jos‚ Luis De la Cruz L zaro\n\n");
+ printf("DBZ CARDS -- programado por Jos‚ Luis De la Cruz L zaro\n\n");
 
  getch();
 

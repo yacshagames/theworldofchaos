@@ -24,7 +24,7 @@ Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
 //#include <iostream.h>
 
 #ifndef __GRAPHICS_H
-#include <graphics.h>
+#include "graphics.h"
 #endif
 
 //#include <conio.h>
@@ -93,57 +93,57 @@ struct mousecursor
 
 	 const int mouseInt =0x33;
 	 const int iret     =0xcf;
-	 const int false    =0;
-	 const int true     =1;
+	 //const int false    =0;
+	 //const int true     =1;
 
 ///////////////////////////////////////////////////////////////////
 //FUNCIONES DE CONTROL
 
 /*inicia el raton*/
  void mouseInit(void);
-
-/*devuelve cierto si esta instalado el driver del raton*/
+ /*
+//devuelve cierto si esta instalado el driver del raton
  int driverexist(void);
 
-/* Esta funci¢n sirve para testear el rat¢n.*/
+// Esta funci¢n sirve para testear el rat¢n.
  int mtest(void);
 
-/*oculta el cursor del raton*/
+// oculta el cursor del raton
  void mousehide(void);
 
-/*muestra el cursor del raton*/
+// muestra el cursor del raton
  void mouseshow(void);
 
-/*desactiva el raton*/
+// desactiva el raton
  void mouseoff(void);
 
-/*activa el raton*/
+// activa el raton
  void mouseon(void);
 
-/* mueve el cursor del raton*/
+// mueve el cursor del raton
  void movemouse(int , int );
 
  void mousesetup(enum videomodetype );
 
-/*retorna la ubicacion del raton*/
+// retorna la ubicacion del raton
  unsigned mousestatus(int *,int *);
 
-/*devuelve la condicion de los botones*/
+// devuelve la condicion de los botones
  unsigned Mbuttonstatus(void);
-
+ */
  int mpresscnt(unsigned );
-
- int mreleasecnt(unsigned );
-
+ /*
+ int mreleasecnt(unsigned );*/
+ 
 /*obtiene el ultimo evento del raton */
- unsigned mouseevent(int *, int *);
-
+ unsigned mouseevent(int& , int& );
+ /*
  //espera por la ocurrencia de cualquier evento y retorna dicho evento
  unsigned mwaitforanyevent( int *, int *);
 
  //espera por la ocurrencia de un evento especifico y retorna dicho evento
  void mwaitforevent(unsigned , int * ,int *);
-
+ */
  //arroja 1 cuando el puntero se esta moviendo
  //y arroja 0 cuando el puntero esta estatico
  int mmoved(void);
@@ -157,7 +157,7 @@ void recuperar_fondo(void);
 void dibujar_puntero(void);
 void actualizar_puntero( int &, int &);
 //destruir los punteros utilizados por la bgi
-int mousedestroy(void);
+void mousedestroy(void);
 ////////////////////////////////////////////////////////////////////////////
 //IMPLEMENTACION DE LAS FUNCIONES
 
@@ -167,39 +167,37 @@ int mousedestroy(void);
 		mouse.ok =false;
 		mouse.mouseoff=true;
 	}
-
+	 /*
 	int driverexist(void)
-	/*devuelve cierto si esta instalado el driver del raton*/
+	//devuelve cierto si esta instalado el driver del raton
 	{
 		void far *addres;
 		addres=getvect(mouseInt);
 		return (addres != NULL)&&(*(unsigned char far *) addres !=iret);
 	}
 
-	/* Esta funci¢n sirve para testear el rat¢n.*/
+	// Esta funci¢n sirve para testear el rat¢n.
 	int mtest(void)
 	{
-	 /* Retorna: 0 => no hay rat¢n instalado.        */
-	 /*          n => el n£mero de botones del rat¢n.*/
+	 // Retorna: 0 => no hay rat¢n instalado.        
+	 //          n => el n£mero de botones del rat¢n.
 	 union REGS regs;
 
 	 regs.x.ax = 0x0;
 	 int86(0x33, &regs, &regs);
-	 if (regs.x.ax > 0) return regs.x.bx; /* n£mero de botones */
+	 if (regs.x.ax > 0) return regs.x.bx; // n£mero de botones
 	 else return 0;
 	}
-
+	*/
 
 	void mousehide(void)
-	/*oculta el cursor del raton*/
+	//oculta el cursor del raton
 	{
-		union REGS regs;
+		//union REGS regs;
 		if(mouse.mouseoff) return;
-
-		/*
-		regs.x.ax=2;
-		int86(mouseInt,&regs,&regs);
-		*/
+		
+		//regs.x.ax=2;
+		//int86(mouseInt,&regs,&regs);		
 
 		if(mouse.oculto==0)putimage(cursor.x_anterior,cursor.y_anterior, cursor.fondo, COPY_PUT);
 
@@ -208,24 +206,24 @@ int mousedestroy(void);
 	}
 
 	void mouseshow(void)
-	/*muestra el cursor del raton*/
+	// muestra el cursor del raton
 	{
-		union REGS regs;
+		//union REGS regs;
 		if(mouse.mouseoff)return;
-		/*
-		regs.x.ax=1;
-		int86(mouseInt,&regs,&regs);
-		mousestatus(&(cursor.x),&(cursor.y));
-		*/
+		
+		//regs.x.ax=1;
+		//int86(mouseInt,&regs,&regs);
+		//mousestatus(&(cursor.x),&(cursor.y));
+		
 
 	       cursor.x_anterior=-1;
 	       cursor.x=0;
 
 		mouse.oculto=0;
 	}
-
+	/*
 	void mouseoff(void)
-	/*desactiva el raton*/
+	// desactiva el raton
 	{
 		if(mouse.ok && !mouse.mouseoff){
 			mousehide();
@@ -234,7 +232,7 @@ int mousedestroy(void);
 	}
 
 	void mouseon(void)
-	/*activa el raton*/
+	// activa el raton
 	{
 		if(mouse.ok && mouseoff){
 			mouse.mouseoff=false;
@@ -243,7 +241,7 @@ int mousedestroy(void);
 	}
 
 	void movemouse(int Mx, int My)
-	/* mueve el cursor del raton*/
+	// mueve el cursor del raton
 	{
 		union REGS regs;
 		if(mouse.mouseoff)return;
@@ -288,7 +286,7 @@ int mousedestroy(void);
 	}
 
 	unsigned mousestatus(int *Mx,int *My)
-	/*retorna la ubicacion del raton*/
+	// retorna la ubicacion del raton
 
 	{
 		union REGS regs;
@@ -310,7 +308,7 @@ int mousedestroy(void);
 	}
 
 	unsigned Mbuttonstatus(void)
-	/*devuelve la condicion de los botones*/
+	// devuelve la condicion de los botones
 	{
 		int Mx,My;
 		if(mouse.mouseoff)return 0;
@@ -318,18 +316,35 @@ int mousedestroy(void);
 		return mousestatus(&Mx,&My);
 	}
 
-
+	*/
 
 	int mpresscnt(unsigned buttonmask)
 	{
+		/*
 		union REGS regs;
 		if(mouse.mouseoff)return 0;
 		regs.x.ax=5;
 		regs.x.bx=buttonmask >>1;
 		int86(mouseInt,&regs,&regs);
 		return regs.x.bx;
-	}
+		*/
 
+		if (buttonmask == LBUTTON) {
+			if (ismouseclick(WM_LBUTTONDOWN)) {
+				clearmouseclick(WM_LBUTTONDOWN);
+				return 1;
+			}
+		}
+		else if (buttonmask == RBUTTON) {
+			if (ismouseclick(WM_RBUTTONDOWN)) {
+				clearmouseclick(WM_RBUTTONDOWN);
+				return 1;
+			}
+		}
+
+		return 0;
+	}
+	/*
 	int mreleasecnt(unsigned buttonmask)
 	{
 		union REGS regs;
@@ -338,20 +353,66 @@ int mousedestroy(void);
 		regs.x.bx=buttonmask >>1;
 		int86(mouseInt,&regs,&regs);
 		return regs.x.bx;
-	}
+	}*/
 
-	unsigned mouseevent(int *Mx, int *My)
-		/*obtiene el ultimo evento del raton */
+	unsigned mouseevent(int& Mx, int& My)
+		// obtiene el ultimo evento del raton 
 
 	{
-		unsigned E;
-		if(mouse.mouseoff){ *Mx=0;  *My=0; return IDLE;}
+		unsigned E=1;
+		if(mouse.mouseoff){ Mx=0;  My=0; return IDLE;}
 
-		E=mousestatus(Mx,My);
-		//sin no se presiona ningun boton
+		//E=mousestatus(Mx,My);
+		Mx = mousex();
+		My = mousey();
+		/*
+		int a;
+		if (a = ismouseclick(WM_LBUTTONDOWN))
+		{
 
+			clearmouseclick(WM_LBUTTONDOWN);
+		}
+
+		char ss[3] = "aa";
+		sprintf(ss, "%d", a);
+		outtextxy(10, 100, ss);
+
+		
+
+		std::cout << a<< " ";
+	*/
+		//getmouseclick(WM_LBUTTONDOWN, x, y);
+
+
+
+		if (E == 0)
+		{
+			//si no se presiona ningun boton
+			if (mpresscnt(LBUTTON) > 0) E = LBUTTON_DOWN;
+			else	if (mpresscnt(RBUTTON) > 0) E = RBUTTON_DOWN;
+			//else	if(mreleasecnt(LBUTTON)>0) E=LBUTTON_UP;
+			//else	if(mreleasecnt(RBUTTON)>0) E=RBUTTON_UP;
+		}
+		//si se presiona por lo menos un boton a la vez
+		else
+		{
+			if (E & LBUTTON)
+			{
+				if (mpresscnt(LBUTTON) > 0)
+					E = LBUTTON_DOWN;
+				else
+					E = LBUTTON_STILL_DOWN;
+			}
+			else if (mpresscnt(RBUTTON) > 0)
+				E = RBUTTON_DOWN;
+			else
+				E = RBUTTON_STILL_DOWN;
+		}
+
+		/*
 		if(E==0)
 		{
+			//si no se presiona ningun boton
 			if(mpresscnt(LBUTTON)>0) E=LBUTTON_DOWN;
 		else	if(mpresscnt(RBUTTON)>0) E=RBUTTON_DOWN;
 		else	if(mreleasecnt(LBUTTON)>0) E=LBUTTON_UP;
@@ -371,11 +432,11 @@ int mousedestroy(void);
 		      E=RBUTTON_DOWN;
 		      else
 		      E=RBUTTON_STILL_DOWN;
-		}
+		}*/
 
 		return E;
 	 }
-
+	/*
 	 unsigned mwaitforanyevent( int *Mx, int *My)
 	 {
 		unsigned E;
@@ -394,21 +455,23 @@ int mousedestroy(void);
 		 do{
 			entry=mouseevent(Mx,My);
 		 }while(entry!=E);
-	 }
+	 }*/
 
 	 int mmoved(void)
 	 {
 		if(mouse.mouseoff)return false;
 
 		 mouse.oldx=mouse.x;       mouse.oldy=mouse.y;
-		 mousestatus(&mouse.x,&mouse.y);
+		 //mousestatus(&mouse.x,&mouse.y);
+		 mouse.x = mousex();
+		 mouse.y = mousey();
 		 mouse.dx=mouse.x-mouse.oldx;     mouse.dy=mouse.y-mouse.oldy;
 		 return(mouse.dx!=0) || (mouse.dy!=0);
 	 }
 
 	 //destruir los punteros utilizados
 
-	 int mousedestroy(void)
+	 void mousedestroy(void)
 	 {
 	  if( cursor.puntero ) //destruye el puntero a el cursor
 	   free(cursor.puntero);
@@ -497,7 +560,7 @@ Evento Detectar_click_o_tecla( void )
 
  p.evento=p.tecla=0;
 
- p.evento=mouseevent( &(p.x), &(p.y) );
+ p.evento=mouseevent( p.x, p.y );
 
   if( kbhit() )
   {
