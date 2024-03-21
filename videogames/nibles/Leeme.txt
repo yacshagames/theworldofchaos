@@ -1,0 +1,55 @@
+Idea original de Microsoft.
+
+Programado en C++ por JOSE LUIS DE LA CRUZ LAZARO UNI-FIEE
+
+Agradeceria sus sugerencias a: ramondc@hotmail.com
+
+Para mas información visite mi Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
+
+NIBBLES 6.1 BETA 29 Dic 1999
+Se añadio el uso del joystick para controlar al nibble del jugador 1, y al mismo tiempo tambien se lo puede controlar mediante el teclado...esto se debe gracias a las rutinas para controlar el joystick: joystick.h y calijoy.h ... que incluyo con los fuentes
+
+NIBBLES 6.0 BETA 26 Jun 1999
+Las versiones posteriores a la 5.6 han sido un fracaso, asi que decidi rehacer el juego desde cero con objetos (POO), lo cual me ha dado buen resultado (un codigo compacto y entendible), esta nueva version la he hecho BETA porque no le añadido todavia el editor de nuevas fases, no hay un tercer jugador y tambien porque todavia no termino de hacer los nuevos fondos de las fases, todo esto en lenguaje ensamblador...
+
+NIBBLES 5.6 13 Jun 1998
+
+Bueno no lo creeran pero este es uno de mis primeros programas en C++, por lo que notaran el excesivo uso de variables, ademas todavia no sabia objetos, ahora si... 20/06/99
+
+PEQUEÑO COMENTARIO
+Me demore mas de 3 meses (¡todo mi verano!), para hacerlo, pero despues de terminar este programa ya estaba en algo en C++...
+
+INSTRUCCIONES
+
+Para los que nunca han jugado el famoso Nibbles en Basic, el objetivo es comer todos los numeros del 1 al 9 que aparecen en la pantalla, cuando se come este ultimo se cambia de nivel ( Recomiendo jugar entre 2 personas, o tres), NO DEBEN CHOCAR, NI CON USTEDES MISMOS
+NO SE PUEDE RETROCEDER!!!!!
+
+MOVIMIENTOS
+	 	IZQUIERDA DERECHA ARRIBA ABAJO
+JUGADOR 1:	 LEFT	    RIGHT   UP	  DOWN
+JUGADOR 2:        A          D      W     S
+JUGADOR 3:        K          ;      O     L 
+
+USO DEL EDITOR DE FASES
+si ya te aburristes de mis fases preprogramadas, has la tuya propia:
+Escoje la opcion 4
+
+luego edita la fase desplazandote con el teclado, y cambiando de color
+con las siguientes teclas:
+
+` = GRIS (cursor) con esta tecla te podras desplazar sin ensuciar la 		  pantalla
+1 = NEGRO
+2 = ROJO
+
+No pongas otro color!!!
+
+Cuando acabaste pulsa enter.
+
+Luego ponle el siguiente nombre: fase_n y pulsas enter
+Donde n es un numero mayor que 10, si le pones un n menor podrias borrar algunas de las fases preprogramadas.
+
+Bueno esta fase se jugara en la fase n (nivel n )asi que si quieres jugarla al inicio solo le cambias de nombre a la fase_1 por otro nombre y tu fase_n por fase_1.
+
+BUGS CONOCIDOS
+
+Mas bien yo no diria un bug, sino un alivio, es que tienes vidas infinitas ( No soy tan cruel vez...)

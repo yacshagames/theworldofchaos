@@ -1,0 +1,66 @@
+___________________________________________
+ El Reto 0014
+ creado por: José Luis De la Cruz Lázaro
+	    jcruz@ec-red.com
+	    www.geocities.com/joseluisdl
+ Fecha: 20 de Febrero del 2000
+___________________________________________
+
+Este reto no es tan difícil como sus predecesores, pero también
+tiene su maña. Lo bueno de este reto es que no se necesita tener
+un compilador a la mano para responderlo, razón por la que creo,
+los retos anteriores no eran muy respondidos.
+
+El reto consiste en que el programa entregue la comparación de 2
+números enteros ingresados por teclado, para esto se provee de
+código fuente ya escrito, por lo que solo falta el código que
+compare los valores ingresados para luego mostrar
+los respectivos resultados.
+
+Solo se debe implementar la LINEA DE CODIGO UTIL(*) que está
+punteada, sin tocar el código que ya está escrito.
+
+(*) Una línea de código útil en C, es la línea de código entre
+    dos "punto y coma" consecutivos.
+
+Y para que no se la lleven tan fácil, no se puede utilizar if, switch, break, while, do, for y  ?: .
+No se puede declarar mas variables de las que ya están declaradas.
+
+//CODIGO FUENTE A COMPLETAR
+
+#include <stdio.h>
+
+void main()
+{
+ int a,b;
+
+ printf( "\n\nIngrese número entero A: ");
+ scanf( "%i", &a );
+ printf( "\nIngrese número entero B: ");
+ scanf( "%i", &b );
+
+ ............ ; //solo completar código aquí
+
+ if( a==b )
+  printf("\n\nSon números iguales.");
+ else
+  printf("\n\nEl mayor es %i y el menor es %i.", a, b );
+}
+
+Mucha Suerte.
+
+          o  o José Luis De la Cruz Lázaro o   220KV of Chaos
+     o       o  Visit my homepage:          o      o
+   o    o o    o EL MUNDO DEL CAOS            o   o o
+  o   o  o     o  www.geocities.com/joseluisdl  o    o  o
+  o    o     o     ICQ: 46906401                      o  o
+   o     o o     Chaos = Chaos & math ? C++ : ++C;        o
+     o                                                     o
+        o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
+                    o  o   o   o   o   o
+     o               o   o   o   o   o
+   o   o      o
+ o      o   o  o  o  o  o o oooo Universidad Nacional de Ingeniería
+          o     o                 Facultad de Ingeniería Eléctrica y
+                                             Electrónica
+                                 O  O  o ooo Lima - Perú ooo o o O  O

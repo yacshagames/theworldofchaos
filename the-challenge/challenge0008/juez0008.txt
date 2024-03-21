@@ -1,0 +1,77 @@
+Hola CWORLD... y principalmente a los que siguen el reto...
+
+Acá envío la solución Juez que utilicé para calificar a los participantes
+del Reto008. Quiero decir también que ninguno solucionó exactamente el
+problema. Que decepción :(, si no me creen compilen esta solución juez y
+compárenla con las soluciones de los participantes.
+
+Bueno... pero como debía haber un ganador, diseñé el método de Evaluación
+ICE, que ya fue detallado en un mensaje anterior.
+
+Volviendo a la solución Juez, quiero decir que este reto lo diseñé
+especialmente para trabajar con punteros a funciones, esto estaba camuflado
+y nadie se dio cuenta... por eso ninguno llego a los 4 puntos máximos en la
+Idea de la calificación ICE.
+
+LA SOLUCION JUEZ:
+
+Como nosotros siempre ingresamos valores discretos, es decir nunca se
+ingresará un punto fuera del dominio de la función, ya que las
+singularidades son números irracionales, se pueden establecer las siguientes
+equivalencias de funciones:
+
+Basándonos en la identidad trigonométrica: sin(2*u) = 2*sin(u)*cos(u);
+
+La función f(x) se podría rescribir como sigue:
+
+f(x) = { sen(x)*cos(x/2) , x<0
+         cos(x)*sin(x/2) , 0<=x<2
+         exp(x)*tan(x/2) , x>2    }
+
+Se observa también que x=2 no pertenece al dominio y obviamente se debía
+retornar un mensaje de advertencia, esto lo dejé a criterio del
+participante.
+
+EL CODIGO FUENTE: ( Omití acentos )
+
+#include <stdio.h>
+#include <math.h>
+
+int i,j;
+//punteros a las funciones basicas usadas en f(x)
+double (*p[4])( double x )={ sin, cos, tan, exp };
+
+double f( double x )
+{
+  return p[i](x)*p[j](x/2);//notar que las subfunciones de f(x)
+                           //tienen la forma h(x)g(x/2)
+}
+
+void main()
+{
+
+  double x;
+  printf("\n\nIngrese x: ");
+  scanf( "%lf", &x );
+
+  while( x==2 ){ printf( "2 no pertenece al domino!!!"); return; }
+  i = x<0 ? 0 : x>=0 && x<2 ? 1 : 3; //para h(x) se reconoce
+                                     //a que funcion apuntar
+  j = x<0 ? 1 : x>=0 && x<2 ? 0 : 2; //para g(x/2) se reconoce
+                                     //a que funcion apuntar
+
+  printf( "Resultado: f( %lg ) = %lf ", x, f( x ) );
+
+}
+
+Cualquier sugerencia o duda pueden hacerla a mi correo...
+
+Un saludo....
+
+José Luis De la Cruz Lázaro
+Página Web (El Mundo del Caos): http://www.geocities.com/joseluisdl
+ICQ: 46906401
+ Universidad Nacional de Ingeniería
+  Facultad de Ingeniería Eléctrica y Electrónica
+ Lima - Perú
+

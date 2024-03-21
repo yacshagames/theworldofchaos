@@ -1,0 +1,124 @@
+Solucionado por Nyder Menéndez
+   Date: Mon, 26 Feb 2001 21:26:58 -0000
+   From: nyder2000@yahoo.es
+Subject: [El Reto]0014 - Solución
+
+Ok... vamos a la carga nuevamente...
+
+(Trabajito pequeño...  tuve que bajar el DJGPP
+e instalarlo... para ver de que se trataba...
+pero bueno... siempre es bueno aprender...
+y como estamos en "Carnavales"...
+hay un poquito de tiempo libre...  :-)
+
+A menos que se te ocurra otra limitante...
+o que el reto sea para resolverlo por un...
+método determinado...
+(para lo cual sería bueno dar una guía...  :-)
+
+Según mis investigaciones (documentación...)
+la coma ',' es un "operador"...
+corríjanme si me equivoco...
+
+y como operador aparece en la lista del...
+orden de precedencia... por lo cual...
+debería (a menos que digan lo contrario...)
+poder utilizarse dentro de la línea de código útil...
+
+y creo... a menos que esté equivocado...
+que eso fue lo que se quizo decir al enunciar...
+lo siguiente...
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+>> Si nos vamos por la definición de línea de código útil que se dio
+>> en los fundamentos de este reto, también es válido poner cualquier
+>> cantidad de líneas de código, porque no sólo el ';' es un separador
+>> de sentencias, sino también lo es la ','.
+
+Muy cierto, <<"esto es permitido">>. Esa es una diferencia entre 
+línea de código útil y sentencia.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+De forma que... luego de varios intentos...
+por comprender las lógicas de precedencia...
+de ambos compiladores... (TC 3.0 y DJGPP)...
+la solución más sencilla.... IMHO.....
+
+sería la siguiente...
+
+#include <stdio.h>
+
+void main()
+{
+ int a,b;
+
+ printf( "\n\nIngrese número entero A: ");
+ scanf( "%i", &a );
+ printf( "\nIngrese número entero B: ");
+ scanf( "%i", &b );
+
+ a=a+b,a=a-(b=(((a-b)>=b)*b)+((b>(a-b))*(a-b)));
+
+ if( a==b )
+  printf("\n\nSon números iguales.");
+ else
+  printf("\n\nEl mayor es %i y el menor es %i.", a, b );
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La cual pude probar... en ambos compiladores...
+y funcionó... pero... si dicen que no se puede...
+utilizar el operador coma ','... entonces... ni modo...
+solo avisen... y tratemos otras soluciones...
+
+Por cierto... los paréntesis...  :-)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ a=a+b,a=a-(b=(((a-b)>=b)*b)+((b>(a-b))*(a-b)));
+            \  \\\ /   /  /   \\  \ //   \ ///
+             \  \\¨   /  /     \\  ¨/     ¨//
+              \  \\  /  /       \\ /      //
+               \  \\/  /         \¨      //
+                \  \  /           \     //
+                 \  \/             \   //
+                  \                 \ //
+                   \                 ¨/
+                    \________________/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Esa forma de "trabajar" la precedencia de ambos compiladores... es...
+muy interesante... parece que utilizan en un punto determinado...
+precedencias inversas... y lo que me parece interpretar...
+
+es que los de la Borland... la botaron... (fallaron...)
+puesto que los paréntesis... en este caso...
+son evaluados de derecha a izquierda ( <--- ) ... y sin embargo...
+internamente... los otros paréntesis... (parece enredado no?)...  :-)
+los evalúa de izquierda a derecha... ( ---> )...
+
+(Para entender lo que estoy diciendo tendrían que...
+probar todas las posibles opciones que hice....  o...
+imaginárselas....  :-)
+
+y eso de "izquierda a derecha... y luego derecha a izquierda...
+es una falta de consistencia... si no me equivoco...
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bueno... espero no haberlos aburrido...
+que sigan gozando de los carnavales...  :-)
+
+nyder2000@yahoo.es
+
+
+

@@ -1,0 +1,28 @@
+El Reto 0010
+creado por: José Luis De la Cruz Lázaro
+              jcruz@e...
+            www.geocities.com/joseluisdl
+Fecha: 24 de Noviembre del 2000
+
+ENUNCIADO: 
+Como hacer una pausa durante un tiempo inferior a 55ms?
+
+
+donde: 
+
+ms = milisegundos = milésimas de segundo. 
+El tiempo ingresado debe ser un número entero de milisegundos. 
+
+
+ACLARACIONES: 
+Como sabemos, la función delay, gettime, etc; dependen del procesador de tiempo de nuestra PC ( Timer), el cual trabaja con unidades de tiempo llamados ticks, donde cada tick equivale aproximadamente a 55ms. La pregunta es como se diseñaría una función que ponga una pausa durante 1ms, 2ms, 
+3ms,...,55ms, 56ms, 57ms, 58ms,... en adelante ; y claro... también hacer la codificación en C/C++. 
+
+
+
+Para estandarizar las respuestas, la función debe tener la siguiente declaración:
+
+
+//Precision Delay 
+//mseg = número entero de milisegundos pdelay( unsigned mseg );
+

@@ -1,0 +1,28 @@
+Hola de nuevo seguidores del Reto...
+
+Aquí está la solución JUEZ completa que prometí.
+
+Antes, quiero decir que todos los participantes al presente Reto estuvieron
+diciendo una falacia todo el tiempo..., pues como van a decir que "El
+Lenguaje C++ ¡¡¡Es el Mejor!!!", cuando su solución es en C, no tiene
+sentido..., estas son las contradicciones de la vida!!! :(
+
+Es por eso, y no podía ser de otra forma, la solución JUEZ tiene que ser
+escrita en C++. Pues aquí esta la solución ( archivo adjunto ).
+
+Sobre su portabilidad, es no ANSI y funciona solo en MS-DOS.
+
+Algo que quiero comentar es que hubo una cosa curiosa, que para imprimir una
+cadena de texto con cout en DJGPP necesita añadir el caracter nueva línea
+"\n" al final de la cadena, pero al hacer esto el programa ya no mostraba el
+efecto tal y como es, así que para forzar al que el programa corra en djgpp,
+adjunto otra solución con printf en lugar de cout, lo cual no me gusta mucho
+ya que lo que se quería era utilizar "Solo C++", pero lo envío de todas
+formas...
+
+Cualquier sugerencia, duda o comentario pueden hacerlo en la lista misma o a
+mi correo.
+
+Y FELIZ NAVIDAD Y PROSPERO AÑO NUEVO PARA TODOS...
+
+Saludos...

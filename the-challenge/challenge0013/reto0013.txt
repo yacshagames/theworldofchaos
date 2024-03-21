@@ -1,0 +1,29 @@
+[El Reto] 0013
+creado por: José Luis De la Cruz Lázaro
+              jcruz@ec-red.com
+            www.geocities.com/joseluisdl
+Fecha: 17 de enero del 2001
+
+Lo que se pide es graficar la siguiente estrella en modo texto, en C o C++.
+
+               o
+             o   o
+            o     o
+o   o   o  o       o  o   o   o
+  o         ¡­FELIZ          o
+     o      NAVIDAD!     o
+       o     2000      o
+         o           o
+        o      o      o
+       o     o   o     o
+          o         o
+      o                 o
+
+Solo se pide que la letra "I" de la palabra NAVIDAD este en el centro de la
+pantalla.( por ejm si trabajamos en una pantalla de 80 columnas y 25 líneas
+el centro será el punto 40,12 )
+
+Hasta aquí es sencillo, pero para que no se la lleven tan fácil no se puede
+utilizar "conio.h"... :)
+
+

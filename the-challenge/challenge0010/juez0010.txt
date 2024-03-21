@@ -1,0 +1,49 @@
+Hola a todos los que siguen el Reto...
+
+Tal y como lo prometí, aquí entrego la solución JUEZ completa al Reto 0010
+ archivo adjunto ). Quisiera que me disculpen la demora, ya que debido a la
+falta de tiempo no la había comentado debidamente, ni había creado un
+ejemplo de aplicación. Esto lo digo porque para probar el funcionamiento de
+la función pdelay, lo hago haciendo la simulación de un reloj.
+
+**********************************************
+SOLUCION JUEZ AL RETO0010:
+Programado por:
+   José Luis De la Cruz Lázaro - 20/XII/2000
+   jcruz@e...
+   http://www.geocities.com/joseluisdl
+**********************************************
+
+La idea es muy simple, contar cuantos incrementos de un contador
+de tipo entero suceden en 1 milisegundo.
+
+A dichos incrementos les denominé subticks, debido a que un tick
+puede ser divido en un número entero de subticks, y mejor aun,
+1 milisegundo tiene también un número entero de subticks,
+el cual se tiene calcular por métodos estadísticos.
+
+El número de "subticks por milisegundo" depende principalmente del
+compilador que se use y de la velocidad del procesador, por lo que
+es necesario implementar una función que cuente cuantos subticks
+existen en 1 tick ( SubTicks() ) y otra que calcule el promedio
+de en un cierto número de ensayos, del resultado arrojado por SubTicks()
+( esto lo hace SubTicksMedio() ).
+
+Una vez calculado el número de "subticks por milisegundo", recién
+se podría utilizar pdelay ya que bastaría una interpolación lineal
+( o regla de tres simple ), para determinar el número de subticks
+en t miliseguntos ( T ), y poner una pausa ejecutando un bucle
+que tendría T pasos.
+
+PORTABILIDAD DE pdelay(): ANSI C
+Funciones necesarias para su uso: Subticks() y SucTicksMedio()
+Variable global necesaria: SubTicks_por_ms
+
+Un saludo...
+
+José Luis De la Cruz Lázaro
+Página Web (El Mundo del Caos): http://www.geocities.com/joseluisdl
+ICQ: 46906401
+ Universidad Nacional de Ingeniería
+  Facultad de Ingeniería Eléctrica y Electrónica
+ Lima - Perú

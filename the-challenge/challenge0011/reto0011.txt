@@ -1,0 +1,11 @@
+[El Reto] 0011
+creado por: José Luis De la Cruz Lázaro
+              jcruz@ec-red.com
+            www.geocities.com/joseluisdl
+Fecha: 15 de Diciembre del 2000
+
+Es solo un sencillo efecto visual en modo texto, el cual trata de varias palabras desplazándose simultáneamente sobre la pantalla, para al final formar una oración. Para ilustrar esto, adjunto un archivo ejecutable del programa terminado.
+
+Lo que se quiere es la codificación de este efecto, la cual puede ser en C o C++ y claro está. Debe ser portable en DOS.
+
+Tal vez lo que mas interese en este reto, es que el código fuente debe ser lo mas pequeño y optimizado posible y según esto evaluaré al ganador.

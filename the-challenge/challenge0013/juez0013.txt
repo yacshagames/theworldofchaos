@@ -1,0 +1,7 @@
+Hola seguidores del RETO:
+
+Acá envío la solución JUEZ, para que vean lo sencillo que era.., solo era poner la estrella en un fichero de texto, y luego leer y mostrarla en el programa, al mas puro estilo de cargar un archivo gráfico PCX o BMP. Aunque podría haber otras respuestas, como poner la estrella dentro del código, en un arreglo estático, pero esto es un gasto innecesario de memoria y además el código ocupa mas espacio.
+
+NOTA: Para correr bien el programa deben copiar el ejecutable en la misma carpeta del fichero estrella.txt.
+
+Un Saludo.

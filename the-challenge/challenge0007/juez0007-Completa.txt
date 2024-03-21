@@ -1,0 +1,352 @@
+ ENUNCIADO ORIGINAL DEL PROBLEMA:
+ 
+El Reto 0007
+creado por: José Luis De la Cruz Lázaro
+	    jcruz@ec-red.com
+            www.geocities.com/joseluisdl
+Fecha: 22 de Septiembre del 2000
+
+Este programa es la recreación de un problema que tuve hace algún tiempo.
+
+El objetivo es sumar 2 matrices mediante una función Suma, donde las matrices
+son arreglos bidimensionales creados dinámicamente y su orden es
+ingresado desde el teclado.
+
+Pero resulta que el programa no muestra errores a la hora de compilar, talvez
+algunos warnings, pero al momento de ejecutar el exe, sucede alguno de los
+siguientes casos:
+-El programa se cuelga desde el inicio;
+-Muestra bien el resultado, pero al final se cuelga;
+-Muestra bien el resultado, pero al final muestra el mensaje de error:
+ Null pointer assignment.
+-Muestra bien el resultado pero solo para matrices de orden pequeño;
+
+SOLUCION:
+Fecha: Solucionado el 11 de Octubre del 2000
+ 
+ PREGUNTA 1:
+ 
+ Lo que se quiere en primer lugar es encontrar donde está el error y
+ explicar porque que se cuelga. No se quiere que se de la solución para un
+ compilador específico, esto lo digo, porque su solución puede correr en
+ DJGPP, pero no en Borland C. Lo que se quiere es que la solución sea general.
+ 
+ SOLUCIÓN:
+ 
+ En este caso no se podría hablar del error, sino de los errores, en primer
+ lugar comencemos por la definición de punteros dobles y hagámonos la
+ pregunta: ¿es factible definir punteros dobles para crear arreglos
+ bidimensionales dinámicos?, observemos la siguiente declaración, que se
+ repite muy seguido en el programa:
+ 
+ int **A;
+ 
+ Para comprender mejor como funciona **A, analicemos el primer asterisco:
+ *A es un arreglo unidimensional sin longitud, para mayor comodidad
+ llamemos p = *A, ahora p es un arreglo unidimensional. Analicemos ahora el
+ segundo asterisco: **A según nuestra notación simplificada podemos
+ escribirlo como *p, con lo que claramente se observa que *p seria una
+ colección de arreglos unidimensionales de igual longitud, es decir es una
+ matriz bidimensional, y p ahora será un puntero a las filas de dicha
+ matriz, así de simple. Es la misma idea que un puntero simple, pero ahora
+ en lugar de apuntar a una colección de variables, se apunta a una
+ colección de arreglos.
+ 
+ Ahora volviendo a la variable original p=*A, entonces *A es el puntero a
+ las filas de la matriz A, según la notación usual, entonces para acceder a
+ la fila "i" de la matriz A, sería algo como: *(A+i) o usando la notación
+ de arreglos sería simplemente A[i].
+ 
+ Entonces A[i] es un puntero a la fila "i" de la matriz, la cual no tiene
+ longitud, porque los punteros declarados no apuntan a ningún sitio, por lo
+ que se necesita asignarles una dirección de memoria a la cual apuntar.
+ Esto último lo hace la función CrearMatriz. Ahora observemos su
+ declaración:
+ 
+ void CrearMatriz( int **A, int Orden)
+ 
+ {
+ 
+ for( int i=0; i<Orden; i++)
+ 
+ A[i] = new int[Orden];
+ 
+ }
+ 
+ En esta función asigna a la fila i, una longitud igual al orden de la
+ matriz ("Orden"), este proceso debe repetirse "Orden" veces, porque la
+ matriz por ser cuadrada, por lo que debe tener "Orden" filas, es decir al
+ final todos los elementos de la matriz tienen un espacio reservado en
+ memoria.
+ 
+ Hasta aquí todo bien... pero el error viene aquí, en un descuido ENORME...
+ ¿pero que sucede con los punteros que no fueron inicializados con new? es
+ decir todos los A[i] para i>Orden, lo mas lógico es que no apunten a nada,
+ es decir son nulos (NULL), pero no es así, estos si apuntan a alguna
+ región de memoria, es decir contienen basura, esta basura a veces es tan
+ importante que si se cambia aunque sea 1 bit, por manipuleos indebidos el
+ programa se cuelga, es decir se interrumpe y ya no sigue su proceder
+ normal, puede hasta inutilizar la máquina y forzar a que la
+ reiniciemos...Ahora miremos esta declaración:
+ 
+ int **Suma( int **A, int **B, int Orden );
+ 
+ Esta función retorna un puntero doble, la cual se utiliza así:
+ 
+ a=Suma(a, b, N);
+ 
+ aquí hay un grave error porque la función Suma, si bien retorna los
+ punteros a la suma de las matrices a y b, por lo dicho anteriormente
+ también retorna los punteros nulos no utilizados, los que al ser asignados
+ a otro puntero doble, pierden su contenido inicial. Resumiendo lo que
+ quiero decir es que hay una asignación de punteros nulos de la función
+ "Suma" a la variable "a", lo que provoca el cuelgue del programa. Esta es
+ la explicación de porque sale el mensaje "Null pointer asigment".
+ 
+ Creo que fue una introducción un poco larga, pero hay que recordar que el
+ objetivo es aprender... Ahora la forma de solucionar este problema sería
+ modificando la función Suma de tal forma que no retorne valor alguno, y
+ que actualice al puntero "a" por referencia, es decir modificando
+ directamente el contenido de "a" en la función suma, esto sería así:
+ 
+  
+ 
+ void Suma( int **A, int **B, int Orden )
+ 
+ {
+ 
+ int i,j;
+ 
+ for(i=0;i<Orden;i++)
+ 
+ for(j=0;j<Orden;j++)
+ 
+ A[i][j]=A[i][j]+B[i][j];
+ 
+ }
+ 
+ Lo que se hace aquí es modificar directamente el contenido de A y
+ asignarle la suma, y como A es un puntero, entonces es pasado por
+ referencia en la función Suma, como se observa a continuación:
+ 
+ Suma(a, b, N);
+ 
+ Entonces la variable "a" es pasada como referencia, con lo cual al final
+ tendrá como contenido, la Suma de a y b.
+ 
+ Aclaraciones:
+ 
+ -Una variable "x" pasada por referencia a una función, quiere decir que la
+ función en vez de tomar como argumento el contenido de "x", toma la
+ dirección de "x" = &x, ahora cualquier cambio que se le haga a la
+ referencia dentro de la función, lo sufrirá la variable "x" fuera de la
+ función.
+ 
+ -Un puntero siempre es pasado como referencia en los argumentos de una
+ función.
+ 
+ Pero ahora surge un nuevo problema mas grave, y es que la declaración "int
+ **A;" crea un número desconocido de filas, las cuales nunca inicializamos,
+ no me refiero al contenido de las filas "*A", eso ya esta inicializado,
+ sino al número de filas que tendrá nuestra matriz, es decir cuantos
+ punteros a las filas necesitamos, esto es equivalente a como si
+ trabajáramos con un puntero sin inicializarlo antes con new, borramos
+ basura valiosa del puntero para meter nuestros datos, y esto perjudica la
+ estabilidad del programa que en cualquier momento se cuelga.
+ 
+ La solución a este nuevo inconveniente sería lógicamente restringiendo el
+ número de filas de la matriz A a un número estático máximo de filas, digo
+ estático, porque todas las variables declaradas estáticamente contienen
+ basura no valiosa, la cual si es borrada no perjudica en nada la
+ estabilidad del programa. Para aclarar la idea observemos el siguiente
+ código:
+ 
+ const int MAX = 126; //Define el máximo orden de las matrices
+ 
+ ...
+ 
+ ...
+ 
+ int *a[MAX],*b[MAX];
+ 
+ Con esto restrinjo a que las matrices tengan un número de "MAX" filas ( en
+ la solución de la pregunta 2 explicaré porque MAX =126), pero ahora se
+ pensará que la matriz "a", por ser declarada estáticamente ocupa un lugar
+ en la memoria, pues no es así no ocupa nada, porque lo único que hice fue
+ declarar un número "MAX" de punteros nulos, y como sabemos un puntero nulo
+ o no inicializado no ocupa espacio en memoria. Para inicializar la matriz
+ "a", procederemos como antes, solo que la función CrearMatriz es alterada
+ levemente como sigue:
+ 
+ int CrearMatriz( int **A, int Orden)
+ 
+ {
+ 
+ for( int i=0; i<Orden; i++)
+ 
+ {
+ 
+ A[i] = new int[Orden];
+ 
+ if( A[i]==NULL || Orden>MAX )
+ 
+ {
+ 
+ cout<<"\nNo hay memoria para crear la matriz...";
+ 
+ return 0;
+ 
+ }
+ 
+ }
+ 
+ Solo se ha hecho un pequeño cambio para detectar si no hay memoria para
+ crear una nueva fila, ya que new retorna NULL si no hay memoria suficiente
+ para asignar a la matriz, en dicho caso la función retorna cero, lo cual
+ producirá el aborto del programa. También se restringe el ingreso de un
+ orden de la matriz mayor a "MAX", ya que en dicho caso se estaría
+ sobrepasando el número de filas declaradas, y esto obviamente produciría
+ un error.
+ 
+ NOTA: esto puede comprobarlo corriendo la solución al [Reto] ( Ver archivo
+ juez0007a1.cpp )
+ 
+ PREGUNTA 2:
+ 
+ En segundo lugar, modificar el programa de tal forma que se pueda sumar
+ las 2 matrices mas eficientemente.
+ 
+ La forma de proceder para solucionar el problema en la pregunta 1, es
+ buena, pero posee ciertas desventajas, como que no declara arreglos
+ bidimensionales dinámicos, ya que siempre se depende de la variable
+ estática MAX.
+ 
+ Así que una forma para declarar un arreglo bidimensional ( Matriz
+ )dinámico de orden N, es simulando este como un vector ( arreglo
+ unidimensional ) dinámico de longitud N*N, donde fácilmente se puede
+ observar que dicho vector estará compuesto por N vectores de longitud N,
+ donde el vector 1 representará la fila 1 de la matriz, el vector 2 la fila
+ 2 y así sucesivamente hasta que el vector N represente la fila N de la
+ matriz.
+ 
+ Por lo que para declarar una matriz A de orden N, procedería como sigue:
+ 
+ int *A;
+ 
+ A = new int[N*N]; //A tiene longitud N*N
+ 
+ Así de fácil, pero hay que tener mucho cuidado de que N*N no sobrepase el
+ valor máximo permitido para su tipo de variable. Por ejemplo si N es int
+ entonces N*N < 32768.
+ 
+ Para acceder al elemento (i,j) de la matriz solo bastaría con hacer lo
+ siguiente: 
+ 
+ A[j*N+i]; //elemento (i,j) de la matriz
+ 
+ Cabe recalcar, que este método es muy utilizado para trabajar con imágenes
+ y hacerles un tratamiento en memoria. Por ejemplo en un juego un sprite (
+ gráfico ), es un matriz bidimensional que contiene los colores de la
+ imagen.
+ 
+ Aplicando este método al problema y utilizando ahora una estructura
+ Matriz, para crear un tipo de datos Matriz, que tendrá como variable
+ miembro un puntero, obtenemos un programa optimizado y que utiliza
+ arreglos bidimensionales dinámicos, que era lo que se quería desde un
+ inicio.]
+ 
+ NOTA: esto puede comprobarlo corriendo la optimización al [Reto] ( Ver
+ archivo juez0007a2.cpp )
+ 
+  
+ 
+ PREGUNTA 3:
+ 
+ La tercera pregunta es: ¿Hasta que Orden ( de las matrices ), podría 
+ funcionar bien el programa, sin colgarse por falta de memoria? 
+ Explicar porque. 
+ Se debe cumplir que la solución de la pregunta 1 debe concordar con lo 
+ dicho en la pregunta 3.
+ 
+ SOLUCIÓN:
+ 
+ En la pregunta 1, dijimos que el número de filas ( igual al orden de la
+ matriz por ser esta cuadrada) debe ser un número "MAX", el cual es
+ desconocido, como lo que me piden es que las matrices "a" y "b" trabajen
+ con su mayor orden posible antes de que el programa se cuelgue, entonces
+ eso quiere decir que debemos trabajar con toda la memoria posible que
+ dispongamos. Pero aquí viene la pregunta: ¿cuánta memoria disponible
+ tengo?, primero debemos saber que existen 6 modelos de memoria
+ disponibles, los cuales podemos ver en la siguiente tabla:
+ 
++--------+----------------+
+¦ Memory ¦     Segments   ¦
+¦ Model  ¦ Code¦Data¦Stack¦
++--------+-----+----+-----+
+¦ Tiny   ¦      64 K      ¦
++--------+----------------+
+¦ Small  ¦ 64 K¦   64 K   ¦
++--------+-----+----------+
+¦ Medium ¦ 1 MB¦   64 K   ¦
++--------+-----+----------+
+¦ Compact¦ 64 K¦   1 MB   ¦
++--------+-----+----------+
+¦ Large  ¦ 1 MB¦   1 MB   ¦
++--------+-----+----------+
+¦ Huge   ¦ 1 MB¦64 K¦64 K ¦
++--------+-----+----+-----+
+ 
+ 
+ Lo que debemos saber es que siempre en cualquier compilador que
+ utilicemos, el modelo de memoria por defecto es el Small ( Modelo Pequeño
+ ), donde de la tabla se observa que el código ( binario ejecutable ) debe
+ ocupar a lo mas 64K y también se observa que la data ( porción de memoria
+ donde se almacenan todas las variables estáticas y globales que declaremos
+ en nuestro programa ) mas el stack ( igual que la data pero solo para
+ variables locales ) deben ocupar 64K.
+ 
+ Volviendo al problema, las matrices "a" y "b" forman parte de la data del
+ programa por lo que entre ambas como máximo pueden 64K, entonces para
+ hallar el orden máximo tendríamos que hacer el siguiente cálculo:
+ 
+ Tamaño(a) + Tamaño(b) = 64K bytes ...(1)
+ 
+ donde:
+ 
+ sizeof(int) = tamaño en bytes que ocupa un tipo entero en memoria =
+ normalmente es 2 bytes
+ 
+ Tamaño(a) = (Número de elementos de a)*sizeof(int) = MAX*MAX*2
+ 
+ Tamaño(b) = (Número de elementos de b)*sizeof(int) = MAX*MAX*2
+ 
+ Luego reemplazando estos valores en (1):
+ 
+ MAX*MAX*2+MAX*MAX*2 = 64K
+ 
+ de donde despejando MAX y truncando su parte decimal se obtiene MAX = 126;
+ 
+ Esto en la práctica no se cumple ya que nunca se tiene disponible los 64K
+ teóricos solamente para la data, a veces el stack quita un poco de bytes a
+ la data, lo correcto sería:
+ 
+ MAX*MAX*2+MAX*MAX*2 + tamaño( stack ) = 64K
+ 
+ de donde aproximadamente se tiene que:
+ 
+ MAX*MAX*2+MAX*MAX*2 = 60K
+ 
+ por lo que MAX = 120
+ 
+ Es decir que en la práctica se va llegar a tener un orden máximo alrededor
+ de 120 en vez de 126.
+ 
+ NOTA: esto puede comprobarlo corriendo la solución al [Reto] ( Ver archivo
+ juez0007a1.cpp )
+ 
+ NOTA FINAL:
+ 
+ Bien espero que no les haya cansado con tan larga solución, pero vuelvo a
+ recordar que el objetivo del Reto es aprender...
+
+

@@ -1,0 +1,42 @@
+Solucionado el 5 de Marzo del 2001.
+
+Hola de nuevo seguidores de el Reto
+
+Aquí envío la solución Juez del Reto 0014:
+
+ a =  ( a^=b, b = (a^b)*( (a^b)<b ) + b*( (a^b)>=b ), a^b ); //solución JUEZ
+
+Donde lo único resaltante creo que es, que en vez de utilizar el método de
+las cubetas, como lo hicieron todos los participantes, se utilizó el método
+del XOR ( or excusivo ), para intercambiar las variables a y b, sin variable
+auxiliar.
+
+a = a^b;
+b = a^b;
+a = a^b;
+
+Pero esta solución es adaptable al otro método, esto es como sigue:
+
+ a =  ( a+=b, b = (a-b)*( (a-b)<b ) + b*( (a-b)>=b ), a-b ); // solución
+alternativa
+
+Un Saludo.
+
+PD: Envío el programa completo de la solución como un adjunto.
+
+
+          o  o José Luis De la Cruz Lázaro o   220KV of Chaos
+     o       o  Visit my homepage:          o      o
+   o    o o    o EL MUNDO DEL CAOS            o   o o
+  o   o  o     o http://www.geocities.com/joseluisdl o  o
+  o    o     o     ICQ: 46906401                 o    o  o
+   o     o o     Chaos = Chaos & math ? C++ : ++C;        o
+     o                                                     o
+        o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
+                    o  o   o   o   o   o
+     o               o   o   o   o   o
+   o   o      o
+ o      o   o  o  o  o  o o oooo Universidad Nacional de Ingeniería
+          o     o                 Facultad de Ingeniería Eléctrica y
+                                             Electrónica
+                                 O  O  o ooo Lima - Perú ooo o o O  O
