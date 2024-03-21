@@ -314,8 +314,8 @@ void writeimagefile(
 
 // Text Functions (text.cpp)
 void gettextsettings(struct textsettingstype *texttypeinfo);
-void outtext(char *textstring);
-void outtextxy(int x, int y, char *textstring);
+void outtext(const char *textstring);
+void outtextxy(int x, int y, const char *textstring);
 void settextjustify(int horiz, int vert);
 void settextstyle(int font, int direction, int charsize);
 void setusercharsize(int multx, int divx, int multy, int divy);

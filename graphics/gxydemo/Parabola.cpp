@@ -12,6 +12,9 @@ correos:
 Pagina Web ( EL MUNDO DEL CAOS ):
  http://www.geocities.com/joseluisdl
 
+ >> Version 2 - 21-III-2024
+	- Update graphics/gxydemo - Porting to VC++ 2017 using winbgi
+
 ***************************************************/
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -22,10 +25,8 @@ Pagina Web ( EL MUNDO DEL CAOS ):
 
 using namespace std;
 
-int APIENTRY WinMain
-(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{	
-
+int main()
+{
 	//se ingresa como argumento la ruta de la carpeta bgi
 	//autoini("");//inicia el modo grafico, por defecto 16 colores
 	initwindow(1024, 768, "El mundo del caos");
@@ -54,4 +55,5 @@ int APIENTRY WinMain
 
 	closegraph();//cierra el modo gr fico
 
+	return 1;
 }

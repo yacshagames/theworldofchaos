@@ -18,6 +18,9 @@ NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
 	TODA CONFIANZA; PERO NO VAYA A BORRAR NADA DE LO QUE YA
 	ESTA ECHO!!!!!!
 
+>> Version 2 - 21-III-2024
+	- Update graphics/gxydemo - Porting to VC++ 2017 using winbgi
+
 Versi¢n 1.8 -> 24-Agosto-2000
 -Se arregla parcialmente el error de que cuando la funci¢n se salia de la ventana
  marco y despues volvia entrar, se unia con una linea el punto de salida
