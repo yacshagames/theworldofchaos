@@ -10,15 +10,16 @@ ramondc@hotmail.com
 Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
 
  >> Version 2 - 21-III-2024
-	- Update graphics/imgbgi - Porting to VC++ 2017 using winbgi
+	- Update graphics/mousebgi - Porting to VC++ 2017 using winbgi
 
 ***************************************************************************/
 
 #include "graphics.h"
 //#include "conio.h"
-
 #include "grafimpl.h"
-#include "mousebgi.h"
+//#include "mousebgi.h"
+#include "imgbgi.h"
+
 /*
 #define wait1 1
 #define wait2 2
@@ -43,80 +44,96 @@ animaci¢n para asegurar que los cambios se hagan durante el retrace delrayo
 
 }//WaitRetrace
   */
+
+int DetectarTecla()
+{
+	if (kbhit())
+	{
+		int tecla = getch();
+		if (tecla == 0)getch();
+
+		return tecla;
+	}
+
+	return 0;
+}
 int main()
 {
+	IniciarSVGA(_1024x768); //se inicia la supervga (256 colores ) con una resolucion de 1024x768
 
-	IniciarSVGA(_800x600); //se inicia la supervga (256 colores )
-			//con una resolucion de 800x600
+	cuadro(0, 0, getmaxx(), getmaxy(), 1); //se dibuja el cuadro de fondo
 
- cuadro(0, 0, getmaxx(), getmaxy(), 1); //se dibuja el cuadro de fondo
+	//Evento raton, raton_anterior;
 
- Evento raton,raton_anterior;
+	//movemouse(100,100); //se mueve el puntero a la posicion (100,100)
+	//mouseshow();//se muestra el raton
 
- //movemouse(100,100); //se mueve el puntero a la posicion (100,100)
- mouseshow();//se muestra el raton
+	IMG freezer, goku; // se crea el objeto grafico
 
- PCX freezer,goku; // se crea el objeto grafico
+	freezer.leer_cabecera("freezer.pcx"); // se lee informacion del archivo pcx
+	goku.leer_cabecera("goku.pcx");
 
- freezer.leer_cabecera(0,"freezer.pcx"); // se lee informacion del archivo pcx
- goku.leer_cabecera(1,"goku.pcx");
+	outtextxy(10, 20, "Press the left mouse button to see KAKAROTO");
+	outtextxy(10, 40, "Press the right mouse button to see FREEZER");
 
- outtextxy(10,20, (char*)"Deja presionado el bot¢n derecho");
- outtextxy(10,30, (char*)"y has un arrastre con el mouse para ver a KAKAROTO");
- outtextxy(10,40, (char*)"y lo mismo pero con el bot¢n izquierdo para ver a FREEZER");
+	//raton = Detectar_click_o_tecla();
+	int xMouse = -1, yMouse = -1;
+	int xMouse_last, yMouse_last;
+	do
+	{
+		//raton_anterior = raton;
+		//raton = Detectar_click_o_tecla(); //se obtiene informacion sobre las coordenadas del raton
 
- raton=Detectar_click_o_tecla();
+		//muestra la card de Goku
+		if ( ismouseclick(WM_LBUTTONDOWN) ) {
 
-  do
-  {
+			xMouse_last = xMouse;
+			yMouse_last = yMouse;
 
-   raton_anterior=raton;
+			xMouse = mousex();
+			yMouse = mousey();
+			clearmouseclick(WM_LBUTTONDOWN);
+			
+			cuadro(xMouse_last, yMouse_last,
+				xMouse_last + 160, yMouse_last + 150, 0); //borra la ventana
+			ventana(xMouse, yMouse, xMouse + 160, yMouse + 150); //dibuja la ventana
 
-   raton=Detectar_click_o_tecla(); //se obtiene informacion sobre las coordenadas del raton
+			goku.Dibujar(xMouse + 10, yMouse + 20); //dibuja a GOKU sobre la ventana en la posicion indicada
 
-   //muestra la card de Goku
-   if( raton.evento == LBUTTON_STILL_DOWN )
-   if( raton.x != raton_anterior.x ||
-      raton.y != raton_anterior.y )
-   {
-    cuadro(raton_anterior.x,raton_anterior.y,
-	   raton_anterior.x+160,raton_anterior.y+150,0); //borra la ventana
-    ventana(raton.x,raton.y,raton.x+160,raton.y+150); //dibuja la ventana
+			outtextxy(xMouse + 30, yMouse + 130, "GOKU");
+		}		
 
-    goku.Dibujar(raton.x+10,raton.y+20); //dibuja a GOKU sobre la ventana en la posicion indicada
+		// muestra la card de Freezer
+		if (ismouseclick(WM_RBUTTONDOWN)) {
 
-    outtextxy(raton.x+30,raton.y+130, (char*)"GOKU");
+			xMouse_last = xMouse;
+			yMouse_last = yMouse;
 
-    }
+			xMouse = mousex();
+			yMouse = mousey();
+			clearmouseclick(WM_RBUTTONDOWN);
 
-   //muestra la card de freezer
-   if( raton.evento == RBUTTON_STILL_DOWN )
-   if( raton.x != raton_anterior.x ||
-      raton.y != raton_anterior.y )
-   {
-    cuadro(raton_anterior.x,raton_anterior.y,
-	   raton_anterior.x+100,raton_anterior.y+150,0); //borra la ventana
-    ventana(raton.x,raton.y,raton.x+100,raton.y+150); //dibuja la ventana
+			cuadro(xMouse_last, yMouse_last,
+				xMouse_last + 160, yMouse_last + 150, 0); //borra la ventana
+			ventana(xMouse, yMouse, xMouse + 160, yMouse + 150); //dibuja la ventana
 
-    freezer.Dibujar(raton.x+10,raton.y+20); //dibuja a freezer sobre la ventana en la posicion indicada
+			freezer.Dibujar(xMouse + 10, yMouse + 20); //dibuja a GOKU sobre la ventana en la posicion indicada
 
-    outtextxy(raton.x+30,raton.y+130, (char*)"FREEZER");
-   }
+			outtextxy(xMouse + 30, yMouse + 130, "FREEZER");
+		}	
 
+	} while ( DetectarTecla() != 27 );
 
-  }while(raton.tecla!=27);
+	//mousehide();
+	//mousedestroy();
 
+	closegraph();
 
- mousehide();
- mousedestroy();
+	//textcolor( GREEN+BLINK );
 
- closegraph();
+	printf("DBZ CARDS -- programado por Jos‚ Luis De la Cruz L zaro\n\n");
 
- //textcolor( GREEN+BLINK );
+	//getch();
 
- printf("DBZ CARDS -- programado por Jos‚ Luis De la Cruz L zaro\n\n");
-
- getch();
-
- return 1;
+	return 1;
 }

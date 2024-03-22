@@ -158,8 +158,7 @@
   <ItemGroup>
     <ClInclude Include="GRAFIMPL.H" />
     <ClInclude Include="graphics.h" />
-    <ClInclude Include="mousebgi.h" />
-    <ClInclude Include="Pcxbgi.h" />
+    <ClInclude Include="Imgbgi.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

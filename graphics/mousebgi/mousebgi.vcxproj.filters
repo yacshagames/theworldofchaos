@@ -26,10 +26,7 @@
     <ClInclude Include="graphics.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="mousebgi.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Pcxbgi.h">
+    <ClInclude Include="Imgbgi.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
