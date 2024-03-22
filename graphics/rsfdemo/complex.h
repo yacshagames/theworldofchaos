@@ -15,6 +15,8 @@ NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
 	TODA CONFIANZA; PERO NO VAYA A BORRAR NADA DE LO QUE YA
 	ESTA ECHO!!!!!!
 
+>> Version 2 - 21-III-2024
+	- Update: Porting to VC++ 2017 using winbgi
 
  Version 1.1 31/10/1999
 
@@ -25,7 +27,7 @@ NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
 	funcion
    exp( complex Z, complex B )
 
-  
+
  Version 1.0 -> 26/1/99
 	CLASES
 	OPERADORES ARITMETICOS
@@ -118,165 +120,167 @@ getch();
 
 
 //Esta es la clase complex
-class complex{
+class complex {
 
-	protected:
+protected:
 
-	double re,im;//Componentes del complejo
+	double re, im;//Componentes del complejo
 
-	
-	public:
+
+public:
 	//Si se declara un complejo
 	//inline complex(complex Z){ re=real(Z);im=imag(Z); }
 
-	complex(double real,double imag){ re=real;im=imag; }
+	complex(double real, double imag) { re = real; im = imag; }
 
-	complex(double real){ re=real;im=0; }
+	complex(double real) { re = real; im = 0; }
 
 	//Si se declara complejo sin argumentos
-	complex() { re=0; im=0; }
-	
+	complex() { re = 0; im = 0; }
+
 	//Suma de complejos
-	friend	complex operator +(complex Z,complex W)
+	friend	complex operator +(complex Z, complex W)
 	{
-	 return complex( Z.re + W.re, Z.im + W.im );
+		return complex(Z.re + W.re, Z.im + W.im);
 	}
 
 	//Suma de complejo y real
-	friend	complex operator +(complex A,double x){
+	friend	complex operator +(complex A, double x) {
 
-	return complex( A.re + x, A.im);
+		return complex(A.re + x, A.im);
 	}
 
 	//Suma de real y complejo
-	friend	complex operator +(double x, complex A){
-	return complex( x + A.re, A.im);
+	friend	complex operator +(double x, complex A) {
+		return complex(x + A.re, A.im);
 	}
 
 	//Diferencia de complejos
-	friend	complex operator -(complex Z,complex W){
-	return complex(Z.re - W.re, Z.im - W.im);
+	friend	complex operator -(complex Z, complex W) {
+		return complex(Z.re - W.re, Z.im - W.im);
 	}
 
 	//Diferencia de complejo y real
-	friend	complex operator -(complex A,double x){
-	return complex( A.re-x, A.im );
+	friend	complex operator -(complex A, double x) {
+		return complex(A.re - x, A.im);
 	}
 
 	//Diferencia de real y complejo
-	friend	complex operator -(double x,complex A){
-	return complex(x - A.re,-A.im);
+	friend	complex operator -(double x, complex A) {
+		return complex(x - A.re, -A.im);
 	}
 	//Negativo de un complejo
 	complex operator -()
-	 {
-	  return complex(-re, -im);
-	 }
+	{
+		return complex(-re, -im);
+	}
 
 	//Multiplicion de complejos
-	friend	complex operator *(complex Z,complex W){
-	
+	friend	complex operator *(complex Z, complex W) {
+
 		return complex(Z.re*W.re - Z.im*W.im, Z.re*W.im + Z.im*W.re);
 
 	}
 
 	//Multiplicacion de un real con un complejo
-	friend	complex operator *(double x,complex A){
-		return complex(x*A.re,x*A.im);
+	friend	complex operator *(double x, complex A) {
+		return complex(x*A.re, x*A.im);
 	}
 
 	//Division de complejo con real
-	friend	complex operator /(complex A,double x){
-	return complex(A.re/x,A.im/x);
+	friend	complex operator /(complex A, double x) {
+		return complex(A.re / x, A.im / x);
 	}
 
 	//Division de complejos
-	friend	complex operator /(complex A,complex B){
-	return complex(A.re*B.re+A.im+B.im, A.im*B.re - A.re*B.im)/(B.re*B.re+B.im+B.im);
+	friend	complex operator /(complex A, complex B) {
+		return complex(A.re*B.re + A.im + B.im, A.im*B.re - A.re*B.im) / (B.re*B.re + B.im + B.im);
 	}
 
 	//OPERADORES LOGICOS
 
 	//Operador ==
-	friend	int operator ==(complex A,complex B){
+	friend	int operator ==(complex A, complex B) {
 
-	if(A.re==B.re&&A.im==B.im)return 1;else return 0; }
+		if (A.re == B.re&&A.im == B.im)return 1; else return 0;
+	}
 
 	//Operador !=
-	friend	int operator !=(complex A,complex B){
+	friend	int operator !=(complex A, complex B) {
 
-	if(A.re!=B.re&&A.im!=B.im)return 1;else return 0; }
+		if (A.re != B.re&&A.im != B.im)return 1; else return 0;
+	}
 
 
 	//Parte Real e Imaginaria
 
-	inline friend double real(complex Z){ return Z.re; };
+	inline friend double real(complex Z) { return Z.re; };
 
-	inline friend double imag(complex Z){ return Z.im; };
+	inline friend double imag(complex Z) { return Z.im; };
 
-	
+
 	//Modulo de un compolejo
-friend double abs(const complex &Z);
+	friend double abs(const complex &Z);
 
-//Conjugada de un complejo
-friend complex conj(const complex &Z);
- 
-//Argumento de un complejo [-pi,pi]
-friend double arg(const complex &A);
+	//Conjugada de un complejo
+	friend complex conj(const complex &Z);
 
-//Potencia de un complejo Z^n
-friend complex pow(const complex &Z, double n);
+	//Argumento de un complejo [-pi,pi]
+	friend double arg(const complex &A);
 
-//Potencia compleja de un complejo Z^W ; W=x+y*i
-friend complex pow(const complex &Z, const complex &W);
+	//Potencia de un complejo Z^n
+	friend complex pow(const complex &Z, double n);
 
-//Raiz cuadrada de un complejo
-friend complex sqrt(const complex &Z);
+	//Potencia compleja de un complejo Z^W ; W=x+y*i
+	friend complex pow(const complex &Z, const complex &W);
 
-//exponencial de un complejo e^Z
-friend complex exp(const complex &Z);
+	//Raiz cuadrada de un complejo
+	friend complex sqrt(const complex &Z);
 
-//Logaritmo Natural de un complejo ln(Z)
-friend complex log(const complex &Z);
+	//exponencial de un complejo e^Z
+	friend complex exp(const complex &Z);
 
-//Logaritmo en base 10 de un complejo
-friend complex log10(const complex &Z);
+	//Logaritmo Natural de un complejo ln(Z)
+	friend complex log(const complex &Z);
 
-//Seno de un complejo
-friend complex sin(const complex &Z);
+	//Logaritmo en base 10 de un complejo
+	friend complex log10(const complex &Z);
 
-//Coseno
-friend complex cos(const complex &Z);
+	//Seno de un complejo
+	friend complex sin(const complex &Z);
 
-//Tangente
-friend complex tan(const complex &Z);
+	//Coseno
+	friend complex cos(const complex &Z);
 
-//Seno Hiperbolico
-friend complex sinh(const complex &Z);
+	//Tangente
+	friend complex tan(const complex &Z);
 
-//Coseno Hiperbolico
-friend complex cosh(const complex &Z);
+	//Seno Hiperbolico
+	friend complex sinh(const complex &Z);
 
-//Tangente Hiperbolica
-friend complex tanh(const complex &Z);
+	//Coseno Hiperbolico
+	friend complex cosh(const complex &Z);
 
-//Arcoseno Hiperbolico
-friend complex asinh(const complex &Z);
+	//Tangente Hiperbolica
+	friend complex tanh(const complex &Z);
 
-//Arcocoseno Hiperbolico
-friend complex acosh(const complex &Z);
+	//Arcoseno Hiperbolico
+	friend complex asinh(const complex &Z);
 
-//Arcotangente Hiperbolica
-friend complex atanh(const complex &Z);
+	//Arcocoseno Hiperbolico
+	friend complex acosh(const complex &Z);
 
-//Arcoseno
-friend complex asin(const complex &Z);
+	//Arcotangente Hiperbolica
+	friend complex atanh(const complex &Z);
 
-//Arcocoseno
-friend complex acos(const complex &Z);
+	//Arcoseno
+	friend complex asin(const complex &Z);
 
-//Arcotangente
-friend complex atan(const complex &Z);
+	//Arcocoseno
+	friend complex acos(const complex &Z);
+
+	//Arcotangente
+	friend complex atan(const complex &Z);
 
 };
 

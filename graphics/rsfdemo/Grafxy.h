@@ -85,60 +85,60 @@ class CRegionXY
 
 protected:
 
-//coordenadas de la region XY, (VALOR EN COORDENAS REALES)
-double Xmin;
-double Xmax;
-double Ymin;
-double Ymax;
+	//coordenadas de la region XY, (VALOR EN COORDENAS REALES)
+	double Xmin;
+	double Xmax;
+	double Ymin;
+	double Ymax;
 
-//VENTANA MARCO
-//coordenadas de la ventana donde se mostrara el grafico (VALOR EN PIXELES)
-int Imin;
-int Imax;
-int Jmin;
-int Jmax;
+	//VENTANA MARCO
+	//coordenadas de la ventana donde se mostrara el grafico (VALOR EN PIXELES)
+	int Imin;
+	int Imax;
+	int Jmin;
+	int Jmax;
 
-double ki,kj; //constanstes utilizadas en la transformacion
+	double ki, kj; //constanstes utilizadas en la transformacion
 
 public:
-//constructor
+	//constructor
 	CRegionXY(double XMIN, double XMAX, double YMIN, double YMAX)
 	{
-	Xmin=XMIN;
-	Xmax=XMAX;
-	Ymin=YMIN;
-	Ymax=YMAX;
-	Imin=0;
-	Imax=getmaxx();
-	Jmin=0;
-	Jmax=getmaxy();
-	ki=(Imax-Imin)/(Xmax-Xmin);
-	kj=(Jmax-Jmin)/(Ymax-Ymin);
+		Xmin = XMIN;
+		Xmax = XMAX;
+		Ymin = YMIN;
+		Ymax = YMAX;
+		Imin = 0;
+		Imax = getmaxx();
+		Jmin = 0;
+		Jmax = getmaxy();
+		ki = (Imax - Imin) / (Xmax - Xmin);
+		kj = (Jmax - Jmin) / (Ymax - Ymin);
 	}
 
 	CRegionXY(double XMIN, double XMAX, double YMIN, double YMAX,
-		  int IMIN,int JMIN, int IMAX, int  JMAX)
+		int IMIN, int JMIN, int IMAX, int  JMAX)
 	{
-	Xmin=XMIN;
-	Xmax=XMAX;
-	Ymin=YMIN;
-	Ymax=YMAX;
-	Imin=IMIN;
-	Jmin=JMIN;
-	Imax=IMAX;
-	Jmax=JMAX;
-	ki=(Imax-Imin)/(Xmax-Xmin);
-	kj=(Jmax-Jmin)/(Ymax-Ymin);
+		Xmin = XMIN;
+		Xmax = XMAX;
+		Ymin = YMIN;
+		Ymax = YMAX;
+		Imin = IMIN;
+		Jmin = JMIN;
+		Imax = IMAX;
+		Jmax = JMAX;
+		ki = (Imax - Imin) / (Xmax - Xmin);
+		kj = (Jmax - Jmin) / (Ymax - Ymin);
 	}
 
-	double xmin(){ return Xmin; };
-	double xmax(){ return Xmax; };
-	double ymin(){ return Ymin; };
-	double ymax(){ return Ymax; };
+	double xmin() { return Xmin; };
+	double xmax() { return Xmax; };
+	double ymin() { return Ymin; };
+	double ymax() { return Ymax; };
 
 	//Funciones Miembro
-	void transfor( int &i, int &j, double x, double y);
-	void punto(double x,double y,char color, char conectar);
+	void transfor(int &i, int &j, double x, double y);
+	void punto(double x, double y, char color, char conectar);
 	void Ejes();
 
 };//fin de la clase CRegionXY
@@ -146,78 +146,78 @@ public:
 //Convierte un punto de coordenadas reales (x,y) , a un pixel de
 //coordenadas enteras (i,j) respecto al origen grafico de la pantalla
 //NOTA: el valor de i y j se sobreescribiran
-void CRegionXY::transfor( int &i, int &j, double x, double y)
+void CRegionXY::transfor(int &i, int &j, double x, double y)
 {
-   i = Imin+(x-Xmin)*ki+1;//Transformaci¢n de real a entero x-->i
-   j = Jmax-(y-Ymin)*kj+1;//Transformaci¢n de real a entero y-->j
+	i = Imin + (x - Xmin)*ki + 1;//Transformaci¢n de real a entero x-->i
+	j = Jmax - (y - Ymin)*kj + 1;//Transformaci¢n de real a entero y-->j
 }
 
 //Grafica el PUNTO (x,y) en coordenadas reales sobre la region
 //rectangular de la PANTALLA de coordenadas (Xmin,Ymax, Xmax,Ymin)
 void CRegionXY::punto(double x, double y, char color, char conectar = CONECTAR)
 {
- int i,j;
- transfor( i, j, x, y);
+	int i, j;
+	transfor(i, j, x, y);
 
- if( Imin< i && i< Imax && Jmin< j && j< Jmax) //para que no se pinte fuera de la ventana marco
- {
-  if( conectar )
-   {
-    if(getcolor()!=color)moveto(i,j);
-    setcolor(color);
-    lineto(i,j); //conecta los puntos con una linea
-   }
-  else
-   putpixel( i, j, color);  //pinta el punto en pantalla
+	if (Imin < i && i < Imax && Jmin < j && j < Jmax) //para que no se pinte fuera de la ventana marco
+	{
+		if (conectar)
+		{
+			if (getcolor() != color)moveto(i, j);
+			setcolor(color);
+			lineto(i, j); //conecta los puntos con una linea
+		}
+		else
+			putpixel(i, j, color);  //pinta el punto en pantalla
 
- }//else
-//  moveto(i,j); //si el punto no se encuentra dentro de la ventana marco, solo se se mueve el cursor a esta posici¢n
+	}//else
+   //  moveto(i,j); //si el punto no se encuentra dentro de la ventana marco, solo se se mueve el cursor a esta posici¢n
 
 }
 
 void CRegionXY::Ejes()
 {
-//Se grafican los ejes cartesianos
-//vector M = transfor(vector(0,0));
-setcolor(14);
-int x, y;
-transfor( x, y, 0, 0);
+	//Se grafican los ejes cartesianos
+	//vector M = transfor(vector(0,0));
+	setcolor(14);
+	int x, y;
+	transfor(x, y, 0, 0);
 
-line(x, Jmin, x, Jmax); //eje y
-line(Imin,y-1,Imax,y-1); // eje x
+	line(x, Jmin, x, Jmax); //eje y
+	line(Imin, y - 1, Imax, y - 1); // eje x
 
-char str[18];
+	char str[18];
 
-int i;
-float num;
+	int i;
+	float num;
 
-setcolor(15);
+	setcolor(15);
 
-for(i=0;i<20;i++)
-{
-//Eje Y
-num = Ymin + ( Ymax-Ymin )/20*i;
-//gcvt(num, 6, str);
-sprintf(str,"%g",num);
+	for (i = 0; i < 20; i++)
+	{
+		//Eje Y
+		num = Ymin + (Ymax - Ymin) / 20 * i;
+		//gcvt(num, 6, str);
+		sprintf(str, "%g", num);
 
-transfor( x, y, 0, num);
+		transfor(x, y, 0, num);
 
-fillellipse( x, y, 2, 1);
-outtextxy(x, y, str);
+		fillellipse(x, y, 2, 1);
+		outtextxy(x, y, str);
 
- if(i%2)
- {
- //Eje X
- num = Xmin + ( Xmax-Xmin )/20*i;
-// gcvt(num, 6, str);
- sprintf(str,"%g",num);
- transfor( x, y, num, 0);
+		if (i % 2)
+		{
+			//Eje X
+			num = Xmin + (Xmax - Xmin) / 20 * i;
+			// gcvt(num, 6, str);
+			sprintf(str, "%g", num);
+			transfor(x, y, num, 0);
 
- fillellipse( x, y, 1, 3);
- outtextxy(x, y-10, str);
- }
+			fillellipse(x, y, 1, 3);
+			outtextxy(x, y - 10, str);
+		}
 
-}
+	}
 
 }
 
