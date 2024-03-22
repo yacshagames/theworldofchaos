@@ -21,11 +21,12 @@
   <ItemGroup>
     <ClCompile Include="complex.cpp" />
     <ClCompile Include="graficad.cpp" />
-    <ClCompile Include="GRAFXYZ3.CPP" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex.h" />
     <ClInclude Include="conio.h" />
+    <ClInclude Include="Grafxy.H" />
+    <ClInclude Include="GRAFXYZ.H" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="RSF.h" />
     <ClInclude Include="VECTOR.H" />

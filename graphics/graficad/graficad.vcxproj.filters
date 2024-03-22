@@ -18,17 +18,11 @@
     <ClCompile Include="complex.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="GRAFXYZ3.CPP">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="graficad.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="VECTOR.H">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="RSF.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -39,6 +33,15 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="complex.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Grafxy.H">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="VECTOR.H">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="GRAFXYZ.H">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
