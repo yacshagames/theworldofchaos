@@ -52,17 +52,17 @@ void GraficarFormula(char *Formula, CRegionXY Region,
 void main()
 {
 	clrscr();
-	cout << "DEMO DEL RECONOCEDOR SINTACTICO DE FUNCIONES (RSF.H):\n\n";
-	cout << "Ingrese la funci¢n f(x) que desee graficar: ";
-	cout << "\n\nEjemplo: \n\t\t0.5*exp(-x/5)*sin(pi*x)  //movimiento amortiguado";
-	cout << "\n\t\t3/2*x^2-5/4*x+1/2   //par bola";
+	cout << "DEMO OF THE SYNTACTIC FUNCTION RECOGNIZER (RSF.H):\n\n";
+	cout << "Enter the function f(x) you want to plot: ";
+	cout << "\n\nExample: \n\t\t0.5*exp(-x/5)*sin(pi*x)"; //damped movement"
+	cout << "\n\t\t3/2*x^2-5/4*x+1/2"; //even ball"
 
-	cout << "\n\nLas funciones matem ticas que se pueden reconocer al momento son:";
-	cout << "\nsin (SENO), cos (COSENO), tan (TANGENTE), exp (EXPONENCIAL), \nsqr (RAIZ CUADRADA), log (LOGARITMO NATURAL)";
-	cout << "\npi (constante Pi = 3.14159...)";
-	cout << "\nNOTA: No importa si los caracteres est n en min£scula o may£scula...";
+	cout << "\n\nThe mathematical functions that can be recognized immediately are:";
+	cout << "\nsin (SINE), cos (COSINE), tan (TANGENT), exp (EXPONENTIAL), \nsqr (SQUARE ROOT), log (NATURAL LOGARITHM)";
+	cout << "\npi (constant Pi = 3.14159...)";
+	cout << "\nNOTE: It does not matter if the characters are lowercase or uppercase...";
 
-	cout << "\n\nNormalmente la gr fica aparecer  en un trazo VERDE\npero si en la gr fica se aprecia un trazo ROJO, quiere decir \nque en ese intervalo no est  definida la funci¢n, como ejemplo intente\ngraficar 0.2*sqr(x^2-25)";
+	cout << "\n\nNormally the plot will appear in a GREEN line, but if the graph shows a RED line, it means that the function is not defined in that interval. As an example, try graphing 0.2*sqr(x^2- 25)";
 
 	cout << "\n\nf(x) = ";
 
