@@ -2,6 +2,10 @@
  IMGBGI
  Basado en las rutinas originales del PCXBGI y el BMPPlus.
 
+ >> Version 2 - 21-III-2024
+	- Porting to VC++ 2017 using winbgi
+	- Optimizes the Dibujar routine for faster painting
+	- Add IMAGETYPE to handle different types of images when drawing
 
  Version 1.4 - 30 Abril 2002
  -Luego de tanto tiempo sin actualizar el PCXBGI, decid¡ hacer algo
@@ -41,7 +45,11 @@
 
 class IMG
 {
- public:
+public:
+	enum class IMAGETYPE {
+		PCX,
+		BMP
+	};
 
   IMG(); //constructor
   ~IMG(); //destructor
@@ -57,6 +65,7 @@ class IMG
 
   char nombre[64];
   int bytes_por_linea;
+  IMAGETYPE eImageType;
 
   //void Paleta(void);
   //void CorrerPaleta(void);
@@ -78,6 +87,7 @@ IMG::IMG()
 {
  alto=ancho=0;
  bytes_por_linea=0;
+ eImageType = IMAGETYPE::PCX;
 }
 
 IMG::~IMG()
@@ -120,8 +130,10 @@ int IMG::leer_cabecera( const std::string& _nombre ){
 	std::transform(snombre.begin(), snombre.end(), snombre.begin(), ::toupper);
 
 	if(snombre.find(".PCX") != std::string::npos) {
+		eImageType = IMAGETYPE::PCX;
 		return leer_cabeceraPCX(snombre.c_str());
 	}else if(snombre.find(".BMP") != std::string::npos) {
+		eImageType = IMAGETYPE::BMP;
 		return leer_cabeceraBMP(snombre.c_str());
 	}else 
 		return 0;
@@ -129,13 +141,14 @@ int IMG::leer_cabecera( const std::string& _nombre ){
 
 int IMG::Dibujar( int x, int y ){
 
- if( strstr( _strupr(nombre), ".PCX")!=NULL )
-  return DibujarPCX( x, y );
- else
-  if( strstr( _strupr(nombre), ".BMP")!=NULL )
-   return DibujarBMP( x, y );
- else return 0;
-
+	switch (eImageType) {
+	case IMG::IMAGETYPE::BMP:
+		return DibujarBMP(x, y);
+	default:
+		return DibujarPCX(x, y);
+	} 
+	
+	return 0;
 }
 
 // Converts a palette index (cColor) to an RGB color, using the palette loaded from the image
@@ -331,3 +344,4 @@ void main(void)
 */
 
 #endif
+

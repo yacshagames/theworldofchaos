@@ -1,4 +1,11 @@
-//IMPLEMENTACION GRAFICA
+/***********************************************************************
+IMPLEMENTACION GRAFICA
+
+>> Version 2 - 21 - III - 2024
+	- Porting to VC++ 2017 using winbgi
+
+***********************************************************************/
+
 #ifndef __GRAPHICS_H
 #include "graphics.h"
 #endif
@@ -72,6 +79,11 @@ void IniciarSVGA(int resolucion)
 //Dibuja un cuadro con efecto 3D
 void cuadro(int x, int y, int x1, int y1, int modo3D, int color_fondo = LIGHTGRAY )
 {
+
+// Solo borra cuando las coordenadas son positivas
+if (x < 0 || y < 0)
+	return;
+
 //  modo3D=0 -> muestra una ventana sin efecto 3D
 //  modo3D=1 -> muestra una ventana saliente
 //  modo3D=2 -> muestra una ventana entrante
@@ -82,6 +94,9 @@ switch( modo3D )
 {
  case 0:
   marco1=marco2=color_fondo;
+  setfillstyle(1, color_fondo);
+  bar(x, y, x1+1, y1+1);
+  return;
   break;
  case 1:
   marco1=15;
@@ -94,7 +109,7 @@ switch( modo3D )
 
  setfillstyle(1,color_fondo);
  bar3d(x,y,x1,y1,0,0);
-
+ 
  color_actual=getcolor();
 
  setcolor(marco1);
@@ -106,7 +121,7 @@ switch( modo3D )
  line(x1,y,x1,y1);
 
  setcolor(color_actual);
-
+ 
 }
 
 void ventana(int izquierda, int arriba, int derecha, int abajo )

@@ -1,7 +1,8 @@
 /***********************************************************************
  ::: IMGBGI :::
-  >> Versión 2 21-III-2024
-  Update graphics/imgbgi - Porting to VC++ 2017 using winbgi
+
+  >> Version 2 - 21 - III - 2024
+	- Update graphics / imgbgi - Porting to VC++ 2017 using winbgi
 
   >> Versión 1.0 30-IV-2002
   Luego de tanto tiempo sin actualizar el PCXBGI, decidí hacer algo más
