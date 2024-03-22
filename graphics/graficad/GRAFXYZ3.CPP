@@ -1,21 +1,27 @@
 /****************************************************************
-GRAFXYZ 1.3
+GRAFXYZ
 
 GRAFICADOR DE FUNCIONES EN 3D
- en coordenadas cartesinanas y polares
+ en coordenadas cartesianas y polares
 
-JOSE LUIS DE LA CRUZ LAZARO UNI-FIEE - 26/06/99
+JOSE LUIS DE LA CRUZ LAZARO UNI-FIEE
 ramondc@hotmail.com
+
+>> Version 2 - 22-III-2024
+	- Update: Porting to VC++ 2017 using winbgi
+	
+>> Version 1.3 - 26/06/99
+
 ****************************************************************/
 
-#include <conio.h>
+//#include <conio.h>
+#define _USE_MATH_DEFINES
 #include <math.h>
-#include <graphics.h>
-#include <iostream.h>
+#include "graphics.h"
+#include <iostream>
 #include "vector.h"	//para que compile este programa copie vector.h
-			//en su directorio de includes
-
-
+					//en su directorio de includes
+using namespace std;
 
 int Zcolor(double z,double maxZ){
 int color=(maxZ-z)*14/(2*maxZ);
@@ -25,8 +31,9 @@ return color;
 
 void main()
 {
-int gd=DETECT,gm;
-initgraph(&gd,&gm,""); //aqui cambie la ruta de su carpeta bgi
+//int gd=DETECT,gm;
+//initgraph(&gd,&gm,""); //aqui cambie la ruta de su carpeta bgi
+initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
 
 vector O(320,240),I(-sin(45*M_PI/180),cos(45*M_PI/180))
 	,J(1,0),K(0,-1);

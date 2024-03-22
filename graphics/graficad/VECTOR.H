@@ -101,7 +101,7 @@ public:
 
 	//Vector Ortogonal (Solo para 2D)
 	vector ort(){
-	if(z!=0)cout<<"\nNo se puede ortogonalizar vector!!!__JLDL";
+	//if(z!=0)cout<<"\nNo se puede ortogonalizar vector!!!__JLDL";
 	vector M;
 	M.x=-y; M.y=x; M.z=z;
 	return M;
@@ -186,7 +186,7 @@ public:
 
 
 };
-
+/*
 //Se define cout<<(vector)
 ostream _FAR & _Cdecl _FARFUNC operator<<(ostream _FAR &, vector _FAR & A){
 cout<<"("<<A.x<<","<<A.y<<","<<A.z<<")";
@@ -195,7 +195,7 @@ cout<<"("<<A.x<<","<<A.y<<","<<A.z<<")";
 //Se define cin>>(vector)
 istream _FAR & _Cdecl _FARFUNC operator>>(istream _FAR &, vector _FAR & A){
 cin>>A.x>>A.y>>A.z;
-}
+}*/
 
 //Triple Producto Escalar de Vectores
 double tpe(vector A,vector B,vector C){
