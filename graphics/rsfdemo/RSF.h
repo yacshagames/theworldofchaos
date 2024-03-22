@@ -54,8 +54,9 @@
 
 #include <string.h>
 #include <stdlib.h>
+#define _USE_MATH_DEFINES
 #include <math.h>
-#include <complex.h>
+#include "complex.h"
 
 class CFuncad
 {
@@ -73,7 +74,7 @@ class CFuncad
 
  int error;
   //constructor
-  CFuncad(char *,char *);
+  CFuncad(char *,const char *);
   ~CFuncad();
 
  private:
@@ -116,12 +117,12 @@ class CFuncad
 
 };
 
- CFuncad::CFuncad(char * formula, char *vars)
+ CFuncad::CFuncad(char * formula, const char *vars)
  {
 
    Formula = new char[strlen(formula)+1];
    Variables = new char[strlen(vars)+1];
-   Numeros = new char[10];
+   Numeros = new char[11];
 
    strcpy(Formula,formula);
    strcpy(Variables,vars);
@@ -137,8 +138,9 @@ class CFuncad
 
  CFuncad::~CFuncad()
  {
-  delete Formula;
-  delete Numeros;
+   delete Formula;
+   delete Variables;
+   delete Numeros;
  }
  void CFuncad::sigP()
  {
@@ -157,7 +159,7 @@ class CFuncad
   pIni=Variables;
   pFin=strchr(Variables, Formula[p]);
 
-  if( *pFin  &&  (Formula[p] != '\x0') ) // '\x0' es un caracter de espacio
+  if( pFin  &&  (Formula[p] != '\x0') ) // '\x0' es un caracter de espacio
   {
 
    FF=VarReal[pFin-pIni];
@@ -283,8 +285,10 @@ class CFuncad
  {
   char cpy[80];
   strcpy(cpy,"");
-
-  for(int i=0;i<6;i++)
+  
+  int i;
+  
+  for(i=0;i<6;i++)
   {
    if(!strncmp(strncpy(cpy,&Formula[p],3),funcion[i],3))
    break;
@@ -332,7 +336,7 @@ class CFuncad
 
  void CFuncad::eval( char Formula[], float &valor )
  {
-  strupr(Formula);
+  _strupr(Formula);
   p=0;
   c=Formula[0];
   valor=Expr();
@@ -472,8 +476,11 @@ class CFuncad
   T=Fact_s_C();
   while(c=='^')
   {
-   sigP();
-   if(T!=complex(0,0)) T=pow(T,Fact_s_C()); else T=T*Fact_s_C();
+   sigP();   
+   if(T!=complex(0,0)) 
+	   T = pow(T,Fact_s_C()); 
+   else
+	   T=T*Fact_s_C();
   };
   return T;
  };
@@ -488,8 +495,8 @@ class CFuncad
    operador=c;
    sigP();
    switch(operador){
-	case '*': S*=Termino_C();break;
-	case '/': S/=Termino_C();break;
+	case '*': S=S*Termino_C();break;
+	case '/': S=S/Termino_C();break;
    }
   };
   return S;
@@ -505,8 +512,8 @@ class CFuncad
    operador=c;
    sigP();
    switch(operador){
-   case '+': E+=ExprSimp_C();break;
-   case '-': E-=ExprSimp_C();break;
+   case '+': E=E+ExprSimp_C();break;
+   case '-': E=E-ExprSimp_C();break;
    };
   };
   return E;
@@ -526,7 +533,8 @@ class CFuncad
    }
   else
   {
-    for(int i=0;i<5;i++)
+	int i;
+    for(i=0;i<5;i++)
     {
      if(!strncmp(strncpy(cpy,&Formula[p],3),funcion[i],3))
      break;
@@ -567,7 +575,7 @@ class CFuncad
 
  void CFuncad::eval( char Formula[], complex &valor )
  {
-  strupr(Formula);
+ _strupr(Formula);
   p=0;
   c=Formula[0];
   valor=Expr_C();

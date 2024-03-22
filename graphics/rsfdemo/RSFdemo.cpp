@@ -15,12 +15,13 @@ Pagina Web ( EL MUNDO DEL CAOS ):
  http://www.geocities.com/joseluisdl
 
 ***************************************************/
-#include <iostream.h> //cin y cout
-#include <conio.h> //clrscr() , getch()
-
+#include <iostream> //cin y cout
+#include "conio.h" //clrscr() , getch()
+#include "graphics.h" 
 #include "RSF.h" //Reconocedor Sintactico de Funciones desde una cadena de texto
-
 #include "grafxy.h" //clase para graficar funciones bidimensionales
+
+using namespace std;
 
 //Grafica la funcion contenida en la cadena de texto Formula
 void GraficarFormula( char *Formula, CRegionXY Region,
@@ -67,7 +68,11 @@ void main()
  cin>>Formula; //Se ingresa la funci¢n
 
  //se ingresa como argumento la ruta de la carpeta bgi
- autoini("");//inicia el modo grafico, por defecto 16 colores
+ //autoini("");//inicia el modo grafico, por defecto 16 colores
+ int maxx = 1024;
+ int maxy = 768;
+
+ initwindow(maxx, maxy, "The world of chaos in C++ - Unlimited Programming");
 
  //se declara la regi¢n donde se graficar  la funci¢n
  CRegionXY Region(  -10,   //x m¡nimo
@@ -79,23 +84,24 @@ void main()
 		    // graficara la funci¢n
 		    40,  //posici¢n izquierda
 		    80,  //posici¢n superior
-		    600, //posici¢n derecha
-		    440);//posici¢n inferior
+			maxx, //posici¢n derecha
+			maxy);//posici¢n inferior
 
  //Pinta el fondo gris
  setfillstyle(1,LIGHTGRAY);
- bar(0, 0, 640, 480);
+ bar(0, 0, maxx, maxy);
 
  //Pinta el fondo (azul claro) de la regi¢n virtual donde
  //se graficar  la funcion f(x)
  setfillstyle(1,LIGHTBLUE);
- bar(40, 80, 600, 440);
+ bar(40, 80, maxx-40, maxy-40);
 
  //Pinta el marco (negro) de la regi¢n virtual
  setcolor(BLACK);
- rectangle( 40, 80, 600, 440);
+ rectangle( 40, 80, maxx-40, maxy-40);
 
- outtextxy(10,20, "La funci¢n es:");
+ setcolor(WHITE);
+ outtextxy(10,20, "The function is:");
  char txt[100];
  sprintf( txt, "f(x) = %s", Formula);
  outtextxy( 10, 40, txt);

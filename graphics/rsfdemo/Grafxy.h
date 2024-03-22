@@ -18,6 +18,9 @@ NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
 	TODA CONFIANZA; PERO NO VAYA A BORRAR NADA DE LO QUE YA
 	ESTA ECHO!!!!!!
 
+>> Version 2 - 21-III-2024
+	- Update graphics/gxydemo - Porting to VC++ 2017 using winbgi
+
 Versi¢n 1.8 -> 24-Agosto-2000
 -Se arregla parcialmente el error de que cuando la funci¢n se salia de la ventana
  marco y despues volvia entrar, se unia con una linea el punto de salida
@@ -69,9 +72,9 @@ Funcion:
 Version 1.0 -> 26/11/98
 
 **********************************************************************/
-#ifndef __GRAPHICS_H
+/*#ifndef __GRAPHICS_H
 #include <graphics.h>
-#endif
+#endif*/
 #include <stdio.h>
 
 #define CONECTAR 1
@@ -218,10 +221,10 @@ outtextxy(x, y, str);
 
 }
 
-void autoini(char *ruta)
+/*void autoini(char *ruta)
 {
 int gd=DETECT,gm;
 initgraph(&gd,&gm,ruta);
-}
+}*/
 
 
