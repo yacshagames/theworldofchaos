@@ -61,22 +61,24 @@ void main()
 	RegistrarEventosMouse();
 
 	//Crea la ventana principal del tama¤o total de la pantalla
-	CVentana ventana_principal("METPRO 1.0", //Titulo de la ventana
+	CVentana ventana_principal("METPRO 2.0", //Titulo de la ventana
 		0, 0, //esquina superior izquierda =  (0,0)
 		maxx, maxy, //esquina inferior derecha = (640,480)
 		VENTANA_PADRE); //se debe especificar que esta
 				// ser  la ventana padre (ventana
 				// que albergar  a mas ventanas hijas)
 
-	unsigned int mainBoxWidth = int(0.984375* double(maxx)), mainBoxHeight = (mainBoxWidth * maxy) / maxx;
+	unsigned int	mainBoxWidth = int(0.975* double(maxx)),
+					mainBoxHeight = (mainBoxWidth * maxy) / maxx,
+					mainBoxLeft = 10, mainBoxTop = 80;
 
 	//se muestra la ventana anterior
 	ventana_principal.Mostrar_ventana();
 
 	//se crea un cuadro para graficar la funci¢n f(x)
-	cuadro(10, 100, //esquina superior izquierda
-		1010, 756, //esquina superior derecha
-		2); //muestra un cuadro entrante
+	cuadro( mainBoxLeft, mainBoxTop, //esquina superior izquierda
+			mainBoxWidth, mainBoxHeight, //esquina superior derecha
+			2); //muestra un cuadro entrante
 
 	Evento raton; //estructura que contiene datos sobre la posici¢n y
 		   //la tecla presionada. Para mas informaci¢n vea la
@@ -86,12 +88,12 @@ void main()
 	CBoton //bot¢n para mostrar la ventana de ingresar la funci¢n f(x)
 		Graficar(10, 40, //esquina superior izquierda
 			20, //alto
-			80, //ancho
-			"Graficar"), //T¡tulo del boton
+			100, //ancho
+			"Plot function"), //T¡tulo del boton
 
-		Salir(100, 40, 20, 80, "Salir"), //Bot¢n para salir del programa
+		Salir(120, 40, 20, 80, "Exit"), //Bot¢n para salir del programa
 
-		AcercaDe(190, 40, 20, 80, "Acerca de"); //Bot¢n para ver la caja de dialogo Acerca de...
+		AcercaDe(210, 40, 20, 120, "About METPRO"); //Bot¢n para ver la caja de dialogo Acerca de...
 
 	 //movemouse(300,300); //mueve el puntero del mouse a la posici¢n (300,300)
 	 //mouseshow(); //muestra el puntero de mouse
@@ -112,7 +114,7 @@ void main()
 		{
 
 			//Muestra la ventana AcercaDe, aqui se muestra los creditos de autor
-			CAcercaDe acercade("Acerca de METPRO 1.0", //T¡tulo de la ventana
+			CAcercaDe acercade("About of METPRO 2.0", //T¡tulo de la ventana
 				200, //coordenada izquierda
 				100,// coord. arr.
 				500,//coord. der.
@@ -126,7 +128,7 @@ void main()
 		if (Graficar.mostrar(raton))
 		{
 			//crea un cuadro vac¡o para graficar la funci¢n f(x)
-			cuadro(10, 100, mainBoxWidth, mainBoxHeight, 2);
+			cuadro(mainBoxLeft, mainBoxTop, mainBoxWidth, mainBoxHeight, 2);
 
 			//se crea un plano cartesiano virtual con la clase CRegionXY de
 			//grafxy.h
@@ -136,7 +138,7 @@ void main()
 				-10, //y m¡nimo
 				10, //y m ximo
 				//cuadro donde se dibujar  la regi¢n XY ( valores en p¡xeles )
-				10, 100, //esquina superior izquierda
+				mainBoxLeft, mainBoxTop, //esquina superior izquierda
 				mainBoxWidth, mainBoxHeight); //esquina inferior derecha
 
 			R.Ejes(); //dibuja los ejes cartesianos en el plano XY creado

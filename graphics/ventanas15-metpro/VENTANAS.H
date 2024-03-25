@@ -170,7 +170,7 @@ void CBoton::mostrar_titulo(int _background_color, int x, int y)
 {
 	setbkcolor(_background_color);
 	int textWidth = textwidth(titulo);
-	outtextxy(x + posx + ancho / 2 - textWidth / 2, y + posy, titulo);
+	outtextxy(x + posx + ancho / 2 - textWidth / 2, y + posy + 1, titulo);
 }
 
 void CBoton::cambiar_titulo(char *_titulo)
@@ -223,13 +223,17 @@ void cuadro(int izq, int arr, int der, int abj, int modo3D, int color_fondo)
 	case 2:
 		marco1 = 8;
 		marco2 = 15;
+		
 	}
 
 	setfillstyle(1, color_fondo);
-	bar3d(izq, arr, der, abj, 0, 0);
+	if (modo3D == 0)	
+		bar(izq, arr, der, abj);
+	else
+		bar3d(izq, arr, der, abj, 0, 0);
 
 	color_actual = getcolor();
-
+	
 	setcolor(marco1);
 	line(izq, arr, der, arr);
 	line(izq, arr, izq, abj);
@@ -334,15 +338,15 @@ void CCajaTexto::cambiar_posicion(int X1, int Y1, int X2, int Y2)
 	y2 = Y2;
 
 	x_real = 20;
-	y_real = 10;
+	y_real = 8;
 	ancho_real = x2 - x1 - 2 * x_real;
-	alto_real = 15;
+	alto_real = 20;
 	color_fondo = GREEN;
 	color_fuente = BLACK;
 	ancho_fuente = textwidth((char*)"x");
 	ancho = ancho_real / ancho_fuente - 2; // se le resta 2 uaf: una para que el texto no se salga por el lado izquierdo de la caja, y otra para que el cursor no se salga de la caja
 	desplazamiento_x = x_real + x1 + ancho_fuente / 2; //desde este valor (en pixeles) se comenzara a escribir, se le aumenta la mitad del ancho_fuente para que haya un margen del texto con la caja
-	y = y_real + y1 - 1/* + textheight((char*)"W") / 2*/;
+	y = y_real + y1 + 1 /* + textheight((char*)"W") / 2*/;
 
 }
 
@@ -598,7 +602,7 @@ public:
 
 		if (Tipo == VENTANA_SIN_TITULO)
 			margen_superior = 0;
-		else margen_superior = 15;
+		else margen_superior = 25;
 
 		arriba = arr;
 		abajo = aba;
@@ -745,7 +749,7 @@ void CVentana::mostrar_titulo(int _background_color)
 	setbkcolor(_background_color);
 	int color_actual = getcolor();
 	setcolor(WHITE);
-	outtextxy(izquierda + margen_superior / 2, arriba + margen_superior / 3, titulo);
+	outtextxy(izquierda + margen_superior / 2, arriba + margen_superior / 4, titulo);
 	setcolor(color_actual);
 
 }

@@ -31,8 +31,8 @@ void CEntrarCadena::Mostrar_ventana(void)
 	CVentana::Mostrar_ventana();
 
 	//mousehide();
-	Aceptar = CBoton((derecha + 7 * izquierda) / 8, abajo - 30, 20, (derecha - izquierda) / 3, "Aceptar");
-	Cancelar = CBoton((5 * derecha + 3 * izquierda) / 8, abajo - 30, 20, (derecha - izquierda) / 3, "Cancelar");
+	Aceptar = CBoton((derecha + 7 * izquierda) / 8, abajo - 30, 20, (derecha - izquierda) / 3, "OK");
+	Cancelar = CBoton((5 * derecha + 3 * izquierda) / 8, abajo - 30, 20, (derecha - izquierda) / 3, "Cancel");
 	funcion.cambiar_posicion(izquierda, arriba_cliente, derecha, abajo);
 	funcion.mostrar_ventana_virtual();
 	//mouseshow();
@@ -94,20 +94,22 @@ void CAcercaDe::Mostrar_ventana(void)
 	logoUNI.pintar();
 
 	//se inserta el bot¢n Aceptar
-	Aceptar = CBoton(izquierda + ancho / 2 + 20, abajo - 30, 20, ancho / 3, "Aceptar");
+	Aceptar = CBoton(izquierda + ancho / 2 + 20, abajo - 30, 20, ancho / 3, "OK");
+	
 	//se inserta los mensajes de cr‚ditos del autor
-	outtextxy(izquierda + 150, arriba_cliente + 10, "   METPRO FUE");
-	outtextxy(izquierda + 150, arriba_cliente + 20, "PROGRAMADO POR:");
+	int top = arriba_cliente - 5;
+	outtextxy(izquierda + 150, top + 10, "   METPRO FUE");
+	outtextxy(izquierda + 150, top + 25, "PROGRAMADO POR:");
 	setcolor(BLUE);
-	outtextxy(izquierda + 150, arriba_cliente + 40, "   JOSE LUIS");
-	outtextxy(izquierda + 150, arriba_cliente + 50, "   DE LA CRUZ");
-	outtextxy(izquierda + 150, arriba_cliente + 60, "   LAZARO");
+	outtextxy(izquierda + 150, top + 40, "   JOSE LUIS");
+	outtextxy(izquierda + 150, top + 60, "   DE LA CRUZ");
+	outtextxy(izquierda + 150, top + 75, "   LAZARO");
 	setcolor(MAGENTA);
-	outtextxy(izquierda + 150, arriba_cliente + 80, "  UNIVERSIDAD");
-	outtextxy(izquierda + 150, arriba_cliente + 90, "  NACIONAL DE");
-	outtextxy(izquierda + 150, arriba_cliente + 100, "  INGENIERIA");
+	outtextxy(izquierda + 150, top + 95, "  UNIVERSIDAD");
+	outtextxy(izquierda + 150, top + 110, "  NACIONAL DE");
+	outtextxy(izquierda + 150, top + 125, "  INGENIERIA");
 	setcolor(RED);
-	outtextxy(izquierda + 150, arriba_cliente + 120, "   LIMA-PERU");
+	outtextxy(izquierda + 150, top + 140, "   LIMA-PERU");
 	//mouseshow();//se muestra el mouse
 }
 

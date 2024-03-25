@@ -522,10 +522,8 @@ unsigned int mouseevent(int& Mx, int& My)
 	else
 		E = IDLE;
 
-	if (E != IDLE) {
-		Mx = mousex();
-		My = mousey();
-	}
+	Mx = mousex();
+	My = mousey();
 
 	/*
 	//unsigned int E;
