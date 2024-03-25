@@ -1,14 +1,14 @@
-#include <graphics.h>
-#include <dos.h>
+#pragma once
+#include "graphics.h"
+#include "mousebgi.h"
 #include "ventanas.h"
-//#include <iostream.h>
 
 #define X 50 //Longitud horizontal de un elemento de la cuadricula
 #define Y 50 //longitud vertical de un elemento de la cuadricula
 
 ///////////////////////////////////////////////////////////////////////////
  int Cubo[4][4][4];
- Juego();
+ //Juego();
  void inicializar();
  int Gato3D();
  int Jugar(int x,int y, int z, int figura);
@@ -183,27 +183,27 @@ void tablero::Marcar( int i, int j, int k, int figura )
 
   int r=Y/3;
 
- mocultar();
+ //mocultar();
 
  switch( figura )
  {
   case 0:
    circle( i, j, r);
-   sound(50);
+   /*sound(50);
    delay(200);
-   nosound();
+   nosound();*/
    break;
   case 1:
    line(i-r,j-r,i+r,j+r);
    line(i-r,j+r,i+r,j-r);
-   sound(100);
+   /*sound(100);
    delay(200);
-   nosound();
+   nosound();*/
 
    break;
  }
 
- mver();
+ //mver();
 
  }
 }
@@ -223,13 +223,13 @@ int tablero::Dominio(int i, int j)
 
 int Reiniciar()
 {
- ventana(40+2*X,20+4*Y,270+2*X,50+4*Y,2);
+ cuadro(40+2*X,20+4*Y,270+2*X,50+4*Y,2);
  outtextxy(90+2*X,30+4*Y,"Gatoman¡a en 3D");
 
  for(int i=0;i<4;i++)
  {
 
-  ventana(tab[i].x,tab[i].y,tab[i].x+4*Y,tab[i].y+4*X,2,2);
+  cuadro(tab[i].x,tab[i].y,tab[i].x+4*Y,tab[i].y+4*X,2,2);
   tab[i].pintar_cuadricula(1);
 
  }
@@ -240,13 +240,16 @@ return 0;
 }
 
 
-void main()
+int main()
 {
- int gdriver = DETECT, gmode;
- initgraph(&gdriver, &gmode, ""); //CAMBIAR AQUI LA RUTA DE TU archivo egabgi.bgi
+ //int gdriver = DETECT, gmode;
+ //initgraph(&gdriver, &gmode, ""); //CAMBIAR AQUI LA RUTA DE TU archivo egabgi.bgi
 
-  char *cad[2]={ "Brillante partida jugador O",
-		      "El Jugador X es el ganador"};
+ // Init WinBGI window
+ initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
+
+  const char *cad[2]={	 "Brillante partida jugador O",
+						 "El Jugador X es el ganador"};
 
  int x,y,z,n,i=0;
 
@@ -256,13 +259,13 @@ void main()
 
  Evento raton;
 
- ventana(0,0,640,480,1);
+ cuadro(0,0,640,480,1);
 
  int Gano_el_juego;
 
  Gano_el_juego = Reiniciar();
 
- mver();
+ //mver();
 
  ////////////////////////////////
  //Bucle principal
@@ -275,9 +278,9 @@ void main()
  if( Empezar.mostrar( raton ) ) Gano_el_juego = Reiniciar();
  if( Salir.mostrar( raton) ) break;
 
-  raton=Detectar_click_o_tecla(1);
+  raton=MouseBGI::Detectar_click_o_tecla();
 
-  if( raton.boton==1 && Gano_el_juego==0)
+  if( raton.evento==MouseBGI::EVENTO::LBUTTON_DOWN && Gano_el_juego==0)
   {
 
    x= raton.x; //capturamos posicion x del mouse sobre las coordenadas de la cudricula
@@ -295,11 +298,11 @@ void main()
 
     if( Gato3D() )
     {
-     ventana(40+2*X,20+4*Y,270+2*X,50+4*Y,1);
+	 cuadro(40+2*X,20+4*Y,270+2*X,50+4*Y,1);
      outtextxy(50+2*X,30+4*Y,cad[i]);
-     sound(500);
+     /*sound(500);
      delay(600);
-     nosound();
+     nosound();*/
      Gano_el_juego=1;
     }
    }
@@ -307,17 +310,19 @@ void main()
  }while(raton.tecla!=27);
  /////////////////////////////////
 
-// getch();
- mocultar();
+ //mocultar();
 
  closegraph();
 
  //AQUI OBVIAMENTE PUEDES CAMBIAR LOS CREDITOS
- textcolor(10); cprintf("\n\nGATOMANIA 3D fue creado por:");
- textcolor(14); gotoxy(24,4);cprintf("Jos‚ Luis De la Cruz L zaro - 1999");
+ setcolor(10); 
+ printf("\n\nGATOMANIA 3D fue creado por:");
+ setcolor(14);
+ //gotoxy(24,4);
+ printf("Jos‚ Luis De la Cruz L zaro");
  getch();
 
- exit(0);
+ return 1;
 }
 
 
