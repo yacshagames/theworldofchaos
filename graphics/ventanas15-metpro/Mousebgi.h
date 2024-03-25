@@ -1,8 +1,7 @@
+#pragma once
 /******************************************************
 MOUSEBGI.H
 Rutinas para controlar el mouse:
-Fuentes originales extraidos de MOUSEC.H
-gracias a Silvia Garcia - 16 Agosto 1999
 
 MODIFICADO POR:
 Jos‚ Luis De la Cruz L zaro
@@ -51,32 +50,18 @@ Version 1.0 - 11 Sep 1999
 - se trabaja perfectamente en el modo grafico de 256 colores
   mediante con el controlador bgi svga256.bgi, esto se hace mediante las
   funciones de control para la bgi creadas para este fin.
+
+Version 0 - 11 Agosto 1999
+- Fuentes originales extraidos de MOUSEC.H
+- gracias a Silvia Garcia - 16 Agosto 1999
+
 *******************************************************/
-
-# ifndef __MOUSEBGI_H
-# define __MOUSEBGI_H
-
-# ifndef __DOS_H
-# include <dos.h>
-# endif
-# ifndef __STDLIB_H
-# include <stdlib.h>
-# endif
-
-//#include <string.h>
-//#include <iostream.h>
-
-#ifndef __GRAPHICS_H
-#include <graphics.h>
-#endif
-
-#ifndef __CONIO_H
-#include <conio.h>
-#endif
-
-#ifndef __PCXBGI_H
-#include "pcxbgi.h"
-#endif
+//# include <dos.h>
+//# include <stdlib.h>
+#include "graphics.h"
+//#include <conio.h>
+//#include "pcxbgi.h"
+#include <vector>
 
 //Estructura que almacena los eventos generados por el rat¢n y teclado
 struct Evento
@@ -90,7 +75,7 @@ struct Evento
 
 //Retorna una estructura Evento, con los eventos generados por el rat¢n y teclado
 Evento Detectar_click_o_tecla( void );
-
+/*
 struct mousecursor
 {
  void *puntero,*fondo;
@@ -98,25 +83,25 @@ struct mousecursor
  int alto,ancho;
 // unsigned char mascara;
 }cursor;
-
+*/
 ////////////////////////////////////////////////////////////////////////
 //CONSTANTES DE CONTROL
 
-	/* mascaras de los botones del raton*/
-	const unsigned LBUTTON   =0x0001; //boton izquierdo
-	const unsigned RBUTTON   =0x0002; //boton derecho
+	// mascaras de los botones del raton
+	/*const unsigned LBUTTON   =0x0001; //boton izquierdo
+	const unsigned RBUTTON   =0x0002; //boton derecho*/
 
-	/*codigos de eventos del raton*/
+	// codigos de eventos del raton
 	const unsigned IDLE                        =0x0000; //no hay eventos
-	const unsigned BUTTON_DOWN                 =0xff01; //se presiono el boton principal del mouse
+	//const unsigned BUTTON_DOWN                 =0xff01; //se presiono el boton principal del mouse
 	const unsigned LBUTTON_DOWN                =0xff01; //se presiono el boton izquierdo del mouse
 	const unsigned RBUTTON_DOWN                =0xff02; //se presiono el boton derecho del mouse
-	const unsigned BUTTON_STILL_DOWN           =0xff04; //se mantiene presionado el boton principal
+	/*const unsigned BUTTON_STILL_DOWN           =0xff04; //se mantiene presionado el boton principal
 	const unsigned LBUTTON_STILL_DOWN          =0xff04; //se mantiene presionado el boton izquierdo
 	const unsigned RBUTTON_STILL_DOWN          =0xff08; //se mantiene presionado el boton derecho
 	const unsigned BUTTON_UP                   =0xff10; //se hizo click con el boton principal
 	const unsigned LBUTTON_UP                  =0xff10; //se solto el boton izquierdo
-	const unsigned RBUTTON_UP                  =0xff20; //se solto el boton derecho
+	const unsigned RBUTTON_UP                  =0xff20; //se solto el boton derecho*/
 	/*
 	NOTA IMPORTANTE:
 	cuando se presiona un boton del mouse se genera primero un evento
@@ -124,11 +109,11 @@ struct mousecursor
 	STILL_DOWN ( si se mantiene presionado ) y luego un evento
 	UP ( cuando se suelta el boton )
 	*/
-
-	/* modos de video*/
+	/*
+	// modos de video
 	enum videomodetype { texto, egavga, svga, svga320x200, lowresgr };
 
-	/*el raton*/
+	// el raton
 	struct mousestr{
 		int oldx,oldy;
 		char ok;
@@ -140,14 +125,14 @@ struct mousecursor
 		char oculto;
 	}mouse;
 
-	/*utilerias del raton*/
+	// utilerias del raton
 
 	 const int mouseInt =0x33;
 	 const int iret     =0xcf;
 	 const int false    =0;
 	 const int true     =1;
 
-	/*define estilos de cursor graficos*/
+	// define estilos de cursor graficos
 	struct hotspotstruct{ int x, y; };
 
 	struct mousecursorestandar
@@ -192,11 +177,11 @@ struct mousecursor
 	   0xfe7f,0x0180,0x0180,0x0180,
 	   0x0180,0x0180,0x0180,0x0180}
 	   };
-
+*/
 
 ///////////////////////////////////////////////////////////////////
 //FUNCIONES DE CONTROL ESTANDAR
-
+#ifdef _XXX
 /*inicia el raton*/
  void mouseInit(void);
 
@@ -232,10 +217,11 @@ struct mousecursor
  int mpresscnt(unsigned );
 
  int mreleasecnt(unsigned );
-
+#endif
 /*obtiene el ultimo evento del raton */
- unsigned mouseevent(int *, int *);
+ unsigned int mouseevent(int& , int& );
 
+#ifdef _XXX
  //espera por la ocurrencia de cualquier evento y retorna dicho evento
  unsigned mwaitforanyevent( int *, int *);
 
@@ -245,12 +231,11 @@ struct mousecursor
  //arroja 1 cuando el puntero se esta moviendo
  //y arroja 0 cuando el puntero esta estatico
  int mmoved(void);
-
  void setmgcursor (const struct mousecursorestandar *);
-
+#endif
 /////////////////////////
 //FUNCIONES DE CONTROL DE LA BGI
-
+/*
 int obtener_cursor(void);
 void obtener_fondo(void);
 void recuperar_fondo(void);
@@ -258,10 +243,10 @@ void dibujar_puntero(void);
 void actualizar_puntero( int &, int &);
 //destruir los punteros utilizados por la bgi
 void mousedestroy(void);
-void WaitRetrace();
+void WaitRetrace();*/
 ////////////////////////////////////////////////////////////////////////////
 //IMPLEMENTACION DE LAS FUNCIONES DE CONTROL ESTANDAR
-
+#ifdef _XXX
 ////////////////////////////////////////////////////////////////////////////
 	 void mouseInit(void)
 	 /*inicia el raton*/
@@ -352,6 +337,7 @@ void WaitRetrace();
 		}
 	}
 ////////////////////////////////////////////////////////////////////////////
+
 	void movemouse(int Mx, int My)
 	/* mueve el cursor del raton*/
 	{
@@ -366,7 +352,10 @@ void WaitRetrace();
 		}
 		if(mouse.lowres)regs.x.cx <<=1;
 		int86(mouseInt,&regs,&regs);
+		Mx = mousex();
+		My = mousey();
 	}
+
 ////////////////////////////////////////////////////////////////////////////
 	void mousesetup(enum videomodetype videomodo ,
 			const struct mousecursorestandar newcursor = arrowcursor)
@@ -471,12 +460,88 @@ void WaitRetrace();
 		int86(mouseInt,&regs,&regs);
 		return regs.x.bx;
 	}
+#endif
+	bool bLBUTTONPRESSED = false;
+	bool bRBUTTONPRESSED = false;
+	bool bMOUSEMOVE = false;
+	
+	void OnLButtonDown(int x, int y) {		
+		bLBUTTONPRESSED = true;
+	}
+
+	void OnRButtonDown(int x, int y) {
+		bRBUTTONPRESSED = true;
+	}
+
+	void OnMButtonDown(int x, int y) {
+	}
+
+	void OnLButtonUp(int x, int y) {
+		bLBUTTONPRESSED = false;
+	}
+
+	void OnRButtonUp(int x, int y) {
+		bRBUTTONPRESSED = false;
+	}
+	
+	void OnMButtonUp(int x, int y) {
+	}
+
+	void OnMouseMove(int x, int y) {			
+
+	}
+	
+	void RegistrarEventosMouse() {
+		registermousehandler(WM_LBUTTONDOWN, OnLButtonDown);
+		registermousehandler(WM_RBUTTONDOWN, OnRButtonDown);
+		registermousehandler(WM_MBUTTONDOWN, OnMButtonDown);
+		registermousehandler(WM_LBUTTONUP, OnLButtonUp);
+		registermousehandler(WM_RBUTTONUP, OnRButtonUp);
+		registermousehandler(WM_MBUTTONUP, OnMButtonUp);
+		registermousehandler(WM_MOUSEMOVE, OnMouseMove);
+	}
+
 ////////////////////////////////////////////////////////////////////////////
-	unsigned mouseevent(int *Mx, int *My)
+	unsigned int mouseevent(int& Mx, int& My)
 		/*obtiene el ultimo evento del raton */
 
 	{
-		unsigned E;
+		unsigned int E;
+
+		if (bLBUTTONPRESSED) {
+			E = LBUTTON_DOWN;
+			//cleardevice();
+			//outtext("L");			
+		}
+		else if (bRBUTTONPRESSED) {
+			E = RBUTTON_DOWN;
+			//cleardevice();
+			//outtext("R");
+			
+		}
+		else
+			E = IDLE;
+
+		if (E != IDLE) {
+			Mx = mousex();
+			My = mousey();
+		}
+		
+		/*
+		//unsigned int E;
+
+		std::vector<int> vkinds = { WM_LBUTTONDOWN, WM_RBUTTONDOWN, WM_MBUTTONDOWN, WM_LBUTTONUP, WM_RBUTTONUP, WM_MBUTTONUP };
+
+		for (auto kind : vkinds) {
+			if (ismouseclick(kind)) {
+				clearmouseclick(kind);
+			}
+		}
+		*/	
+		
+		return E;
+
+		/*unsigned E;
 		if(mouse.mouseoff){ *Mx=0;  *My=0; return IDLE;}
 
 		E=mousestatus(Mx,My);
@@ -500,15 +565,15 @@ void WaitRetrace();
 		   E=LBUTTON_STILL_DOWN;
 		  }
 		 else if(mpresscnt(RBUTTON)>0)
-		      E=RBUTTON_DOWN;
-		      else
-		      E=RBUTTON_STILL_DOWN;
+			  E=RBUTTON_DOWN;
+			  else
+			  E=RBUTTON_STILL_DOWN;
 		}
 
-		return E;
+		return E;*/
 	 }
 ////////////////////////////////////////////////////////////////////////////
-	 unsigned mwaitforanyevent( int *Mx, int *My)
+/*	 unsigned mwaitforanyevent( int *Mx, int *My)
 	 {
 		unsigned E;
 
@@ -533,11 +598,12 @@ void WaitRetrace();
 		if(mouse.mouseoff)return false;
 
 		 mouse.oldx=mouse.x;       mouse.oldy=mouse.y;
-		 mousestatus(&mouse.x,&mouse.y);
+		 //mousestatus(&mouse.x,&mouse.y);
 		 mouse.dx=mouse.x-mouse.oldx;     mouse.dy=mouse.y-mouse.oldy;
 		 return(mouse.dx!=0) || (mouse.dy!=0);
 	 }
 ////////////////////////////////////////////////////////////////////////////
+ 
 	 void setmgcursor (const struct mousecursorestandar *newcursor)
 	 {
 		union  REGS regs;
@@ -656,6 +722,7 @@ void WaitRetrace() {
 	jz  l2;
       }
 }
+*/
 /////////////////////////////////////
 //IMPLEMENTACION DE EVENTOS
 Evento Detectar_click_o_tecla( void )
@@ -665,7 +732,7 @@ Evento Detectar_click_o_tecla( void )
  p.evento=0;
  p.tecla=-1;
 
- p.evento=mouseevent( &(p.x), &(p.y) );
+ p.evento=mouseevent( p.x, p.y );
 
   if( kbhit() )
   {
@@ -676,5 +743,3 @@ Evento Detectar_click_o_tecla( void )
 }
 
 
-
-#endif

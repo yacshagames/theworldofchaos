@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.34320.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ventanas15-metpro", "ventanas15-metpro.vcxproj", "{D207919D-2FD7-4E35-8A99-93A47D607E0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D207919D-2FD7-4E35-8A99-93A47D607E0C}.Debug|x64.ActiveCfg = Debug|x64
+		{D207919D-2FD7-4E35-8A99-93A47D607E0C}.Debug|x64.Build.0 = Debug|x64
+		{D207919D-2FD7-4E35-8A99-93A47D607E0C}.Debug|x86.ActiveCfg = Debug|Win32
+		{D207919D-2FD7-4E35-8A99-93A47D607E0C}.Debug|x86.Build.0 = Debug|Win32
+		{D207919D-2FD7-4E35-8A99-93A47D607E0C}.Release|x64.ActiveCfg = Release|x64
+		{D207919D-2FD7-4E35-8A99-93A47D607E0C}.Release|x64.Build.0 = Release|x64
+		{D207919D-2FD7-4E35-8A99-93A47D607E0C}.Release|x86.ActiveCfg = Release|Win32
+		{D207919D-2FD7-4E35-8A99-93A47D607E0C}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9277DD7F-83CC-4E35-BFA1-007B5BAFBA98}
+	EndGlobalSection
+EndGlobal

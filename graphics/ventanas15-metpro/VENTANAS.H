@@ -1,3 +1,4 @@
+#pragma once
 /*****************************************************************************
 VENTANAS.H
 SIMULA UN ENTORNO GRAFICO SIMILAR A WINDOWS 98
@@ -39,29 +40,12 @@ Version 1.4  17-Agosto-2000
  * Clase CBoton
 
 *****************************************************************************/
-#ifndef __VENTANAS_H
-#define __VENTANAS_H
-
-#if !defined(__GRAPHICS_H)
-#include <graphics.h>
-#endif
-
-#if !defined(__CONIO_H)
-#include <conio.h>
-#endif
-
-#if !defined(__STRING_H)
-#include <string.h>
-#endif
-
-#include <alloc.h>
-#include <time.h>
-
-#ifndef __PCXBGI_H
-#include "pcxbgi.h"
-#endif
-
-
+#include "graphics.h"
+//#include <conio.h>
+//#include <string.h>
+//#include <alloc.h>
+//#include <time.h>
+#include "imgbgi.h"
 #include "funcgraf.h"
 #include "mousebgi.h"
 
@@ -86,7 +70,7 @@ class CBoton
 
  CBoton(){};
 
- CBoton(int _posx, int _posy, int _alto, int _ancho, char *_titulo);
+ CBoton(int _posx, int _posy, int _alto, int _ancho, const char *_titulo);
 
  int mostrar(Evento &raton);
  void mostrar( int modo);
@@ -98,7 +82,7 @@ class CBoton
 
 };
 
-CBoton::CBoton(int _posx, int _posy, int _alto, int _ancho, char *_titulo)
+CBoton::CBoton(int _posx, int _posy, int _alto, int _ancho, const char *_titulo)
 {
 posx=_posx;
 posy=_posy;
@@ -115,7 +99,7 @@ estado=modo;
 
 if(estado!=estado_anterior)
 {
- mousehide();  //oculta el puntero para que este no corte el grafico del boton
+ //mousehide();  //oculta el puntero para que este no corte el grafico del boton
  cuadro(posx,posy,posx+ancho,posy+alto,modo);
 
  switch( modo )
@@ -125,7 +109,7 @@ if(estado!=estado_anterior)
    mostrar_titulo();
    break;
    case SIN_FOCO:
-   setcolor(0);
+ //  setcolor(0);
    mostrar_titulo();
    break;
    case PRESIONADO:
@@ -133,7 +117,7 @@ if(estado!=estado_anterior)
    mostrar_titulo(2,2);
  }
 
- mouseshow(); //el puntero se ve otra vez
+ //mouseshow(); //el puntero se ve otra vez
 
 }
 estado_anterior=estado;
@@ -168,7 +152,7 @@ int CBoton::mostrar(Evento &raton)
    {
     mostrar(PRESIONADO);
     delay(100); //para que se note el efecto de presionar se pone una peque¤a pausa
-    while( mouseevent( &(raton.x), &(raton.y) )  == LBUTTON_STILL_DOWN )//mientras no se suelte el boton
+    while( mouseevent( raton.x, raton.y )  == LBUTTON_DOWN)//mientras no se suelte el boton
      if( !mousemove( raton.x, raton.y ) )
       mostrar(SIN_FOCO);
      else
@@ -184,8 +168,8 @@ int CBoton::mostrar(Evento &raton)
 
 void CBoton::mostrar_titulo(int x, int y)
 {
- int longitud=strlen( titulo );
- outtextxy(x+posx+ancho/2-textwidth("W")/2*longitud,y+posy+alto/2-3,titulo);
+ int textWidth = textwidth(titulo);
+ outtextxy(x + posx + ancho / 2 - textWidth /2, y + posy, titulo);
 }
 
 void CBoton::cambiar_titulo( char *_titulo )
@@ -195,23 +179,23 @@ void CBoton::cambiar_titulo( char *_titulo )
 
 ///////////////////////////////////////////////////////////////////////////
 //INICIA EL MODO GRAFICO
-
+/*
 int huge func()
 {
  return 2;
-}
+}*/
 
-void ModoGrafico( void )
+void ModoGrafico(void)
 {
- int controlador=0,modo=0;
+	//int controlador=0,modo=0;
+    // controlador=DETECT;
+	//installuserdriver("Svga256",func);
+	//initgraph(&controlador,&modo,"");
+	//mousesetup(svga);//inicia el raton
+	//mousehide(); //oculta el raton
 
-// controlador=DETECT;
- installuserdriver("Svga256",func);
- initgraph(&controlador,&modo,"");
-
- mousesetup(svga);//inicia el raton
- mousehide(); //oculta el raton
-
+	// Init WinBGI window
+	initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -353,10 +337,10 @@ void CCajaTexto::cambiar_posicion( int X1, int Y1, int X2, int Y2 )
   alto_real=15;
   color_fondo=GREEN;
   color_fuente=BLACK;
-  ancho_fuente=textwidth("W");
+  ancho_fuente=textwidth((char*)"W");
   ancho=ancho_real/ancho_fuente-2; // se le resta 2 uaf: una para que el texto no se salga por el lado izquierdo de la caja, y otra para que el cursor no se salga de la caja
   desplazamiento_x=x_real+x1+ancho_fuente/2; //desde este valor (en pixeles) se comenzara a escribir, se le aumenta la mitad del ancho_fuente para que haya un margen del texto con la caja
-  y=y_real+y1+textheight("W")/2;
+  y=y_real+y1+textheight((char*)"W")/2;
 
  }
 
@@ -381,7 +365,8 @@ void CCajaTexto::mostrar_cursor(int color)
 
 void CCajaTexto::mostrar_texto_virtual(int pos_inicial)
 {
- for(int j=0;j<ancho;j++)
+ int j;
+ for(j=0;j<ancho;j++)
   if((pos_inicial+j)<longitud)
    caja[j]=cad[pos_inicial+j];
    else
@@ -600,12 +585,12 @@ class CVentana
 
  CBoton Salir;
 
- CVentana(char *Titulo, int izq, int arr, int der, int aba )
+ CVentana(const char *Titulo, int izq, int arr, int der, int aba )
  {
    CVentana::CVentana( Titulo, izq, arr, der, aba, VENTANA_HIJA);
  }
 
- CVentana( char *Titulo, int izq, int arr, int der, int aba, int Tipo )
+ CVentana( const char *Titulo, int izq, int arr, int der, int aba, int Tipo )
  {
   strcpy(titulo, Titulo);
 
@@ -641,12 +626,13 @@ class CVentana
 void CVentana::Mostrar_ventana(void)
 {
 
- mousehide();
+ //mousehide();
  if( tipo != VENTANA_PADRE )
  {
   unsigned int tamano;
   tamano=imagesize(izquierda,arriba,derecha,abajo);
-  lugar_prestado=farmalloc(tamano);
+  //lugar_prestado=farmalloc(tamano);
+  lugar_prestado = new char[tamano];
   getimage(izquierda,arriba,derecha,abajo, lugar_prestado );
  }
 
@@ -663,7 +649,7 @@ void CVentana::Mostrar_ventana(void)
  Salir.mostrar(SIN_FOCO);
  }
 
- mouseshow();
+ //mouseshow();
 }
 
 
@@ -695,7 +681,7 @@ void CVentana::Mover_ventana(Evento raton)
 
   raton=Detectar_click_o_tecla();
 
-  }while( raton.evento == LBUTTON_STILL_DOWN );
+  }while( raton.evento == LBUTTON_DOWN );
 
   if( arr>=0 && aba<getmaxy() && izq>=0 && der<getmaxx() )
   {
@@ -742,10 +728,11 @@ void CVentana::devolver_lugar(void)
 {
  if( tipo == VENTANA_HIJA )
  {
-  mousehide();
+  //mousehide();
   putimage(izquierda, arriba, lugar_prestado, COPY_PUT);
-  mouseshow();
-  farfree(lugar_prestado);
+  //mouseshow();
+  //farfree(lugar_prestado);
+  delete lugar_prestado;
  }
 }
 
@@ -768,7 +755,7 @@ int CVentana::puntero_en_area_de_titulo(Evento raton)
 
 class CGrafico
 {
- PCX pcx;
+ IMG pcx;
 
  int izq;
  int arr;
@@ -779,12 +766,12 @@ class CGrafico
 
  CGrafico(){};
 
- CGrafico( int x, int y, char *Nombre)
+ CGrafico( int x, int y,const char *Nombre)
  {
   strcpy(nombre,Nombre);
   izq=x;
   arr=y;
-  pcx.leer_cabecera(1,nombre);
+  pcx.leer_cabecera(nombre);
  }
 
  void pintar(void);
@@ -795,6 +782,4 @@ void CGrafico::pintar(void)
  {
   pcx.Dibujar( izq, arr );
  }
-
-#endif
 

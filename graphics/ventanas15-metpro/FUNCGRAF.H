@@ -1,13 +1,7 @@
 //MAS FUNCIONES GRAFICAS QUE LE FALTA GRAPHICS.H
 
-#ifndef __GRAPHICS_H
-#include <graphics.h>
-#endif
-
-
-#ifndef __MOUSEBGI_H
-#include "mousebgi.h"  //funcion WaitRetrace()
-#endif
+#include "graphics.h"
+//#include "mousebgi.h"  //funcion WaitRetrace()
 
 /*
 void WaitRetrace() {
@@ -68,7 +62,7 @@ void linea_inversa(int x1, int y1, int x2, int y2)
 
 void rectangulo_inverso(int x1, int y1, int x2, int y2)
 {
- WaitRetrace();
+ //WaitRetrace();
  linea_inversa(x1,y1,x1,y2);
  linea_inversa(x1,y2,x2,y2);
  linea_inversa(x2,y2,x2,y1);

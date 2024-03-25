@@ -33,7 +33,7 @@ lo que he avanzado...
 
 ************************************************************************/
 
-#include <conio.h>
+//#include <conio.h>
 
 #include "ventanas.h"  //funciones para dibujar ventanas y botones tipo
 			// Windows, las ventanas se pueden mover
@@ -57,6 +57,8 @@ void main()
 		//y 256 colores. Tambi‚n activa el raton en dicho modo gr fico
 		//cargando el puntero desde un archivo pcx; el puntero
 		//queda oculto
+
+ RegistrarEventosMouse();
 
  //Crea la ventana principal del tama¤o total de la pantalla
  CVentana ventana_principal( "METPRO 1.0", //Titulo de la ventana
@@ -89,8 +91,8 @@ void main()
 
 	AcercaDe(190,40,20,80,"Acerca de"); //Bot¢n para ver la caja de dialogo Acerca de...
 
- movemouse(300,300); //mueve el puntero del mouse a la posici¢n (300,300)
- mouseshow(); //muestra el puntero de mouse
+ //movemouse(300,300); //mueve el puntero del mouse a la posici¢n (300,300)
+ //mouseshow(); //muestra el puntero de mouse
 
   //Inicia un bucle para mostrar el programa mientras no se presione
   //la tecla ESCAPE o no se presione el Bot¢n "Salir"
@@ -151,7 +153,7 @@ void main()
       //ESCAPE se recibe el evento SE_CANCELA. Luego la ventana se cierra
       //automaticamente
 
-      mousehide(); //oculta el rat¢n
+      //mousehide(); //oculta el rat¢n
 
       //si se ingres¢ una cadena de texto mientras estuvo visible la ventana
       //Mensaje, esta cadena se almacena en funcion.cad miembro de CEntrarCadena
@@ -162,7 +164,7 @@ void main()
 		 CONECTAR,  //conectar  los puntos de la gr fica por rectas
 		 LIGHTBLUE, // color del trazo ( azul claro )
 		 0.01);     //Paso del intervalo (valor de la partici¢n del intervalo x)
-      mouseshow(); //muestra el raton
+      //mouseshow(); //muestra el raton
      }
 
   }
@@ -173,7 +175,7 @@ void main()
   //se sale del bucle si se presiona ESCAPE
   }while(raton.tecla!=27);
 
- mousehide(); //se oculta el rat¢n
+ //mousehide(); //se oculta el rat¢n
 
  closegraph(); //se cierra el modo gr fico SVGA
 
