@@ -1,11 +1,20 @@
 #pragma once
 /***********************************************************************
  ::: BMPPlus :::
+ LOADS AN 8-BIT BMP (256 COLORS) AND PLOTS IT ON THE SCREEN
 
-  >> Version 2 - 23-III-2024
+  >> Version 2 - 25-III-2024
 	- Update: Porting to VC++ 2017 using winbgi
 	- The old VIDEO class and the BMP class methods related to drawing and
 	  setting the palette are removed, since they were obsolete in Windows
+	- getRGBFromPalette is Added to convert a palette color into an RGB color,
+	  and use it in the WinBIG putpixel that requires an RGB color as a
+	  parameter and not a palette color like the old borland c or turbo c putpixel
+	- dibujarppp is optimized to plot pixel by pixel on the screen from a
+	  preloaded bitmap
+	- It is allowed to choose whether to read the bitmap (preloaded), since there
+	  are cases in which it will only be required to read the header
+	- Minor improvements in the definition of classes and member variables
 
   >> Versión 1.0 8-IX-2000
  Similar al PCXPlus pero grafica mapas de bits (BMP) utilizando
@@ -14,8 +23,8 @@
 
  :::Programado por:::
  José Luis De La Cruz Lázaro
- YACSHA - Software & Desing 2002
-  >> yacsha@elmundodelcaos.tk    
+ YACSHA - Software & Desing
+  >> ramondc@hotmail.com   
   >> www.elmundodelcaos.tk -> EL MUNDO DEL CAOS - Unlimited Programming
   >> www.foros3d.tk  -> Foros de discusión  Flash/ActionScript - C/C++
 
@@ -100,21 +109,19 @@ final el rojo. Los pixels están en orden inverso; comienzan en la última línea.
 */
 
 
-#define PALETTE_INDEX       0x03c8
-#define PALETTE_DATA        0x03c9
+//#define PALETTE_INDEX       0x03c8
+//#define PALETTE_DATA        0x03c9
 
 class BMP
 {
 protected:
 
-	unsigned char *bitmap;
+	unsigned char* bitmap;
 	unsigned char paleta[256 * 3];
-
-	//void fskip(FILE *fp, int n);
 
 public:
 	////////////////////////////////////////////////////////////////////////
-	// Info de la cabecera: https://es.wikipedia.org/wiki/Windows_bitmap  //
+	// Header Info: https://es.wikipedia.org/wiki/Windows_bitmap  //
 	////////////////////////////////////////////////////////////////////////
 	// CABECERA     					//#bytes
 	char tipo[2];         		        //2
@@ -136,15 +143,21 @@ public:
 	unsigned long n_indices;			//4  - retorna el numero de colores de la paleta - Number of actually used colors
 	unsigned long n_i_indices;			//4  - Number of important colors 0=all
 										//Total: 40 bytes
-
+	BMP();
 	~BMP();
-	int abrir(const char *nom);
+	int abrir(const char *nom, bool readBitmap);
 	//void asign_paleta();
 	void rotar_paleta();
 	//void dibujar(VIDEO &video,int x,int y);
-	//void dibujarppp(int x,int y);
-	//void pintar();
+	void dibujarppp(int x,int y);
+private:
+	int getRGBFromPalette(unsigned char cColor);
 };
+
+BMP::BMP()
+{
+	bitmap = NULL;
+}
 
 BMP::~BMP()
 {
@@ -152,7 +165,7 @@ BMP::~BMP()
 		delete bitmap;
 }
 
-int BMP::abrir(const char *nom)
+int BMP::abrir(const char *nom, bool readBitmap )
 {
 	FILE *fp;
 
@@ -177,30 +190,45 @@ int BMP::abrir(const char *nom)
 	fread(&n_indices, 4, 1, fp);
 	fread(&n_i_indices, 4, 1, fp);
 
-	if (n_indices == 0 && bits_por_pixel == 8) n_indices = 256;
+	if (n_indices == 0 && bits_por_pixel == 8)
+		n_indices = 256;
 
 	int i;
 
-	for (i = 0; i < n_indices; i++)
-	{
+	for (i = 0; i < n_indices; i++){
+
+		// Load the color and move all the bytes read in 
+		// the PCX palette 2 bits to the right. The RGB 
+		// components of the palette are found in the
+		// 6 bits with the greatest weight of the values
+		// read from the file
 		paleta[i * 3 + 2] = fgetc(fp) >> 2;
 		paleta[i * 3 + 1] = fgetc(fp) >> 2;
 		paleta[i * 3 + 0] = fgetc(fp) >> 2;
 		fgetc(fp);
 	}
 
-	// bitmap = (unsigned char far *)
-	//		   farmalloc(sizeof(unsigned char far)*(ancho)*(alto));
+	
+	if (readBitmap) {
 
-	bitmap = new unsigned char[alto*ancho];
+		// bitmap = (unsigned char far *)
+		//		   farmalloc(sizeof(unsigned char far)*(ancho)*(alto));
 
-	int ex_ancho = (4 - ancho % 4) % 4, k;
+		bitmap = new unsigned char[alto*ancho];
 
-	for (int j = alto - 1; j >= 0; j--)
-	{
-		for (i = 0; i < ancho; i++)
-			bitmap[j*ancho + i] = (unsigned char)fgetc(fp);
-		for (k = 0; k < ex_ancho; k++)fgetc(fp);
+		int ex_ancho = (4 - ancho % 4) % 4, k;
+
+		for (int j = alto - 1; j >= 0; j--) {
+			for (i = 0; i < ancho; i++)
+				bitmap[j*ancho + i] = (unsigned char)fgetc(fp);
+
+			for (k = 0; k < ex_ancho; k++)
+				fgetc(fp);
+		}
+
+	} else {
+
+		bitmap = NULL;
 	}
 
 	fclose(fp);
@@ -234,8 +262,7 @@ void BMP::rotar_paleta()
 	//asign_paleta();
 }
 
-/*
-void BMP::dibujar(VIDEO &video,int x,int y)
+/*void BMP::dibujar(VIDEO &video,int x,int y)
 {
   unsigned int pos_pantalla = 320*y;//(y<<8)+(y<<6);
   unsigned int indice_bmp = 0;
@@ -253,12 +280,23 @@ void BMP::dibujar(VIDEO &video,int x,int y)
   }
 
   video.desplegar();
-}
+}*/
 
 //Dibujar pixel por pixel
-void BMP::dibujarppp(int x,int y)
+void BMP::dibujarppp(int x, int y)
 {
-  for(int i=0;i<alto;i++)
-   for (int j=0;j<ancho;j++)
-	putpixel(j+x,i+y,bitmap[i*ancho+j]);
-}*/
+	int i, j;
+	for (i = 0; i < alto; i++)
+		for (j = 0; j < ancho; j++)
+			putpixel(j + x, i + y, getRGBFromPalette(bitmap[i*ancho + j]));
+}
+
+// Converts a palette index (cColor) to an RGB color, using the palette loaded from the image
+int BMP::getRGBFromPalette(unsigned char cColor)
+{
+	int rgb = paleta[cColor*3+2];			// blue
+	rgb = (rgb << 8) + paleta[cColor*3+1];	// green
+	rgb = (rgb << 8) + paleta[cColor*3+0];	// red
+
+	return rgb;
+}
