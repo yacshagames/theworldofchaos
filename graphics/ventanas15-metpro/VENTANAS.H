@@ -54,7 +54,7 @@ Version 1.4  17-Agosto-2000
 //#include <string.h>
 //#include <alloc.h>
 //#include <time.h>
-#include "imgbgi.h"
+#include "bmpplus.h"
 #include "funcgraf.h"
 #include "mousebgi.h"
 
@@ -777,23 +777,31 @@ int CVentana::puntero_en_area_de_titulo(Evento raton)
 
 class CGrafico
 {
-	IMG pcx;
+public:
+	enum class DRAWMODE {		
+		READIMAGEFILE,	// Draw the image directly. It's fast. Recommended option
+		PUTPIXEL,		// Draw the image pixel by pixel. Is slow.		
+	};
 
 	int izq;
 	int arr;
 
+private:
+	BMP bmp;
+	DRAWMODE drawMode;
 	char nombre[12];
 
 public:
 
 	CGrafico() {};
 
-	CGrafico(int x, int y, const char *Nombre)
+	CGrafico(int x, int y, const char *Nombre, DRAWMODE _drawMode)
 	{
 		strcpy(nombre, Nombre);
 		izq = x;
 		arr = y;
-		pcx.leer_cabecera(nombre);
+		bmp.abrir(nombre, _drawMode== DRAWMODE::PUTPIXEL );
+		drawMode = _drawMode;
 	}
 
 	void pintar(void);
@@ -802,6 +810,9 @@ public:
 
 void CGrafico::pintar(void)
 {
-	pcx.Dibujar(izq, arr);
+	if(drawMode == DRAWMODE::READIMAGEFILE)
+		readimagefile(nombre, izq, arr, izq+bmp.ancho, arr+bmp.alto);
+	else
+		bmp.dibujarppp(izq, arr);
 }
 

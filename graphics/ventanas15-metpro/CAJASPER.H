@@ -9,6 +9,11 @@
 
 >> Version 2 - 24 - III - 2024
 - Update graphics / ventanas - Porting to VC++ 2017 using winbgi
+- logoUNI is initialized in the CGrafico constructor
+- Minor improvements in the definition of classes and member variables
+- CAcercaDe::Mostrar_ventana, in PUTPIXEL mode, it no longer loads the
+  bmp, it just directly draws the bmp from a preloaded bitmap, without
+  reading it from disk as it was before
 
 *************************************************************************/
 
@@ -81,7 +86,10 @@ class CAcercaDe : public CVentana
 public:
 
 	CAcercaDe(const char *Titulo, int izq, int arr, int der, int aba)
-		: CVentana(Titulo, izq, arr, der, aba) {};
+		
+		: logoUNI(izquierda + 10, arriba_cliente + 10, "logouni.bmp", CGrafico::DRAWMODE::READIMAGEFILE),
+		CVentana(Titulo, izq, arr, der, aba)
+	{};
 
 	void Mostrar_ventana(void);
 	void Mover_ventana(Evento raton);
@@ -96,9 +104,11 @@ void CAcercaDe::Mostrar_ventana(void)
 
 	//mousehide(); //oculta el mouse para no da¤ar los graficos de la ventana
 
-	 //se inserta el logo de mi querida UNIVERSIDAD NACIONAL DE INGENIERIA
-	logoUNI = CGrafico(izquierda + 10, arriba_cliente + 10, "logouni.pcx");
-	//se pinta el logo en la caja de di logo
+	 // Update a new position
+	logoUNI.izq = izquierda + 10;
+	logoUNI.arr = arriba_cliente + 10;
+	
+	// Se pinta el logo en la caja de di logo
 	logoUNI.pintar();
 
 	//se inserta el bot¢n Aceptar
@@ -106,10 +116,10 @@ void CAcercaDe::Mostrar_ventana(void)
 	
 	//se inserta los mensajes de cr‚ditos del autor
 	int top = arriba_cliente - 5;
-	outtextxy(izquierda + 150, top + 10, "   METPRO FUE");
-	outtextxy(izquierda + 150, top + 25, "PROGRAMADO POR:");
+	outtextxy(izquierda + 150, top + 10, "   METPRO WAS");
+	outtextxy(izquierda + 150, top + 25, "PROGRAMMED BY:");
 	setcolor(BLUE);
-	outtextxy(izquierda + 150, top + 40, "   JOSE LUIS");
+	outtextxy(izquierda + 150, top + 45, "   JOSE LUIS");
 	outtextxy(izquierda + 150, top + 60, "   DE LA CRUZ");
 	outtextxy(izquierda + 150, top + 75, "   LAZARO");
 	setcolor(MAGENTA);
@@ -125,7 +135,7 @@ void CAcercaDe::Mostrar_ventana(void)
 void CAcercaDe::Mover_ventana(Evento raton)
 {
 	CVentana::Mover_ventana(raton);
-	logoUNI.pintar();
+	//logoUNI.pintar();
 }
 
 //se espera a que se mueva el rat¢n o se presione una tecla

@@ -23,6 +23,15 @@ HISTORIA...
 
 >> Version 2 - 24 - III - 2024
 - Update graphics / ventanas - Porting to VC++ 2017 using winbgi
+- The painting of the picture shown in the about box is updated, 
+  now it can be painted with PUTPIXEL (slow) or
+  with READIMAGEFILE (fast). The latter is the one that is
+  configured by default.
+- bmpplus is used instead of imgbgi, to draw the bmp faster on the screen
+- Logouni.bmp is loaded in the About box instead of logouni.pcx.
+  Because the pcx format has been obsolete
+- Translate credits for english
+- 
 
 Versi¢n 1.5  17-Agosto-2000
 -Se agrega comentarios a casi todas las lineas de c¢digo.

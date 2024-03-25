@@ -23,12 +23,12 @@
     <ClCompile Include="MetPro.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bmpplus.h" />
     <ClInclude Include="CAJASPER.H" />
     <ClInclude Include="complex.h" />
     <ClInclude Include="FUNCGRAF.H" />
     <ClInclude Include="Grafxy.h" />
     <ClInclude Include="graphics.h" />
-    <ClInclude Include="Imgbgi.h" />
     <ClInclude Include="Mousebgi.h" />
     <ClInclude Include="RSF.h" />
     <ClInclude Include="VECTOR.H" />
