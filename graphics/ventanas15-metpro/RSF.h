@@ -18,6 +18,9 @@
 
   HISTORIA:
 
+  >> Version 2 - 24-III-2024
+	- Update graphics/RSF - Porting to VC++ 2017 using winbgi
+
   versi¢n 1.3  24-Agosto-2000
   -Se cambi¢ el nombre de IFUNCADE.H por el de RSF.H (Reconocedor
    Sint ctico de Funciones).
@@ -88,7 +91,7 @@ private:
 	float ExprSimp();
 	float Expr();
 	void Procesar_como_func_estandar();
-	void eval(char Formula[], float &valor);
+	void eval(char* Formula, float &valor);
 	float Calcular_formula(void);
 	//float Entrar_Funcion( char Cadena[] );
 public:
@@ -334,7 +337,7 @@ void CFuncad::Procesar_como_func_estandar()
 		}
 };
 
-void CFuncad::eval(char Formula[], float &valor)
+void CFuncad::eval(char* Formula, float &valor)
 {
 	_strupr(Formula);
 	p = 0;

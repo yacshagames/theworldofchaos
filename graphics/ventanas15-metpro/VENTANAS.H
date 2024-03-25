@@ -13,6 +13,15 @@ Pagina Web ( EL MUNDO DEL CAOS ):
 
 HISTORIA...
 
+ >> Version 2 - 24-III-2024
+	- Update graphics/ventanas - Porting to VC++ 2017 using winbgi
+
+Versi¢n 1.5  17-Agosto-2000
+-Se agrega comentarios a casi todas las lineas de c¢digo.
+-Se actualiza las cabeceras mousebgi.h y pcxbgi.h con otras versiones
+ mas actuale, que son mas eficientes.
+-Se borra c¢digo inservible
+
 Version 1.4  17-Agosto-2000
 -Se modific¢ la funci¢n miembro Mover_ventana de CVentana, para que al mover
  la ventana fuera de los l¡mites de la pantalla, no sucedan errores con la
@@ -137,7 +146,7 @@ int CBoton::mostrar(Evento &raton)
 
 	switch (raton.evento)
 	{
-	case IDLE: //No se hizo click
+	case MouseBGI::EVENTO::IDLE: //No se hizo click
 
 		if (mousemove(raton.x, raton.y))
 			mostrar(CON_FOCO);
@@ -146,13 +155,13 @@ int CBoton::mostrar(Evento &raton)
 
 		break;
 
-	case LBUTTON_DOWN: //se hizo un click izquierdo
+	case MouseBGI::EVENTO::LBUTTON_DOWN: //se hizo un click izquierdo
 
 		if (mousemove(raton.x, raton.y))
 		{
 			mostrar(PRESIONADO);
 			delay(100); //para que se note el efecto de presionar se pone una peque¤a pausa
-			while (mouseevent(raton.x, raton.y) == LBUTTON_DOWN)//mientras no se suelte el boton
+			while (MouseBGI::mouseevent(raton.x, raton.y) == MouseBGI::EVENTO::LBUTTON_DOWN)//mientras no se suelte el boton
 				if (!mousemove(raton.x, raton.y))
 					mostrar(SIN_FOCO);
 				else
@@ -198,6 +207,9 @@ void ModoGrafico(int maxx, int maxy)
 	// Init WinBGI window
 	// Fix window size bug, from WinBGI. Add 10 to width and height
 	initwindow(maxx+10, maxy+10, "The world of chaos in C++ - Unlimited Programming");
+
+	// Initialize MouseBGI
+	MouseBGI::RegisterMouseEvents();
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -273,8 +285,9 @@ class CCajaTexto
 	int ancho_fuente;
 
 	int i; //posicion actual en la cadena cad[]
+public:
 	int longitud; //longitud de la cadena cad[]
-
+private:
 	///contadores para el desplazamineto horizontal sobre la caja
 
 	int inicio;//posicion horizontal inicial del contador x (normalmente es cero)
@@ -352,6 +365,7 @@ void CCajaTexto::cambiar_posicion(int X1, int Y1, int X2, int Y2)
 
 void CCajaTexto::mostrar_ventana_virtual(void)
 {
+	setbkcolor(color_fondo);
 	cuadro(x_real + x1, y_real + y1, x_real + x1 + ancho_real, y_real + y1 + alto_real, 2, color_fondo);
 	setcolor(color_fuente);
 	mostrar_texto_virtual(i + inicio - x);
@@ -363,11 +377,11 @@ void CCajaTexto::moverse(int x, int y)
 }
 
 void CCajaTexto::mostrar_cursor(int color)
-{
-	setbkcolor(color_fondo);
+{	
+	setbkmode(TRANSPARENT); // If setbkmode(not standar winbgi) is not defined use: setbkcolor(color_fondo);
 	setcolor(color);
 	moverse(x, y + 1); // y+1 es para que el cursor no se superponga a algun caracter de la cadena
-	outtext("_");
+	outtext("_");	
 }
 
 void CCajaTexto::mostrar_texto_virtual(int pos_inicial)
@@ -687,9 +701,9 @@ void CVentana::Mover_ventana(Evento raton)
 
 		rectangulo_inverso(izq, arr, der, aba); //borra el rectangulo anterior
 
-		raton = Detectar_click_o_tecla();
+		raton = MouseBGI::Detectar_click_o_tecla();
 
-	} while (raton.evento == LBUTTON_DOWN);
+	} while (raton.evento == MouseBGI::EVENTO::LBUTTON_DOWN);
 
 	if (arr >= 0 && aba < getmaxy() && izq >= 0 && der < getmaxx())
 	{
@@ -720,12 +734,12 @@ unsigned CVentana::responder_eventos(Evento &raton)
 unsigned CVentana::esperar_eventos(Evento &raton)
 {
 
-	raton = Detectar_click_o_tecla();
+	raton = MouseBGI::Detectar_click_o_tecla();
 
 	if (tipo != VENTANA_SIN_TITULO)
 		if (Salir.mostrar(raton)) return SE_CANCELA;
 
-	if (puntero_en_area_de_titulo(raton) && raton.evento == LBUTTON_DOWN)
+	if (puntero_en_area_de_titulo(raton) && raton.evento == MouseBGI::EVENTO::LBUTTON_DOWN)
 		Mover_ventana(raton);
 
 	return SE_ACEPTA;

@@ -21,6 +21,9 @@ DEFINICIONES DE LOS CONSTRUCTORES DE CADA CLASE INCLUIDA EN VENTANAS.H
 
 HISTORIA...
 
+>> Version 2 - 24 - III - 2024
+- Update graphics / ventanas - Porting to VC++ 2017 using winbgi
+
 Versi¢n 1.5  17-Agosto-2000
 -Se agrega comentarios a casi todas las lineas de c¢digo.
 -Se actualiza las cabeceras mousebgi.h y pcxbgi.h con otras versiones
@@ -57,8 +60,6 @@ void main()
 		   //y 256 colores. Tambi‚n activa el raton en dicho modo gr fico
 		   //cargando el puntero desde un archivo pcx; el puntero
 		   //queda oculto
-
-	RegistrarEventosMouse();
 
 	//Crea la ventana principal del tama¤o total de la pantalla
 	CVentana ventana_principal("METPRO 2.0", //Titulo de la ventana
@@ -148,7 +149,7 @@ void main()
 				200, 100, //esquina superior izquierda
 				400, 190); //esquina inferior derecha
 
-	  //se espera que el usuario genere un evento sobre la ventana
+			//se espera que el usuario genere un evento sobre la ventana
 			if (Mensaje.responder_eventos(raton) == SE_ACEPTA)
 			{
 				//Al recibir el evento SE_ACEPTA, el usuario presion¢ el bot¢n Aceptar
@@ -174,7 +175,7 @@ void main()
 		}
 
 		//Se obtiene los eventos generados con el rat¢n o teclado
-		raton = Detectar_click_o_tecla();
+		raton = MouseBGI::Detectar_click_o_tecla();
 
 		//se sale del bucle si se presiona ESCAPE
 	} while (raton.tecla != 27);

@@ -353,6 +353,8 @@ void setrgbpalette( int colornum, int red, int green, int blue );
 #undef COLOR
 int COLOR(int r, int g, int b); // No longer a macro
 
+void setbkmode(int mode);
+
 #ifdef __cplusplus
 };
 #endif

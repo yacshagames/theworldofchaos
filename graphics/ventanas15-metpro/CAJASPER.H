@@ -1,9 +1,17 @@
 #pragma once
+/*************************************************************************
 //CAJAS DE DIALOGO PERSONALIZADAS miembros p£blicos de CVentana
 
 //Aqui he creado las ventanas t¡picas de una aplicaci¢n visual como son
 //la ventana de AcercaDe y la ventana de ingresar datos desde el teclado
 //(ingresar una cadena de texto)
+
+
+>> Version 2 - 24 - III - 2024
+- Update graphics / ventanas - Porting to VC++ 2017 using winbgi
+
+*************************************************************************/
+
 #include "ventanas.h"
 
 class CEntrarCadena : public CVentana
@@ -51,7 +59,7 @@ unsigned CEntrarCadena::esperar_eventos(Evento &raton)
 
 		if (raton.tecla == ENTER || Aceptar.mostrar(raton))
 		{
-			strcpy(funcion.cad, funcion.cad);
+			funcion.cad[funcion.longitud] = '\0';
 			return SE_ACEPTA;
 		}
 
