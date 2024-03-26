@@ -1,9 +1,14 @@
 /***********************************************************************
- ::: GRAFICADOR DE FUNCIONES 3D :::
+ ::: 3D FUNCTION PLOTTER :::
+
+ >> Version 2 - 25-III-2024
+- Update graphics/graf3d0 - Porting to VC++ 2017 using winbgi
+
  >> Versión 1.0 15-V-2000
- Rota una superficie 3D z=f(x,y) aleatoriamente alrededor de cada uno
- de los tres ejes (X,Y,Z), modelando esta función como una estructura
- alámbrica (como una malla o cuadrícula..)
+ - First version for Borland C++ 3.1 and Turbo C 3.0
+ - Rota una superficie 3D z=f(x,y) aleatoriamente alrededor de cada uno
+   de los tres ejes (X,Y,Z), modelando esta función como una estructura
+   alámbrica (como una malla o cuadrícula..)
 
  :::Programado por:::
  José Luis De La Cruz Lázaro
@@ -15,8 +20,8 @@
 ***********************************************************************/
 
 #include "graphics.h"
-#include "conio.h"
-#include "math.h"
+//#include "conio.h"
+//#include "math.h"
 
  double ox,oy,ix,iy,jx,jy,ky;
 
@@ -52,12 +57,12 @@ void main()
 
  double x,y,z;
 
- int gd=DETECT,gm;
- initgraph(&gd,&gm,"");
+ // Init WinBGI window
+ initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
 
  DibujarEjes();
 
- const Xn=30,Yn=30;
+ const int Xn=30,Yn=30;
 
  int Malla[Xn][Yn][2];
  int i,j;
