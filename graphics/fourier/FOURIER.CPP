@@ -1,18 +1,32 @@
 /*********************************************************************
-SE TRANSFORMA UNA FUNCION f(t) PERIODICA A SU RESPECTIVA SERIE 
-DE FOURIER ( LA MISMA FUNCION PERO REPRESENTADA EN UNA SUMA DE
-SENOS Y COSENOS)
-programado por:
-JOSE LUIS DE LA CRUZ LAZARO 	UNI-FIEE 8 Nov 1999
-ramondc@hotmail.com
-Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
+FOURIER
+
+A PERIODIC FUNCTION f(t) IS TRANSFORMED INTO ITS RESPECTIVE FOURIER
+SERIES (THE SAME FUNCTION BUT REPRESENTED IN A SUM OF SINES AND COSINES)
+
+Programmed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+ HISTORY...
+
+ >> Version 2 - 26-III-2024
+	- Update graphics/fourier - Porting to VC++ 2017 using winbgi
+
+>> Version 1 - 8-XI-1999
+	- First version for Borland C++ 3.1 and Turbo C 3.0
+
 *********************************************************************/
 
-#include <conio.h>
-#include <dos.h>
-
+//#include <conio.h>
+//#include <dos.h>
+#include "graphics.h"
 #include "grafxy.h"
-//#include "metodos.h"
 
 class CSerieFourier
 {
@@ -157,9 +171,10 @@ double CSerieFourier::evaluar_serie( double t )
   return A[0]/2+S;
 }
 
-void main()
+int main()
 {
- autoini("");
+ // Init WinBGI window
+ initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
 
  CRegionXY R(-8,8,-6,6);
 
@@ -181,13 +196,13 @@ void main()
    R.punto( t, escalon.evaluar_serie(t), GREEN/*, CONECTAR*/ );
    R.punto( t, escalon.f(t), RED);
    }
-   char *msg=NULL;
+   char msg[40];
    sprintf(msg,"Numero de Terminos de Fourier = %i",i);
    outtextxy(10,10,msg);
    getch();
 //   delay(500);
 
-
+   //return 1;
  }
 
   getch();
