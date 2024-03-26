@@ -1,14 +1,40 @@
 #pragma once
+/*****************************************************************************
+GATOMANIA 3D
+TIC-TAC-TOE GAME ON A 4x4x4 CUBE
+
+programmed by:
+ JOSE LUIS DE LA CRUZ LAZARO
+ ramondc@hotmail.com
+Pagina Web ( EL MUNDO DEL CAOS )
+
+HISTORY...
+
+ >> Version 2 - 25-III-2024
+	- Update graphics/gato3d - Porting to VC++ 2017 using winbgi
+	- The width and height of the screen can be customized from the global
+	  constants maxx and maxy. And the board adapts to the new resolution
+	- Fix bug that caused them to not be interleaved correctly between X and 0,
+	  where sometimes two consecutive x's or two consecutive zeros appeared.
+	- Using updates librarys ventanas.h and mousebgi.h
+
+>> Version 1 - 16-XIII-1999
+	- First version for Borland C++ 3.1 and Turbo C 3.0
+
+*****************************************************************************/
 #include "graphics.h"
+#include "conio.h"
 #include "mousebgi.h"
 #include "ventanas.h"
 
-#define X 50 //Longitud horizontal de un elemento de la cuadricula
-#define Y 50 //longitud vertical de un elemento de la cuadricula
+const unsigned int maxx = 1024;
+const unsigned int maxy = 768;
+const unsigned int X = int( double(50 * maxx) / 640.0); //Longitud horizontal de un elemento de la cuadricula
+const unsigned int Y = int( double(50 * maxy) / 480.0); //longitud vertical de un elemento de la cuadricula
 
 ///////////////////////////////////////////////////////////////////////////
 int Cubo[4][4][4];
-//Juego();
+
 void inicializar();
 int Gato3D();
 int Jugar(int x, int y, int z, int figura);
@@ -144,7 +170,7 @@ public:
 	}
 
 	void pintar_cuadricula(int color);
-	void Marcar(int i, int j, int k, int figura);
+	bool Marcar(int i, int j, int k, int figura);
 	int Dominio(int i, int j);
 
 };
@@ -166,7 +192,7 @@ void tablero::pintar_cuadricula(int color)
 }
 
 //Grafica un O ¢ X en el centro del elemento (x,y) de la cuadricula
-void tablero::Marcar(int i, int j, int k, int figura)
+bool tablero::Marcar(int i, int j, int k, int figura)
 {
 	//figura = 0 "dibuja un O"
 	//figura = 1 "dibuja una X"
@@ -206,7 +232,10 @@ void tablero::Marcar(int i, int j, int k, int figura)
 
 		//mver();
 
+		return true;
 	}
+
+	return false;
 }
 
 int tablero::Dominio(int i, int j)
@@ -223,9 +252,10 @@ tablero tab[4] = { tablero(10,10),
 
 
 int Reiniciar()
-{
-	cuadro(40 + 2 * X, 20 + 4 * Y, 270 + 2 * X, 50 + 4 * Y, 2);
-	outtextxy(90 + 2 * X, 30 + 4 * Y, "Gatoman¡a en 3D");
+{	
+	cuadro(56 + 2 * X, 20 + 4 * Y, 56 + 6 * X, 50 + 4 * Y, 2);
+	setcolor(WHITE);
+	outtextxy(4 * X, 30 + 4 * Y, "Gatoman¡a en 3D");
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -245,22 +275,23 @@ int main()
 {
 	//int gdriver = DETECT, gmode;
 	//initgraph(&gdriver, &gmode, ""); //CAMBIAR AQUI LA RUTA DE TU archivo egabgi.bgi
+	
+	ModoGrafico(maxx, maxy); // Activate WinBGI graphics mode with 1024x768 resolution	
 
-	// Init WinBGI window
-	initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
+	setbkmode(TRANSPARENT);
 
-	const char *cad[2] = { "Brillante partida jugador O",
-						   "El Jugador X es el ganador" };
+	const char *cad[2] = { "Player X wins the game",
+						   "Brilliant game player O" };
 
 	int x, y, z, n, i = 0;
 
 
-	CBoton Empezar(16 + 4 * Y, 80, 20, 80, "Reiniciar"),
-		Salir(16 + 4 * Y, 110, 20, 80, "Salir");
+	CBoton	Reset(14 + 4 * X, 80, 20, 85, "Reset game"),
+			Exit(14 + 4 * X, 110, 20, 85, "Exit");
 
 	Evento raton;
 
-	cuadro(0, 0, 640, 480, 1);
+	cuadro(0, 0, maxx, maxy, 1);
 
 	int Gano_el_juego;
 
@@ -276,31 +307,35 @@ int main()
 	do
 	{
 
-		if (Empezar.mostrar(raton)) Gano_el_juego = Reiniciar();
-		if (Salir.mostrar(raton)) break;
+		if (Reset.mostrar(raton))
+			Gano_el_juego = Reiniciar();
+
+		if (Exit.mostrar(raton))
+			break;
 
 		raton = MouseBGI::Detectar_click_o_tecla();
 
 		if (raton.evento == MouseBGI::EVENTO::LBUTTON_DOWN && Gano_el_juego == 0)
 		{
 
-			x = raton.x; //capturamos posicion x del mouse sobre las coordenadas de la cudricula
-			y = raton.y; //capturamos posicion y del mouse sobre las coordenadas de la cudricula
+			x = raton.x; //capturamos posicion x del mouse sobre las coordenadas de la cuadricula
+			y = raton.y; //capturamos posicion y del mouse sobre las coordenadas de la cuadricula
 
 			for (z = 0; z < 4; z++)
 				if (tab[z].Dominio(x, y))break;
 
 			if (z < 4)
 			{
-				i = (i + 1) % 2;
+				//i = (i + 1) % 2;
 				setcolor(12 + i);
 
-				tab[z].Marcar(x, y, z, i);
+				if (tab[z].Marcar(x, y, z, i))
+					i = (i + 1) % 2;
 
 				if (Gato3D())
 				{
-					cuadro(40 + 2 * X, 20 + 4 * Y, 270 + 2 * X, 50 + 4 * Y, 1);
-					outtextxy(50 + 2 * X, 30 + 4 * Y, cad[i]);
+					cuadro(56 + 2 * X, 20 + 4 * Y, 56 + 6 * X, 50 + 4 * Y, 1, BLACK);
+					outtextxy(4 * X-20, 30 + 4 * Y, cad[i]);
 					/*sound(500);
 					delay(600);
 					nosound();*/
@@ -311,17 +346,16 @@ int main()
 	} while (raton.tecla != 27);
 	/////////////////////////////////
 
-	//mocultar();
+	//mocultar();	
+
+	// CREDITS!
+	setcolor(10);
+	printf("\n\nGATOMANIA 3D was programmed by: ");
+	setcolor(14);
+	gotoxy(24,4);
+	printf("Jose Luis De la Cruz Lazaro - Lima - Peru\n\n\n\n\n\n\n\n\n\n");	
 
 	closegraph();
-
-	//AQUI OBVIAMENTE PUEDES CAMBIAR LOS CREDITOS
-	setcolor(10);
-	printf("\n\nGATOMANIA 3D fue creado por:");
-	setcolor(14);
-	//gotoxy(24,4);
-	printf("Jos‚ Luis De la Cruz L zaro");
-	getch();
 
 	return 1;
 }

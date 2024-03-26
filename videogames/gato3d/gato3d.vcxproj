@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bmpplus.h" />
+    <ClInclude Include="conio.h" />
     <ClInclude Include="FUNCGRAF.H" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="Mousebgi.h" />

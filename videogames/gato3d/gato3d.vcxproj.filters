@@ -35,5 +35,8 @@
     <ClInclude Include="FUNCGRAF.H">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="conio.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
