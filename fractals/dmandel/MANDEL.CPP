@@ -1,19 +1,23 @@
-//DIAGRAMADOR DEL CONJUNTO DE MANDELBROT
-//POR JOSE LUIS DE LA CRUZ LAZARO 01/11/1999
-//ramondc@hotmail.com
-//Pagina web: www.geocities.com/SiliconValley/Screen/2767/jldl.htm");
+/*****************************************************************************
+MANDELBROT SET PLOTTER
+BY JOSE LUIS DE LA CRUZ LAZARO 
 
-#include"graphics.h"
-#include"conio.h"
-#include"complex.h"
+>> Version 2 - 25 - III - 2024
+- Update graphics/dmandel - Porting to VC++ 2017 using winbgi
 
-int huge Detect ()
-{
-	return ( 2 );
-}
+>> Version 1 - 01 - XI - 1999
+- First version for Borland C++ 3.1 and Turbo C 3.0
+ 
+ramondc@hotmail.com
+Pagina web: www.geocities.com/SiliconValley/Screen/2767/jldl.htm");
 
+*****************************************************************************/
 
-void main()
+#include "graphics.h"
+//#include "conio.h"
+#include "complex.h"
+
+int main()
 {
 
 double
@@ -31,21 +35,19 @@ int  i,j,ITERACION;
 
 complex Z,C;
 
-int gd=DETECT,gm;
-
-installuserdriver ( "svga256", Detect );
-   initgraph (&gd, &gm, "");
-   setgraphmode ( 2 );
+ // Init WinBGI window
+int maxx = 1024, maxy = 768;
+ initwindow(maxx+10, maxy+10, "The world of chaos in C++ - Unlimited Programming");
 
 cleardevice();
 
 //PROCESO DE DIAGRAMADO
-    for(j=0;j<480;j++)
-      for(i=0;i<640;i++)
+    for(j=0;j<maxy;j++)
+      for(i=0;i<maxx;i++)
 	{
 
-	C=complex((REALMAX-REALMIN)/640.*i+REALMIN,
-		   IMAGMAX-(IMAGMAX-IMAGMIN)/480.*j);
+	C=complex((REALMAX-REALMIN)/ maxx *i+REALMIN,
+		   IMAGMAX-(IMAGMAX-IMAGMIN)/ maxy *j);
 	ITERACION=0;
 
 	Z=0;
@@ -54,7 +56,7 @@ cleardevice();
 	   Z=Z*Z+C; //cambiar aqui la ecuacion
 
 	  ITERACION++;
-	  if( norm(Z) > DIVERGE)break;
+	  if( abs(Z) > DIVERGE)break;
 	  }while( ITERACION<ITERMAX );
 
 	if(ITERACION!=ITERMAX)putpixel(i,j,ITERACION+50);
@@ -63,9 +65,9 @@ cleardevice();
 
 
 getch();
+setcolor(GREEN);
+printf("<< Mandel 2.0 >>\n");
+printf("Programmed by Jose Luis De la Cruz Lazaro\n\n\n\n\n\n\n\n\n");
 closegraph();
-textcolor(GREEN);
-cprintf("<< Mandel 1.0 >>");
-cprintf("programado por Jos‚ Luis De la Cruz L zaro");
-
+return 1;
 }
