@@ -1,16 +1,18 @@
 /***********************************************************************
- ::: GRAFICADOR DE FUNCIONES 3D :::
+ ::: 3D FUNCTION PLOTTER :::
 
- Rota una superficie 3D z=f(x,y) aleatoriamente alrededor de cada uno
- de los tres ejes (X,Y,Z), modelando esta función como una estructura
- alámbrica (como una malla o cuadrícula..)
+Rotates a 3D surface z=f(x,y) randomly around each of the three axes (X,Y,Z),
+modeling this function as a wireframe (like a mesh or grid...)
 
-  >> Versión 1.1 20-VII-2000
+>> Version 2 - 25-III-2024
+- Update graphics/graf3d2 - Porting to VC++ 2017 using winbgi
+
+>> Versión 1.1 - 20-VII-2000  
  Optimización de los algoritmos de dibujo de la versión 1.0 .
  Algunas nuevas superficies matemáticas 3D.
 
-  >> Versión 1.0 15-V-2000
-  Primera Versión.
+>> Versión 1.0 - 15-V-2000
+   - First version for Borland C++ 3.1 and Turbo C 3.0
 
  :::Programado por:::
  José Luis De La Cruz Lázaro
@@ -21,12 +23,12 @@
 
 ***********************************************************************/
 
-#include "iostream.h"
+//#include "iostream.h"
 #include "graphics.h"
 #include "conio.h"
-#include "math.h"
-#include "dos.h"//delay()
-#include "stdlib.h"//srand(), random()
+//#include "math.h"
+//#include "dos.h"//delay()
+//#include "stdlib.h"//srand(), random()
 #include "time.h" //time()
 
  double ox,oy,ix,iy,jx,jy,ky;
@@ -46,7 +48,7 @@ void DibujarEjes()
 //del rayo en el CRT( Tubo de rayos cat¢dicos del monitor).
 //Es conveniente ejecutarlo antes de dibujar en una animaci¢n
 //para asegurar que los cambios se hagan durante el retrace del rayo
-void WaitRetrace()
+/*void WaitRetrace()
 {
   _DX = 0x03DA;
 
@@ -61,7 +63,7 @@ void WaitRetrace()
 	and al,0x08;
 	jz  l2;
       }
-}
+}*/
 
 //se obtiene los valores de los angulos
 double tsen=0.099833, //sen(0.1)
@@ -90,12 +92,12 @@ void main()
 
  double x,y,z;
 
- int gd=DETECT,gm;
- initgraph(&gd,&gm,"");
+ // Init WinBGI window
+ initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
 
 // DibujarEjes();
 
- const Xn=25,Yn=25;
+ const int Xn=25,Yn=25;
 
  int Malla[Xn][Yn][2];
  double Superficie[Xn][Yn][3];
