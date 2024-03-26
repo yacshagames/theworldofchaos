@@ -1,10 +1,16 @@
 /*********************************************************************
-GRAF3D - 15 de Mayo del 2000
- Rota una superficie 3D z=f(x,y) aleatoriamente alrededor de cada
- uno de los tres ejes, modelando esta funcion como una estructura
- al mbrica (como una malla o cuadr¡cula..)
+GRAF3D
 
-programado por:
+ >> Version 2 - 25-III-2024
+- Update graphics/graf3d1 - Porting to VC++ 2017 using winbgi
+
+ >> Version 1.0 - 15-V-2000
+ - First version for Borland C++ 3.1 and Turbo C 3.0
+ - Rota una superficie 3D z=f(x,y) aleatoriamente alrededor de cada
+   uno de los tres ejes, modelando esta funcion como una estructura
+   al mbrica (como una malla o cuadr¡cula..)
+
+Programmed by:
  JOSE LUIS DE LA CRUZ LAZARO
 
   UNIVERSIDAD NACIONAL DE INGENIERIA
@@ -20,12 +26,12 @@ Pagina Web ( EL MUNDO DEL CAOS ):
 Pagina Recomendada para consultar sobre el tema:
  http://www.upv.es/protel/usr/jotrofer/graficos/3d.htm
 *********************************************************************/
-#include "iostream.h"
+//#include "iostream.h"
 #include "graphics.h"
 #include "conio.h"
-#include "math.h"
-#include "dos.h"//delay()
-#include "stdlib.h"//srand(), random()
+//#include "math.h"
+//#include "dos.h"//delay()
+//#include "stdlib.h"//srand(), random()
 #include "time.h" //time()
 
  double ox,oy,ix,iy,jx,jy,ky;
@@ -45,7 +51,7 @@ void DibujarEjes()
 //del rayo en el CRT( Tubo de rayos cat¢dicos del monitor).
 //Es conveniente ejecutarlo antes de dibujar en una animaci¢n
 //para asegurar que los cambios se hagan durante el retrace del rayo
-void WaitRetrace()
+/*void WaitRetrace()
 {
   _DX = 0x03DA;
 
@@ -60,7 +66,7 @@ void WaitRetrace()
 	and al,0x08;
 	jz  l2;
       }
-}
+}*/
 
  //Aceleradores de calculos trigonometricos
  //esto se hace para no emplear las funciones sin() y cos() 
@@ -118,12 +124,12 @@ void main()
 
  double x,y,z;
 
- int gd=DETECT,gm;
- initgraph(&gd,&gm,"");
+ // Init WinBGI window
+ initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
 
  //DibujarEjes();
 
- const Xn=25,Yn=25; //ancho y alto de cuadricula ( Malla )
+ const int Xn=25,Yn=25; //ancho y alto de cuadricula ( Malla )
 
  int Malla[Xn][Yn][2]; //Malla 2D de proyeccion de la superficie en la pantalla
  double Superficie[Xn][Yn][3]; //Malla 3D de puntos originales
