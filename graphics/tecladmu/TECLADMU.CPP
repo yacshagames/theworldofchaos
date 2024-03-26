@@ -1,6 +1,10 @@
 /*********************************************************************
- TECLADO Musical
- Se simula un teclado musical utilizando el teclado del computador.
+Musical KEYBOARD
+
+A musical keyboard is simulated using the computer keyboard.
+ 
+>> Version 2 - 25-III-2024
+- Update graphics/tecladmu - Porting to VC++ 2017 using winbgi
 
 - Versi¢n 1.4 - 17 Julio del 2000
   Se actualiza y optimiza los fuentes de la versi¢n anterior.
@@ -30,12 +34,14 @@ Pagina Web ( EL MUNDO DEL CAOS ):
  http://www.geocities.com/joseluisdl
 *********************************************************************/
 
-#include"dos.h"
-#include"ctype.h"
-#include"conio.h"
-#include"math.h"
-#include"stdio.h"
-#include"graphics.h"
+//#include"dos.h"
+//#include"ctype.h"
+//#include"conio.h"
+//#include"math.h"
+//#include"stdio.h"
+#include "graphics.h"
+#include <string>
+using std::string;
 
 void pinta_tecla( int accion, int octava, int nota)
 {
@@ -133,9 +139,10 @@ void tocar( int octava, int nota)
  //frecuencia=frecuenciaAcumulada+f*2^(octava-4)
  frecuencia+=f*pow(2,octava-4);
 
-   sound(frecuencia);
-   delay(200);
-   nosound();
+   //sound(frecuencia);
+   // delay(200);
+   //nosound();
+	Beep(frecuencia, 200);
 
  pinta_tecla(0,octava,nota);//borra el circulo rojo
 
@@ -143,7 +150,7 @@ void tocar( int octava, int nota)
 
  setcolor(14);
 
- char *Nota;
+ string Nota;
 
  switch(nota)
  {
@@ -162,7 +169,7 @@ void tocar( int octava, int nota)
 
  }
 
- outtext(Nota);
+ outtext(Nota.c_str());
  outtext(" ");
 }
 
@@ -230,27 +237,27 @@ void PintarTeclado()
 
  //PINTA TEXTO INFORMATIVO Y COPYRIGHT
  setfillstyle(1,16); //16=BLANCO
- outtextxy(10,140,"NOTAS TOCADAS:");
+ outtextxy(10,140,"NOTES PLAYED:");
  moveto(10,160);
 
  settextstyle(3, HORIZ_DIR, 3);
  setcolor(2);
- outtextxy(10,110,"TECLADO Musical *** Versi¢n 1.4");
+ outtextxy(10,110,"Musical Keyboard *** Version 2");
 
  settextstyle(7, HORIZ_DIR, 2);
  setcolor(3);
- outtextxy(100,430,"Esta es una producci¢n m s de:");
+ outtextxy(100,430,"This is another production made by:");
  setcolor(12);
- outtextxy(300,450,"Jos‚ Luis De la Cruz L zaro");
- settextstyle(11, HORIZ_DIR, 2);
+ outtextxy(300,450,"Jose Luis De la Cruz Lazaro");
+ //settextstyle(11, HORIZ_DIR, 2);
 
 }
 
-void main()
+int main()
 {
 
- int gd=DETECT,gm;
- initgraph(&gd,&gm,"");
+ // Init WinBGI window
+ initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
 
  PintarTeclado();
 
@@ -264,6 +271,8 @@ void main()
  }while( tecla1!=27 );//Se toca el teclado hasta que se presione ESCAPE
 
  closegraph();
+
+ return 1;
 
 }
 
