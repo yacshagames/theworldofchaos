@@ -1,15 +1,31 @@
 /****************************************************************************
-GAMMA Versi¢n 1.1
+GAMMA
 
-Grafica la funcion gamma(x) de Euler, tambien se puede utilizar la funcion
-gamma(x) para calcular la gamma de cualquier numero.
+Plot Euler's gamma(x) function, you can also use the gamma(x)
+function to calculate the gamma of any number.
 
-JOSE LUIS DE LA CRUZ LAZARO UNI-FIEE - 26/06/99
-ramondc@hotmail.com
+Programmed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+ HISTORY...
+
+ >> Version 2 - 26-III-2024
+	- Update graphics/gamma - Porting to VC++ 2017 using winbgi
+
+>> Version 1.1 - 26-VI-1999
+	- First version for Borland C++ 3.1 and Turbo C 3.0
+
 ****************************************************************************/
 
-#include "iostream.h"
-#include "conio.h"
+//#include "iostream.h"
+//#include "conio.h"
+#include "graphics.h"
 #include "grafxy.h"
 
 long double n;
@@ -55,10 +71,10 @@ double gamma(long double r)
 
 }
 
-void main()
+int main()
 {
-//Busca los archivos graficos en la ruta especificada (Ruta de la carpeta bgi)
-autoini("c:\\bc31\\bgi");
+// Init WinBGI window
+initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
 
 //Coordenadas de las esquinas del plano cartesiano de la pantalla
 // R( xmin, xmax, ymin, ymax)
@@ -75,4 +91,6 @@ R.punto(x,gamma(x),11);
 
 getch();
 closegraph();
+
+return 1;
 }
