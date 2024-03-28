@@ -1,23 +1,30 @@
 /***********************************************************************
- ::: TRIANGULO EN MOVIMIENTO :::
+ ::: MOVING TRIANGLE :::
+
+ Plots a triangle in a 3D system on the screen rotating
+ around the axe Z. Its initial coordinates are read from a text file.
+ 
+  >> Version 2 - 26-III-2024
+	- Update graphics/triangul - Porting to VC++ 2017 using winbgi
+
   >> Versión 1.0 14-X-2000
- Grafica un triángulo en un sistema 3D en pantalla rotando aleatoriamente
- alrededor de los ejes. Sus coordenadas iniciales son leidas
+ Grafica un triángulo en un sistema 3D en pantalla rotando
+ alrededor del eje Z. Sus coordenadas iniciales son leidas
  desde un archivo de texto.
 
  :::Programado por:::
- José Luis De La Cruz Lázaro
- YACSHA - Software & Desing 2002
-  >> yacsha@elmundodelcaos.tk    
-  >> www.elmundodelcaos.tk -> EL MUNDO DEL CAOS - Unlimited Programming
-  >> www.foros3d.tk  -> Foros de discusión  Flash/ActionScript - C/C++
+ Jose Luis De La Cruz Lazaro
+ YACSHA - Software & Desing
+  >> ramondc@hotmail.com    
+  >> EL MUNDO DEL CAOS - Unlimited Programming  
 
 ***********************************************************************/
-#include <graphics.h>
-#include <math.h>
-#include <dos.h>
-#include <conio.h>
-#include <stdio.h>
+
+#include "graphics.h"
+//#include <math.h>
+//#include <dos.h>
+//#include <conio.h>
+//#include <stdio.h>
 
 //Contiene la posici¢n de un punto en el plano XY
 struct punto
@@ -28,14 +35,14 @@ struct punto
 
 void DibujarTriangulo( punto *P )
 {
- for( int i=1;i<3;i++)
- {
-  moveto( P[i].x, P[i].y );
-  lineto( P[i+1].x, P[i+1].y );
- }
-  moveto( P[i].x, P[i].y );
-  lineto( P[1].x, P[1].y );
-
+	int i;
+	for (i = 1; i < 3; i++)
+	{
+		moveto(P[i].x, P[i].y);
+		lineto(P[i + 1].x, P[i + 1].y);
+	}
+	moveto(P[i].x, P[i].y);
+	lineto(P[1].x, P[1].y);
 }
 
 int LeerPuntos( punto *P )
@@ -46,7 +53,7 @@ int LeerPuntos( punto *P )
  if( (puntos = fopen("puntos.dat","r") )==NULL )
   return 0; //si no encuentra el archivo retorna cero
 
-  printf("Datos de las coordenadas del tri ngulo, obtenidas del archivo puntos.dat: \n\n");
+  printf("Triangle coordinate data, obtained from the points.dat file:\n\n");
 
  int i;
  for( i=0; i<4; i++)
@@ -54,23 +61,23 @@ int LeerPuntos( punto *P )
   fscanf(puntos, "%i %i", &P[i].x, &P[i].y );
 
   if( i==0 )
-   printf("Punto Pivote: ( %i, %i)\n",P[i].x, P[i].y);
+   printf("Pivot Point: ( %i, %i)\n",P[i].x, P[i].y);
   else
-   printf("Vertice %i   : ( %i, %i)\n", i, P[i].x, P[i].y);
+   printf("Vertex %i   : ( %i, %i)\n", i, P[i].x, P[i].y);
  }
 
  fclose(puntos);
 
- printf("\nPresione cualquier tecla para continuar...");
-
- getch();
+ printf("\nEnter 1 to continue : ");
+ int opt;
+ scanf("%i", &opt);
 
  return 1;
 
 }
 
 
-void main()
+int main()
 {
 
  punto P[4];
@@ -81,13 +88,11 @@ void main()
  if( !LeerPuntos( P ) )
  {
   printf("El archivo puntos.dat no existe!!!");
-  return;
+  return 0;
  }
-
-
- //Inicia el modo grafico
- int gd=DETECT,gm;
- initgraph(&gd,&gm,"");
+ 
+ // Init WinBGI window
+ initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
 
 // punto P[4]={{320,240},{50,220},{130,330},{250,100}};
 
@@ -113,6 +118,8 @@ void main()
  }
 
  closegraph();
+
+ return 1;
 
 }
 
