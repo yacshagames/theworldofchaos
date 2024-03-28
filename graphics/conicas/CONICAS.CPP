@@ -1,24 +1,35 @@
 /*********************************************************************
-CONICAS - 15 de Mayo del 2000
-Programa que grafica cónicas en su forma general
+CONICS
+Program that plots conics in their general form
+AX^2+BXY+CY^2+DX+EY+F=0
 
-programado por:
+Programmed by:
  JOSE LUIS DE LA CRUZ LAZARO
 
   UNIVERSIDAD NACIONAL DE INGENIERIA
-  Facultad de Ingenier¡a El‚ctrica y Electr¢nica
-  Lima-Per£
+  Faculty of Electrical and Electronic Engineering
+  Lima-Peru
 
 correos:
- jcruz@ec-red.com
  ramondc@hotmail.com 
-Pagina Web ( EL MUNDO DEL CAOS ):
- http://www.geocities.com/joseluisdl
+Pagina Web ( EL MUNDO DEL CAOS )
+
+ HISTORY...
+
+ >> Version 2 - 26-III-2024
+	- Update graphics/conicas - Porting to VC++ 2017 using winbgi
+
+>> Version 1 - 15-V-1999
+	- First version for Borland C++ 3.1 and Turbo C 3.0
+
 *********************************************************************/
-#include "iostream.h"
-#include "math.h"
-#include "conio.h"
+
+#include "graphics.h"
+#include <iostream>
+//#include "math.h"
+//#include "conio.h"
 #include "grafxy.h"
+using namespace std;
 
 void main()
 {
@@ -27,8 +38,8 @@ void main()
 
  double A,B,C,D,E,F;
 
-  cout<<"\tConica General de la forma AX^2+BXY+CY^2+DX+EY+F=0";
-  cout<<"\n\nIngrese los coeficientes de la c¢nica:";
+  cout<<"\tGeneral Conic Shape PLOTTER: AX^2+BXY+CY^2+DX+EY+F=0";
+  cout<<"\n\nEnter the coefficients of the conic:";
   cout<<"\nA: ";
   cin>>A;
   cout<<"B: ";
@@ -42,10 +53,8 @@ void main()
   cout<<"F: ";
   cin>>F;
 
-//ruta de la carpeta bgi de tu compilador (controladores graficos)
-//si se deja vacio ("") busca el controlador bgi en la misma carpeta
-//del ejecutable de este programa
- autoini(""); 
+ // Init WinBGI window
+ initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
 
  CRegionXY R(-10, //xminino
 	     10,  //xmaximo

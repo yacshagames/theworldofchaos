@@ -1,14 +1,16 @@
 /*********************************************************************
 GRAFXY.H
-Su uso se centra en la grafica de puntos y figuras en la pantalla,
-principalmente de "graphics.h", pero tomando a la pantalla
-como si fuera el plano cartesiano.
+
+Grafica puntos de una funci¢n en la pantalla, en la regi¢n del plano
+cartesiano especificada.
+Se toma a la pantalla como si fuera la regi¢n del plano cartesiano
+especificada.
 
 programado por:
  JOSE LUIS DE LA CRUZ LAZARO
 correos:
  jcruz@ec-red.com
- ramondc@hotmail.com 
+ ramondc@hotmail.com
 Pagina Web ( EL MUNDO DEL CAOS ):
  http://www.geocities.com/joseluisdl
 
@@ -16,7 +18,18 @@ NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
 	TODA CONFIANZA; PERO NO VAYA A BORRAR NADA DE LO QUE YA
 	ESTA ECHO!!!!!!
 
-Versi¢n 1.7 -> 15/Mayo/2000
+>> Version 2 - 26-III-2024
+	- Update graphics/gxydemo - Porting to VC++ 2017 using winbgi
+	- grafxy and grafxya they are merged in grafxy, for better maintenance
+	- Added define USING_RSF that allows including or excluding the rsf.h
+	  library. If rsf.h is not needed, its definition can be ignored. 
+
+Version 1.8 -> 24-Agosto-2000
+-Se arregla parcialmente el error de que cuando la funci¢n se salia de la ventana
+ marco y despues volvia entrar, se unia con una linea el punto de salida
+ y el punto de entrada.
+
+Version 1.7 -> 15/Mayo/2000
 -Se dividio grafxy en:
  grafxy (grafxy basico) que contiene las funciones mas usadas.
  grafxya (grafxy avanzado) que contiene funciones que complementan a grafxy
@@ -26,6 +39,15 @@ Versi¢n 1.7 -> 15/Mayo/2000
  transformacion creando constantes ( ki, kj ).
 -La funcion CFungraf pasa a formar parte de grafxya
 
+Version 1.65 -> 20/09/1999
+- Graficar function is added: It allows graphing a function on the drawn axes,
+  this function is processed from a text string using the syntactic
+  function recognizer rsf.h
+- conver function is added: Converts a vector R of real coordinates to a vector M 
+  of integer coordinates, relative to the screen size
+- punto function is improved: Which now works with vectors: Draw a point that 
+  represents point P in the rectangular region specified by II and SD
+  and paints it the color specified in color
 
 Version 1.6 -> 11/08/1999
 -Se modifica la clase CRegionXY, a¤adiendo las variables miembro
@@ -62,10 +84,12 @@ Funcion:
 Version 1.0 -> 26/11/98
 
 **********************************************************************/
-#ifndef __GRAPHICS_H
-#include <graphics.h>
+//#include "graphics.h"
+#include "vector.h"
+
+#ifdef USING_RSF
+#include "rsf.h"
 #endif
-#include <stdio.h>
 
 #define CONECTAR 1
 #define NOCONECTAR 0
@@ -128,7 +152,14 @@ public:
 
 	//Funciones Miembro
 	void transfor( int &i, int &j, double x, double y);
-	void punto(double x,double y,char color, char conectar);
+	vector conver(vector P);
+	vector converl(vector R);
+	void punto(vector P, char color, char conectar);
+	void punto(double x, double y, char color, char conectar);
+	void punto(double x, double y, int color, double minX, double maxX, double minY, double maxY);
+#ifdef USING_RSF
+	void Graficar(char* Formula, char conectar, char color, float Particion);
+#endif
 	void Ejes();
 
 };//fin de la clase CRegionXY
@@ -142,98 +173,168 @@ void CRegionXY::transfor( int &i, int &j, double x, double y)
    j = Jmax-(y-Ymin)*kj+1;//Transformaci¢n de real a entero y-->j
 }
 
-//Grafica el PUNTO (x,y) en coordenadas reales sobre la region
-//rectangular de la PANTALLA de coordenadas (Xmin,Ymax, Xmax,Ymin)
-void CRegionXY::punto(double x, double y, char color, char conectar = 0)
+
+//Convierte un vector R de coordenadas reales a un vector M de
+//coordenadas enteras, relativas al tama¤o de la pantalla
+//II=(0,0) SD=(getmaxx,getmaxy)
+//      |          |
+//    entero      entero
+//
+//Donde la pantalla representara a una regi¢n rectangular R donde
+//las esquinas son los vectores de coordenadas reales II y SD;
+//II=InferiorIzquierda de la pantalla
+//SD=SuperiorDerecha de la pantalla
+//En resumen la Region R se transforma a una region rectangular W pero
+//de coordenadas enteras que encaja en la pantalla
+
+/*
+vector CRegionXY::conver(vector P)
 {
- int i,j;
- transfor( i, j, x, y);
 
- if( Imin< i && i< Imax && Jmin< j && j< Jmax) //para que no se pinte fuera de la ventana marco
- {
-  if( conectar )
-   {
-    if(getcolor()!=color)moveto(i,j);
-    setcolor(color);
-    lineto(i,j); //conecta los puntos con una linea
-   }
-  else
-   putpixel( i, j, color);  //pinta el punto en pantalla
+return vector( (P.x-Xmin)*getmaxx()/(Xmax-Xmin)+1, 	//Conversion de real a entero x-->m
+		getmaxy()-(P.y-Ymin)*getmaxy()/(Ymax-Ymin)+1 );//Conversion de real a entero y-->n
+}
+*/
 
- }
+vector CRegionXY::conver(vector P)
+{
+
+	return vector((P.x - Xmin)*(Imax - Imin) / (Xmax - Xmin) + Imin + 1, 	//Conversion de real a entero x-->m
+		Jmax - (P.y - Ymin)*(Jmax - Jmin) / (Ymax - Ymin) + 1);//Conversion de real a entero y-->n
+}
+
+
+vector CRegionXY::converl(vector R)
+{
+	vector M;
+	M = conver(R);
+	M = vector(M.x, getmaxy() - M.y);
+
+	return M;
+}
+
+//Grafica un punto que representa al punto P en la region rectangular
+//especificada por II y SD y lo pinta del color especificado en color
+
+void CRegionXY::punto(vector P, char color, char conectar = 0)
+{
+	vector M = conver(P);
+
+	if (Imin < M.x && M.x < Imax && Jmin < M.y && M.y < Jmax) //para que no se pinte fuera de la ventana marco
+	{
+		if (conectar)
+		{
+			if (getcolor() != color)moveto(M.x, M.y);
+			setcolor(color);
+			lineto(M.x, M.y); //conecta los puntos
+		}
+		else
+			putpixel(M.x, M.y, color);  //grafica la funcion en pantalla
+
+	}
 
 }
+
+void CRegionXY::punto(double x, double y, char color, char conectar = 0)
+{
+	punto(vector(x, y), color, conectar);
+}
+
+
+//Igual que la funcion anterior pero sin vectores
+//Grafica un punto en la pantalla pero tomando coordenadas reales (x,y)
+//y un color especificado en color, donde su dominio es la region
+//rectangular de esquinas:
+//inferior izquierda (minX,minY) hasta superior derecha (maxX,maxY)
+
+void CRegionXY::punto(double x, double y, int color, double minX, double maxX, double minY, double maxY) {
+	//Se establece las particiones de la pantalla (RANGO DE VISION DE LA FUNCION)
+	//desde (minX,minY) hasta (maxX,maxY)
+	int m, n;
+
+	m = (x - minX)*getmaxx() / (maxX - minX) + 1; 	//Conversion de real a entero x-->m
+	n = getmaxy() - (y - minY)*getmaxy() / (maxY - minY) + 1;//Conversion de real a entero y-->n
+
+	putpixel(m, n, color);  //grafica la funcion en pantalla
+
+}
+
+#ifdef USING_RSF
+void CRegionXY::Graficar(char* Formula, char conectar = 0, char color = 9, float Particion = 0.01)
+{
+
+	float x, y;
+
+	CFuncad funcion(Formula, "X");
+	//Funcion a graficar y=f(x)
+
+	for (x = Xmin; x < Xmax; x += Particion)
+	{
+		y = funcion.f(x);
+		if (!funcion.error)
+			punto(vector(x, y), color, conectar);
+		else punto(vector(x, y), GREEN, conectar);
+	}
+
+}
+#endif
 
 void CRegionXY::Ejes()
 {
-//Se grafican los ejes cartesianos
-//vector M = transfor(vector(0,0));
-setcolor(14);
-int x, y;
-transfor( x, y, 0, 0);
+	//Se grafican los ejes cartesianos
+	vector M = conver(vector(0, 0));
+	setcolor(14);
+	int x = (int)M.x, y = (int)M.y;
 
-line(x, Jmin, x, Jmax); //eje y
-line(Imin,y-1,Imax,y-1); // eje x
 
-char str[18];
+	line(x, Jmin, x, Jmax); //eje y
+	line(Imin, y - 1, Imax, y - 1); // eje x
 
-int i;
-float num;
+	char str[18];
 
-setcolor(15);
+	int i;
+	float num;
 
-for(i=0;i<20;i++)
-{
-//Eje Y
-num = Ymin + ( Ymax-Ymin )/20*i;
-//gcvt(num, 6, str);
-sprintf(str,"%g",num);
+	setcolor(15);
 
-transfor( x, y, 0, num);
+	for (i = 0; i < 20; i++)
+	{
+		//Eje Y
+		num = Ymin + (Ymax - Ymin) / 20 * i;
+		//gcvt(num, 6, str);
+		sprintf(str, "%g", num);
 
-fillellipse( x, y, 2, 1);
-outtextxy(x, y, str);
+		M = conver(vector(0, num));
+		x = (int)M.x;
+		y = (int)M.y;
 
- if(i%2)
- {
- //Eje X
- num = Xmin + ( Xmax-Xmin )/20*i;
-// gcvt(num, 6, str);
- sprintf(str,"%g",num);
- transfor( x, y, num, 0);
+		fillellipse(x, y, 2, 1);
+		outtextxy(x, y, str);
 
- fillellipse( x, y, 1, 3);
- outtextxy(x, y-10, str);
- }
+		if (i % 2)
+		{
+			//Eje X
+			num = Xmin + (Xmax - Xmin) / 20 * i;
+			// gcvt(num, 6, str);
+			sprintf(str, "%g", num);
+			M = conver(vector(num, 0));
+			x = (int)M.x;
+			y = (int)M.y;
 
-}
+			fillellipse(x, y, 1, 3);
+			outtextxy(x, y - 10, str);
+		}
 
-}
-
-	       /*
-void CRegionXY::Graficar( char *Formula, char conectar = 0, char color = 9, float Particion = 0.01)
-{
-
-float x,y;
-
-CFuncad funcion(Formula,"X");
-//Funcion a graficar y=f(x)
-
-for(x=Xmin;x<Xmax;x+=Particion)
-{
-  y=funcion.f(x);
-  if(!funcion.error)
-  punto( vector(x,y), color, conectar);
-  else punto( vector(x,y), GREEN, conectar);
-}
+	}
 
 }
 
 
-void autoini(char *ruta)
+
+/*void autoini(char *ruta)
 {
 int gd=DETECT,gm;
 initgraph(&gd,&gm,ruta);
-}
+}*/
 
 
