@@ -17,6 +17,9 @@ Programmed by:
 
  >> Version 2 - 26-III-2024
 	- Update graphics/fourier - Porting to VC++ 2017 using winbgi
+	- The fourier series approximation with up to 15 terms is added 
+	  for the following functions: "Step Function", "sqrt(1 - t^2)", 
+	  "0.1*(t + 2)*(t + 1)* t*(t - 1)*(t - 3)" and "t^3
 
 >> Version 1 - 8-XI-1999
 	- First version for Borland C++ 3.1 and Turbo C 3.0
