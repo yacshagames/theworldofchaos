@@ -15,16 +15,16 @@
 
 ***********************************************************************/
 
-#include <graphics.h>
-#include <conio.h>
-#include <stdlib.h>
-#include <dos.h>
+#include "graphics.h"
+#include "conio.h"
+//#include <stdlib.h>
+//#include <dos.h>
 
 /****************************************************
 Rutina Residente para controlar el TECLADO utilizando
 directamente el puerto 0x60. Mediante SCANCODE.
 *****************************************************/
-
+/*
 #ifdef __cplusplus
     #define __CPPARGS ...
 #else
@@ -86,8 +86,8 @@ void DesInstalar()
 {
   _dos_setvect(0x9,IRQ9_PROC);      //Sit£a en la tabla la direcci¢n original
 }
-/*****************************FIN**************************/
-
+//*****************************FIN**************************
+*/
 
 #define diam 6
 #define mov 20
@@ -187,21 +187,21 @@ void jugador::dibujar(){
  rectangle(x,y,x+xa,y+ya);
  };
 
-void main(){
- // char tec=0;
-  int driver=DETECT, mode;
-  initgraph (&driver, &mode, "");
+int main(){
+  // char tec=0;
+  // Init WinBGI window
+  initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
   maxx=getmaxx();
   maxy=getmaxy();
   pelota ob;
   jugador j1(1),j2(2);
 
 
-  Instalar(); //Instala controlador residente
+  //Instalar(); //Instala controlador residente
 
-  while( !Tecla[0x1] )
+  while( 1/*!Tecla[0x1]*/ )
   {
-     if ( Tecla[0x1E] ) //A
+     /*if ( Tecla[0x1E] ) //A
       j1.mover(1);
      if ( Tecla[0x2C] ) //Z
       j1.mover(2);
@@ -209,7 +209,7 @@ void main(){
       j2.mover(1);
      if (Tecla[0x50])   //Abajo
       j2.mover(2);
-
+	  */
    delay(10);
    cleardevice();
    if(ob.rebotar(j1.y,j2.y))
@@ -220,7 +220,9 @@ void main(){
    j2.dibujar();
   }
 
-  DesInstalar(); //desinstala controlador residente
+ // DesInstalar(); //desinstala controlador residente
 
   closegraph();
+
+  return 1;
 }
