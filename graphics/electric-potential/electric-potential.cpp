@@ -1,19 +1,5 @@
-#include <grafxy.h>
-
-int huge func()
-{
- return 2;
-}
-
-void ModoGrafico( void )
-{
- int controlador,modo;
-
- controlador=DETECT;
- installuserdriver("Svga256",func);
- initgraph(&controlador,&modo,"c:\\bc31\\bgi");
-
-}
+#include "graphics.h"
+#include "grafxy.h"
 
 void Paleta(unsigned char r, unsigned char g, unsigned char b)
 {
@@ -30,7 +16,7 @@ void Paleta(unsigned char r, unsigned char g, unsigned char b)
 
 	cont=0;
 	cont1=0;
-
+/*
 	// El c¢digo que sigue a continuaci¢n pasa el contenido del array "Paleta"
 	//a la paleta de la VGA
 	for (cont=0;cont<256;cont++)
@@ -40,7 +26,7 @@ void Paleta(unsigned char r, unsigned char g, unsigned char b)
 			outportb (0x03c9,Paleta[cont][cont1]);
 			//cout<<Paleta
 	}
-
+	*/
 }
 
 void potenciales( CRegionXY &campo, float x, float y, float radio,
@@ -111,7 +97,8 @@ void potenciales( CRegionXY &campo, float x, float y, float radio,
 
 void main()
 {
- ModoGrafico();
+// Init WinBGI window
+initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
 
  CRegionXY campo(0,10,0,10);
 
