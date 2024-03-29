@@ -22,7 +22,7 @@ NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
 	- Update graphics/gxydemo - Porting to VC++ 2017 using winbgi
 	- grafxy and grafxya they are merged in grafxy, for better maintenance
 	- Added define USING_RSF that allows including or excluding the rsf.h
-	  library. If rsf.h is not needed, its definition can be ignored. 
+	  library. If rsf.h is not needed, its definition can be ignored.
 
 Version 1.8 -> 24-Agosto-2000
 -Se arregla parcialmente el error de que cuando la funci¢n se salia de la ventana
@@ -43,9 +43,9 @@ Version 1.65 -> 20/09/1999
 - Graficar function is added: It allows graphing a function on the drawn axes,
   this function is processed from a text string using the syntactic
   function recognizer rsf.h
-- conver function is added: Converts a vector R of real coordinates to a vector M 
+- conver function is added: Converts a vector R of real coordinates to a vector M
   of integer coordinates, relative to the screen size
-- punto function is improved: Which now works with vectors: Draw a point that 
+- punto function is improved: Which now works with vectors: Draw a point that
   represents point P in the rectangular region specified by II and SD
   and paints it the color specified in color
 
@@ -99,59 +99,59 @@ class CRegionXY
 
 protected:
 
-//coordenadas de la region XY, (VALOR EN COORDENAS REALES)
-double Xmin;
-double Xmax;
-double Ymin;
-double Ymax;
+	//coordenadas de la region XY, (VALOR EN COORDENAS REALES)
+	double Xmin;
+	double Xmax;
+	double Ymin;
+	double Ymax;
 
-//VENTANA MARCO
-//coordenadas de la ventana donde se mostrara el grafico (VALOR EN PIXELES)
-int Imin;
-int Imax;
-int Jmin;
-int Jmax;
+	//VENTANA MARCO
+	//coordenadas de la ventana donde se mostrara el grafico (VALOR EN PIXELES)
+	int Imin;
+	int Imax;
+	int Jmin;
+	int Jmax;
 
-double ki,kj; //constanstes utilizadas en la transformacion
+	double ki, kj; //constanstes utilizadas en la transformacion
 
 public:
-//constructor
+	//constructor
 	CRegionXY(double XMIN, double XMAX, double YMIN, double YMAX)
 	{
-	Xmin=XMIN;
-	Xmax=XMAX;
-	Ymin=YMIN;
-	Ymax=YMAX;
-	Imin=0;
-	Imax=getmaxx();
-	Jmin=0;
-	Jmax=getmaxy();
-	ki=(Imax-Imin)/(Xmax-Xmin);
-	kj=(Jmax-Jmin)/(Ymax-Ymin);
+		Xmin = XMIN;
+		Xmax = XMAX;
+		Ymin = YMIN;
+		Ymax = YMAX;
+		Imin = 0;
+		Imax = getmaxx();
+		Jmin = 0;
+		Jmax = getmaxy();
+		ki = (Imax - Imin) / (Xmax - Xmin);
+		kj = (Jmax - Jmin) / (Ymax - Ymin);
 	}
 
 	CRegionXY(double XMIN, double XMAX, double YMIN, double YMAX,
-		  int IMIN,int JMIN, int IMAX, int  JMAX)
+		int IMIN, int JMIN, int IMAX, int  JMAX)
 	{
-	Xmin=XMIN;
-	Xmax=XMAX;
-	Ymin=YMIN;
-	Ymax=YMAX;
-	Imin=IMIN;
-	Jmin=JMIN;
-	Imax=IMAX;
-	Jmax=JMAX;
-	ki=(Imax-Imin)/(Xmax-Xmin);
-	kj=(Jmax-Jmin)/(Ymax-Ymin);
+		Xmin = XMIN;
+		Xmax = XMAX;
+		Ymin = YMIN;
+		Ymax = YMAX;
+		Imin = IMIN;
+		Jmin = JMIN;
+		Imax = IMAX;
+		Jmax = JMAX;
+		ki = (Imax - Imin) / (Xmax - Xmin);
+		kj = (Jmax - Jmin) / (Ymax - Ymin);
 	}
 
-	double xmin(){ return Xmin; };
-	double xmax(){ return Xmax; };
-	double ymin(){ return Ymin; };
-	double ymax(){ return Ymax; };
+	double xmin() { return Xmin; };
+	double xmax() { return Xmax; };
+	double ymin() { return Ymin; };
+	double ymax() { return Ymax; };
 
 	//Funciones Miembro
-	void transfor( int &i, int &j, double x, double y);
+	void transfor(int &i, int &j, double x, double y);
 	vector conver(vector P);
 	vector converl(vector R);
 	void punto(vector P, char color, char conectar);
@@ -167,10 +167,10 @@ public:
 //Convierte un punto de coordenadas reales (x,y) , a un pixel de
 //coordenadas enteras (i,j) respecto al origen grafico de la pantalla
 //NOTA: el valor de i y j se sobreescribiran
-void CRegionXY::transfor( int &i, int &j, double x, double y)
+void CRegionXY::transfor(int &i, int &j, double x, double y)
 {
-   i = Imin+(x-Xmin)*ki+1;//Transformaci¢n de real a entero x-->i
-   j = Jmax-(y-Ymin)*kj+1;//Transformaci¢n de real a entero y-->j
+	i = Imin + (x - Xmin)*ki + 1;//Transformaci¢n de real a entero x-->i
+	j = Jmax - (y - Ymin)*kj + 1;//Transformaci¢n de real a entero y-->j
 }
 
 
