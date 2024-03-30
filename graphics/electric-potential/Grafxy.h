@@ -8,15 +8,19 @@ especificada.
 
 programado por:
  JOSE LUIS DE LA CRUZ LAZARO
-correos:
- jcruz@ec-red.com
+correos: 
  ramondc@hotmail.com
-Pagina Web ( EL MUNDO DEL CAOS ):
- http://www.geocities.com/joseluisdl
+ Pagina Web ( EL MUNDO DEL CAOS ) 
 
 NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
 	TODA CONFIANZA; PERO NO VAYA A BORRAR NADA DE LO QUE YA
 	ESTA ECHO!!!!!!
+
+>> Version 2.1 - 30-III-2024
+	- The Grafxy class is improved to draw directly in memory, using
+	  bitmaps and putimage, instead of using the putpixel function,
+	  which is quite slow. Considerably increasing the program's
+	  performance in time
 
 >> Version 2 - 26-III-2024
 	- Update graphics/gxydemo - Porting to VC++ 2017 using winbgi
