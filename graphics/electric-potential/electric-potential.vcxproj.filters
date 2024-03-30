@@ -23,10 +23,10 @@
     <ClInclude Include="graphics.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Grafxy.h">
+    <ClInclude Include="VECTOR.H">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="VECTOR.H">
+    <ClInclude Include="Grafxy.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

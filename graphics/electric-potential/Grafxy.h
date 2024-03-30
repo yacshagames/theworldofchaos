@@ -116,18 +116,23 @@ protected:
 
 public:
 	//constructor
-	CRegionXY(double XMIN, double XMAX, double YMIN, double YMAX)
+	CRegionXY(double XMIN, double XMAX, double YMIN, double YMAX) :
+		CRegionXY::CRegionXY(XMIN, XMAX, YMIN, YMAX,
+			0, 0, getmaxx(), getmaxy())
 	{
-		Xmin = XMIN;
-		Xmax = XMAX;
-		Ymin = YMIN;
-		Ymax = YMAX;
-		Imin = 0;
-		Imax = getmaxx();
-		Jmin = 0;
-		Jmax = getmaxy();
-		ki = (Imax - Imin) / (Xmax - Xmin);
-		kj = (Jmax - Jmin) / (Ymax - Ymin);
+		/*Xmin=XMIN;
+		Xmax=XMAX;
+		Ymin=YMIN;
+		Ymax=YMAX;
+		Imin=0;
+		Imax=getmaxx();
+		Jmin=0;
+		Jmax=getmaxy();
+		ki=(Imax-Imin)/(Xmax-Xmin);
+		kj=(Jmax-Jmin)/(Ymax-Ymin);
+		*/
+	
+
 	}
 
 	CRegionXY(double XMIN, double XMAX, double YMIN, double YMAX,
@@ -143,24 +148,43 @@ public:
 		Jmax = JMAX;
 		ki = (Imax - Imin) / (Xmax - Xmin);
 		kj = (Jmax - Jmin) / (Ymax - Ymin);
+
+		bmpScreen.bmHeight = (JMAX - JMIN)+1;
+		bmpScreen.bmWidth = (IMAX - IMIN)+1;
+		bmpScreen.bmWidthBytes = sizeof(unsigned int) * bmpScreen.bmWidth;
+		bmpScreen.bmBits = new unsigned int[bmpScreen.bmHeight*bmpScreen.bmWidth];
 	}
 
-	double xmin() { return Xmin; };
-	double xmax() { return Xmax; };
-	double ymin() { return Ymin; };
-	double ymax() { return Ymax; };
+	~CRegionXY() {
+		if (bmpScreen.bmBits)
+			delete bmpScreen.bmBits;
+	}
+
+	double xmin() const { return Xmin; };
+	double xmax() const { return Xmax; };
+	double ymin() const { return Ymin; };
+	double ymax() const { return Ymax; };
 
 	//Funciones Miembro
 	void transfor(int &i, int &j, double x, double y);
-	vector conver(vector P);
+	vector conver(vector P) const;
 	vector converl(vector R);
-	void punto(vector P, char color, char conectar);
-	void punto(double x, double y, char color, char conectar);
-	void punto(double x, double y, int color, double minX, double maxX, double minY, double maxY);
+	void punto(vector P, int color, char conectar) const;
+	void punto(double x, double y, int color, char conectar) const;
+	void punto(double x, double y, int color, double minX, double maxX, double minY, double maxY) const;
 #ifdef USING_RSF
 	void Graficar(char* Formula, char conectar, char color, float Particion);
 #endif
 	void Ejes();
+
+	void draw();
+
+private:
+	void putpixel(int x, int y, int color) const;
+
+private:
+	unsigned int anchoScreen;
+	BITMAP bmpScreen;
 
 };//fin de la clase CRegionXY
 
@@ -196,7 +220,7 @@ return vector( (P.x-Xmin)*getmaxx()/(Xmax-Xmin)+1, 	//Conversion de real a enter
 }
 */
 
-vector CRegionXY::conver(vector P)
+vector CRegionXY::conver(vector P) const
 {
 
 	return vector((P.x - Xmin)*(Imax - Imin) / (Xmax - Xmin) + Imin + 1, 	//Conversion de real a entero x-->m
@@ -216,7 +240,7 @@ vector CRegionXY::converl(vector R)
 //Grafica un punto que representa al punto P en la region rectangular
 //especificada por II y SD y lo pinta del color especificado en color
 
-void CRegionXY::punto(vector P, char color, char conectar = 0)
+void CRegionXY::punto(vector P, int color, char conectar = 0) const
 {
 	vector M = conver(P);
 
@@ -235,7 +259,7 @@ void CRegionXY::punto(vector P, char color, char conectar = 0)
 
 }
 
-void CRegionXY::punto(double x, double y, char color, char conectar = 0)
+void CRegionXY::punto(double x, double y, int color, char conectar = 0) const
 {
 	punto(vector(x, y), color, conectar);
 }
@@ -247,7 +271,7 @@ void CRegionXY::punto(double x, double y, char color, char conectar = 0)
 //rectangular de esquinas:
 //inferior izquierda (minX,minY) hasta superior derecha (maxX,maxY)
 
-void CRegionXY::punto(double x, double y, int color, double minX, double maxX, double minY, double maxY) {
+void CRegionXY::punto(double x, double y, int color, double minX, double maxX, double minY, double maxY) const {
 	//Se establece las particiones de la pantalla (RANGO DE VISION DE LA FUNCION)
 	//desde (minX,minY) hasta (maxX,maxY)
 	int m, n;
@@ -255,7 +279,7 @@ void CRegionXY::punto(double x, double y, int color, double minX, double maxX, d
 	m = (x - minX)*getmaxx() / (maxX - minX) + 1; 	//Conversion de real a entero x-->m
 	n = getmaxy() - (y - minY)*getmaxy() / (maxY - minY) + 1;//Conversion de real a entero y-->n
 
-	putpixel(m, n, color);  //grafica la funcion en pantalla
+	this->putpixel(m, n, color);  //grafica la funcion en pantalla
 
 }
 
@@ -327,6 +351,17 @@ void CRegionXY::Ejes()
 
 	}
 
+}
+
+void CRegionXY::draw()
+{
+	putimage(Imin, Jmin, &bmpScreen, COPY_PUT);
+}
+
+void CRegionXY::putpixel(int x, int y, int color) const
+{
+	auto screen = (unsigned int*)bmpScreen.bmBits;		
+	screen[x + bmpScreen.bmWidth * y] = color;
 }
 
 
