@@ -6,9 +6,10 @@ JOSE LUIS DE LA CRUZ LAZARO 	UNI-FIEE 30 Nov 1999
 ramondc@hotmail.com
 Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
 **********************************************************************/
-#include <iostream.h> //cout cin
-#include <conio.h> //clrscr() getch() gotoxy() getchar() cprintf() textcolor()
-#include <math.h> //fabs() pow() sqrt()
+#include <iostream> //cout cin
+#include "graphics.h"
+#include "conio.h" //clrscr() getch() gotoxy() getchar() cprintf() textcolor()
+/*#include <math.h> //fabs() pow() sqrt()
 #include <ctype.h>// toupper()
 
 //"menu.h"
@@ -28,14 +29,48 @@ Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
 #ifndef __BIOS_H
 #include <bios.h>
 #endif
+*/
+/*
+// The standard Borland 16 colors
+#define MAXCOLORS       15
+enum colors {
+	BLACK, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN, LIGHTGRAY, DARKGRAY,
+	LIGHTBLUE, LIGHTGREEN, LIGHTCYAN, LIGHTRED, LIGHTMAGENTA, YELLOW, WHITE
+};
+*/
+using namespace std;
 
-int MENU (char *vec[],int x,int y,int dim,int puntero,int col);
+int MENU (const char *vec[],int x,int y,int dim,int puntero,int col);
 ///
 void CUADRO(int x1,int y1,int ancho,int largo,int col);
 
-Imprimir_Raiz( int iteracion, double raiz)
+void Imprimir_Raiz( int iteracion, double raiz)
 {
  cout<<"\nIteraci¢n "<<iteracion<<"\tRaiz = "<<raiz;
+}
+
+void textcolor(int color) {
+
+}
+/*
+void gotoxy(short int x, short int y)
+{
+	COORD pos = { x, y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}*/
+
+int wherex()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	return csbi.dwCursorPosition.X;
+}
+
+int wherey()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	return csbi.dwCursorPosition.Y;
 }
 
 
@@ -273,7 +308,7 @@ void Mostrar_Solucion_del_Sistema( int n, double x[10] )
    textcolor(LIGHTCYAN);
    for(int i=0;i<n;i++)
     {
-     cprintf("x[%i] = %g", i+1, x[i]);
+     printf("x[%i] = %g", i+1, x[i]);
      cout<<"\n";
     }
 }
@@ -283,12 +318,12 @@ void Mostrar_Matriz_de_Permutacion(int n, int p[10] )
 {
    cout<<"\n\n";
    textcolor(BROWN);
-   cprintf("Matriz de permutaci¢n p:");
+   printf("Matriz de permutaci¢n p:");
    cout<<"\n";
-   cprintf("p = [ ");
+   printf("p = [ ");
    for(int i=0;i<n;i++)
-     cprintf("%i ", p[i]+1);
-   cprintf("]");
+     printf("%i ", p[i]+1);
+   printf("]");
 }
 
 void Mostrar_Matrices_LU( int n, double W[10][10], int p[10] )
@@ -296,7 +331,7 @@ void Mostrar_Matrices_LU( int n, double W[10][10], int p[10] )
    int i,j;
    cout<<"\n\n";
    textcolor(LIGHTMAGENTA);
-   cprintf("Matriz L:");
+   printf("Matriz L:");
    cout<<"\n";
 
    for(i=0;i<n;i++)
@@ -314,7 +349,7 @@ void Mostrar_Matrices_LU( int n, double W[10][10], int p[10] )
 
    cout<<"\n\n";
    textcolor(WHITE);
-   cprintf("Matriz U:");
+   printf("Matriz U:");
    cout<<"\n";
    for(i=0;i<n;i++)
    {
@@ -344,7 +379,7 @@ void Ingresar_Sistema( int &n, double W[10][10] )
  {
    for(j=0;j<n;j++)
    {
-    cprintf("A[%i,%i] = ",i,j);
+    printf("A[%i,%i] = ",i,j);
     cin>>W[i][j];
    }
   cout<<"\n";
@@ -354,7 +389,7 @@ void Ingresar_Sistema( int &n, double W[10][10] )
  textcolor(LIGHTGREEN);
  for(i=0;i<n;i++)	//se ingresa los elementos de la matriz B
  {
-  cprintf("B[%i] = ",i);
+  printf("B[%i] = ",i);
   cin>>W[i][n];
  }
 }
@@ -367,11 +402,11 @@ void Visualizar_Sistema( int &n, double W[10][10] )
    cout<<"\n\nSistema Ax=B Ingresado: \n";
 
    textcolor(YELLOW);
-   cprintf("Matriz A");
+   printf("Matriz A");
 
    gotoxy(9*n,wherey());
    textcolor(LIGHTGREEN);
-   cprintf("Matriz B");
+   printf("Matriz B");
 
    cout<<"\n";
    for(i=0;i<n;i++)
@@ -380,13 +415,13 @@ void Visualizar_Sistema( int &n, double W[10][10] )
      textcolor(YELLOW);
      for(j=0;j<n;j++)
      {
-       cprintf("%g",W[i][j]);
+       printf("%g",W[i][j]);
        cout<<"\t";
      }
 
      //Imprime Matriz B
      textcolor(LIGHTGREEN);
-     cprintf("%g",W[i][n]);
+     printf("%g",W[i][n]);
 
      cout<<"\n";
     }
@@ -403,6 +438,7 @@ void Inicializar_Matriz_de_Trabajo( int &n, double W[10][10], double Wo[10][10] 
 
 void main()
 {
+	initwindow(0, 0);
 
  double x[10],W[10][10],Wo[10][10];
  int n=-1,p[10];
@@ -412,7 +448,7 @@ void main()
  //n: numero de incognitas (orden de la matriz A)
  //p: vector de permutacion
 
-    char *Metodo_Matricial[7]={
+    const char *Metodo_Matricial[7]={
    "Ingresar sistema matricial",
    "Visualizar el sistema ingresado",
    "Metodo de Gauss - Descomposici¢n LU",
@@ -421,7 +457,7 @@ void main()
    "Metodo de Gauss-Seidel",
    "Salir"}; //inicializacion del menu
 
- char opc; //definicion de variables
+ char opc=0; //definicion de variables
  clrscr();
  while(opc!=-1)
  {
@@ -429,9 +465,9 @@ void main()
   CUADRO(12,6,50,15,9);
   gotoxy( 14,8 );
   textcolor(LIGHTRED);
-  cprintf("METODOS DE SOLUCIONES DE ECUACIONES MATRICIALES");
+  printf("METODOS DE SOLUCIONES DE ECUACIONES MATRICIALES");
   textcolor(LIGHTGREEN);
-  gotoxy( 1,23 );cprintf("Utilice las flechas ARRIBA y ABAJO para desplazar el cursor sobre las opciones");
+  gotoxy( 1,23 );printf("Utilice las flechas ARRIBA y ABAJO para desplazar el cursor sobre las opciones");
   opc=MENU(Metodo_Matricial,20,11,7,-1,15);//se crea el menu de opciones
   gotoxy(1,1);
 
@@ -449,7 +485,7 @@ void main()
    case  2:
     if( n<2 ) break;
     clrscr();
-    cprintf(Metodo_Matricial[opc]);
+    printf(Metodo_Matricial[opc]);
     LU_Gauss(n,W,p);
     Calcular_Solucion_del_Sistema_LU( n, W, x, p );
     Mostrar_Solucion_del_Sistema( n, x );
@@ -460,7 +496,7 @@ void main()
    case  3:
     if( n<2 ) break;
     clrscr();
-    cprintf(Metodo_Matricial[opc]);
+    printf(Metodo_Matricial[opc]);
     LU_Pivot_Maximo( n, W, p );
     Calcular_Solucion_del_Sistema_LU( n, W, x, p );
     Mostrar_Solucion_del_Sistema( n, x );
@@ -471,7 +507,7 @@ void main()
    case  4:
     if( n<2 ) break;
     clrscr();
-    cprintf(Metodo_Matricial[opc]);
+    printf(Metodo_Matricial[opc]);
     LU_Cholesky( n, W, x );
     Mostrar_Matrices_LU( n, W, p );
     getch();
@@ -480,7 +516,7 @@ void main()
    case  5:
     if( n<2 ) break;
     clrscr();
-    cprintf(Metodo_Matricial[opc]);
+    printf(Metodo_Matricial[opc]);
     Gauss_Seidel( n, W, x);
     Mostrar_Solucion_del_Sistema( n, x );
     getch();
@@ -490,18 +526,18 @@ void main()
    case  6:
     clrscr();
     gotoxy(25,12);
-    cprintf("Esta seguro que desea salir S/N: ");
-    opc=toupper(getche());
+    printf("Esta seguro que desea salir S/N: ");
+    opc=toupper(getch());
     if( opc=='S') opc=-1;
     break;
 
    }
 
  }
-
+ closegraph();
 }
 
-int MENU (char *vec[],int x,int y,int dim,int puntero,int col)
+int MENU (const char *vec[],int x,int y,int dim,int puntero,int col)
 {
  /*Esta funcion resive unvector tipo caracter
    definido de la siguiente manera
@@ -520,42 +556,73 @@ int MENU (char *vec[],int x,int y,int dim,int puntero,int col)
  {
   for(int k=0;k<dim;k++)
   {
-   gotoxy(x,y+k);cprintf("%s",vec[k]);
+   gotoxy(x,y+k);printf("%s",vec[k]);
   }
   if(puntero!=-1 && puntero<dim){con=puntero;}
 
-  while(sal != 1)
+  while (sal != 1)
   {
-   gotoxy(x-1,y+con);cprintf(">");
+	  gotoxy(x - 1, y + con); printf(">");
 
-    textcolor(col);
-    gotoxy(x,y+con_ant);cprintf("%s",vec[con_ant]);
-    textcolor(LIGHTGREEN);
-    gotoxy(x,y+con);cprintf("%s",vec[con]);
-    con_ant=con;
+	  textcolor(col);
+	  gotoxy(x, y + con_ant); printf("%s", vec[con_ant]);
+	  textcolor(LIGHTGREEN);
+	  gotoxy(x, y + con); printf("%s", vec[con]);
+	  con_ant = con;
 
-   while(bioskey(1)==0);
-   gotoxy(x-1,y+con);cprintf(" ");
-   switch(bioskey(0))
-   {
-    case 0x11b :sal=1;con=-1;break;//ESC
-    case 0x1c0d:sal=1;break;//ENTER
-    case 0x4800:
-    con--;
-    if(con < 0)con=(dim-1);
+	  /*
+	  while (bioskey(1) == 0);
+	  gotoxy(x - 1, y + con); printf(" ");
+	  switch (bioskey(0))
+	  {
+	  case 0x11b:sal = 1; con = -1; break;//ESC
+	  case 0x1c0d:sal = 1; break;//ENTER
+	  case 0x4800:
+		  con--;
+		  if (con < 0)con = (dim - 1);
 
-    break;//Fle. Arriba
-    case 0x5000:con++;if(con > (dim-1))con=0;break;//Fle. Abajo
-   }
-   if( kbhit() ) getch();
+		  break;//Fle. Arriba
+	  case 0x5000:con++; if (con > (dim - 1))con = 0; break;//Fle. Abajo
+	  }
+	  if (kbhit()) getch();*/
+
+
+#ifdef _WIN32
+
+	  // This routine is very fast at detecting pressed keys.But it only works on Windows
+
+	  if (GetKeyState(VK_ESCAPE) & 0x8000/*Check if high-order bit is set (1 << 15)*/) {
+		  // Key ESCAPE
+		  sal = 1;
+		  con = -1;
+	  }
+	  else if (GetKeyState(VK_RETURN) & 0x8000/*Check if high-order bit is set (1 << 15)*/) {
+		  // Key RETURN
+		  sal = 1;
+	  }
+	  else if (GetKeyState(VK_UP) & 0x8000) {
+		  // Key Up
+		  con--;
+		  if (con < 0)
+			  con = (dim - 1);
+	  }
+	  else if (GetKeyState(VK_DOWN) & 0x8000) {
+		  // Key Down
+		  con++;
+		  if (con > (dim - 1))
+			  con = 0;
+	  }
+#else	
+
+
+#endif	
   }
-
   return(con);
  }
  else
  {
   printf("El menu no tiene la dimension correcta o se salio de la pantalla");
-  getche();
+  getch();
   return(con=-1);
  }
 }
@@ -574,21 +641,23 @@ void CUADRO(int x1,int y1,int ancho,int largo,int col)
   textcolor(col);
   for(int i=x1+1;i<=x1+ancho-1;i++)
   {
-   gotoxy(i,y1);cprintf("Í");
-   gotoxy(i,y1+largo);cprintf("Í");
+   gotoxy(i,y1);printf("Í");
+   gotoxy(i,y1+largo);printf("Í");
   }
   for(int k=y1+1;k<=y1+largo-1;k++)
   {
-   gotoxy(x1,k);cprintf("º");
-   gotoxy(x1+ancho,k);cprintf("º");
+   gotoxy(x1,k);printf("º");
+   gotoxy(x1+ancho,k);printf("º");
   }
-  gotoxy(x1,y1);cprintf("É");
-  gotoxy(x1,y1+largo);cprintf("È");
-  gotoxy(x1+ancho,y1+largo);cprintf("¼");
-  gotoxy(x1+ancho,y1);cprintf("»");
+  gotoxy(x1,y1);printf("É");
+  gotoxy(x1,y1+largo);printf("È");
+  gotoxy(x1+ancho,y1+largo);printf("¼");
+  gotoxy(x1+ancho,y1);printf("»");
  }
  else
  {
-  gotoxy(x1,y1);cprintf("Cuadro fuera de pantalla");getch();
+  gotoxy(x1,y1);printf("Cuadro fuera de pantalla");getch();
  }
 }
+
+
