@@ -31,59 +31,99 @@ HISTORY...
 
 **********************************************************************/
 #include <iostream> //cout cin
-#include "conio.h" //clrscr() getch() gotoxy() getchar() cprintf() textcolor()
+#include "conio.h" //clrscr() cgetch() gotoxy() textcolor()
 #include <string>
 #include <vector>
 #ifdef max
 #undef max
 #endif
-
 #include <algorithm>
-
 
 using namespace std;
 
-std::string msgMatrixNotInvertible = "The matrix is not invertible";
 
-int MENU(std::vector<std::string>& vec, int x, int y, int dim, int puntero, int col);
+class CMatrixSolvingLinearEq {
+public:
+	CMatrixSolvingLinearEq();
+	~CMatrixSolvingLinearEq();
 
-// Print a picture in console text mode
-void CUADRO(int x1, int y1, int ancho, int largo, int col);
+	void LU_Gauss();	
+	void LU_Pivot_Maximum();
+	bool LU_Cholesky();
+	bool Gauss_Seidel();
 
-void Imprimir_Raiz(int iteracion, double raiz)
+	void Calculate_LU_System_Solution();
+	void Show_System_Solution();	
+	void Show_Permutation_Matrix();	
+	void Show_LU_Matrices();	
+	bool SetNumberUnknownsVariables();
+	void Enter_System();
+	void Visualize_System();
+	bool Initialize_Work_Matrix();
+
+
+	int MENU(std::vector<std::string>& vec, int x, int y, int dim, int puntero, int col);
+
+	// Print a picture in console text mode
+	void FRAME(int x1, int y1, int ancho, int largo, int col);
+
+private:
+
+	//x: contains the solution of the system Ax=B
+	//W: Work matrix. Initially contains A|B at the end contains L\U
+	//Wo: contains the initial values of W
+	//n: number of unknowns (order of matrix A)
+	//p: permutation vector
+	int n;
+	std::vector<double> x;
+	std::vector<std::vector<double>> W, Wo;
+	std::vector<int> p;
+
+public:
+	static std::string msgMatrixNotInvertible;
+};
+
+std::string CMatrixSolvingLinearEq::msgMatrixNotInvertible = "The matrix is not invertible";
+
+CMatrixSolvingLinearEq::CMatrixSolvingLinearEq()
 {
-	cout << "\nIteration " << iteracion << "\tRoot = " << raiz;
+	// Init matrix dimension at empty matrix
+	n = 0;
+}
+
+CMatrixSolvingLinearEq::~CMatrixSolvingLinearEq()
+{
 }
 
 //////////////////////////////////////////////////////////////////////
-//ALGORITMO LU POR DESCOMPOSICION GAUSSIANA
+// LU ALGORITHM BY GAUSSIAN DECOMPOSITION
 //////////////////////////////////////////////////////////////////////
-void LU_Gauss(int n, std::vector<std::vector<double>>& W, std::vector<int>& p)
+void CMatrixSolvingLinearEq::LU_Gauss()
 {
 
 	int i, j, k;
 
-	// se inicializa p
+	// p is initialized
 	for (i = 0; i < n; i++)
 		p[i] = i;
 
-	double m; //multiplicador
+	double m; //multiplier
 	int tmp;
 
-	//Calculo de la matriz W
+	// Calculation of the matrix W
 	for (k = 0; k < n - 1; k++)
 	{
-		//se halla (el menor) j>=k tal que W[p[j]][k]!=0
+		// find (the smallest) j>=k such that W[p[j]][k]!=0
 		for (j = k; j < n; j++)
 			if (W[p[j]][k] != 0)
-			{//se intercambia los contenidos de p[k] y p[j]
+			{// the contents of p[k] and p[j] are exchanged
 				tmp = p[k];
 				p[k] = p[j];
 				p[j] = tmp;
-				break; //se encontro el j buscado
+				break; // the searched j was found
 			}
 
-		if (j == n)//no se encontro el j buscado
+		if (j == n)// the searched j was not found
 		{
 			cout << msgMatrixNotInvertible;
 			return;
@@ -99,7 +139,7 @@ void LU_Gauss(int n, std::vector<std::vector<double>>& W, std::vector<int>& p)
 		}
 	}
 
-	//existe un cero en la diagonal
+	// there is a zero on the diagonal
 	if (W[p[n - 1]][n - 1] == 0)
 	{
 		cout << msgMatrixNotInvertible;
@@ -109,25 +149,24 @@ void LU_Gauss(int n, std::vector<std::vector<double>>& W, std::vector<int>& p)
 }
 
 /////////////////////////////////////////////////////////////////////
-//ALGORITMO DE DESCOMPOSICION LU UTILIZANDO LA ESTRATRATEGIA DEL
-//PIVOTE MAXIMO
+// LU DECOMPOSITION ALGORITHM USING THE MAXIMUM PIVOT STRATEGY
 //////////////////////////////////////////////////////////////////////
-void LU_Pivot_Maximo(int n, std::vector<std::vector<double>>& W, std::vector<int>& p)
+void CMatrixSolvingLinearEq::LU_Pivot_Maximum()
 {
 
 	int i, j, k;
-	double m; //multiplicador
-	std::vector<double> d(n);	// d[i]= maximo( |Wij| ) 0<=j<n
-								// d[i] = maximo valor absoluto de los elementos de la fila i de W
+	double m; // multiplier
+	std::vector<double> d(n);	// d[i] = maximum( |Wij| ) 0<=j<n
+								// d[i] = maximum absolute value of the elements of row i of W
 
 	for (i = 0; i < n; i++)
 	{
 		p[i] = i;
 
-		//Se halla los maximos valores absolutos de cada fila y se los guarda en d[i]
+		// The maximum absolute values of each row are found and stored in d[i]
 		for (j = 0, d[i] = 0; j < n; j++)
 		{
-			m = fabs(W[i][j]);
+			m = std::abs(W[i][j]);
 			if (m > d[i]) d[i] = m;
 		}
 
@@ -142,15 +181,15 @@ void LU_Pivot_Maximo(int n, std::vector<std::vector<double>>& W, std::vector<int
 	//Calculo de la matriz W
 	for (k = 0; k < n - 1; k++)
 	{
-		//se halla (el menor) j>=k tal que
-		//fabs(W[p[j]][k])/d[p[j]] >= fabs(W[p[i]][k])/d[p[i]]
+		// find (the smallest) j>=k such that
+		//std::abs(W[p[j]][k])/d[p[j]] >= std::abs(W[p[i]][k])/d[p[i]]
 		for (j = k; j < n; j++)
 		{
 			for (i = k; i < n; i++)
-				if (fabs(W[p[j]][k]) / d[p[j]] < fabs(W[p[i]][k]) / d[p[i]]) break;
+				if (std::abs(W[p[j]][k]) / d[p[j]] < std::abs(W[p[i]][k]) / d[p[i]]) break;
 
-			if (i == n) // se encontro el j buscado
-			{//se intercambia los contenidos de p[k] y p[j]
+			if (i == n) // the searched j was found
+			{ //the contents of p[k] and p[j] are exchanged
 				i = p[k];
 				p[k] = p[j];
 				p[j] = i;
@@ -160,7 +199,7 @@ void LU_Pivot_Maximo(int n, std::vector<std::vector<double>>& W, std::vector<int
 
 		for (i = k + 1; i < n; i++)
 		{
-			m = W[p[i]][k] = W[p[i]][k] / W[p[k]][k]; // se asigna el multiplicador de la fila pivote
+			m = W[p[i]][k] = W[p[i]][k] / W[p[k]][k]; // the multiplier of the pivot row is assigned
 
 			for (j = k + 1; j <= n; j++)
 				W[p[i]][j] -= m * W[p[k]][j];
@@ -168,7 +207,7 @@ void LU_Pivot_Maximo(int n, std::vector<std::vector<double>>& W, std::vector<int
 		}
 	}
 
-	//existe un cero en la diagonal
+	// there is a zero on the diagonal
 	if (W[p[n - 1]][n - 1] == 0)
 	{
 		cout << msgMatrixNotInvertible;
@@ -177,9 +216,9 @@ void LU_Pivot_Maximo(int n, std::vector<std::vector<double>>& W, std::vector<int
 }
 
 //////////////////////////////////////////////////////////////////////
-//ALGORITMO DE DESCOMPOSICION LU UTILIZANDO EL METODO DE CHOLESKY
+// LU DECOMPOSITION ALGORITHM USING THE CHOLESKY METHOD
 //////////////////////////////////////////////////////////////////////
-bool LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>& x)
+bool CMatrixSolvingLinearEq::LU_Cholesky()
 {
 	std::vector<std::vector<double>> L(n, std::vector<double>(n));
 	double Sum, diagonalElement;
@@ -210,7 +249,7 @@ bool LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>
 		}
 	}
 
-	//  se asigna la matriz L a la matriz W
+	// assign matrix L to matrix W
 	for (j = 0; j < n; j++)
 		for (i = j; i < n; i++)
 			if (j == i)
@@ -218,7 +257,7 @@ bool LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>
 			else
 				W[i][j] = W[j][i] = L[i][j];
 
-	//sustitucion hacia adelante y hacia atras
+	// substitution forward and backward
 	std::vector<double> b(n);
 	for (k = 0; k < n; k++)
 	{
@@ -245,9 +284,9 @@ bool LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>
 }
 
 //////////////////////////////////////////////////////////////////////
-//ALGORITMO DE ITERACION DE GAUSS-SEIDEL
+// GAUSS-SEIDEL ITERATION ALGORITHM
 //////////////////////////////////////////////////////////////////////
-void Gauss_Seidel(int n, std::vector<std::vector<double>>& W, std::vector<double>& x)
+bool CMatrixSolvingLinearEq::Gauss_Seidel()
 {
 	std::vector<std::vector<double>> B(n, std::vector<double>(n));
 	std::vector<double> C(n), x_ant(n);
@@ -269,7 +308,7 @@ void Gauss_Seidel(int n, std::vector<std::vector<double>>& W, std::vector<double
 		for (i = 0; i < n; i++)
 		{
 			for (k = 0; k < n; k++)
-				x_ant[k] = x[k]; //guardo el vector anterior Xm-1=Xm
+				x_ant[k] = x[k]; // the previous vector is saved Xm-1 = Xm
 
 			Sum = 0.0;
 
@@ -292,24 +331,28 @@ void Gauss_Seidel(int n, std::vector<std::vector<double>>& W, std::vector<double
 
 	if( (deltaMax > error)==false )
 		cout << "\nThe solution CONVERGES with " << iterations << " iterations";
-	else
+	else {
 		cout << "\nThe solution DIVERGES with " << iterations << " iterations. Divergence value: " << divergenceMax;
+		return  false;
+	}
+
+	return true;
 
 }
 /*/////////////////////////////////////////////////////////////////////////////
 FUNCIONES PARA MOSTRAR LAS MATRICES:  x p L U
-x: matriz columna con las solucion del sistema Ax=B
-p: vector de permutacion del sistema
-L: matriz triangular inferior
-U: matriz triangular superior
-Nota: PLU=A
-donde P se calcula a partir de p
+x: column matrix with the solutions of the system Ax=B
+p: permutation vector of the system
+L: lower triangular matrix
+U: upper triangular matrix
+Note: PLU=A
+where P is calculated from p
 ////////////////////////////////////////////////////////////////////////////*/
-void Calcular_Solucion_del_Sistema_LU(int n, std::vector<std::vector<double>>& W, std::vector<double>& x, std::vector<int>& p)
+void CMatrixSolvingLinearEq::Calculate_LU_System_Solution()
 {
 	int j, k;
-	//se procede a calcular la matriz x
-	double Sum;  //variable que contendra la sumatoria
+	// we proceed to calculate the matrix x
+	double Sum; // variable that will contain the sum
 	for (k = n - 1; k >= 0; k--)
 	{
 		for (Sum = 0, j = k + 1; j < n; j++)
@@ -319,45 +362,42 @@ void Calcular_Solucion_del_Sistema_LU(int n, std::vector<std::vector<double>>& W
 
 }
 
-void Mostrar_Solucion_del_Sistema(int n, std::vector<double>& x)
+void CMatrixSolvingLinearEq::Show_System_Solution()
 {
 	cout << "\nSolution to the Ax=B system: \n";
 	textcolor(LIGHTCYAN);
 	for (int i = 0; i < n; i++)
-	{
-		printf("x[%i] = %g", i + 1, x[i]);
-		cout << "\n";
-	}
+		cout << "x[" << i + 1 << "] = " << x[i] << endl;
 }
 
 
-void Mostrar_Matriz_de_Permutacion(int n, std::vector<int>& p)
+void CMatrixSolvingLinearEq::Show_Permutation_Matrix()
 {
 	cout << "\n\n";
 	textcolor(BROWN);
-	printf("Permutation matrix p:");
-	cout << "\n";
-	printf("p = [ ");
+	cout << "Permutation matrix p:" << endl;
+	cout<<"p = [ ";
 	for (int i = 0; i < n; i++)
-		printf("%i ", p[i] + 1);
-	printf("]");
+		cout<< p[i] + 1 << " ";
+	cout<<"]";
 }
 
-void Mostrar_Matrices_LU(int n, std::vector<std::vector<double>>& W, std::vector<int>& p)
+void CMatrixSolvingLinearEq::Show_LU_Matrices()
 {
 	int i, j;
 	cout << "\n\n";
 	textcolor(LIGHTMAGENTA);
-	printf("Matrix L:");
-	cout << "\n";
+	cout << "Matrix L:" << endl;
 
 	for (i = 0; i < n; i++)
 	{
 		for (j = 0; j < n; j++)
 		{
-			if (j == i)cout << "1\t";
+			if (j == i)
+				cout << "1\t";
 			else
-				if (j > i)cout << "0\t";
+				if (j > i)
+					cout << "0\t";
 				else
 					cout << W[p[i]][j] << "\t";
 		}
@@ -366,14 +406,16 @@ void Mostrar_Matrices_LU(int n, std::vector<std::vector<double>>& W, std::vector
 
 	cout << "\n\n";
 	textcolor(WHITE);
-	printf("Matrix U:");
-	cout << "\n";
+	cout << "Matrix U:" << endl;
+
 	for (i = 0; i < n; i++)
 	{
 		for (j = 0; j < n; j++)
 		{
-			if (j < i) cout << "0";
-			else cout << W[p[i]][j];
+			if (j < i) 
+				cout << "0";
+			else 
+				cout << W[p[i]][j];
 			gotoxy(wherex() + 9, wherey());
 		}
 		cout << "\n";
@@ -382,39 +424,56 @@ void Mostrar_Matrices_LU(int n, std::vector<std::vector<double>>& W, std::vector
 }
 
 
-void SetNumberUnknownsVariables(int &n)
+bool CMatrixSolvingLinearEq::SetNumberUnknownsVariables()
 {
+	int _n;
 	clrscr();
 	cout << "\n\nEnter the system Ax=B :\n\n"
 		<< "Enter the number of unknowns variables: ";
-	cin >> n;//se ingresa orden de la matriz de la matriz A	
+	cin >> _n; // order of the matrix of matrix A is entered
+
+	// Resize all matrix
+	if (_n > 1) {
+		this->n = _n;
+		x.resize(n, 0.0);
+		p.resize(n, 0);
+		W.resize(n, std::vector<double>(n + 1, 0.0));
+		Wo.resize(n, std::vector<double>(n + 1, 0.0));
+	}
+	else {		
+		cout << "Error: Enter a value greater than 1!!";
+		cgetch();
+		return false;
+	}
+
+	return true;
 }
 
-void Ingresar_Sistema(int &n, std::vector<std::vector<double>>& W)
+void CMatrixSolvingLinearEq::Enter_System()
 {
 	int i, j;
 
 	cout << "\nEnter the elements of matrix A:\n";
 	textcolor(YELLOW);
-	for (i = 0; i < n; i++)	//se ingresa los elementos de la matriz A
+	for (i = 0; i < n; i++)	// enter the elements of matrix A
 	{
 		for (j = 0; j < n; j++)
 		{
-			printf("A[%i,%i] = ", i, j);
-			cin >> W[i][j];
+			cout << "A[" << i << "," << j << "] = ";
+			cin >> Wo[i][j];
 		}
 		cout << "\n";
 	}
 
 	cout << "\nEnter the elements of matrix B:\n";
 	textcolor(LIGHTGREEN);
-	for (i = 0; i < n; i++)	//se ingresa los elementos de la matriz B
+	for (i = 0; i < n; i++)	// enter the elements of matrix B
 	{
-		printf("B[%i] = ", i);
-		cin >> W[i][n];
+		cout << "B[" << i << "] = ";
+		cin >> Wo[i][n];
 	}
 }
-void Visualizar_Sistema(int &n, std::vector<std::vector<double>>& W)
+void CMatrixSolvingLinearEq::Visualize_System()
 {
 	//  textcolor(LIGHTGRAY);
 	int i, j;
@@ -423,55 +482,40 @@ void Visualizar_Sistema(int &n, std::vector<std::vector<double>>& W)
 	cout << "\n\nSystem Ax=B Entered: \n";
 
 	textcolor(YELLOW);
-	printf("Matrix A");
+	cout<<"Matrix A";
 
 	gotoxy(9 * n, wherey());
 	textcolor(LIGHTGREEN);
-	printf("Matrix B");
+	cout << "Matrix B" << endl;
 
-	cout << "\n";
-	for (i = 0; i < n; i++)
-	{
-		//Imprime Matriz A
+	for (i = 0; i < n; i++)	{
+
+		// Show Matriz A
 		textcolor(YELLOW);
 		for (j = 0; j < n; j++)
-		{
-			printf("%g", W[i][j]);
-			cout << "\t";
-		}
+			cout << W[i][j] << '\t';
 
-		//Imprime Matriz B
+		// Show Matriz B
 		textcolor(LIGHTGREEN);
-		printf("%g", W[i][n]);
-
-		cout << "\n";
+		cout << W[i][n] << endl;
 	}
 	cgetch();
 }
 
-void Inicializar_Matriz_de_Trabajo(int &n, std::vector<std::vector<double>>& W, std::vector<std::vector<double>>& Wo)
-{
-	int i, j;
-	for (i = 0; i < n; i++)
-		for (j = 0; j <= n; j++)
-			W[i][j] = Wo[i][j];
+bool CMatrixSolvingLinearEq::Initialize_Work_Matrix()
+{	
+	if (n > 1) {
+		// Init matrix W from matrix Wo
+		W = Wo;
+		return true;
+	}
+
+	return false;
 }
 
 int main()
 {
-	// Init console window with WinBGI active in console mode
-	//initwindow(0, 0);
-	//SetForegroundWindow(GetConsoleWindow());
-
-	std::vector<double> x;
-	std::vector<std::vector<double>> W, Wo;
-	std::vector<int> p;
-	int n = -1;
-	//x: contiene la solucion del sistema Ax=B
-	//W: Matriz de trabajo. Inicialmente contiene A|B al final contiene a L\U
-	//Wo: contiene los valores iniciales de W
-	//n: numero de incognitas (orden de la matriz A)
-	//p: vector de permutacion
+	CMatrixSolvingLinearEq msle;
 
 	std::vector<std::string> Metodo_Matricial = {
 	"Enter matrix system",
@@ -482,148 +526,144 @@ int main()
 	"Gauss-Seidel method",
 	"Exit" }; //menu initialization
 
-	char opc = 0; //definicion de variables
+	// Init constans project
+	char opc = 0; 
 	clrscr();
 	while (opc != -1)
 	{	
 		clrscr();
-		CUADRO(12, 6, 57, 15, 9);
+		msle.FRAME(12, 6, 57, 15, 9);
 		gotoxy(14, 8);
 		textcolor(LIGHTRED);
-		printf("MATRIX METHODS FOR SOLVING SYSTEMS OF LINEAR EQUATIONS");
+		cout << "MATRIX METHODS FOR SOLVING SYSTEMS OF LINEAR EQUATIONS";
 		textcolor(LIGHTGREEN);
 		gotoxy(42, 23); 
-		printf("Developed by Yacsha Software");
-		opc = MENU(Metodo_Matricial, 20, 11, 7, -1, 15);//se crea el menu de opciones
+		cout << "Developed by Yacsha Software";
+		opc = msle.MENU(Metodo_Matricial, 20, 11, 7, -1, 15); // create the options menu
 		gotoxy(1, 1);
-
-		if (n > 1) Inicializar_Matriz_de_Trabajo(n, W, Wo);
+		
+		
+		// Init matrix W from Wo
+		if( msle.Initialize_Work_Matrix()==false )						
+			if (opc != 0 && opc != 6)
+				continue;	// Does not execute numeric methods
+			
 
 		switch (opc)
 		{
 		case 0:
 			
-			SetNumberUnknownsVariables(n);
+			if (msle.SetNumberUnknownsVariables()) 			
+				msle.Enter_System();				
 
-			if (n > 0){
-				x.resize(n, 0.0);
-				p.resize(n, 0);
-				W.resize(n, std::vector<double>(n+1, 0.0));
-				Wo.resize(n, std::vector<double>(n+1, 0.0));
-
-			}
-			else {
-				cout << "Error: Enter a value greater than zero!!";
-				cgetch();
-				break;
-			}
-
-
-
-			Ingresar_Sistema(n, Wo);
 			break;
-		case 1:
-			if (n < 2) break;
-			Visualizar_Sistema(n, W);
+		case 1:	
+
+			msle.Visualize_System();
+
 			break;
 		case  2:
-			if (n < 2) break;
+			
 			clrscr();
 			cout << Metodo_Matricial[opc];
-			LU_Gauss(n, W, p);
-			Calcular_Solucion_del_Sistema_LU(n, W, x, p);
-			Mostrar_Solucion_del_Sistema(n, x);
-			Mostrar_Matriz_de_Permutacion(n, p);
-			Mostrar_Matrices_LU(n, W, p);
+			msle.LU_Gauss();
+			msle.Calculate_LU_System_Solution();
+			msle.Show_System_Solution();
+			msle.Show_Permutation_Matrix();
+			msle.Show_LU_Matrices();
 			cgetch();
+			
 			break;
 		case  3:
-			if (n < 2) break;
+			
 			clrscr();
 			cout << Metodo_Matricial[opc];
-			LU_Pivot_Maximo(n, W, p);
-			Calcular_Solucion_del_Sistema_LU(n, W, x, p);
-			Mostrar_Solucion_del_Sistema(n, x);
-			Mostrar_Matriz_de_Permutacion(n, p);
-			Mostrar_Matrices_LU(n, W, p);
+			msle.LU_Pivot_Maximum();
+			msle.Calculate_LU_System_Solution();
+			msle.Show_System_Solution();
+			msle.Show_Permutation_Matrix();
+			msle.Show_LU_Matrices();
 			cgetch();
+			
 			break;
 		case  4:
-			if (n < 2) break;
+			
 			clrscr();
 			cout << Metodo_Matricial[opc];
-			if( LU_Cholesky(n, W, x) )
-				Mostrar_Matrices_LU(n, W, p);
+			if(msle.LU_Cholesky() )
+				msle.Show_LU_Matrices();
 			cgetch();
-			break;
 
+			break;
 		case  5:
-			if (n < 2) break;
+
 			clrscr();
 			cout << Metodo_Matricial[opc];
-			Gauss_Seidel(n, W, x);
-			Mostrar_Solucion_del_Sistema(n, x);
+			msle.Gauss_Seidel();
+			msle.Show_System_Solution();
 			cgetch();
-			break;
 
+			break;
 		case -1:
 		case  6:
+
 			clrscr();
 			gotoxy(25, 12);
-			printf("Esta seguro que desea salir S/N: ");
+			cout << "Are you sure you want to leave Y/N?: ";
 			opc = toupper(cgetch());
-			if (opc == 'S') opc = -1;
+			if (opc == 'Y')
+				opc = -1;
+			
 			break;
-
 		}
 	}
-	//closegraph();
+	
 	return 1;
 }
 
-int MENU(std::vector<std::string>& vec, int x, int y, int dim, int puntero, int col)
-{	
+
+
+int CMatrixSolvingLinearEq::MENU(std::vector<std::string>& vec, int x, int y, int dim, int puntero, int col)
+{
 	textcolor(col);
 	int k, con;
 	for (k = 0; k < dim; k++) {
 		gotoxy(x, y + k);
-		printf("%d) %s", k + 1, vec[k].c_str());
+		cout << k + 1 << ") " << vec[k];
 	}
-	gotoxy(x, y + k+1);
+	gotoxy(x, y + k + 1);
 	cout << "Enter a option: ";
 	cin >> con;
 
-	return con-1;
+	return con - 1;
 }
 
 
 // Print a picture in console text mode
-void CUADRO(int x1, int y1, int ancho, int largo, int col)
+void CMatrixSolvingLinearEq::FRAME(int x1, int y1, int ancho, int largo, int col)
 {
-	
+
 	if (x1 >= 0 && y1 >= 0 && (x1 + ancho) <= 70 && (y1 + largo) <= 25)
 	{
 		textcolor(col);
 		for (int i = x1 + 1; i <= x1 + ancho - 1; i++)
 		{
-			gotoxy(i, y1); printf("Í");
-			gotoxy(i, y1 + largo); printf("Í");
+			gotoxy(i, y1); cout << "Í";
+			gotoxy(i, y1 + largo); cout << "Í";
 		}
 		for (int k = y1 + 1; k <= y1 + largo - 1; k++)
 		{
-			gotoxy(x1, k); printf("º");
-			gotoxy(x1 + ancho, k); printf("º");
+			gotoxy(x1, k); cout << "º";
+			gotoxy(x1 + ancho, k); cout << "º";
 		}
-		gotoxy(x1, y1); printf("É");
-		gotoxy(x1, y1 + largo); printf("È");
-		gotoxy(x1 + ancho, y1 + largo); printf("¼");
-		gotoxy(x1 + ancho, y1); printf("»");
+		gotoxy(x1, y1); cout << "É";
+		gotoxy(x1, y1 + largo); cout << "È";
+		gotoxy(x1 + ancho, y1 + largo); cout << "¼";
+		gotoxy(x1 + ancho, y1); cout << "»";
 	}
 	else
 	{
-		gotoxy(x1, y1); printf("Cuadro fuera de pantalla");
+		gotoxy(x1, y1); cout << "Box off screen";
 		cgetch();
 	}
 }
-
-
