@@ -179,10 +179,10 @@ void LU_Pivot_Maximo(int n, std::vector<std::vector<double>>& W, std::vector<int
 //////////////////////////////////////////////////////////////////////
 //ALGORITMO DE DESCOMPOSICION LU UTILIZANDO EL METODO DE CHOLESKY
 //////////////////////////////////////////////////////////////////////
-void LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>& x)
+bool LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>& x)
 {
 	std::vector<std::vector<double>> L(n, std::vector<double>(n));
-	double Sum;
+	double Sum, diagonalElement;
 	int i, j, k;
 
 	for (j = 0; j < n; j++){
@@ -190,7 +190,16 @@ void LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>
 		for (Sum = 0.0, k = 0; k < j; k++)
 			Sum += pow(L[j][k], 2);
 
-		L[j][j] = sqrt(W[j][j] - Sum);
+		diagonalElement = W[j][j] - Sum;
+
+		if (diagonalElement < 0) {
+			cout << endl << "Cholesky factorization cannot be applied on the diagonal ["
+				<< j << "," << j << "]." << endl
+				<< "Possibly matrix A is not diagonally dominant.";			
+			return false;
+		}
+
+		L[j][j] = sqrt(diagonalElement);
 
 		for (i = j + 1; i < n; i++){
 
@@ -231,7 +240,7 @@ void LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>
 		x[k] = (b[k] - Sum) / W[k][k];
 	}
 
-
+	return true;
 
 }
 
@@ -543,8 +552,8 @@ int main()
 			if (n < 2) break;
 			clrscr();
 			cout << Metodo_Matricial[opc];
-			LU_Cholesky(n, W, x);
-			Mostrar_Matrices_LU(n, W, p);
+			if( LU_Cholesky(n, W, x) )
+				Mostrar_Matrices_LU(n, W, p);
 			cgetch();
 			break;
 
