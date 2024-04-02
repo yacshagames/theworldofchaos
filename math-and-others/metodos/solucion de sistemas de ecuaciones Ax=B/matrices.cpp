@@ -23,13 +23,8 @@ Developed by:
 HISTORY...
 
   >> Version 2 - 01-IV-2024
-	- wherex, wherey, textcolor, cgetch and ckbhit functions are added
-	- Comments are added to the declaration of each function
-	- If WinBGI is not used, the 16 default colors are defined for
-	  console mode
-	- The cgetch and ckbhit functions are defined in console mode
-	  (conio.h), so as not to cause the same conflict with the WinBGI
-	  getch and kbhit functions.
+	- Code is updated and improved
+	- Comments are translated from Spanish to English
 
   >> Version 1 - 30-XI-1999
 	- First version for Borland C++ 3.1 and Turbo C 3.0
@@ -57,7 +52,7 @@ void Imprimir_Raiz(int iteracion, double raiz)
 //////////////////////////////////////////////////////////////////////
 //ALGORITMO LU POR DESCOMPOSICION GAUSSIANA
 //////////////////////////////////////////////////////////////////////
-void LU_Gauss(int n, double W[10][10], int p[10])
+void LU_Gauss(int n, std::vector<std::vector<double>>& W, std::vector<int>& p)
 {
 
 	int i, j, k;
@@ -67,6 +62,7 @@ void LU_Gauss(int n, double W[10][10], int p[10])
 		p[i] = i;
 
 	double m; //multiplicador
+	int tmp;
 
 	//Calculo de la matriz W
 	for (k = 0; k < n - 1; k++)
@@ -75,9 +71,9 @@ void LU_Gauss(int n, double W[10][10], int p[10])
 		for (j = k; j < n; j++)
 			if (W[p[j]][k] != 0)
 			{//se intercambia los contenidos de p[k] y p[j]
-				m = p[k];
+				tmp = p[k];
 				p[k] = p[j];
-				p[j] = m;
+				p[j] = tmp;
 				break; //se encontro el j buscado
 			}
 
@@ -110,7 +106,7 @@ void LU_Gauss(int n, double W[10][10], int p[10])
 //ALGORITMO DE DESCOMPOSICION LU UTILIZANDO LA ESTRATRATEGIA DEL
 //PIVOTE MAXIMO
 //////////////////////////////////////////////////////////////////////
-void LU_Pivot_Maximo(int n, double W[10][10], int p[10])
+void LU_Pivot_Maximo(int n, std::vector<std::vector<double>>& W, std::vector<int>& p)
 {
 
 	int i, j, k;
@@ -177,7 +173,7 @@ void LU_Pivot_Maximo(int n, double W[10][10], int p[10])
 //////////////////////////////////////////////////////////////////////
 //ALGORITMO DE DESCOMPOSICION LU UTILIZANDO EL METODO DE CHOLESKY
 //////////////////////////////////////////////////////////////////////
-void LU_Cholesky(int n, double W[10][10], double x[10])
+void LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>& x)
 {
 	double L[10][10], Sum;
 	int i, j, k;
@@ -226,7 +222,7 @@ void LU_Cholesky(int n, double W[10][10], double x[10])
 //////////////////////////////////////////////////////////////////////
 //ALGORITMO DE ITERACION DE GAUSS-SEIDEL
 //////////////////////////////////////////////////////////////////////
-void Gauss_Seidel(int n, double W[10][10], double x[10])
+void Gauss_Seidel(int n, std::vector<std::vector<double>>& W, std::vector<double>& x)
 {
 	double B[10][10], C[10], x_ant[10];
 	int i, j, k;
@@ -268,9 +264,9 @@ U: matriz triangular superior
 Nota: PLU=A
 donde P se calcula a partir de p
 ////////////////////////////////////////////////////////////////////////////*/
-void Calcular_Solucion_del_Sistema_LU(int n, double W[10][10], double x[10], int p[10])
+void Calcular_Solucion_del_Sistema_LU(int n, std::vector<std::vector<double>>& W, std::vector<double>& x, std::vector<int>& p)
 {
-	int i, j, k;
+	int j, k;
 	//se procede a calcular la matriz x
 	double Sum;  //variable que contendra la sumatoria
 	for (k = n - 1; k >= 0; k--)
@@ -282,7 +278,7 @@ void Calcular_Solucion_del_Sistema_LU(int n, double W[10][10], double x[10], int
 
 }
 
-void Mostrar_Solucion_del_Sistema(int n, double x[10])
+void Mostrar_Solucion_del_Sistema(int n, std::vector<double>& x)
 {
 	cout << "\nSolution to the Ax=B system: \n";
 	textcolor(LIGHTCYAN);
@@ -294,7 +290,7 @@ void Mostrar_Solucion_del_Sistema(int n, double x[10])
 }
 
 
-void Mostrar_Matriz_de_Permutacion(int n, int p[10])
+void Mostrar_Matriz_de_Permutacion(int n, std::vector<int>& p)
 {
 	cout << "\n\n";
 	textcolor(BROWN);
@@ -306,7 +302,7 @@ void Mostrar_Matriz_de_Permutacion(int n, int p[10])
 	printf("]");
 }
 
-void Mostrar_Matrices_LU(int n, double W[10][10], int p[10])
+void Mostrar_Matrices_LU(int n, std::vector<std::vector<double>>& W, std::vector<int>& p)
 {
 	int i, j;
 	cout << "\n\n";
@@ -344,14 +340,18 @@ void Mostrar_Matrices_LU(int n, double W[10][10], int p[10])
 
 }
 
-void Ingresar_Sistema(int &n, double W[10][10])
-{
-	int i, j;
 
+void SetNumberUnknownsVariables(int &n)
+{
 	clrscr();
 	cout << "\n\nEnter the system Ax=B :\n\n"
 		<< "Enter the number of unknowns variables: ";
-	cin >> n;//se ingresa orden de la matriz de la matriz A
+	cin >> n;//se ingresa orden de la matriz de la matriz A	
+}
+
+void Ingresar_Sistema(int &n, std::vector<std::vector<double>>& W)
+{
+	int i, j;
 
 	cout << "\nEnter the elements of matrix A:\n";
 	textcolor(YELLOW);
@@ -373,7 +373,7 @@ void Ingresar_Sistema(int &n, double W[10][10])
 		cin >> W[i][n];
 	}
 }
-void Visualizar_Sistema(int &n, double W[10][10])
+void Visualizar_Sistema(int &n, std::vector<std::vector<double>>& W)
 {
 	//  textcolor(LIGHTGRAY);
 	int i, j;
@@ -408,7 +408,7 @@ void Visualizar_Sistema(int &n, double W[10][10])
 	cgetch();
 }
 
-void Inicializar_Matriz_de_Trabajo(int &n, double W[10][10], double Wo[10][10])
+void Inicializar_Matriz_de_Trabajo(int &n, std::vector<std::vector<double>>& W, std::vector<std::vector<double>>& Wo)
 {
 	int i, j;
 	for (i = 0; i < n; i++)
@@ -422,8 +422,10 @@ int main()
 	//initwindow(0, 0);
 	//SetForegroundWindow(GetConsoleWindow());
 
-	double x[10], W[10][10], Wo[10][10];
-	int n = -1, p[10];
+	std::vector<double> x;
+	std::vector<std::vector<double>> W, Wo;
+	std::vector<int> p;
+	int n = -1;
 	//x: contiene la solucion del sistema Ax=B
 	//W: Matriz de trabajo. Inicialmente contiene A|B al final contiene a L\U
 	//Wo: contiene los valores iniciales de W
@@ -459,6 +461,24 @@ int main()
 		switch (opc)
 		{
 		case 0:
+			
+			SetNumberUnknownsVariables(n);
+
+			if (n > 0){
+				x.resize(n, 0.0);
+				p.resize(n, 0);
+				W.resize(n, std::vector<double>(n, 0.0));
+				Wo.resize(n, std::vector<double>(n, 0.0));
+
+			}
+			else {
+				cout << "Error: Enter a value greater than zero!!";
+				cgetch();
+				break;
+			}
+
+
+
 			Ingresar_Sistema(n, Wo);
 			break;
 		case 1:
