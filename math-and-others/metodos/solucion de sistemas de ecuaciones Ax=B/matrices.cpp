@@ -34,10 +34,16 @@ HISTORY...
 #include "conio.h" //clrscr() getch() gotoxy() getchar() cprintf() textcolor()
 #include <string>
 #include <vector>
+#ifdef max
+#undef max
+#endif
+
+#include <algorithm>
+
 
 using namespace std;
 
-std::string msgMatrixzNotInvertible = "The matrix is not invertible";
+std::string msgMatrixNotInvertible = "The matrix is not invertible";
 
 int MENU(std::vector<std::string>& vec, int x, int y, int dim, int puntero, int col);
 
@@ -79,7 +85,7 @@ void LU_Gauss(int n, std::vector<std::vector<double>>& W, std::vector<int>& p)
 
 		if (j == n)//no se encontro el j buscado
 		{
-			cout << msgMatrixzNotInvertible;
+			cout << msgMatrixNotInvertible;
 			return;
 		}
 
@@ -96,7 +102,7 @@ void LU_Gauss(int n, std::vector<std::vector<double>>& W, std::vector<int>& p)
 	//existe un cero en la diagonal
 	if (W[p[n - 1]][n - 1] == 0)
 	{
-		cout << msgMatrixzNotInvertible;
+		cout << msgMatrixNotInvertible;
 		return;
 	}
 
@@ -111,8 +117,8 @@ void LU_Pivot_Maximo(int n, std::vector<std::vector<double>>& W, std::vector<int
 
 	int i, j, k;
 	double m; //multiplicador
-	double d[10];// d[i]= maximo( |Wij| ) 0<=j<n
-		 // d[i] = maximo valor absoluto de los elementos de la fila i de W
+	std::vector<double> d(n);	// d[i]= maximo( |Wij| ) 0<=j<n
+								// d[i] = maximo valor absoluto de los elementos de la fila i de W
 
 	for (i = 0; i < n; i++)
 	{
@@ -127,7 +133,7 @@ void LU_Pivot_Maximo(int n, std::vector<std::vector<double>>& W, std::vector<int
 
 		if (d[i] == 0)
 		{
-			cout << msgMatrixzNotInvertible;
+			cout << msgMatrixNotInvertible;
 			return;
 		}
 
@@ -165,7 +171,7 @@ void LU_Pivot_Maximo(int n, std::vector<std::vector<double>>& W, std::vector<int
 	//existe un cero en la diagonal
 	if (W[p[n - 1]][n - 1] == 0)
 	{
-		cout << msgMatrixzNotInvertible;
+		cout << msgMatrixNotInvertible;
 		return;
 	}
 }
@@ -175,19 +181,21 @@ void LU_Pivot_Maximo(int n, std::vector<std::vector<double>>& W, std::vector<int
 //////////////////////////////////////////////////////////////////////
 void LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>& x)
 {
-	double L[10][10], Sum;
+	std::vector<std::vector<double>> L(n, std::vector<double>(n));
+	double Sum;
 	int i, j, k;
 
-	for (j = 0; j < n; j++)
-	{
+	for (j = 0; j < n; j++){
 
-		for (Sum = 0, k = 0; k < j; k++) Sum += pow(L[j][k], 2);
+		for (Sum = 0.0, k = 0; k < j; k++)
+			Sum += pow(L[j][k], 2);
 
 		L[j][j] = sqrt(W[j][j] - Sum);
 
-		for (i = j + 1; i < n; i++)
-		{
-			for (Sum = 0, k = 0; k < j; k++) Sum += L[i][k] * L[j][k];
+		for (i = j + 1; i < n; i++){
+
+			for (Sum = 0.0, k = 0; k < j; k++)
+				Sum += L[i][k] * L[j][k];
 
 			L[i][j] = (W[i][j] - Sum) / L[j][j];
 		}
@@ -196,22 +204,30 @@ void LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>
 	//  se asigna la matriz L a la matriz W
 	for (j = 0; j < n; j++)
 		for (i = j; i < n; i++)
-			if (j == i) W[i][i] = L[i][i];
-			else W[i][j] = W[j][i] = L[i][j];
+			if (j == i)
+				W[i][i] = L[i][i];
+			else
+				W[i][j] = W[j][i] = L[i][j];
 
-	//sustitucion hacia adelante y hacia atraz
-	double b[10];
+	//sustitucion hacia adelante y hacia atras
+	std::vector<double> b(n);
 	for (k = 0; k < n; k++)
 	{
 		Sum = 0.0;
-		for (j = 0; j < k; j++) Sum += W[k][j] * b[j];
+
+		for (j = 0; j < k; j++)
+			Sum += W[k][j] * b[j];
+
 		b[k] = W[k][n] - Sum;
 	}
 
 	for (k = n - 1; k >= 0; k--)
 	{
 		Sum = 0.0;
-		for (j = k + 1; j < n; j++) Sum += W[k][j] * x[j];
+
+		for (j = k + 1; j < n; j++)
+			Sum += W[k][j] * x[j];
+
 		x[k] = (b[k] - Sum) / W[k][k];
 	}
 
@@ -224,7 +240,9 @@ void LU_Cholesky(int n, std::vector<std::vector<double>>& W, std::vector<double>
 //////////////////////////////////////////////////////////////////////
 void Gauss_Seidel(int n, std::vector<std::vector<double>>& W, std::vector<double>& x)
 {
-	double B[10][10], C[10], x_ant[10];
+	std::vector<std::vector<double>> B(n, std::vector<double>(n));
+	std::vector<double> C(n), x_ant(n);
+
 	int i, j, k;
 
 	for (i = 0; i < n; i++)
@@ -236,9 +254,9 @@ void Gauss_Seidel(int n, std::vector<std::vector<double>>& W, std::vector<double
 		x[i] = 0;
 	}
 
-	double Sum, m;
-
-	for (m = 0; m < 10; m++)
+	double Sum, error = 1e-6, deltaMax, divergenceMax = 1e10;
+	unsigned int iterations = 0;
+	do {
 		for (i = 0; i < n; i++)
 		{
 			for (k = 0; k < n; k++)
@@ -252,7 +270,21 @@ void Gauss_Seidel(int n, std::vector<std::vector<double>>& W, std::vector<double
 				Sum += B[i][j] * x_ant[j];
 
 			x[i] = Sum + C[i];
+
+			deltaMax = 0.0;
+
+			for (k = 0; k < n; k++)
+				deltaMax = std::max(std::abs(x_ant[k] - x[k]), deltaMax);
+
 		}
+
+		iterations++;
+	} while (deltaMax > error && deltaMax < divergenceMax);
+
+	if( (deltaMax > error)==false )
+		cout << "\nThe solution CONVERGES with " << iterations << " iterations";
+	else
+		cout << "\nThe solution DIVERGES with " << iterations << " iterations. Divergence value: " << divergenceMax;
 
 }
 /*/////////////////////////////////////////////////////////////////////////////
@@ -467,8 +499,8 @@ int main()
 			if (n > 0){
 				x.resize(n, 0.0);
 				p.resize(n, 0);
-				W.resize(n, std::vector<double>(n, 0.0));
-				Wo.resize(n, std::vector<double>(n, 0.0));
+				W.resize(n, std::vector<double>(n+1, 0.0));
+				Wo.resize(n, std::vector<double>(n+1, 0.0));
 
 			}
 			else {
