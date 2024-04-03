@@ -783,7 +783,7 @@ int main()
 int CMatrixSolvingLinearEq::MENU(std::vector<std::string>& vec, int x, int y, int col)
 {
 	textcolor(col);
-	int k, con, dim = vec.size();
+	int k, con, dim = static_cast<int>(vec.size());
 	for (k = 0; k < dim; k++) {
 		gotoxy(x, y + k);
 		cout << k + 1 << ") " << vec[k];
