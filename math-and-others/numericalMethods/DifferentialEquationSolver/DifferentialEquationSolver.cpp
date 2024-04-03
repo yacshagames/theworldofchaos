@@ -5,15 +5,15 @@ using namespace std;
 
 // METODO DE EULER
 
-float Df(float x, float y)
+double f(double x, double y)
 {
-	return y / x + 2 * x*y;
 	// Ecuacion Diferencial y'=y/x+2*x*y
+	return y / x + 2 * x*y;	
 }
 
 void Euler()
 {
-	float fa, a, b, x, y, h, df;
+	double fa, a, b, x, y, h;
 	clrscr();
 	cout << "\n\tMETODO DE EULER\n";
 	cout << "\n\tIngrese a = "; cin >> a;
@@ -22,7 +22,7 @@ void Euler()
 	cout << "\tIngrese h = "; cin >> h;
 	x = a; y = fa;
 	do {
-		y = y + h * Df(x, y);
+		y = y + h * f(x, y);
 		cout << "\n\tx = " << x;
 		cout << "\t\t\ty = " << y;
 		x = x + h;
@@ -39,7 +39,7 @@ double oper(double x, double y, double h)
 
 void ModifiedEuler()
 {
-	double fa, a, b, x, y, h, df;
+	double fa, a, b, x, y, h;
 	clrscr();
 	cout << "\n\tMETODO DE EULER MODIFICADO\n";
 	cout << "\n\tIngrese a = "; cin >> a;
@@ -57,16 +57,17 @@ void ModifiedEuler()
 }
 
 // METODO DE PREDICTOR CORRECTOR
-
+/*
 double f(double x, double y)
 {
-	return y / x + 2 * x*y;
 	// Ecuacion Diferencial y'=y/x+2*x*y
-}
+	return y / x + 2 * x*y;
+	
+}*/
 
 void Predictor_Corrector()
 {
-	double fa, a, b, x, y, y1, h, df, yo, error = 1e-6;
+	double fa, a, b, x, y, y1, h, yo, error = 1e-6;
 	int n = 1;
 	clrscr();
 	cout << "\n\tMETODO DE PREDICTOR CORRECTOR\n";
@@ -95,21 +96,21 @@ void Predictor_Corrector()
 
 
 // METODO DE RUNGE KUTTA(ORDEN 2)
-double f1(double x, double y)
+/*double f1(double x, double y)
 {
-	return y / x + 2 * x*y;
 	// Ecuacion Diferencial y'=y/x+2*x*y
-}
+	return y / x + 2 * x*y;	
+}*/
 
 
 double K1(double h, double y, double x)
 {
-	return h * f1(x, y); // Ecuacion Diferencial
+	return h * f(x, y); // Ecuacion Diferencial
 			   // y'=-0.4y+0.2
 }
 double K2(double h, double y, double x, double k1)
 {
-	return h * f1(x + h, y + k1);
+	return h * f(x + h, y + k1);
 }
 void Runge_Kutta2ndOrder()
 {
