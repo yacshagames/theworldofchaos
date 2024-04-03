@@ -1,7 +1,7 @@
-// DifferentialEquationSolver.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
-
 #include <iostream>
+#include "conio.h"
+
+using namespace std;
 
 // METODO DE EULER
 
@@ -11,8 +11,7 @@ float Df(float x, float y)
 	// Ecuacion Diferencial y'=y/x+2*x*y
 }
 
-
-void main()
+void Euler()
 {
 	float fa, a, b, x, y, h, df;
 	clrscr();
@@ -28,7 +27,7 @@ void main()
 		cout << "\t\t\ty = " << y;
 		x = x + h;
 	} while (x <= b + h);
-	getch();
+	cgetch();
 }
 
 //METODO DE EULER MODIFICADO
@@ -38,7 +37,7 @@ double oper(double x, double y, double h)
 	return y * (1 + 0.5*h*(1 / x + 2 * x)) / (1 - (1 / (x + h) + 2 * (x + h))*0.5*h);
 }
 
-void main()
+void ModifiedEuler()
 {
 	double fa, a, b, x, y, h, df;
 	clrscr();
@@ -54,7 +53,7 @@ void main()
 		cout << "\n\tx = " << x;
 		cout << "\t\ty = " << y;
 	} while (x < b);
-	getch();
+	cgetch();
 }
 
 // METODO DE PREDICTOR CORRECTOR
@@ -65,7 +64,7 @@ double f(double x, double y)
 	// Ecuacion Diferencial y'=y/x+2*x*y
 }
 
-void main()
+void Predictor_Corrector()
 {
 	double fa, a, b, x, y, y1, h, df, yo, error = 1e-6;
 	int n = 1;
@@ -91,12 +90,12 @@ void main()
 		//		n=n+1;
 		x = x + h;
 	} while (x <= b + h);
-	getch();
+	cgetch();
 }
 
 
 // METODO DE RUNGE KUTTA(ORDEN 2)
-double f(double x, double y)
+double f1(double x, double y)
 {
 	return y / x + 2 * x*y;
 	// Ecuacion Diferencial y'=y/x+2*x*y
@@ -105,14 +104,14 @@ double f(double x, double y)
 
 double K1(double h, double y, double x)
 {
-	return h * f(x, y); // Ecuacion Diferencial
+	return h * f1(x, y); // Ecuacion Diferencial
 			   // y'=-0.4y+0.2
 }
 double K2(double h, double y, double x, double k1)
 {
-	return h * f(x + h, y + k1);
+	return h * f1(x + h, y + k1);
 }
-void main()
+void Runge_Kutta2ndOrder()
 {
 	double fa, a, b, x, y, h, k1, k2;
 	clrscr();
@@ -132,5 +131,15 @@ void main()
 		cout << "\tx = " << x;
 		cout << "\ty = " << y;
 	} while (x < b);
-	getch();
+	cgetch();
+}
+
+int main() {
+	
+	Euler();
+	ModifiedEuler();
+	Predictor_Corrector();
+	Runge_Kutta2ndOrder();
+
+	return 1;
 }
