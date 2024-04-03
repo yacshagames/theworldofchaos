@@ -52,6 +52,10 @@ HISTORY...
 	- The user is asked whether or not he wants to display the LU
 	  matrices, because for a large dimension of A, the display process
 	  is slow.
+	- A chronometer is added to measure the time that each method takes,
+	  and the seconds that each method has taken to process the solution
+	  are shown, in order to obtain a point of comparison between the
+	  efficiency of the algorithms.
 
   >> Version 1 - 30-XI-1999
 	- First version for Borland C++ 3.1 and Turbo C 3.0
@@ -67,6 +71,7 @@ HISTORY...
 #include <algorithm>
 #include <random>
 #include <functional> // bind
+#include <chrono> // chronometers functions
 
 using namespace std;
 
@@ -91,6 +96,9 @@ public:
 	bool Initialize_Work_Matrix();
 	void GenerateRandomMatrices(bool isDiagonallyDominant);
 
+	// chronometers functions
+	void chronoStart();
+	void chronoEnd();
 
 	int MENU(std::vector<std::string>& vec, int x, int y, int col);
 
@@ -108,6 +116,9 @@ private:
 	std::vector<double> x;
 	std::vector<std::vector<double>> W, Wo;
 	std::vector<int> p;
+	
+	// chronometers variables
+	std::chrono::time_point<std::chrono::steady_clock> time_start;
 
 public:
 	static std::string msgMatrixNotInvertible;
@@ -588,6 +599,22 @@ void CMatrixSolvingLinearEq::GenerateRandomMatrices( bool isDiagonallyDominant )
 
 }
 
+void CMatrixSolvingLinearEq::chronoStart(){
+
+	this->time_start = std::chrono::steady_clock::now();
+}
+
+void CMatrixSolvingLinearEq::chronoEnd(){
+
+	const auto time_end{ std::chrono::steady_clock::now() };
+	const std::chrono::duration<double> elapsed_seconds{ time_end - time_start };
+	cout << "\nElapsed time: " << elapsed_seconds.count() << " seconds" << endl;
+
+	textcolor(LIGHTGRAY);
+	cout << "Press any key to show solutions..." << endl;;
+	cgetch();
+}
+
 int main()
 {
 	CMatrixSolvingLinearEq msle;
@@ -623,7 +650,6 @@ int main()
 		if( msle.Initialize_Work_Matrix()==false )						
 			if (opc != 0 && opc != 1 && opc != 7)
 				continue;	// Does not execute numeric methods
-			
 
 		switch (opc)
 		{
@@ -656,9 +682,15 @@ int main()
 		case  3:
 			
 			clrscr();
-			cout << Metodo_Matricial[opc];
+			cout << Metodo_Matricial[opc];			
+
+			msle.chronoStart(); // Init chronometer
+
 			msle.LU_Gauss();
 			msle.Calculate_LU_System_Solution();
+
+			msle.chronoEnd(); // End chronometer and show elapsed time
+
 			msle.Show_System_Solution();
 			msle.Show_Permutation_Matrix();
 			if( msle.Show_LU_Matrices() )
@@ -669,8 +701,14 @@ int main()
 			
 			clrscr();
 			cout << Metodo_Matricial[opc];
+			
+			msle.chronoStart(); // Init chronometer
+			
 			msle.LU_Pivot_Maximum();
 			msle.Calculate_LU_System_Solution();
+
+			msle.chronoEnd(); // End chronometer and show elapsed time
+
 			msle.Show_System_Solution();
 			msle.Show_Permutation_Matrix();
 			if (msle.Show_LU_Matrices())
@@ -681,12 +719,21 @@ int main()
 			
 			clrscr();
 			cout << Metodo_Matricial[opc];
+
+			msle.chronoStart(); // Init chronometer
+
 			if (msle.LU_Cholesky()) {
+
+				msle.chronoEnd(); // End chronometer and show elapsed time
+
 				cout << endl << endl << "Converged satisfactorily." << endl;
 
 				if (msle.Show_LU_Matrices())
 					cgetch();
 			} else {
+
+				msle.chronoEnd(); // End chronometer and show elapsed time
+
 				cout << ": Cholesky factorization cannot be applied on this diagonal" << endl
 					 << "Possibly matrix A is not diagonally dominant.";
 
@@ -698,8 +745,19 @@ int main()
 
 			clrscr();
 			cout << Metodo_Matricial[opc];
-			if( msle.Gauss_Seidel() )
+
+			msle.chronoStart(); // Init chronometer
+			
+			if (msle.Gauss_Seidel()) {
+
+				msle.chronoEnd(); // End chronometer and show elapsed time
 				msle.Show_System_Solution();
+
+			} else {
+				msle.chronoEnd(); // End chronometer and show elapsed time
+			}
+
+
 			cgetch();
 
 			break;
