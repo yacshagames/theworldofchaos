@@ -47,6 +47,11 @@ HISTORY...
 	- Modifications are added to the History version
 	- The roots are shown in the Gauss-Seidel method as long as this
 	  method converges.
+	- In the Cholesky method, information messages are added about whether
+	  the method converges or does not converge.
+	- The user is asked whether or not he wants to display the LU
+	  matrices, because for a large dimension of A, the display process
+	  is slow.
 
   >> Version 1 - 30-XI-1999
 	- First version for Borland C++ 3.1 and Turbo C 3.0
@@ -79,7 +84,7 @@ public:
 	void Calculate_LU_System_Solution();
 	void Show_System_Solution();	
 	void Show_Permutation_Matrix();	
-	void Show_LU_Matrices();	
+	bool Show_LU_Matrices();	
 	bool SetNumberUnknownsVariables();
 	void Enter_System();
 	void Visualize_System();
@@ -257,9 +262,7 @@ bool CMatrixSolvingLinearEq::LU_Cholesky()
 		diagonalElement = W[j][j] - Sum;
 
 		if (diagonalElement < 0) {
-			cout << endl << "Cholesky factorization cannot be applied on the diagonal ["
-				<< j << "," << j << "]." << endl
-				<< "Possibly matrix A is not diagonally dominant.";			
+			cout << endl << "In element [" << j << "," << j << "].";				
 			return false;
 		}
 
@@ -407,8 +410,15 @@ void CMatrixSolvingLinearEq::Show_Permutation_Matrix()
 	cout<<"]";
 }
 
-void CMatrixSolvingLinearEq::Show_LU_Matrices()
+bool  CMatrixSolvingLinearEq::Show_LU_Matrices()
 {
+	textcolor(WHITE);
+	cout << "\n\nShow LU matrices (Y/N)? ";
+	char subOption = toupper(cgetch());
+
+	if (subOption != 'Y')
+		return false;
+
 	int i, j;
 	cout << "\n\n";
 	textcolor(LIGHTMAGENTA);
@@ -446,6 +456,7 @@ void CMatrixSolvingLinearEq::Show_LU_Matrices()
 		cout << "\n";
 	}
 
+	return true;
 }
 
 
@@ -586,8 +597,8 @@ int main()
 	"Generate random matrices",
     "View the entered matrix system",
 	"Gauss method - LU decomposition",
-	"Gauss Method - Maximum Pivot",
-	"Cholesky method",
+	"Gauss method - Maximum Pivot",
+	"Cholesky factorization method",
 	"Gauss-Seidel method",
 	"Exit" }; //menu initialization
 
@@ -650,8 +661,8 @@ int main()
 			msle.Calculate_LU_System_Solution();
 			msle.Show_System_Solution();
 			msle.Show_Permutation_Matrix();
-			msle.Show_LU_Matrices();
-			cgetch();
+			if( msle.Show_LU_Matrices() )
+				cgetch();
 			
 			break;
 		case  4:
@@ -662,17 +673,25 @@ int main()
 			msle.Calculate_LU_System_Solution();
 			msle.Show_System_Solution();
 			msle.Show_Permutation_Matrix();
-			msle.Show_LU_Matrices();
-			cgetch();
+			if (msle.Show_LU_Matrices())
+				cgetch();
 			
 			break;
 		case  5:
 			
 			clrscr();
 			cout << Metodo_Matricial[opc];
-			if(msle.LU_Cholesky() )
-				msle.Show_LU_Matrices();
-			cgetch();
+			if (msle.LU_Cholesky()) {
+				cout << endl << endl << "Converged satisfactorily." << endl;
+
+				if (msle.Show_LU_Matrices())
+					cgetch();
+			} else {
+				cout << ": Cholesky factorization cannot be applied on this diagonal" << endl
+					 << "Possibly matrix A is not diagonally dominant.";
+
+				cgetch();
+			}
 
 			break;
 		case  6:
