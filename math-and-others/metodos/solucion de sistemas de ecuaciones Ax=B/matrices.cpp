@@ -22,9 +22,31 @@ Developed by:
 
 HISTORY...
 
-  >> Version 2 - 01-IV-2024
+  >> Version 2 - 02-IV-2024
 	- Code is updated and improved
 	- Comments are translated from Spanish to English
+	- std::vector is used instead of arrays, and in this way the
+	  limitation that did not allow solving systems of equations with
+	  more than 10 unknown variables is eliminated.
+	- Improvements in the coding of the Gauss Seidel and Cholesky
+	  algorithms.
+	- Finished replacing all arrays with std:vector
+	- An alert message is added informing when the Cholesky method
+	  cannot be applied
+	- The code is modernized, converting it into the
+	  CMatrixSolvingLinearEq class
+	- Traces of old C functions, such as printf, cprintf, fabs, etc...
+	  are removed and replaced with their modern equivalents
+	- Some missing comments and the names of the CMatrixSolvingLinearEq
+	  methods are translated into English.
+	- Unnecessary files are removed
+	- The option is added to generate the elements of matrices A and B	  
+	  randomly, only defining the order of the matrix and indicating
+	  whether it will be diagonally dominant. If you create a diagonally
+	  dominant matrix, it can be successfully processed.
+	- Modifications are added to the History version
+	- The roots are shown in the Gauss-Seidel method as long as this
+	  method converges.
 
   >> Version 1 - 30-XI-1999
 	- First version for Borland C++ 3.1 and Turbo C 3.0
@@ -38,6 +60,8 @@ HISTORY...
 #undef max
 #endif
 #include <algorithm>
+#include <random>
+#include <functional> // bind
 
 using namespace std;
 
@@ -60,9 +84,10 @@ public:
 	void Enter_System();
 	void Visualize_System();
 	bool Initialize_Work_Matrix();
+	void GenerateRandomMatrices(bool isDiagonallyDominant);
 
 
-	int MENU(std::vector<std::string>& vec, int x, int y, int dim, int puntero, int col);
+	int MENU(std::vector<std::string>& vec, int x, int y, int col);
 
 	// Print a picture in console text mode
 	void FRAME(int x1, int y1, int ancho, int largo, int col);
@@ -513,12 +538,52 @@ bool CMatrixSolvingLinearEq::Initialize_Work_Matrix()
 	return false;
 }
 
+void CMatrixSolvingLinearEq::GenerateRandomMatrices( bool isDiagonallyDominant )
+{
+	// Random device
+	std::random_device rd;
+
+	// Distribution values between -1 and 1
+	std::uniform_real_distribution<double> distribution(-1.0, 1.0);
+
+	if (isDiagonallyDominant) {
+
+		// A diagonally dominant matrix is created with random elements in the pre-specified
+		// range. So that it can be successfully processed by the Cholesky and Gauss-Seidel algorithms
+
+		double matrixDimension = double(n);
+		
+		// Distribution values between matrixDimension*1.2 and matrixDimension*1.5
+		std::uniform_real_distribution<double> distributionDiagonal(matrixDimension*1.2, matrixDimension*1.5); 
+
+		std::mt19937 engine(rd()); // Mersenne twister MT19937
+
+		int i, j;
+		for (i = 0; i < n; i++)
+			for (j = 0; j <= n; j++)
+				Wo[i][j] = i == j ? 
+				distributionDiagonal(engine) :	// Random values between -1 and 1
+				distribution(engine);			// Random values between matrixDimension*1.2 and matrixDimension*1.5
+	} else {
+
+		for (auto& element : Wo) {
+
+			std::mt19937 engine(rd()); // Mersenne twister MT19937
+			auto generator = std::bind(distribution, engine);
+
+			std::generate_n(element.begin(), element.size(), generator);
+		}
+	}
+
+}
+
 int main()
 {
 	CMatrixSolvingLinearEq msle;
 
 	std::vector<std::string> Metodo_Matricial = {
 	"Enter matrix system",
+	"Generate random matrices",
     "View the entered matrix system",
 	"Gauss method - LU decomposition",
 	"Gauss Method - Maximum Pivot",
@@ -532,20 +597,20 @@ int main()
 	while (opc != -1)
 	{	
 		clrscr();
-		msle.FRAME(12, 6, 57, 15, 9);
+		msle.FRAME(12, 6, 57, 16, 9);
 		gotoxy(14, 8);
 		textcolor(LIGHTRED);
 		cout << "MATRIX METHODS FOR SOLVING SYSTEMS OF LINEAR EQUATIONS";
 		textcolor(LIGHTGREEN);
 		gotoxy(42, 23); 
 		cout << "Developed by Yacsha Software";
-		opc = msle.MENU(Metodo_Matricial, 20, 11, 7, -1, 15); // create the options menu
+		opc = msle.MENU(Metodo_Matricial, 20, 11, 15); // create the options menu
 		gotoxy(1, 1);
 		
 		
 		// Init matrix W from Wo
 		if( msle.Initialize_Work_Matrix()==false )						
-			if (opc != 0 && opc != 6)
+			if (opc != 0 && opc != 1 && opc != 7)
 				continue;	// Does not execute numeric methods
 			
 
@@ -557,12 +622,27 @@ int main()
 				msle.Enter_System();				
 
 			break;
-		case 1:	
+		case 1:
+			if (msle.SetNumberUnknownsVariables()) {
+
+				textcolor(LIGHTGRAY);
+				cout << "\nIf you create a diagonally dominant matrix, it can be successfully processed" << endl;
+				cout << "by the Cholesky and Gauss-Seidel algorithms." << endl << endl;
+
+				textcolor(WHITE);
+				cout << "Generate diagonally dominant matrix (Y/N)? ";
+				char subOption = toupper(cgetch());
+				
+				msle.GenerateRandomMatrices(subOption == 'Y');
+			}
+
+			break;
+		case 2:	
 
 			msle.Visualize_System();
 
 			break;
-		case  2:
+		case  3:
 			
 			clrscr();
 			cout << Metodo_Matricial[opc];
@@ -574,7 +654,7 @@ int main()
 			cgetch();
 			
 			break;
-		case  3:
+		case  4:
 			
 			clrscr();
 			cout << Metodo_Matricial[opc];
@@ -586,7 +666,7 @@ int main()
 			cgetch();
 			
 			break;
-		case  4:
+		case  5:
 			
 			clrscr();
 			cout << Metodo_Matricial[opc];
@@ -595,17 +675,17 @@ int main()
 			cgetch();
 
 			break;
-		case  5:
+		case  6:
 
 			clrscr();
 			cout << Metodo_Matricial[opc];
-			msle.Gauss_Seidel();
-			msle.Show_System_Solution();
+			if( msle.Gauss_Seidel() )
+				msle.Show_System_Solution();
 			cgetch();
 
 			break;
 		case -1:
-		case  6:
+		case  7:
 
 			clrscr();
 			gotoxy(25, 12);
@@ -623,10 +703,10 @@ int main()
 
 
 
-int CMatrixSolvingLinearEq::MENU(std::vector<std::string>& vec, int x, int y, int dim, int puntero, int col)
+int CMatrixSolvingLinearEq::MENU(std::vector<std::string>& vec, int x, int y, int col)
 {
 	textcolor(col);
-	int k, con;
+	int k, con, dim = vec.size();
 	for (k = 0; k < dim; k++) {
 		gotoxy(x, y + k);
 		cout << k + 1 << ") " << vec[k];
