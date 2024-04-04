@@ -47,6 +47,8 @@ HISTORY...
 	- Change project name to SolvingODE
 	- Comments are translated from Spanish to English
 	- Credits are added
+	- The visualization of the x and y calculation tables is improved,
+	  in each method, always showing the values in the range [a, b]
 
   >> Version 1 - 30-XI-1999
 	- First version for Borland C++ 3.1 and Turbo C 3.0
@@ -86,9 +88,9 @@ public:
 
 CNumericalMethodsSolvingODE::CNumericalMethodsSolvingODE()
 {
-	fa = 0;
-	a = 0;
-	b = 1;
+	fa = 3;
+	a = 1;
+	b = 2;
 	x = a;
 	y = b;
 	h = 0.1;
@@ -133,38 +135,49 @@ void CNumericalMethodsSolvingODE::Visualize_System()
 // EULER'S METHOD
 void CNumericalMethodsSolvingODE::Euler()
 {
+	double bUpper = b + h;
 	x = a; y = fa;
-	do {
+	do {		
+		
+		cout << "\n\tx = " << x;
+		cout << "\t\t\ty = " << y;
+
 		y = y + h * f(x, y);
 		x = x + h;
-		cout << "\n\tx = " << x;
-		cout << "\t\t\ty = " << y;		
-	} while (x <= b);
+		
+	} while (x < bUpper );
 }
 
 // MODIFIED EULER METHOD (MIDPOINT METHOD)
 void CNumericalMethodsSolvingODE::ModifiedEuler()
 {
-
+	double bUpper = b + h;
 	x = a; y = fa;
 	do {
-
-		y = y + h * f(x + 0.5*h, y + 0.5*h*f(x, y));
-
-		x = x + h;
+		
 		cout << "\n\tx = " << x;
 		cout << "\t\ty = " << y;
-	} while (x < b);
+
+		y = y + h * f(x + 0.5*h, y + 0.5*h*f(x, y));
+		x = x + h;
+	
+	} while (x < bUpper);
 }
 
 // PREDICTOR - CORRECTOR METHOD - IMPROVED EULER(HEUN'S) METHOD
 void CNumericalMethodsSolvingODE::Predictor_Corrector( int iterMax )
 {
-	double  y1, yo, error = 1e-6, k1;
+	double  y1, yo, error = 1e-6, k1, bUpper= b+h;
 	int n;
 
 	x = a; y = fa;
 	do {
+
+		cout << "\n\tx = " << x;
+		cout << "\t\t\ty = " << y;
+		if( x>a )
+			cout << "\t\tIterations: " << n;
+
 		//PREDICTOR: EULER
 		yo = y;
 		k1 = f(x, yo);
@@ -179,43 +192,57 @@ void CNumericalMethodsSolvingODE::Predictor_Corrector( int iterMax )
 
 		} while (	std::abs(y - y1) > error && 
 					++n < iterMax );
-		cout << "\t"<<n;
-		cout << "\n\tx = " << x;
-		cout << "\t\t\ty = " << yo;
-		x = x + h;
+		
+		x = x + h;		
 
-	} while (x <= b + h);
+	} while (x < bUpper);
 }
 
 
 // RUNGE KUTTA METHOD (ORDER 2)
 void CNumericalMethodsSolvingODE::Runge_Kutta2()
 {
-	double k1, k2;
+	double k1=0, k2=0, bUpper = b + h;
 
 	x = a; y = fa;
 	do {
+
+		if (x > a) {
+			cout << "\n\tk1 = " << k1;
+			cout << "\tk2 = " << k2;
+		}
+		else
+			cout << endl;
+		cout << "\tx = " << x;
+		cout << "\ty = " << y;
 
 		k1 = f(x, y);
 		k2 = f(x + h, y + h * k1);
 
 		y = y + 0.5*h*(k1 + k2);
 		x = x + h;
-
-		cout << "\n\tk1 = " << k1;
-		cout << "\tk2 = " << k2;
-		cout << "\tx = " << x;
-		cout << "\ty = " << y;
-	} while (x < b);
+	
+	} while (x < bUpper);
 }
 
 // RUNGE KUTTA METHOD (ORDER 4)
 void CNumericalMethodsSolvingODE::Runge_Kutta4()
 {
-	double  k1, k2, k3, k4;
+	double  k1=0, k2=0, k3=0, k4=0, bUpper = b + h;
 
 	x = a; y = fa;
 	do {
+
+		if (x > a) {
+			cout << "\n\tk1 = " << k1;
+			cout << "\tk2 = " << k2;
+			cout << "\tk3 = " << k3;
+			cout << "\tk4 = " << k4;
+		}
+		else
+			cout << endl;
+		cout << "\tx = " << x;
+		cout << "\ty = " << y;
 
 		k1 = f(x, y);
 		k2 = f(x + 0.5*h, y + 0.5*h*k1);
@@ -225,14 +252,8 @@ void CNumericalMethodsSolvingODE::Runge_Kutta4()
 		y = y + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6;
 		x = x + h;
 
-		cout << "\n\tk1 = " << k1;
-		cout << "\tk2 = " << k2;
-		cout << "\tk3 = " << k3;
-		cout << "\tk4 = " << k4;
-		cout << "\tx = " << x;
-		cout << "\ty = " << y;
-	} while (x < b);
-	cgetch();
+		
+	} while (x < bUpper);
 }
 
 int main() {
