@@ -1,3 +1,57 @@
+/*********************************************************************
+NUMERICAL METHODS FOR SOLVING ORDINARY DIFFERENTIAL EQUATIONS - ODEs
+
+An ordinary differential equation - ODE, is solved using the
+following numerical method algorithms:
+
+	- Euler
+	- Modified Euler
+	- Predictor-Corrector
+	- Runge Kutta (Order2)
+	- Runge Kutta (Order4)
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+  >> Version 2 - 04-IV-2024
+	- Code is updated and improved
+	- Merges all numerical methods that solve differential equations
+	  in a single file
+	- Porting to VC++ 2017
+	- Translate functions name
+	- Change float variables to double
+	- The function y' = f(x,y) is unified into a single function that
+	  is reused in all methods
+	- Unused variables are eliminated
+	- The ModifiedEuler and Predictor_Corrector method is corrected
+	- Order 4 Runge Kutta method added
+	- A menu is added in text mode to select the numerical method to
+	  use in the solution
+	- Unnecessary files are removed
+	- The code is modernized, converting it into the
+	  CNumericalMethodsSolvingODE class
+	- Traces of old C function fabs, etc... are removed and replaced
+	  with their modern equivalents
+	- The maximum width at which a menu box can be created is increased
+	- Change project name to SolvingODE
+	- Comments are translated from Spanish to English
+	- Credits are added
+
+  >> Version 1 - 30-XI-1999
+	- First version for Borland C++ 3.1 and Turbo C 3.0
+
+**********************************************************************/
 #include <iostream>
 #include "conio.h"
 #include "Menu.h"
@@ -44,7 +98,7 @@ CNumericalMethodsSolvingODE::~CNumericalMethodsSolvingODE()
 {
 }
 
-// Ecuacion diferencial ordinaria - ODE por defecto
+// Default Ordinary differential equation - Default ODE
 double CNumericalMethodsSolvingODE::f(double x, double y)
 {
 	//Default ODE: y'= f(x,y) = y/x+2*x*y
@@ -76,7 +130,7 @@ void CNumericalMethodsSolvingODE::Visualize_System()
 }
 
 
-// METODO DE EULER
+// EULER'S METHOD
 void CNumericalMethodsSolvingODE::Euler()
 {
 	x = a; y = fa;
@@ -88,8 +142,7 @@ void CNumericalMethodsSolvingODE::Euler()
 	} while (x <= b);
 }
 
-//METODO DE EULER MODIFICADO (MÉTODO DEL PUNTO MEDIO)
-
+// MODIFIED EULER METHOD (MIDPOINT METHOD)
 void CNumericalMethodsSolvingODE::ModifiedEuler()
 {
 
@@ -104,7 +157,7 @@ void CNumericalMethodsSolvingODE::ModifiedEuler()
 	} while (x < b);
 }
 
-// METODO DE PREDICTOR CORRECTOR (Improved Euler (Heun's) Method Calculator)
+// PREDICTOR - CORRECTOR METHOD - IMPROVED EULER(HEUN'S) METHOD
 void CNumericalMethodsSolvingODE::Predictor_Corrector( int iterMax )
 {
 	double  y1, yo, error = 1e-6, k1;
@@ -135,7 +188,7 @@ void CNumericalMethodsSolvingODE::Predictor_Corrector( int iterMax )
 }
 
 
-// METODO DE RUNGE KUTTA(ORDEN 2)
+// RUNGE KUTTA METHOD (ORDER 2)
 void CNumericalMethodsSolvingODE::Runge_Kutta2()
 {
 	double k1, k2;
@@ -156,7 +209,7 @@ void CNumericalMethodsSolvingODE::Runge_Kutta2()
 	} while (x < b);
 }
 
-
+// RUNGE KUTTA METHOD (ORDER 4)
 void CNumericalMethodsSolvingODE::Runge_Kutta4()
 {
 	double  k1, k2, k3, k4;
