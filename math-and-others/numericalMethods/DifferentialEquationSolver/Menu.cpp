@@ -28,7 +28,7 @@ int Menu::DrawOptions(std::vector<std::string>& vec, int x, int y, int col)
 void Menu::DrawBox(int x1, int y1, int ancho, int largo, int col)
 {
 
-	if (x1 >= 0 && y1 >= 0 && (x1 + ancho) <= 70 && (y1 + largo) <= 25)
+	if (x1 >= 0 && y1 >= 0 && (x1 + ancho) <= 128 && (y1 + largo) <= 25)
 	{
 		textcolor(col);
 		for (int i = x1 + 1; i <= x1 + ancho - 1; i++)

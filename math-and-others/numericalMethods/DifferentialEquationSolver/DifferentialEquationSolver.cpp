@@ -4,23 +4,81 @@
 
 using namespace std;
 
-// METODO DE EULER
+// NUMERICAL METHODS FOR SOLVING ORDINARY DIFFERENTIAL EQUATIONS - ODEs
+class CNumericalMethodsSolvingODE{
 
-double f(double x, double y)
+public:
+
+	CNumericalMethodsSolvingODE();
+	~CNumericalMethodsSolvingODE();
+
+private:
+	double f(double x, double y);
+
+public:
+
+	void InitVariables();
+	void Visualize_System();
+
+	void Euler();
+	void ModifiedEuler();
+	void Predictor_Corrector(int iterMax);
+	void Runge_Kutta2();
+	void Runge_Kutta4();
+
+public:
+	double fa, a, b, x, y, h;
+};
+
+CNumericalMethodsSolvingODE::CNumericalMethodsSolvingODE()
 {
-	// Ecuacion Diferencial y'=y/x+2*x*y
+	fa = 0;
+	a = 0;
+	b = 1;
+	x = a;
+	y = b;
+	h = 0.1;
+}
+
+CNumericalMethodsSolvingODE::~CNumericalMethodsSolvingODE()
+{
+}
+
+// Ecuacion diferencial ordinaria - ODE por defecto
+double CNumericalMethodsSolvingODE::f(double x, double y)
+{
+	//Default ODE: y'= f(x,y) = y/x+2*x*y
 	return y / x + 2 * x*y;	
 }
 
-void Euler()
+void CNumericalMethodsSolvingODE::InitVariables()
 {
-	double fa, a, b, x, y, h;
+	clrscr();
 
-	cout << "\n\tMETODO DE EULER\n";
 	cout << "\n\tIngrese a = "; cin >> a;
-	cout << "\tIngrese b = "; cin >> b;
+	cout << "\tIngrese b = ";   cin >> b;
 	cout << "\tIngrese f(a) = "; cin >> fa;
 	cout << "\tIngrese h = "; cin >> h;
+	x = a; y = fa;
+}
+
+void CNumericalMethodsSolvingODE::Visualize_System()
+{
+	clrscr();
+
+	cout << "ODE: y' = f(x,y) = y/x + 2*x*y" << endl << endl;
+	cout << "a = " << a << endl;
+	cout << "b = " << b << endl;
+	cout << "f(a) = " << fa << endl;
+	cout << "h = " << h << endl;
+
+	cgetch();
+}
+
+
+// METODO DE EULER
+void CNumericalMethodsSolvingODE::Euler()
+{
 	x = a; y = fa;
 	do {
 		y = y + h * f(x, y);
@@ -30,33 +88,13 @@ void Euler()
 	} while (x <= b);
 }
 
-//METODO DE EULER MODIFICADO
+//METODO DE EULER MODIFICADO (MÉTODO DEL PUNTO MEDIO)
 
-double oper(double x, double y, double h)
+void CNumericalMethodsSolvingODE::ModifiedEuler()
 {
-	return y * (1 + 0.5*h*(1 / x + 2 * x)) / (1 - (1 / (x + h) + 2 * (x + h))*0.5*h);
-}
 
-void ModifiedEuler()
-{
-	double fa, a, b, x, y, h, k1, k2;
-
-	cout << "\n\tMETODO DE EULER MODIFICADO\n";
-	cout << "\n\tIngrese a = "; cin >> a;
-	cout << "\tIngrese b = ";   cin >> b;
-	cout << "\tIngrese f(a) = "; cin >> fa;
-	cout << "\tIngrese h = "; cin >> h;
 	x = a; y = fa;
 	do {
-		//y = oper(x, y, h);
-
-		//Predictor-corrector
-		//k1 = f(x, y);
-		//k2 = f(x + h, y + h * k1);
-		//y = y + 0.5*h*(k1 + k2);
-
-		// Euler modificado (Método del punto medio)
-		//y = (y + 0.5*h*f(x, y)) / (1 - f(x + h, y + h) / (y + h)*0.5*h);
 
 		y = y + h * f(x + 0.5*h, y + 0.5*h*f(x, y));
 
@@ -67,74 +105,41 @@ void ModifiedEuler()
 }
 
 // METODO DE PREDICTOR CORRECTOR (Improved Euler (Heun's) Method Calculator)
-/*
-double f(double x, double y)
+void CNumericalMethodsSolvingODE::Predictor_Corrector( int iterMax )
 {
-	// Ecuacion Diferencial y'=y/x+2*x*y
-	return y / x + 2 * x*y;
-	
-}*/
+	double  y1, yo, error = 1e-6, k1;
+	int n;
 
-void Predictor_Corrector( int iterMax )
-{
-	double fa, a, b, x, y, y1, h, yo, error = 1e-6, k1;
-	int n = 1;
-
-	cout << "\n\tMETODO DE PREDICTOR CORRECTOR\n";
-	cout << "\n\tIngrese a = "; cin >> a;
-	cout << "\tIngrese b = "; cin >> b;
-	cout << "\tIngrese f(a) = "; cin >> fa;
-	cout << "\tIngrese h = "; cin >> h;
 	x = a; y = fa;
 	do {
 		//PREDICTOR: EULER
 		yo = y;
 		k1 = f(x, yo);
 		y = y + h * f(x, y);
-		//CORRECTOR: EULER MODIFICADO
-		int nn = 0;
+		
+		//CORRECTOR: EULER MEJORADO
+		n = 0;
 		do {
 
 			y1 = y;
 			y = yo + 0.5*h*(k1 + f(x + h, y));
 
-		} while (	fabs(y - y1) > error && 
-					++nn < iterMax );
-		cout << "\t"<<nn;
+		} while (	std::abs(y - y1) > error && 
+					++n < iterMax );
+		cout << "\t"<<n;
 		cout << "\n\tx = " << x;
 		cout << "\t\t\ty = " << yo;
-		//		n=n+1;
 		x = x + h;
+
 	} while (x <= b + h);
 }
 
 
 // METODO DE RUNGE KUTTA(ORDEN 2)
-/*double f1(double x, double y)
+void CNumericalMethodsSolvingODE::Runge_Kutta2()
 {
-	// Ecuacion Diferencial y'=y/x+2*x*y
-	return y / x + 2 * x*y;	
-}
+	double k1, k2;
 
-double K1(double h, double y, double x)
-{
-	return h * f(x, y); // Ecuacion Diferencial
-						// y'=-0.4y+0.2
-}
-double K2(double h, double y, double x, double k1)
-{
-	return h * f(x + h, y + k1);
-}*/
-
-void Runge_Kutta2()
-{
-	double fa, a, b, x, y, h, k1, k2;
-
-	cout << "\n\tMETODO DE RUNGE KUTTA (ORDEN 2)\n";
-	cout << "\n\tIngrese a = ";  cin >> a;
-	cout << "\tIngrese b = ";    cin >> b;
-	cout << "\tIngrese f(a) = "; cin >> fa;
-	cout << "\tIngrese h = ";    cin >> h;
 	x = a; y = fa;
 	do {
 
@@ -152,15 +157,10 @@ void Runge_Kutta2()
 }
 
 
-void Runge_Kutta4()
+void CNumericalMethodsSolvingODE::Runge_Kutta4()
 {
-	double fa, a, b, x, y, h, k1, k2, k3, k4;
-	clrscr();
-	cout << "\n\tMETODO DE RUNGE KUTTA (ORDEN 4)\n";
-	cout << "\n\tIngrese a = ";  cin >> a;
-	cout << "\tIngrese b = ";    cin >> b;
-	cout << "\tIngrese f(a) = "; cin >> fa;
-	cout << "\tIngrese h = ";    cin >> h;
+	double  k1, k2, k3, k4;
+
 	x = a; y = fa;
 	do {
 
@@ -183,23 +183,19 @@ void Runge_Kutta4()
 }
 
 int main() {
-	/*
-	Euler();
-	ModifiedEuler();
-	Predictor_Corrector(50);
-	Runge_Kutta2();
-	Runge_Kutta4();
-	*/
 
-	//CDifferentialEqSolver des;
+	CNumericalMethodsSolvingODE ode;
 	Menu menu;
 
 	std::vector<std::string> Metodo_Matricial = {
-	"EULER",
-	"EULER MODIFICADO",
-	"PREDICTOR-CORRECTOR",
-	"RUNGE KUTTA (ORDEN 2)",
-	"RUNGE KUTTA (ORDEN 4)",
+	"Enter initial ODE values",
+	"Enter ODE: y' = f(x,y)",
+	"View initial ODE values",
+	"Euler",
+	"Modified Euler",
+	"Predictor-Corrector",
+	"Runge Kutta (Order2)",
+	"Runge Kutta (Order4)",
 	"Exit" }; //menu initialization
 
 	// Init constans project
@@ -208,12 +204,12 @@ int main() {
 	while (opc != -1)
 	{
 		clrscr();
-		menu.DrawBox(12, 6, 57, 16, 9);
+		menu.DrawBox(12, 6, 71, 17, LIGHTBLUE);
 		gotoxy(14, 8);
 		textcolor(LIGHTRED);
-		cout << "MATRIX METHODS FOR SOLVING SYSTEMS OF LINEAR EQUATIONS";
+		cout << "NUMERICAL METHODS FOR SOLVING ORDINARY DIFFERENTIAL EQUATIONS - ODEs";
 		textcolor(LIGHTGREEN);
-		gotoxy(42, 23);
+		gotoxy(56, 24);
 		cout << "Developed by Yacsha Software";
 		opc = menu.DrawOptions(Metodo_Matricial, 20, 11, 15); // create the options menu
 		gotoxy(1, 1);
@@ -222,64 +218,22 @@ int main() {
 		// Init matrix W from Wo
 		//if (msle.Initialize_Work_Matrix() == false)
 		//	if (opc != 0 && opc != 1 && opc != 7)
-		//		continue;	// Does not execute numeric methods
+		//		continue;	// Does not execute numeric methods		
 
 		switch (opc)
 		{
-		/*case 0:
+		case 0:
 
-			if (msle.SetNumberUnknownsVariables())
-				msle.Enter_System();
+			ode.InitVariables();			
 
 			break;
 		case 1:
-			if (msle.SetNumberUnknownsVariables()) {
-
-				textcolor(LIGHTGRAY);
-				cout << "\nIf you create a diagonally dominant matrix, it can be successfully processed" << endl;
-				cout << "by the Cholesky and Gauss-Seidel algorithms." << endl << endl;
-
-				textcolor(WHITE);
-				cout << "Generate diagonally dominant matrix (Y/N)? ";
-				char subOption = toupper(cgetch());
-
-				msle.GenerateRandomMatrices(subOption == 'Y');
-			}
+			
 
 			break;
 		case 2:
 
-			msle.Visualize_System();
-
-			break;*/
-		case  0:
-
-			clrscr();
-			cout << Metodo_Matricial[opc];
-
-			Euler();
-
-			cgetch();
-
-			break;
-		case  1:
-
-			clrscr();
-			cout << Metodo_Matricial[opc];
-
-			ModifiedEuler();
-
-			cgetch();
-
-			break;
-		case  2:
-
-			clrscr();
-			cout << Metodo_Matricial[opc];
-
-			Predictor_Corrector(50);
-			
-			cgetch();
+			ode.Visualize_System();			
 
 			break;
 		case  3:
@@ -287,26 +241,56 @@ int main() {
 			clrscr();
 			cout << Metodo_Matricial[opc];
 
-			Runge_Kutta2();
+			ode.Euler();
+
+			cgetch();
+
+			break;
+		case  4:
+
+			clrscr();
+			cout << Metodo_Matricial[opc];
+
+			ode.ModifiedEuler();
+
+			cgetch();
+
+			break;
+		case  5:
+
+			clrscr();
+			cout << Metodo_Matricial[opc];
+
+			ode.Predictor_Corrector(50);
+			
+			cgetch();
+
+			break;
+		case  6:
+
+			clrscr();
+			cout << Metodo_Matricial[opc];
+
+			ode.Runge_Kutta2();
 
 
 			cgetch();
 
 			break;
 
-		case  4:
+		case  7:
 
 			clrscr();
 			cout << Metodo_Matricial[opc];
 
-			Runge_Kutta4();
+			ode.Runge_Kutta4();
 
 
 			cgetch();
 
 			break;
 		case -1:
-		case  5:
+		case  8:
 
 			clrscr();
 			gotoxy(25, 12);
