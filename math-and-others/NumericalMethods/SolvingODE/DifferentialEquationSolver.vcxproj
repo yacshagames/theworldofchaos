@@ -153,10 +153,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AddOns.cpp" />
     <ClCompile Include="DifferentialEquationSolver.cpp" />
     <ClCompile Include="Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddOns.h" />
     <ClInclude Include="conio.h" />
     <ClInclude Include="Menu.h" />
   </ItemGroup>

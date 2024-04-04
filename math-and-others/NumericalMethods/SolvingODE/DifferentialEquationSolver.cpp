@@ -49,19 +49,38 @@ HISTORY...
 	- Credits are added
 	- The visualization of the x and y calculation tables is improved,
 	  in each method, always showing the values in the range [a, b]
+	- A chronometer is added to measure the time that each method takes,
+	  and the seconds that each method has taken to process the solution
+	  are shown, in order to obtain a point of comparison between the
+	  efficiency of the algorithms.
+	- The ShowSolutions method is added to display the solutions after
+	  the numerical method algorithm code has finished. In such a way
+	  that the time of each algorithm can be measured correctly and
+	  then display the results on the screen.
 
   >> Version 1 - 30-XI-1999
 	- First version for Borland C++ 3.1 and Turbo C 3.0
 
 **********************************************************************/
 #include <iostream>
+#include <string>
 #include "conio.h"
 #include "Menu.h"
+#include "AddOns.h"
 
 using namespace std;
 
 // NUMERICAL METHODS FOR SOLVING ORDINARY DIFFERENTIAL EQUATIONS - ODEs
 class CNumericalMethodsSolvingODE{
+	struct Solution {
+		double x = 0;
+		double y = 0;
+		double k1 = 0;
+		double k2 = 0;
+		double k3 = 0;
+		double k4 = 0;
+		unsigned int iterations;
+	};
 
 public:
 
@@ -74,7 +93,7 @@ private:
 public:
 
 	void InitVariables();
-	void Visualize_System();
+	void VisualizeSystem();
 
 	void Euler();
 	void ModifiedEuler();
@@ -82,8 +101,12 @@ public:
 	void Runge_Kutta2();
 	void Runge_Kutta4();
 
+	void ShowSolutions( bool show_k1_k2=false, bool show_k3_k4 =false, bool show_iterations=false);
+
 public:
 	double fa, a, b, x, y, h;
+
+	vector<Solution> ySolutions;
 };
 
 CNumericalMethodsSolvingODE::CNumericalMethodsSolvingODE()
@@ -94,6 +117,9 @@ CNumericalMethodsSolvingODE::CNumericalMethodsSolvingODE()
 	x = a;
 	y = b;
 	h = 0.1;
+
+	unsigned int ySolutionsSize = static_cast<unsigned int>(std::ceil((b - a) / h)) + 1;
+	ySolutions.resize(ySolutionsSize);
 }
 
 CNumericalMethodsSolvingODE::~CNumericalMethodsSolvingODE()
@@ -111,22 +137,25 @@ void CNumericalMethodsSolvingODE::InitVariables()
 {
 	clrscr();
 
-	cout << "\n\tIngrese a = "; cin >> a;
-	cout << "\tIngrese b = ";   cin >> b;
-	cout << "\tIngrese f(a) = "; cin >> fa;
-	cout << "\tIngrese h = "; cin >> h;
+	cout << "\n\tEnter Xmin = "; cin >> a;
+	cout << "\tEnter Xmax = ";   cin >> b;
+	cout << "\tEnter Ymin = f(Xmin) = "; cin >> fa;
+	cout << "\tEnter step h = "; cin >> h;
 	x = a; y = fa;
+
+	unsigned int ySolutionsSize = static_cast<unsigned int>(std::ceil((b - a) / h)) + 1;
+	ySolutions.resize(ySolutionsSize);
 }
 
-void CNumericalMethodsSolvingODE::Visualize_System()
+void CNumericalMethodsSolvingODE::VisualizeSystem()
 {
 	clrscr();
 
-	cout << "ODE: y' = f(x,y) = y/x + 2*x*y" << endl << endl;
-	cout << "a = " << a << endl;
-	cout << "b = " << b << endl;
-	cout << "f(a) = " << fa << endl;
-	cout << "h = " << h << endl;
+	cout << "ODE: y' = f(x,y) = y/x + 2*x*y --> Unknown: y = f(x)" << endl << endl;
+	cout << "Xmin = " << a << endl;
+	cout << "Xmax = " << b << endl;
+	cout << "Ymin = f(Xmin) = " << fa << endl;
+	cout << "step h = " << h << endl;
 
 	cgetch();
 }
@@ -135,48 +164,66 @@ void CNumericalMethodsSolvingODE::Visualize_System()
 // EULER'S METHOD
 void CNumericalMethodsSolvingODE::Euler()
 {
-	double bUpper = b + h;
 	x = a; y = fa;
-	do {		
-		
-		cout << "\n\tx = " << x;
-		cout << "\t\t\ty = " << y;
+
+	unsigned int i, nYSolutionsSize = static_cast<unsigned int>(ySolutions.size());
+	for (i = 0; i < nYSolutionsSize; i++) {
+
+		//cout << "\n\tx = " << x;
+		//cout << "\t\t\ty = " << y;		
+		// Store the solutions for y
+		auto& ys = ySolutions[i];
+		ys.x = x;
+		ys.y = y;
 
 		y = y + h * f(x, y);
-		x = x + h;
-		
-	} while (x < bUpper );
+		x = x + h;		
+	}
 }
 
 // MODIFIED EULER METHOD (MIDPOINT METHOD)
 void CNumericalMethodsSolvingODE::ModifiedEuler()
 {
-	double bUpper = b + h;
 	x = a; y = fa;
-	do {
+
+	unsigned int i, nYSolutionsSize = static_cast<unsigned int>(ySolutions.size());
+	for (i = 0; i < nYSolutionsSize; i++) {
 		
-		cout << "\n\tx = " << x;
-		cout << "\t\ty = " << y;
+		//cout << "\n\tx = " << x;
+		//cout << "\t\ty = " << y;
+		// Store the solutions for y
+		auto& ys = ySolutions[i];
+		ys.x = x;
+		ys.y = y;
 
 		y = y + h * f(x + 0.5*h, y + 0.5*h*f(x, y));
 		x = x + h;
 	
-	} while (x < bUpper);
+	}
 }
 
 // PREDICTOR - CORRECTOR METHOD - IMPROVED EULER(HEUN'S) METHOD
 void CNumericalMethodsSolvingODE::Predictor_Corrector( int iterMax )
 {
-	double  y1, yo, error = 1e-6, k1, bUpper= b+h;
+	double  y1, yo, error = 1e-6, k1;
 	int n;
 
 	x = a; y = fa;
-	do {
 
-		cout << "\n\tx = " << x;
-		cout << "\t\t\ty = " << y;
-		if( x>a )
-			cout << "\t\tIterations: " << n;
+	unsigned int i, nYSolutionsSize = static_cast<unsigned int>(ySolutions.size());
+	for (i = 0; i < nYSolutionsSize; i++) {
+
+		//cout << "\n\tx = " << x;
+		//cout << "\t\t\ty = " << y;
+		//if( x>a )
+		//	cout << "\t\tIterations: " << n;
+
+		// Store the solutions for y
+		auto& ys = ySolutions[i];
+		ys.x = x;
+		ys.y = y;
+		if(i > 0)
+			ys.iterations = n;
 
 		//PREDICTOR: EULER
 		yo = y;
@@ -195,26 +242,34 @@ void CNumericalMethodsSolvingODE::Predictor_Corrector( int iterMax )
 		
 		x = x + h;		
 
-	} while (x < bUpper);
+	}
 }
 
 
 // RUNGE KUTTA METHOD (ORDER 2)
 void CNumericalMethodsSolvingODE::Runge_Kutta2()
 {
-	double k1=0, k2=0, bUpper = b + h;
+	double k1=0, k2=0;
 
 	x = a; y = fa;
-	do {
 
-		if (x > a) {
-			cout << "\n\tk1 = " << k1;
-			cout << "\tk2 = " << k2;
-		}
-		else
-			cout << endl;
-		cout << "\tx = " << x;
-		cout << "\ty = " << y;
+	unsigned int i, nYSolutionsSize = static_cast<unsigned int>(ySolutions.size());
+	for (i = 0; i < nYSolutionsSize; i++) {
+
+		//if (x > a) {
+		//	cout << "\n\tk1 = " << k1;
+		//	cout << "\tk2 = " << k2;
+		//}
+		//else
+		//	cout << endl;
+		//cout << "\tx = " << x;
+		//cout << "\ty = " << y;
+		// Store the solutions for y
+		auto& ys = ySolutions[i];
+		ys.x = x;
+		ys.y = y;
+		ys.k1 = k1;
+		ys.k2 = k2;		
 
 		k1 = f(x, y);
 		k2 = f(x + h, y + h * k1);
@@ -222,27 +277,37 @@ void CNumericalMethodsSolvingODE::Runge_Kutta2()
 		y = y + 0.5*h*(k1 + k2);
 		x = x + h;
 	
-	} while (x < bUpper);
+	}
 }
 
 // RUNGE KUTTA METHOD (ORDER 4)
 void CNumericalMethodsSolvingODE::Runge_Kutta4()
 {
-	double  k1=0, k2=0, k3=0, k4=0, bUpper = b + h;
+	double  k1=0, k2=0, k3=0, k4=0;
 
 	x = a; y = fa;
-	do {
 
-		if (x > a) {
-			cout << "\n\tk1 = " << k1;
-			cout << "\tk2 = " << k2;
-			cout << "\tk3 = " << k3;
-			cout << "\tk4 = " << k4;
-		}
-		else
-			cout << endl;
-		cout << "\tx = " << x;
-		cout << "\ty = " << y;
+	unsigned int i, nYSolutionsSize = static_cast<unsigned int>(ySolutions.size());
+	for (i = 0; i < nYSolutionsSize; i++) {
+
+		//if (x > a) {
+		//	cout << "\n\tk1 = " << k1;
+		//	cout << "\tk2 = " << k2;
+		//	cout << "\tk3 = " << k3;
+		//	cout << "\tk4 = " << k4;
+		//}
+		//else
+		//	cout << endl;
+		//cout << "\tx = " << x;
+		//cout << "\ty = " << y;
+		// Store the solutions for y
+		auto& ys = ySolutions[i];
+		ys.x = x;
+		ys.y = y;
+		ys.k1 = k1;
+		ys.k2 = k2;
+		ys.k3 = k3;
+		ys.k4 = k4;
 
 		k1 = f(x, y);
 		k2 = f(x + 0.5*h, y + 0.5*h*k1);
@@ -251,9 +316,42 @@ void CNumericalMethodsSolvingODE::Runge_Kutta4()
 
 		y = y + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6;
 		x = x + h;
-
 		
-	} while (x < bUpper);
+	}
+}
+
+void CNumericalMethodsSolvingODE::ShowSolutions(bool show_k1_k2, bool show_k3_k4, bool show_iterations)
+{
+	textcolor(WHITE);	
+
+	unsigned int i, nYSolutionsSize = static_cast<unsigned int>(ySolutions.size());	
+
+	for (i = 0; i < nYSolutionsSize; i++) {
+		auto& ys = ySolutions[i];
+
+		cout << endl;
+
+		if (i>0) {	
+
+			if (show_k1_k2) {
+				cout << "k1 = " << ys.k1;
+				cout << "\tk2 = " << ys.k2;
+			}
+
+			if (show_k3_k4) {
+				cout << "\tk3 = " << ys.k3;
+				cout << "\tk4 = " << ys.k4;
+			}
+
+			if (show_k1_k2 || show_k3_k4 )
+				cout << '\t';
+		}
+		cout << "x = " << ys.x;
+		cout << "\ty = " << ys.y;	
+
+		if(show_iterations)
+			cout << "\titerations = " << ys.iterations;
+	}
 }
 
 int main() {
@@ -265,11 +363,11 @@ int main() {
 	"Enter initial ODE values",
 	"Enter ODE: y' = f(x,y)",
 	"View initial ODE values",
-	"Euler",
-	"Modified Euler",
-	"Predictor-Corrector",
-	"Runge Kutta (Order2)",
-	"Runge Kutta (Order4)",
+	"EULER",
+	"MODIFIED EULER (MIDPOINT)",
+	"PREDICTOR-CORRECTOR (HEUN'S)",
+	"RUNGE KUTTA (ORDER2)",
+	"RUNGE KUTTA (ORDER4)",
 	"Exit" }; //menu initialization
 
 	// Init constans project
@@ -307,15 +405,23 @@ int main() {
 			break;
 		case 2:
 
-			ode.Visualize_System();			
+			ode.VisualizeSystem();			
 
 			break;
 		case  3:
 
 			clrscr();
-			cout << Metodo_Matricial[opc];
+			textcolor(LIGHTCYAN);
+			cout << Metodo_Matricial[opc] << endl;
+			textcolor(WHITE);
+
+			AddOns::chronoStart(); // Init chronometer			
 
 			ode.Euler();
+
+			AddOns::chronoEnd(); // End chronometer and show elapsed time
+
+			ode.ShowSolutions();
 
 			cgetch();
 
@@ -323,9 +429,17 @@ int main() {
 		case  4:
 
 			clrscr();
-			cout << Metodo_Matricial[opc];
+			textcolor(LIGHTCYAN);
+			cout << Metodo_Matricial[opc] << endl;
+			textcolor(WHITE);
 
+			AddOns::chronoStart(); // Init chronometer			
+			
 			ode.ModifiedEuler();
+
+			AddOns::chronoEnd(); // End chronometer and show elapsed time
+
+			ode.ShowSolutions();
 
 			cgetch();
 
@@ -333,20 +447,42 @@ int main() {
 		case  5:
 
 			clrscr();
-			cout << Metodo_Matricial[opc];
+			textcolor(LIGHTCYAN);
+			cout << Metodo_Matricial[opc] << endl;
+			textcolor(WHITE);
 
-			ode.Predictor_Corrector(50);
-			
+			{
+				cout << "\n\nUse iterative method (Y/N)? ";
+				char subOption = toupper(cgetch());
+
+				cout << endl;
+
+				AddOns::chronoStart(); // Init chronometer	
+
+				ode.Predictor_Corrector(subOption != 'Y' ? 1 : 1000);
+
+				AddOns::chronoEnd(); // End chronometer and show elapsed time
+			}
+
+			ode.ShowSolutions(false, false, true);
+
 			cgetch();
 
 			break;
 		case  6:
 
 			clrscr();
-			cout << Metodo_Matricial[opc];
+			textcolor(LIGHTCYAN);
+			cout << Metodo_Matricial[opc] << endl;
+			textcolor(WHITE);
+
+			AddOns::chronoStart(); // Init chronometer	
 
 			ode.Runge_Kutta2();
 
+			AddOns::chronoEnd(); // End chronometer and show elapsed time
+			
+			ode.ShowSolutions(true);
 
 			cgetch();
 
@@ -355,10 +491,17 @@ int main() {
 		case  7:
 
 			clrscr();
-			cout << Metodo_Matricial[opc];
+			textcolor(LIGHTCYAN);
+			cout << Metodo_Matricial[opc] << endl;
+			textcolor(WHITE);
+
+			AddOns::chronoStart(); // Init chronometer	
 
 			ode.Runge_Kutta4();
 
+			AddOns::chronoEnd(); // End chronometer and show elapsed time
+
+			ode.ShowSolutions(true, true);
 
 			cgetch();
 

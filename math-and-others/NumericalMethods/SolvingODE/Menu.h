@@ -1,8 +1,5 @@
 #pragma once
-#include <string>
 #include <vector>
-#include <iostream>
-#include "conio.h"
 
 using namespace std;
 
