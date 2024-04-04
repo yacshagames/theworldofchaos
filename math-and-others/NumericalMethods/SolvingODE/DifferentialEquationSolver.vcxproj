@@ -155,12 +155,14 @@
   <ItemGroup>
     <ClCompile Include="AddOns.cpp" />
     <ClCompile Include="DifferentialEquationSolver.cpp" />
+    <ClCompile Include="FormulaParser.cpp" />
     <ClCompile Include="Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddOns.h" />
     <ClInclude Include="conio.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="FormulaParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
