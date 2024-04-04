@@ -1,5 +1,6 @@
 #include <iostream>
 #include "conio.h"
+#include "Menu.h"
 
 using namespace std;
 
@@ -14,7 +15,7 @@ double f(double x, double y)
 void Euler()
 {
 	double fa, a, b, x, y, h;
-	clrscr();
+
 	cout << "\n\tMETODO DE EULER\n";
 	cout << "\n\tIngrese a = "; cin >> a;
 	cout << "\tIngrese b = "; cin >> b;
@@ -27,7 +28,6 @@ void Euler()
 		cout << "\n\tx = " << x;
 		cout << "\t\t\ty = " << y;		
 	} while (x <= b);
-	cgetch();
 }
 
 //METODO DE EULER MODIFICADO
@@ -40,7 +40,7 @@ double oper(double x, double y, double h)
 void ModifiedEuler()
 {
 	double fa, a, b, x, y, h, k1, k2;
-	clrscr();
+
 	cout << "\n\tMETODO DE EULER MODIFICADO\n";
 	cout << "\n\tIngrese a = "; cin >> a;
 	cout << "\tIngrese b = ";   cin >> b;
@@ -64,7 +64,6 @@ void ModifiedEuler()
 		cout << "\n\tx = " << x;
 		cout << "\t\ty = " << y;
 	} while (x < b);
-	cgetch();
 }
 
 // METODO DE PREDICTOR CORRECTOR (Improved Euler (Heun's) Method Calculator)
@@ -80,7 +79,7 @@ void Predictor_Corrector( int iterMax )
 {
 	double fa, a, b, x, y, y1, h, yo, error = 1e-6, k1;
 	int n = 1;
-	clrscr();
+
 	cout << "\n\tMETODO DE PREDICTOR CORRECTOR\n";
 	cout << "\n\tIngrese a = "; cin >> a;
 	cout << "\tIngrese b = "; cin >> b;
@@ -107,7 +106,6 @@ void Predictor_Corrector( int iterMax )
 		//		n=n+1;
 		x = x + h;
 	} while (x <= b + h);
-	cgetch();
 }
 
 
@@ -131,7 +129,7 @@ double K2(double h, double y, double x, double k1)
 void Runge_Kutta2()
 {
 	double fa, a, b, x, y, h, k1, k2;
-	clrscr();
+
 	cout << "\n\tMETODO DE RUNGE KUTTA (ORDEN 2)\n";
 	cout << "\n\tIngrese a = ";  cin >> a;
 	cout << "\tIngrese b = ";    cin >> b;
@@ -151,7 +149,6 @@ void Runge_Kutta2()
 		cout << "\tx = " << x;
 		cout << "\ty = " << y;
 	} while (x < b);
-	cgetch();
 }
 
 
@@ -186,12 +183,141 @@ void Runge_Kutta4()
 }
 
 int main() {
-	
-	//Euler();
-	//ModifiedEuler();
+	/*
+	Euler();
+	ModifiedEuler();
 	Predictor_Corrector(50);
 	Runge_Kutta2();
 	Runge_Kutta4();
+	*/
+
+	//CDifferentialEqSolver des;
+	Menu menu;
+
+	std::vector<std::string> Metodo_Matricial = {
+	"EULER",
+	"EULER MODIFICADO",
+	"PREDICTOR-CORRECTOR",
+	"RUNGE KUTTA (ORDEN 2)",
+	"RUNGE KUTTA (ORDEN 4)",
+	"Exit" }; //menu initialization
+
+	// Init constans project
+	char opc = 0;
+	clrscr();
+	while (opc != -1)
+	{
+		clrscr();
+		menu.DrawBox(12, 6, 57, 16, 9);
+		gotoxy(14, 8);
+		textcolor(LIGHTRED);
+		cout << "MATRIX METHODS FOR SOLVING SYSTEMS OF LINEAR EQUATIONS";
+		textcolor(LIGHTGREEN);
+		gotoxy(42, 23);
+		cout << "Developed by Yacsha Software";
+		opc = menu.DrawOptions(Metodo_Matricial, 20, 11, 15); // create the options menu
+		gotoxy(1, 1);
+
+
+		// Init matrix W from Wo
+		//if (msle.Initialize_Work_Matrix() == false)
+		//	if (opc != 0 && opc != 1 && opc != 7)
+		//		continue;	// Does not execute numeric methods
+
+		switch (opc)
+		{
+		/*case 0:
+
+			if (msle.SetNumberUnknownsVariables())
+				msle.Enter_System();
+
+			break;
+		case 1:
+			if (msle.SetNumberUnknownsVariables()) {
+
+				textcolor(LIGHTGRAY);
+				cout << "\nIf you create a diagonally dominant matrix, it can be successfully processed" << endl;
+				cout << "by the Cholesky and Gauss-Seidel algorithms." << endl << endl;
+
+				textcolor(WHITE);
+				cout << "Generate diagonally dominant matrix (Y/N)? ";
+				char subOption = toupper(cgetch());
+
+				msle.GenerateRandomMatrices(subOption == 'Y');
+			}
+
+			break;
+		case 2:
+
+			msle.Visualize_System();
+
+			break;*/
+		case  0:
+
+			clrscr();
+			cout << Metodo_Matricial[opc];
+
+			Euler();
+
+			cgetch();
+
+			break;
+		case  1:
+
+			clrscr();
+			cout << Metodo_Matricial[opc];
+
+			ModifiedEuler();
+
+			cgetch();
+
+			break;
+		case  2:
+
+			clrscr();
+			cout << Metodo_Matricial[opc];
+
+			Predictor_Corrector(50);
+			
+			cgetch();
+
+			break;
+		case  3:
+
+			clrscr();
+			cout << Metodo_Matricial[opc];
+
+			Runge_Kutta2();
+
+
+			cgetch();
+
+			break;
+
+		case  4:
+
+			clrscr();
+			cout << Metodo_Matricial[opc];
+
+			Runge_Kutta4();
+
+
+			cgetch();
+
+			break;
+		case -1:
+		case  5:
+
+			clrscr();
+			gotoxy(25, 12);
+			cout << "Are you sure you want to leave Y/N?: ";
+			opc = toupper(cgetch());
+			if (opc == 'Y')
+				opc = -1;
+
+			break;
+		}
+	}
 
 	return 1;
 }
