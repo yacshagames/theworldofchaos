@@ -57,6 +57,10 @@ HISTORY...
 	  the numerical method algorithm code has finished. In such a way
 	  that the time of each algorithm can be measured correctly and
 	  then display the results on the screen.
+	- The FormulaParser library is added to define an ODE y'=f(x,y) from
+	  a text string entered by the user, and in this way the user will
+	  be able to customize the ODE equation that will be solved by the
+	  numerical methods implemented.
 
   >> Version 1 - 30-XI-1999
 	- First version for Borland C++ 3.1 and Turbo C 3.0
@@ -67,6 +71,7 @@ HISTORY...
 #include "conio.h"
 #include "Menu.h"
 #include "AddOns.h"
+#include "FormulaParser.h"
 
 using namespace std;
 
@@ -93,6 +98,7 @@ private:
 public:
 
 	void InitVariables();
+	void InitODE();
 	void VisualizeSystem();
 
 	void Euler();
@@ -107,9 +113,15 @@ public:
 	double fa, a, b, x, y, h;
 
 	vector<Solution> ySolutions;
+
+	string formulaODE;
+private:
+
+	CFormulaParser fpODE;
 };
 
 CNumericalMethodsSolvingODE::CNumericalMethodsSolvingODE()
+	: fpODE("","xy")
 {
 	fa = 3;
 	a = 1;
@@ -130,7 +142,10 @@ CNumericalMethodsSolvingODE::~CNumericalMethodsSolvingODE()
 double CNumericalMethodsSolvingODE::f(double x, double y)
 {
 	//Default ODE: y'= f(x,y) = y/x+2*x*y
-	return y / x + 2 * x*y;	
+	if (formulaODE.empty())
+		return y / x + 2 * x*y;
+	else
+		return fpODE.f(x, y);
 }
 
 void CNumericalMethodsSolvingODE::InitVariables()
@@ -139,7 +154,7 @@ void CNumericalMethodsSolvingODE::InitVariables()
 
 	cout << "\n\tEnter Xmin = "; cin >> a;
 	cout << "\tEnter Xmax = ";   cin >> b;
-	cout << "\tEnter Ymin = f(Xmin) = "; cin >> fa;
+	cout << "\tEnter Ymin = g(Xmin) = "; cin >> fa;
 	cout << "\tEnter step h = "; cin >> h;
 	x = a; y = fa;
 
@@ -147,11 +162,45 @@ void CNumericalMethodsSolvingODE::InitVariables()
 	ySolutions.resize(ySolutionsSize);
 }
 
+void CNumericalMethodsSolvingODE::InitODE()
+{
+	clrscr();
+
+	textcolor(LIGHTGRAY);
+	
+	cout << "If you enter Y it will ask you to enter a string with the function f(x, y)," << endl
+		<< "the processing of the algorithms will be slower, if you enter N the formula " << endl
+		<< "parser will be deactivated, the default function f(x,y) = y/x + 2*x*y will be used," << endl
+		<< "and the processing of the algorithms will be faster." << endl;
+
+	textcolor(WHITE);
+	cout << "\nActivate parser formula for the ODE Y/N? ";
+	
+	char subOption = toupper(cgetch());
+
+	if (subOption == 'Y') {
+		cout << "\n\tEnter ODE: y' = f(x,y) = ";
+		cin >> formulaODE;
+	}
+	else
+		formulaODE.clear();
+
+	fpODE = CFormulaParser(formulaODE, "xy");	
+}
+
 void CNumericalMethodsSolvingODE::VisualizeSystem()
 {
 	clrscr();
 
-	cout << "ODE: y' = f(x,y) = y/x + 2*x*y --> Unknown: y = f(x)" << endl << endl;
+	
+	if (formulaODE.empty()) {
+
+		cout << "ODE without formula parser: y' = f(x,y) = y/x + 2*x*y --> Unknown: y = g(x)" << endl << endl;
+	}
+	else {
+
+		cout << "ODE WITH formula parser: y' = f(x,y) = " << formulaODE << " --> Unknown: y = g(x)" << endl << endl;
+	}
 	cout << "Xmin = " << a << endl;
 	cout << "Xmax = " << b << endl;
 	cout << "Ymin = f(Xmin) = " << fa << endl;
@@ -401,6 +450,7 @@ int main() {
 			break;
 		case 1:
 			
+			ode.InitODE();
 
 			break;
 		case 2:
