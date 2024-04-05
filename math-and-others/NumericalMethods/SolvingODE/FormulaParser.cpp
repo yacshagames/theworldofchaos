@@ -140,7 +140,10 @@ double CFormulaParser::ExprSimp()
 	double S;
 	char operador;
 	S = Termino();
-	while (strchr("*/", c) && (c != '\x0'))
+	
+	//while (strchr("*/", c) && (c != '\x0'))
+	string standardOperators = "*/";
+	while ( standardOperators.rfind(c) != string::npos && (c != '\x0'))
 	{
 		operador = c;
 		sigP();
@@ -162,7 +165,10 @@ double CFormulaParser::Expr()
 	double E;
 	char operador;
 	E = ExprSimp();
-	while (strchr("+-", c) && (c != '\x0'))
+	
+	//while (strchr("+-", c) && (c != '\x0'))
+	string standardOperators = "+-";
+	while (standardOperators.rfind(c) != string::npos && (c != '\x0'))
 	{
 		operador = c;
 		sigP();
