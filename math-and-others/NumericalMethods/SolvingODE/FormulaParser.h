@@ -4,6 +4,28 @@
 
   Syntactic Function Recognizer from a text string. Allows you to evaluate
   a function f(x,y,z), where the function is entered as a text string.
+  
+  --------------------------------------------------------------------------
+  Example Usage:
+	
+	// f(x,y) = 1-(x^2*sin(y)/(2*x^2+3*y^2)+tan(x*y^2))*(2+1)+exp(5/2)/sqr(x)
+	string function = "1-(x^2*sin(y)/(2*x^2+3*y^2)+tan(x*y^2))*(2+1)+exp(5/2)/sqr(x)";
+	
+	// Variables x, y are defined
+	CFormulaParser parser(function, "xy");
+	
+	// Evaluate function: value = f(3,4) = 4.742785459
+	double value = parser.f(3, 4);			
+
+  Recognized operators :
+  + - * /	--> Standard
+  ^			--> Exponential
+
+  Recognized math funtions :
+	SIN COS LOG TAN	--> Standard
+	EXP				--> e^(number), where e = 2.718... (euler number)
+	SQR				--> square root
+  --------------------------------------------------------------------------
 
   *original source file thanks to Luis Serna
 
@@ -21,6 +43,14 @@
 	- Separate files in to FormulaParser.h and FormulaParser.cpp
 	- The RSF_COMPLEX definition is added that allows defining whether the
 	  functions in a complex variable will be compiled from the library.
+	- The C++ code is modernized, stopping using char* strings and arrays,
+	  replacing them with their modern equivalent std::string and
+	  std::vector respectively
+	- The old C functions strcpy, strchr, uppper, etc. are removed and
+	  replaced with their modern equivalents from the standard std::string and
+	  std::algorithm libraries.
+	- An example code on how to use the FormulaParser library is added to
+	  the credits of FormulaParser.h
 
  >> Version 2 - 24-III-2024
 	- Update graphics/RSF - Porting to VC++ 2017 using winbgi
@@ -58,32 +88,34 @@
 	 evaluation process.
 
 ***************************************************************************/
+#include <string>
+#include <vector>
+using std::string;
+using std::vector;
 
-#include <string.h>
-#include <stdlib.h>
-#define _USE_MATH_DEFINES
-#include <math.h>
-#ifdef RSF_COMPLEX
+#ifdef FP_COMPLEX
 	#include "complex.h"
 #endif
 
 class CFormulaParser
 {
 private:
-
-	char *Numeros;
-	char funcion[6][4];
-	char *Variables;
-	char *Formula;
+	
+	string Variables;
+	string Formula;
 	char c;
-	int p, ruptura;
+	unsigned int p, ruptura;
 	double FF, VarReal[3];
+
+	static const string Numeros;
+	static const vector<string> funcion;
+	static const double M_PI;
 
 public:
 
 	int error;
 	//constructor
-	CFormulaParser(char *, const char *);
+	CFormulaParser(const string& formula, const string& vars);
 	~CFormulaParser();
 
 private:
@@ -97,18 +129,18 @@ private:
 	double ExprSimp();
 	double Expr();
 	void Procesar_como_func_estandar();
-	void eval(char* Formula, double &valor);
-	double Calcular_formula(void);
+	void eval(const string& formula, double &valor);
+	double Calcular_formula();
 	//double Entrar_Funcion( char Cadena[] );
 public:
-	double f(double, double, double);
+	double f(double x, double y = 0, double z = 0);
 
 
 	/*
 	void f( char Cadena[], char Vars[],
 		   double var1 , double var2, double var3 );
 	  */
-#ifdef RSF_COMPLEX
+#ifdef FP_COMPLEX
 	  //FUNCIONES EN VARIABLE COMPLEJA
 private:
 	complex FC, VarCompleja[3]; //FC : Funcion Compleja

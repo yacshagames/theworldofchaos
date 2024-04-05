@@ -1,51 +1,56 @@
 #include "FormulaParser.h"
+#include <algorithm>
 
-CFormulaParser::CFormulaParser(char * formula, const char *vars)
+const string CFormulaParser::Numeros = "0123456789";
+
+const vector<string> CFormulaParser::funcion =  { "SIN", "COS", "EXP", "SQR", "LOG", "TAN" };
+
+const double CFormulaParser::M_PI = 3.14159265358979323846;
+
+CFormulaParser::CFormulaParser(const string& formula, const string& vars)
 {
+	Formula = formula;
+	Variables = vars;
 
-	Formula = new char[strlen(formula) + 1];
-	Variables = new char[strlen(vars) + 1];
-	Numeros = new char[11];
-
-	strcpy(Formula, formula);
-	strcpy(Variables, vars);
-
-	strcpy(Numeros, "0123456789");
-	strcpy(funcion[0], "SIN");
-	strcpy(funcion[1], "COS");
-	strcpy(funcion[2], "EXP");
-	strcpy(funcion[3], "SQR");
-	strcpy(funcion[4], "LOG");
-	strcpy(funcion[5], "TAN");
+	// To uppercase
+	std::transform(Formula.begin(), Formula.end(), Formula.begin(), ::toupper);
+	std::transform(Variables.begin(), Variables.end(), Variables.begin(), ::toupper);
 }
 
 CFormulaParser::~CFormulaParser()
 {
-	delete Formula;
-	delete Variables;
-	delete Numeros;
 }
+
 void CFormulaParser::sigP()
 {
 	do {
 		p++;
-		if (p <= strlen(Formula)) c = Formula[p];
+		
+		if (p <= static_cast<unsigned int>(Formula.size()) )
+			c = Formula[p];
+
 	} while (c == ' ');
-};
+}
 
 void CFormulaParser::Procesar_como_numero()
 {
-	int codigo;
-	int inicio = p;
-	char Num[80], *pIni, *pFin;
-
+	//int codigo;
+	unsigned int inicio = p;
+	/*char Num[80], *pIni, *pFin;
+	
 	pIni = Variables;
 	pFin = strchr(Variables, Formula[p]);
 
 	if (pFin && (Formula[p] != '\x0')) // '\x0' es un caracter de espacio
+	{*/
+
+	string::size_type pos = Variables.rfind(Formula[p]);
+
+	if (pos != string::npos && (Formula[p] != '\x0'))// '\x0' es un caracter de espacio
 	{
 
-		FF = VarReal[pFin - pIni];
+		//FF = VarReal[pFin - pIni];
+		FF = VarReal[pos];
 
 		sigP();
 
@@ -54,43 +59,48 @@ void CFormulaParser::Procesar_como_numero()
 	{
 		do
 			sigP();
-		while (strchr(Numeros, c) && (c != '\x0'));
+		//while (strchr(Numeros, c) && (c != '\x0'));
+		while ( Numeros.rfind(c)!= string::npos && (c != '\x0'));
 
 		if (c == '.')
 			do
 				sigP();
-		while (strchr(Numeros, c) && (c != '\x0'));
+		//while (strchr(Numeros, c) && (c != '\x0'));
+		while (Numeros.rfind(c) != string::npos && (c != '\x0'));
 
 		if (c == 'E')
 		{
 			sigP();
 			do
 				sigP();
-			while (strchr(Numeros, c) && (c != '\x0'));
-		};
+			//while (strchr(Numeros, c) && (c != '\x0'));
+			while (Numeros.rfind(c) != string::npos && (c != '\x0'));
+		}
 
-		strncpy(Num, &Formula[inicio], p - inicio);
-		Num[p - inicio] = '\0';
-		FF = strtod(Num, &pIni);
-	};
+		//strncpy(Num, &Formula[inicio], p - inicio);
+		//Num[p - inicio] = '\0';
+		//FF = strtod(Num, &pIni);
+		FF = std::stod(Formula.substr(inicio, p - inicio));
+	}
 
-};
+}
 
 void CFormulaParser::Procesar_como_nueva_expr()
 {
 	sigP();
 	FF = Expr();
 	if (c == ')') sigP(); else ruptura = p;
-};
+}
 
 double CFormulaParser::fct()
 {
-	if (strchr(Numeros, c) || strchr(Variables, c) && (c != '\x0'))
+	//if (strchr(Numeros, c) || strchr(Variables, c) && (c != '\x0'))
+	if (Numeros.rfind(c) != string::npos || Variables.rfind(c) != string::npos && (c != '\x0'))
 		Procesar_como_numero();
 	else if (c == '(') Procesar_como_nueva_expr();
 	else Procesar_como_func_estandar();
 	return FF;
-};
+}
 
 double CFormulaParser::Fact_s()
 {
@@ -100,7 +110,7 @@ double CFormulaParser::Fact_s()
 		return -fct();
 	}
 	else	return fct();
-};
+}
 
 double CFormulaParser::Termino()
 {
@@ -115,15 +125,15 @@ double CFormulaParser::Termino()
 
 			if (T >= 0)         //si la base es positiva, exponente puede ser cualquier numero real
 				T = pow(T, exponente);
-			else if (exponente == (int)exponente)//si T<0 ; exponente debera ser entero
+			else if (std::abs(exponente - (double)(int)exponente) < 1e-5)//si T<0 ; exponente debera ser entero
 				T = pow(T, exponente);
 			else { T = 0; error = 1; } // si T<0 y exponente no es entero ocurre un error
 
 		}
 		else T = T * Fact_s();
-	};
+	}
 	return T;
-};
+}
 
 double CFormulaParser::ExprSimp()
 {
@@ -143,9 +153,9 @@ double CFormulaParser::ExprSimp()
 			else { S = 0; error = 1; }
 			break;
 		}
-	};
+	}
 	return S;
-};
+}
 
 double CFormulaParser::Expr()
 {
@@ -159,21 +169,22 @@ double CFormulaParser::Expr()
 		switch (operador) {
 		case '+': E += ExprSimp(); break;
 		case '-': E -= ExprSimp(); break;
-		};
-	};
+		}
+	}
 	return E;
-};
+}
 
 void CFormulaParser::Procesar_como_func_estandar()
 {
-	char cpy[80];
-	strcpy(cpy, "");
+	//char cpy[80];
+	//strcpy(cpy, "");
 
 	int i;
 
 	for (i = 0; i < 6; i++)
 	{
-		if (!strncmp(strncpy(cpy, &Formula[p], 3), funcion[i], 3))
+		//if (!strncmp(strncpy(cpy, &Formula[p], 3), funcion[i], 3))
+		if ( Formula.compare(p, 3, funcion[i]) == 0 )
 			break;
 	}
 
@@ -202,7 +213,8 @@ void CFormulaParser::Procesar_como_func_estandar()
 		}
 	}
 	else
-		if (!strncmp(strncpy(cpy, &Formula[p], 2), "PI", 2))
+		//if (!strncmp(strncpy(cpy, &Formula[p], 2), "PI", 2))
+		if (Formula.compare(p, 3, "PI") != 0)
 		{
 			p++;
 			sigP();
@@ -217,23 +229,23 @@ void CFormulaParser::Procesar_como_func_estandar()
 		}
 };
 
-void CFormulaParser::eval(char* Formula, double &valor)
+void CFormulaParser::eval(const string& formula, double &valor)
 {
-	_strupr(Formula);
+	//_strupr(Formula);
 	p = 0;
 	c = Formula[0];
 	valor = Expr();
 	if (c != '\x0')error = 1;
 	ruptura = p;
-};
+}
 
-double CFormulaParser::Calcular_formula(void/*char cad[]*/)
+double CFormulaParser::Calcular_formula()
 {
 	double r;
 	error = 0;
 	eval(Formula, r);
 	return r;
-};
+}
 
 
 // double CFuncad::Entrar_Funcion( char Cadena[] )
@@ -241,7 +253,7 @@ double CFormulaParser::Calcular_formula(void/*char cad[]*/)
 //  strcpy(Formula,Cadena);
 // };
 
-double CFormulaParser::f(double x, double y = 0, double z = 0)
+double CFormulaParser::f(double x, double y, double z)
 {
 	VarReal[0] = x;
 	VarReal[1] = y;
@@ -265,7 +277,7 @@ double CFormulaParser::f(double x, double y = 0, double z = 0)
  };
   */
 
-#ifdef RSF_COMPLEX
+#ifdef FP_COMPLEX
 
   //char funcion[5][3]={ "SIN","COS","EXP","LOG","TAN"};
   //char Numeros[]="0123456789";
