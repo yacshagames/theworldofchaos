@@ -5,34 +5,16 @@ JOSE LUIS DE LA CRUZ LAZARO 	UNI-FIEE 30 Nov 1999
 ramondc@hotmail.com
 Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
 *********************************************************************/
-#include <iostream.h>
-#include <conio.h>
-#include <math.h>
-#include <ctype.h>
+#include <iostream>
+#include "conio.h"
 
-//"menu.h"
-//RUTINA PARA CREAR UN MENU VIRTUAL EN EL MODO TEXTO
-#ifndef __STDLIB_H
-#include <stdlib.h>
-#endif
+using namespace std;
 
-#ifndef __CONIO_H
-#include <conio.h>
-#endif
-
-#ifndef __STDIO_H
-#include <stdio.h>
-#endif
-
-#ifndef __BIOS_H
-#include <bios.h>
-#endif
-
-int MENU(char *vec[], int x, int y, int dim, int puntero, int col);
+int MENU(const char *vec[], int x, int y, int dim, int puntero, int col);
 ///
 void CUADRO(int x1, int y1, int ancho, int largo, int col);
 
-Imprimir_Raiz(int iteracion, double raiz)
+void Imprimir_Raiz(int iteracion, double raiz)
 {
 	cout << "\nIteraci¢n " << iteracion << "\tRaiz = " << raiz;
 }
@@ -101,7 +83,7 @@ double Biseccion(double a, double b, double error = 1e-6)
 }
 
 //Metodo de la falsa posici¢n
-double Falsa_Posicion(double a, double b, double error = 1e-6)
+void Falsa_Posicion(double a, double b, double error = 1e-6)
 {
 	double x1, x2, fa, fx2;
 	int iteracion = 1;
@@ -118,7 +100,7 @@ double Falsa_Posicion(double a, double b, double error = 1e-6)
 }
 
 //Metodo de la secante
-double Secante(double x1, double x2, double error = 1e-6)
+void Secante(double x1, double x2, double error = 1e-6)
 {
 	double fx1, fx2, x;
 	int iteracion = 1;
@@ -131,7 +113,7 @@ double Secante(double x1, double x2, double error = 1e-6)
 	} while (fabs(x2 - x1) > error);
 }
 
-double Punto_Fijo(double x, double error = 1e-6)
+void Punto_Fijo(double x, double error = 1e-6)
 {
 	double x1;
 	int iteracion = 1;
@@ -143,9 +125,9 @@ double Punto_Fijo(double x, double error = 1e-6)
 	} while (fabs(x1 - x) > error);
 }
 
-void main()
+int main()
 {
-	char *Calculo_de_Raices[8] = {
+	const char *Calculo_de_Raices[8] = {
    "Cambiar par metros",
    "Visualizar par metros",
    "M‚todo de Bisecci¢n",
@@ -155,7 +137,7 @@ void main()
    "M‚todo del Punto Fijo",
    "Salir" }; //inicializacion del menu
 
-	char opc; //definicion de variables
+	char opc = 0; //definicion de variables
 
 	double a, b, Xo, error = 0;//par metros para los m‚todos
 
@@ -166,9 +148,9 @@ void main()
 		CUADRO(12, 6, 50, 15, LIGHTRED);
 		gotoxy(14, 8);
 		textcolor(LIGHTCYAN);
-		cprintf("METODOS PARA CALCULAR LAS RAICES DE LA FUNCION");
-		gotoxy(25, 9); cprintf("f(x)=xtan(x)-x^2-0.168=0");
-		gotoxy(1, 23); cprintf("Utilice las flechas ARRIBA y ABAJO para desplazar el cursor sobre las opciones");
+		printf("METODOS PARA CALCULAR LAS RAICES DE LA FUNCION");
+		gotoxy(25, 9); printf("f(x)=xtan(x)-x^2-0.168=0");
+		gotoxy(1, 23); printf("Utilice las flechas ARRIBA y ABAJO para desplazar el cursor sobre las opciones");
 
 		opc = MENU(Calculo_de_Raices, 20, 11, 8, -1, 15);//se crea el menu de opciones
 
@@ -193,24 +175,24 @@ void main()
 			clrscr();
 			cout << "\n\n";
 			textcolor(YELLOW);
-			cprintf("Intervalo [a,b] donde se desea buscar la raiz = [ %g , %g ]", a, b);
+			printf("Intervalo [a,b] donde se desea buscar la raiz = [ %g , %g ]", a, b);
 			cout << "\n\n";
 			textcolor(LIGHTCYAN);
-			cprintf("Para M‚todo de Newton y Punto fijo");
+			printf("Para M‚todo de Newton y Punto fijo");
 			cout << "\n";
-			cprintf("Valor inicial de x = %g", Xo);
+			printf("Valor inicial de x = %g", Xo);
 			cout << "\n\n";
 			textcolor(LIGHTRED);
-			cprintf("Error de aproximaci¢n (en valor decimal) = %g ", error);
-			getch();
+			printf("Error de aproximaci¢n (en valor decimal) = %g ", error);
+			cgetch();
 			break;
 
 		case -1:
 		case  7:
 			clrscr();
 			gotoxy(25, 12);
-			cprintf("Esta seguro que desea salir S/N: ");
-			opc = toupper(getche());
+			printf("Esta seguro que desea salir S/N: ");
+			opc = toupper(cgetch());
 			if (opc == 'S')
 			{
 				opc = -1;
@@ -223,7 +205,7 @@ void main()
 		if (opc > 1 && error != 0)
 		{
 			clrscr();
-			cprintf(Calculo_de_Raices[opc]);
+			printf(Calculo_de_Raices[opc]);
 			cout << "\n\nTabla de Raices:\n";
 			switch (opc)
 			{
@@ -233,7 +215,7 @@ void main()
 			case 5: Newton_Raphson(Xo, error); break;
 			case 6: Punto_Fijo(Xo, error); break;
 			}
-			getch();
+			cgetch();
 		}
 
 		if (error == 0)
@@ -241,20 +223,20 @@ void main()
 			textcolor(LIGHTCYAN);
 			clrscr();
 			gotoxy(20, 12);
-			cprintf("No se ha ingresado los par metros");
+			printf("No se ha ingresado los par metros");
 			gotoxy(17, 13);
-			cprintf("Por favor seleccione la opci¢n ");
+			printf("Por favor seleccione la opci¢n ");
 			textcolor(LIGHTGREEN);
-			cprintf("Cambiar par metros");
-			getch();
+			printf("Cambiar par metros");
+			cgetch();
 		}
 
 	}
-
+	return 1;
 }
 
 
-int MENU(char *vec[], int x, int y, int dim, int puntero, int col)
+int MENU(const char *vec[], int x, int y, int dim, int puntero, int col)
 {
 	/*Esta funcion resive unvector tipo caracter
 	  definido de la siguiente manera
@@ -273,22 +255,22 @@ int MENU(char *vec[], int x, int y, int dim, int puntero, int col)
 	{
 		for (int k = 0; k < dim; k++)
 		{
-			gotoxy(x, y + k); cprintf("%s", vec[k]);
+			gotoxy(x, y + k); printf("%s", vec[k]);
 		}
 		if (puntero != -1 && puntero < dim) { con = puntero; }
 
 		while (sal != 1)
 		{
-			gotoxy(x - 1, y + con); cprintf(">");
+			gotoxy(x - 1, y + con); printf(">");
 
 			textcolor(col);
-			gotoxy(x, y + con_ant); cprintf("%s", vec[con_ant]);
+			gotoxy(x, y + con_ant); printf("%s", vec[con_ant]);
 			textcolor(LIGHTGREEN);
-			gotoxy(x, y + con); cprintf("%s", vec[con]);
+			gotoxy(x, y + con); printf("%s", vec[con]);
 			con_ant = con;
-
+			/*
 			while (bioskey(1) == 0);
-			gotoxy(x - 1, y + con); cprintf(" ");
+			gotoxy(x - 1, y + con); printf(" ");
 			switch (bioskey(0))
 			{
 			case 0x11b:sal = 1; con = -1; break;//ESC
@@ -299,8 +281,8 @@ int MENU(char *vec[], int x, int y, int dim, int puntero, int col)
 
 				break;//Fle. Arriba
 			case 0x5000:con++; if (con > (dim - 1))con = 0; break;//Fle. Abajo
-			}
-			if (kbhit()) getch();
+			}*/
+			if (ckbhit()) cgetch();
 		}
 
 		return(con);
@@ -308,7 +290,7 @@ int MENU(char *vec[], int x, int y, int dim, int puntero, int col)
 	else
 	{
 		printf("El menu no tiene la dimension correcta o se salio de la pantalla");
-		getche();
+		cgetch();
 		return(con = -1);
 	}
 }
@@ -325,22 +307,22 @@ void CUADRO(int x1, int y1, int ancho, int largo, int col)
 		textcolor(col);
 		for (int i = x1 + 1; i <= x1 + ancho - 1; i++)
 		{
-			gotoxy(i, y1); cprintf("Í");
-			gotoxy(i, y1 + largo); cprintf("Í");
+			gotoxy(i, y1); printf("Í");
+			gotoxy(i, y1 + largo); printf("Í");
 		}
 		for (int k = y1 + 1; k <= y1 + largo - 1; k++)
 		{
-			gotoxy(x1, k); cprintf("º");
-			gotoxy(x1 + ancho, k); cprintf("º");
+			gotoxy(x1, k); printf("º");
+			gotoxy(x1 + ancho, k); printf("º");
 		}
-		gotoxy(x1, y1); cprintf("É");
-		gotoxy(x1, y1 + largo); cprintf("È");
-		gotoxy(x1 + ancho, y1 + largo); cprintf("¼");
-		gotoxy(x1 + ancho, y1); cprintf("»");
+		gotoxy(x1, y1); printf("É");
+		gotoxy(x1, y1 + largo); printf("È");
+		gotoxy(x1 + ancho, y1 + largo); printf("¼");
+		gotoxy(x1 + ancho, y1); printf("»");
 	}
 	else
 	{
-		gotoxy(x1, y1); cprintf("Cuadro fuera de pantalla"); getch();
+		gotoxy(x1, y1); printf("Cuadro fuera de pantalla"); cgetch();
 	}
 }
 
@@ -354,9 +336,6 @@ void CUADRO(int x1, int y1, int ancho, int largo, int col)
 //que verifiquen simultaneamente este par de ecuaciones
 //utilizando este método 
 
-#include "conio.h"
-#include "fstream.h"
-#include "math.h"
 float F(float x, float y)
 {
 	return x * y*y - y - 2;          //  F(x) = xy^2-y-2 = 0
@@ -381,7 +360,7 @@ float Gy(float x, float y)
 {
 	return x * x*x;
 }
-void main()
+void Newton2Variables()
 {
 	double x, y, e, f, g, fx, fy, gx, gy, x1, y1;
 	clrscr();
@@ -399,5 +378,5 @@ void main()
 		cout << "\n\tSoluci¢n X = " << x;
 		cout << "\tSoluci¢n Y = " << y;
 	} while (sqrt((x1 - x)*(x1 - x) + (y1 - y)*(y1 - y)) > e);
-	getch();
+	cgetch();
 }
