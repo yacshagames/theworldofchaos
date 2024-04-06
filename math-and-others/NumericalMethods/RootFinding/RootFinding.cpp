@@ -1,26 +1,130 @@
 /*********************************************************************
-METODOS PARA CALCULAR LAS RAICES DE UNA FUNCION: f(x)=0
-programado por:
-JOSE LUIS DE LA CRUZ LAZARO 	UNI-FIEE 30 Nov 1999
-ramondc@hotmail.com
-Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
-*********************************************************************/
+NUMERICAL METHODS FOR FINDING ROOTS OF A FUNCTION
+
+Is solved using the following numerical method algorithms:
+
+	- Bisection
+	- False position
+	- Secant method
+	- Newton-Raphson
+	- Fixed point
+	
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+  >> Version 2 - 04-IV-2024
+	- Code is updated and improved
+	- Merges all numerical methods that solve differential equations
+	  in a single file
+	- Porting to VC++ 2017
+	- Translate functions name
+	- Change float variables to double
+	- The function y' = f(x,y) is unified into a single function that
+	  is reused in all methods
+	- Unused variables are eliminated
+	- The ModifiedEuler and Predictor_Corrector method is corrected
+	- Order 4 Runge Kutta method added
+	- A menu is added in text mode to select the numerical method to
+	  use in the solution
+	- Unnecessary files are removed
+	- The code is modernized, converting it into the
+	  CNumericalMethodsSolvingODE class
+	- Traces of old C function fabs, etc... are removed and replaced
+	  with their modern equivalents
+	- The maximum width at which a menu box can be created is increased
+	- Change project name to SolvingODE
+	- Comments are translated from Spanish to English
+	- Credits are added
+	- The visualization of the x and y calculation tables is improved,
+	  in each method, always showing the values in the range [a, b]
+	- A chronometer is added to measure the time that each method takes,
+	  and the seconds that each method has taken to process the solution
+	  are shown, in order to obtain a point of comparison between the
+	  efficiency of the algorithms.
+	- The ShowSolutions method is added to display the solutions after
+	  the numerical method algorithm code has finished. In such a way
+	  that the time of each algorithm can be measured correctly and
+	  then display the results on the screen.
+	- The FormulaParser library is added to define an ODE y'=f(x,y) from
+	  a text string entered by the user, and in this way the user will
+	  be able to customize the ODE equation that will be solved by the
+	  numerical methods implemented.
+
+  >> Version 1 - 30-XI-1999
+	- First version for Borland C++ 3.1 and Turbo C 3.0
+
+**********************************************************************/
 #include <iostream>
+#include <string>
+#include <list>
 #include "conio.h"
+#include "Menu.h"
+#include "AddOns.h"
+#include "FormulaParser.h"
 
 using namespace std;
 
-int MENU(const char *vec[], int x, int y, int dim, int puntero, int col);
-///
-void CUADRO(int x1, int y1, int ancho, int largo, int col);
+class CRootFinding {
+	struct Solution {
+		double root = 0;
+		unsigned int iterations = 0;
+	};
 
-void Imprimir_Raiz(int iteracion, double raiz)
+public:
+	CRootFinding();
+	~CRootFinding();
+
+	double f(double x);
+	double g(double x);
+	double fderivada(double x);
+
+	double Newton_Raphson();
+	double Bisection();
+	void False_Position();
+	void Secant();
+	void Fixed_Point();
+
+	void InitVariables();
+	//void InitFunction();
+	void VisualizeSystem();
+	void SaveSolutions(const unsigned int& iteration, const double& root);
+
+public:
+
+	// parameters for numerical methods
+	double xmin, xmax, Xo, error;
+
+	// Root solutions
+	list<Solution> xSolutions;
+};
+
+
+
+CRootFinding::CRootFinding()
 {
-	cout << "\nIteraci¢n " << iteracion << "\tRaiz = " << raiz;
+	xmin = 1;
+	xmax = 5;
+	Xo = 2;
+	error = 1e-6;
+}
+
+CRootFinding::~CRootFinding()
+{
 }
 
 //definicion de la funcion f(x)
-double f(double x)
+double CRootFinding::f(double x)
 {
 	//f(x)=xtan(x)-x^2-0.168=0
 	return x * tan(x) - x * x - 0.168;
@@ -30,14 +134,14 @@ double f(double x)
 //para obtener g(x) se despeja convenientemente f(x)
 //de forma que quede x=g(x) donde g'(x)<1 ( derivada de g(x) <1 )
 //esta funcion se utiliza en el metodo del punto fijo
-double g(double x)
+double CRootFinding::g(double x)
 {
 	//x=g(x)=(x^2+0.168)/tan(x);
 	return (x*x + 0.168) / tan(x);
 }
 
-double fderivada(double x)
-{
+double CRootFinding::fderivada(double x)
+{	
 	/*
 	derivamos por definicion
 	 lim  ( f(x+h)-f(x) )/h
@@ -49,8 +153,10 @@ double fderivada(double x)
 }
 
 //Metodo de Newton-Raphson
-double Newton_Raphson(double x, double error = 1e-6)
+double CRootFinding::Newton_Raphson()
 {
+	double x = Xo;
+
 	double x_anterior;
 
 	int iteracion = 1;
@@ -58,8 +164,8 @@ double Newton_Raphson(double x, double error = 1e-6)
 	do
 	{
 		x_anterior = x;
-		x = x - f(x) / fderivada(x);
-		Imprimir_Raiz(iteracion++, x);
+		x = x - f(x) / fderivada(x);		
+		SaveSolutions(iteracion++, x);
 	} while (fabs(x - x_anterior) > error);
 
 	return x;
@@ -67,8 +173,10 @@ double Newton_Raphson(double x, double error = 1e-6)
 }
 
 //Metodo de la bisecci¢n
-double Biseccion(double a, double b, double error = 1e-6)
+double CRootFinding::Bisection()
 {
+	double a = xmin, b = xmax;
+
 	double m;
 	int iteracion = 1;
 	do
@@ -76,15 +184,17 @@ double Biseccion(double a, double b, double error = 1e-6)
 		m = (a + b) / 2;
 		if (f(a)*f(m) < 0)b = m;
 		else a = m;
-		Imprimir_Raiz(iteracion++, (a + b) / 2);
+		SaveSolutions(iteracion++, (a + b) / 2);
 	} while (fabs(a - b) > error);
 
 	return (a + b) / 2;
 }
 
 //Metodo de la falsa posici¢n
-void Falsa_Posicion(double a, double b, double error = 1e-6)
+void CRootFinding::False_Position()
 {
+	double a = xmin, b = xmax;
+
 	double x1, x2, fa, fx2;
 	int iteracion = 1;
 	x2 = a;
@@ -95,13 +205,15 @@ void Falsa_Posicion(double a, double b, double error = 1e-6)
 		fa = f(a);
 		fx2 = f(x2);
 		if ((fa*fx2) > 0) a = x2; else b = x2;
-		Imprimir_Raiz(iteracion++, x2);
+		SaveSolutions(iteracion++, x2);
 	} while (fabs(x2 - x1) > error);
 }
 
 //Metodo de la secante
-void Secante(double x1, double x2, double error = 1e-6)
+void CRootFinding::Secant()
 {
+	double x1 = xmin, x2 = xmax;
+
 	double fx1, fx2, x;
 	int iteracion = 1;
 	do
@@ -109,225 +221,163 @@ void Secante(double x1, double x2, double error = 1e-6)
 		fx1 = f(x1); fx2 = f(x2);
 		x = x2 - fx2 * (x2 - x1) / (fx2 - fx1);
 		x1 = x2; x2 = x;
-		Imprimir_Raiz(iteracion++, x2);
+		SaveSolutions(iteracion++, x2);
 	} while (fabs(x2 - x1) > error);
 }
 
-void Punto_Fijo(double x, double error = 1e-6)
+void CRootFinding::Fixed_Point()
 {
+	double x = Xo;
+
 	double x1;
-	int iteracion = 1;
+	unsigned int iteration = 1;
 	do
 	{
 		x1 = x;
 		x = g(x);
-		Imprimir_Raiz(iteracion++, x);
+		SaveSolutions(iteration++, x);
 	} while (fabs(x1 - x) > error);
+}
+
+void CRootFinding::InitVariables()
+{
+	textcolor(WHITE);
+	clrscr();
+
+	cout	<< "\n\nEnter the interval [A,B] where you want to search for the root\n"
+			<< "Enter A (Real Number):";
+	cin >> xmin;
+	cout << "Enter B (Real Number):";
+	cin >> xmax;
+	cout << "\n\nFor Newton's Method and Fixed Point\nEnter initial value of the root (Real Number): ";
+	cin >> Xo;
+
+	cout << "\n\nEnter the approximation error ( \"Small number\" 0<error<=0.1 ): ";
+	double _error;
+	cin >> _error;
+
+	if (_error > 0) {
+		error = _error;
+	} else {
+		textcolor(LIGHTRED);
+		cout << "\n\nThe error must be a number greater than zero";
+		cgetch();		
+	}
+}
+
+void CRootFinding::VisualizeSystem()
+{
+	clrscr();
+	cout << "\n\n";
+	textcolor(YELLOW);
+	printf("Interval [a,b] where you want to search for the root = [ %g , %g ]", xmin, xmax);
+	cout << "\n\n";
+	textcolor(LIGHTCYAN);
+	printf("For Newton's Method and Fixed Point");
+	cout << "\n";
+	printf("Initial value of x = %g", Xo);
+	cout << "\n\n";
+	textcolor(LIGHTRED);
+	printf("Approximation error (in decimal value) = %g ", error);
+	cgetch();
+}
+
+void CRootFinding::SaveSolutions(const unsigned int& iteration, const double& root)
+{
+	//cout << "\nIteration " << iteracion << "\tRoot = " << raiz;
+
+	Solution sol;
+	sol.root = root;
+	sol.iterations = iteration;
+	xSolutions.push_back(sol);
 }
 
 int main()
 {
-	const char *Calculo_de_Raices[8] = {
-   "Cambiar par metros",
-   "Visualizar par metros",
-   "M‚todo de Bisecci¢n",
-   "M‚todo de la Falsa Posici¢n",
-   "M‚todo de la Secante",
-   "M‚todo de Newton-Raphson",
-   "M‚todo del Punto Fijo",
-   "Salir" }; //inicializacion del menu
+	CRootFinding rf;
+	Menu menu;
 
-	char opc = 0; //definicion de variables
+	vector<string> rootFinding = {
+		"Enter initial values",		
+		"View initial values",
+		"BISECTION METHOD",
+		"FALSE POSITION METHOD",
+		"SECANT METHOD",
+		"NEWTON-RAPHSON METHOD",
+		"FIXED POINT METHOD",
+		"Exit" }; //inicializacion del menu
 
-	double a, b, Xo, error = 0;//par metros para los m‚todos
+	char opc = 0; //definicion de variables	
 
 	clrscr();
 	while (opc != -1)
 	{
 		clrscr();
-		CUADRO(12, 6, 50, 15, LIGHTRED);
+		menu.DrawBox(12, 6, 52, 15, LIGHTRED);
 		gotoxy(14, 8);
 		textcolor(LIGHTCYAN);
-		printf("METODOS PARA CALCULAR LAS RAICES DE LA FUNCION");
+		printf("NUMERICAL METHODS FOR FINDING ROOTS OF A FUNCTION");
 		gotoxy(25, 9); printf("f(x)=xtan(x)-x^2-0.168=0");
-		gotoxy(1, 23); printf("Utilice las flechas ARRIBA y ABAJO para desplazar el cursor sobre las opciones");
 
-		opc = MENU(Calculo_de_Raices, 20, 11, 8, -1, 15);//se crea el menu de opciones
+		opc = menu.DrawOptions(rootFinding, 20, 11, WHITE);//se crea el menu de opciones
 
 		switch (opc)
 		{
 		case 0:
-			textcolor(WHITE);
-			clrscr();
-			cout << "\n\nIngresar el intervalo [A,B] donde se desea buscar la raiz\n"
-				<< "Ingrese A (N£mero Real):";
-			cin >> a;
-			cout << "Ingrese B (N£mero Real):";
-			cin >> b;
-			cout << "\n\nPara M‚todo de Newton y Punto fijo\nIngrese valor inicial de la raiz (N£mero Real): ";
-			cin >> Xo;
-			cout << "\n\nIngrese el error de aproximaci¢n ( \"N£mero peque¤o\" 0<error<=0.1 ): ";
-			cin >> error;
+			rf.InitVariables();
 			break;
 
 		case 1:
-			if (error == 0)break;
-			clrscr();
-			cout << "\n\n";
-			textcolor(YELLOW);
-			printf("Intervalo [a,b] donde se desea buscar la raiz = [ %g , %g ]", a, b);
-			cout << "\n\n";
-			textcolor(LIGHTCYAN);
-			printf("Para M‚todo de Newton y Punto fijo");
-			cout << "\n";
-			printf("Valor inicial de x = %g", Xo);
-			cout << "\n\n";
-			textcolor(LIGHTRED);
-			printf("Error de aproximaci¢n (en valor decimal) = %g ", error);
-			cgetch();
+			rf.VisualizeSystem();
 			break;
 
 		case -1:
 		case  7:
 			clrscr();
 			gotoxy(25, 12);
-			printf("Esta seguro que desea salir S/N: ");
+			printf("Are you sure you want to leave Y/N?: ");
 			opc = toupper(cgetch());
-			if (opc == 'S')
+			if (opc == 'Y')
 			{
 				opc = -1;
-				error = 1;
 			}
 			break;
 
 		}
 
-		if (opc > 1 && error != 0)
+		if ( opc > 1 )
 		{
 			clrscr();
-			printf(Calculo_de_Raices[opc]);
+			cout << rootFinding[opc];
 			cout << "\n\nTabla de Raices:\n";
 			switch (opc)
 			{
-			case 2: Biseccion(a, b, error); break;
-			case 3: Falsa_Posicion(a, b, error); break;
-			case 4: Secante(a, b, error); break;
-			case 5: Newton_Raphson(Xo, error); break;
-			case 6: Punto_Fijo(Xo, error); break;
+			case 2: rf.Bisection(); break;
+			case 3: rf.False_Position(); break;
+			case 4: rf.Secant(); break;
+			case 5: rf.Newton_Raphson(); break;
+			case 6: rf.Fixed_Point(); break;
 			}
 			cgetch();
 		}
 
+		/*
 		if (error == 0)
 		{
 			textcolor(LIGHTCYAN);
 			clrscr();
 			gotoxy(20, 12);
-			printf("No se ha ingresado los par metros");
+			printf("Initial values have not been entered");
 			gotoxy(17, 13);
-			printf("Por favor seleccione la opci¢n ");
+			printf("Please select the option ");
 			textcolor(LIGHTGREEN);
-			printf("Cambiar par metros");
+			printf("Enter initial values");
 			cgetch();
-		}
+		}*/
 
 	}
 	return 1;
 }
-
-
-int MENU(const char *vec[], int x, int y, int dim, int puntero, int col)
-{
-	/*Esta funcion resive unvector tipo caracter
-	  definido de la siguiente manera
-	  char *nomvec[dim]={"OPC1","OPC2","OPC3"..... ,"OPCn"};
-	  necesita las siguientes librerias:
-	  #include <conio.h>
-	  #include <stdio.h>
-	  #include <bios.h>
-	  ejemplo de como se envia
-	  opc=MENU(10,10,nomvec,dim);
-	  puntero= opcion por defecto donde aparecera el puntero
-	*/
-	textcolor(col);
-	int con = 0, con_ant = 0, sal = 0;
-	if (dim >= 1 && x >= 2 && y + (dim - 1) <= 24)
-	{
-		for (int k = 0; k < dim; k++)
-		{
-			gotoxy(x, y + k); printf("%s", vec[k]);
-		}
-		if (puntero != -1 && puntero < dim) { con = puntero; }
-
-		while (sal != 1)
-		{
-			gotoxy(x - 1, y + con); printf(">");
-
-			textcolor(col);
-			gotoxy(x, y + con_ant); printf("%s", vec[con_ant]);
-			textcolor(LIGHTGREEN);
-			gotoxy(x, y + con); printf("%s", vec[con]);
-			con_ant = con;
-			/*
-			while (bioskey(1) == 0);
-			gotoxy(x - 1, y + con); printf(" ");
-			switch (bioskey(0))
-			{
-			case 0x11b:sal = 1; con = -1; break;//ESC
-			case 0x1c0d:sal = 1; break;//ENTER
-			case 0x4800:
-				con--;
-				if (con < 0)con = (dim - 1);
-
-				break;//Fle. Arriba
-			case 0x5000:con++; if (con > (dim - 1))con = 0; break;//Fle. Abajo
-			}*/
-			if (ckbhit()) cgetch();
-		}
-
-		return(con);
-	}
-	else
-	{
-		printf("El menu no tiene la dimension correcta o se salio de la pantalla");
-		cgetch();
-		return(con = -1);
-	}
-}
-
-///
-void CUADRO(int x1, int y1, int ancho, int largo, int col)
-{
-	/*necesita
-	 #include <conio.h>
-	 #include <stdio.h>
-	*/
-	if (x1 >= 0 && y1 >= 0 && (x1 + ancho) <= 70 && (y1 + largo) <= 25)
-	{
-		textcolor(col);
-		for (int i = x1 + 1; i <= x1 + ancho - 1; i++)
-		{
-			gotoxy(i, y1); printf("Í");
-			gotoxy(i, y1 + largo); printf("Í");
-		}
-		for (int k = y1 + 1; k <= y1 + largo - 1; k++)
-		{
-			gotoxy(x1, k); printf("º");
-			gotoxy(x1 + ancho, k); printf("º");
-		}
-		gotoxy(x1, y1); printf("É");
-		gotoxy(x1, y1 + largo); printf("È");
-		gotoxy(x1 + ancho, y1 + largo); printf("¼");
-		gotoxy(x1 + ancho, y1); printf("»");
-	}
-	else
-	{
-		gotoxy(x1, y1); printf("Cuadro fuera de pantalla"); cgetch();
-	}
-}
-
-
-
 
 
 //METODO DE NEWTON(2 VARIABLES)
@@ -336,27 +386,27 @@ void CUADRO(int x1, int y1, int ancho, int largo, int col)
 //que verifiquen simultaneamente este par de ecuaciones
 //utilizando este método 
 
-float F(float x, float y)
+double F(double x, double y)
 {
 	return x * y*y - y - 2;          //  F(x) = xy^2-y-2 = 0
 }                            //  G(x) = x^3y-6x-9 = 0
-float G(float x, float y)
+double G(double x, double y)
 {
 	return x * x*x*y - 6 * x - 9;
 }
-float Fx(float x, float y)
+double Fx(double x, double y)
 {
 	return y * y;
 }
-float Fy(float x, float y)
+double Fy(double x, double y)
 {
 	return 2 * y*x - 1;
 }
-float Gx(float x, float y)
+double Gx(double x, double y)
 {
 	return 3 * x*x*y - 6;
 }
-float Gy(float x, float y)
+double Gy(double x, double y)
 {
 	return x * x*x;
 }

@@ -153,10 +153,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AddOns.cpp" />
+    <ClCompile Include="FormulaParser.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="RootFinding.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddOns.h" />
     <ClInclude Include="conio.h" />
+    <ClInclude Include="FormulaParser.h" />
+    <ClInclude Include="Menu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
