@@ -72,13 +72,19 @@ HISTORY...
 #include "Menu.h"
 #include "AddOns.h"
 #include "FormulaParser.h"
+#ifdef max
+#undef max
+#endif
+#include <algorithm>
 
 using namespace std;
 
 class CRootFinding {
 	struct Solution {
-		double root = 0;
+		double x = 0;
+		double y = 0;
 		unsigned int iterations = 0;
+		double error = 0.0;
 	};
 
 public:
@@ -89,16 +95,27 @@ public:
 	double g(double x);
 	double fderivada(double x);
 
+	// METHOD (1 VARIABLE)
 	double Newton_Raphson();
 	double Bisection();
 	void False_Position();
 	void Secant();
 	void Fixed_Point();
 
+	// NEWTON METHOD(2 VARIABLES)
+	double F(double x, double y);
+	double G(double x, double y);
+	double Fx(double x, double y);
+	double Fy(double x, double y);
+	double Gx(double x, double y);
+	double Gy(double x, double y);
+	void Newton2Variables(double x, double y);
+
 	void InitVariables();
 	//void InitFunction();
 	void VisualizeSystem();
-	void SaveSolutions(const unsigned int& iteration, const double& root);
+	void SaveSolutions(const unsigned int& iteration, const double& currentError, const double& x, const double& y = 0 );
+	void ShowSolutions(bool ShowY=false);
 
 public:
 
@@ -106,7 +123,7 @@ public:
 	double xmin, xmax, Xo, error;
 
 	// Root solutions
-	list<Solution> xSolutions;
+	list<Solution> rootSolutions;
 };
 
 
@@ -155,18 +172,21 @@ double CRootFinding::fderivada(double x)
 //Metodo de Newton-Raphson
 double CRootFinding::Newton_Raphson()
 {
-	double x = Xo;
+	double x = Xo, currentError;
 
 	double x_anterior;
 
-	int iteracion = 1;
+	unsigned int iteration = 1;
 
 	do
 	{
 		x_anterior = x;
-		x = x - f(x) / fderivada(x);		
-		SaveSolutions(iteracion++, x);
-	} while (fabs(x - x_anterior) > error);
+		x = x - f(x) / fderivada(x);
+
+		currentError = std::abs(x - x_anterior);
+		SaveSolutions(iteration++, currentError, x);
+
+	} while (currentError > error);
 
 	return x;
 
@@ -175,17 +195,20 @@ double CRootFinding::Newton_Raphson()
 //Metodo de la bisecci¢n
 double CRootFinding::Bisection()
 {
-	double a = xmin, b = xmax;
+	double a = xmin, b = xmax, currentError;
 
 	double m;
-	int iteracion = 1;
+	unsigned int iteration = 1;
 	do
 	{
 		m = (a + b) / 2;
 		if (f(a)*f(m) < 0)b = m;
 		else a = m;
-		SaveSolutions(iteracion++, (a + b) / 2);
-	} while (fabs(a - b) > error);
+		
+		currentError = std::abs(a - b);
+		SaveSolutions(iteration++, currentError, (a + b) / 2);
+
+	} while (currentError > error);
 
 	return (a + b) / 2;
 }
@@ -193,10 +216,10 @@ double CRootFinding::Bisection()
 //Metodo de la falsa posici¢n
 void CRootFinding::False_Position()
 {
-	double a = xmin, b = xmax;
+	double a = xmin, b = xmax, currentError;
 
 	double x1, x2, fa, fx2;
-	int iteracion = 1;
+	unsigned int iteration = 1;
 	x2 = a;
 	do
 	{
@@ -205,29 +228,35 @@ void CRootFinding::False_Position()
 		fa = f(a);
 		fx2 = f(x2);
 		if ((fa*fx2) > 0) a = x2; else b = x2;
-		SaveSolutions(iteracion++, x2);
-	} while (fabs(x2 - x1) > error);
+
+		currentError = std::abs(x2 - x1);
+		SaveSolutions(iteration++, currentError, x2);
+
+	} while (currentError > error);
 }
 
 //Metodo de la secante
 void CRootFinding::Secant()
 {
-	double x1 = xmin, x2 = xmax;
+	double x1 = xmin, x2 = xmax, currentError;
 
 	double fx1, fx2, x;
-	int iteracion = 1;
+	unsigned int iteration = 1;
 	do
 	{
 		fx1 = f(x1); fx2 = f(x2);
 		x = x2 - fx2 * (x2 - x1) / (fx2 - fx1);
 		x1 = x2; x2 = x;
-		SaveSolutions(iteracion++, x2);
-	} while (fabs(x2 - x1) > error);
+		
+		currentError = std::abs(x2 - x1);
+		SaveSolutions(iteration++, currentError, x2);
+
+	} while (currentError > error);
 }
 
 void CRootFinding::Fixed_Point()
 {
-	double x = Xo;
+	double x = Xo, currentError;
 
 	double x1;
 	unsigned int iteration = 1;
@@ -235,9 +264,112 @@ void CRootFinding::Fixed_Point()
 	{
 		x1 = x;
 		x = g(x);
-		SaveSolutions(iteration++, x);
-	} while (fabs(x1 - x) > error);
+
+		currentError = std::abs(x1 - x);
+		SaveSolutions(iteration++, currentError, x);
+
+	} while (currentError > error);
 }
+
+//-----------------------------------------------------------------
+// NEWTON METHOD(2 VARIABLES)
+// If you have 2 functions: F(x,y)=0 and G(x,y)=0, you can find
+// the solution sets (x,y) that simultaneously verify this pair
+// of equations using this method
+// Example for:
+//  F(x) = xy^2-y-2 = 0 and  G(x) = x^3y-6x-9 = 0
+
+double CRootFinding::F(double x, double y)
+{
+	//  F(x) = xy^2-y-2 = 0
+	return x * y*y - y - 2;          
+}									
+double CRootFinding::G(double x, double y)
+{
+	//  G(x) = x^3y-6x-9 = 0
+	return x*x*x * y - 6 * x - 9;
+}
+double CRootFinding::Fx(double x, double y)
+{
+	// Fx = d/dx( F(x,y) ) = y^2 // partial derivative of F(x,y) with respect to x
+	return y * y;
+}
+double CRootFinding::Fy(double x, double y)
+{
+	// Fy = d/dy( F(x,y) ) = 2xy-1 // partial derivative of F(x,y) with respect to y
+	return 2 * x * y - 1;
+}
+double CRootFinding::Gx(double x, double y)
+{
+	// Gx = d/dx( G(x,y) ) = 3x^2y-6 // partial derivative of G(x,y) with respect to x
+	return 3 * x*x*y - 6;
+}
+double CRootFinding::Gy(double x, double y)
+{
+	// Gy = d/dy( G(x,y) ) = x^3 // partial derivative of G(x,y) with respect to y
+	return x * x * x;
+}
+void CRootFinding::Newton2Variables(double x, double y)
+{		
+	/*------------------------------------------------------
+	
+	J=  Jacobian matrix (matrix of partial derivatives of F and G)
+	
+	J = | dF/dx dF/dy |
+		| dG/dx dG/dy |
+	
+	J^-1 = inverse of the Jacobian matrix
+
+       k+1      k       k     k      
+	|x|   =  |x|  + J^-1 * |F|       .... Newton Raphson for 2 variables algorimth
+	|y|      |y|           |G|
+
+	If
+
+	f = F(x, y), g = G(x, y)
+	
+	Partial derivative of F(x,y) and G(x,y) with respect to x and y
+	fx = d/dx (F(x, y)), fy = d/dy (F(x, y))
+	gx = d/dx (G(x, y)), gy = d/dy (G(x, y))
+
+	then
+
+	J = | fx fy |  and J^-1 = 1 / DJ *  |  gy -fy |
+		| gx gy |                       | -gx  fx |
+
+	DJ = determinant of J
+	DJ = (fx * gy - gx * fy);
+
+	 k+1   k                     k    k
+	x   = x - ( gy * f - fy * g ) / DJ
+
+	 k+1   k                      k    k
+	y   = y - ( -gx * f + fx * g ) / DJ
+
+	------------------------------------------------------*/
+	
+	double f, g, fx, fy, gx, gy, x1, y1, DJ, currentError;
+
+	unsigned int iteration = 0;	
+	SaveSolutions(iteration++, 0, x, y);
+	do {		
+		x1 = x; y1 = y;
+		f = F(x, y); g = G(x, y);
+		fx = Fx(x, y); fy = Fy(x, y);
+		gx = Gx(x, y); gy = Gy(x, y);
+		
+		DJ = (fx * gy - gx * fy);
+		x = x - (  gy * f - fy * g ) / DJ;
+		y = y - ( -gx * f + fx * g ) / DJ;
+
+		currentError = std::max(std::abs(x1 - x), std::abs(y1 - y));
+		SaveSolutions(iteration++, currentError, x, y);
+
+	} while (currentError > error);
+
+
+}
+//-----------------------------------------------------------------
 
 void CRootFinding::InitVariables()
 {
@@ -270,26 +402,40 @@ void CRootFinding::VisualizeSystem()
 	clrscr();
 	cout << "\n\n";
 	textcolor(YELLOW);
-	printf("Interval [a,b] where you want to search for the root = [ %g , %g ]", xmin, xmax);
+	cout << "Interval [a,b] where you want to search for the root = [ " << std::defaultfloat << xmin << " , " << xmax << " ]";
 	cout << "\n\n";
 	textcolor(LIGHTCYAN);
-	printf("For Newton's Method and Fixed Point");
-	cout << "\n";
-	printf("Initial value of x = %g", Xo);
-	cout << "\n\n";
+	cout << "For Newton's Method and Fixed Point" << endl;
+	cout << "Initial value of x = " << std::defaultfloat << Xo << endl << endl;
 	textcolor(LIGHTRED);
-	printf("Approximation error (in decimal value) = %g ", error);
+	cout << "Approximation error (in decimal value) = " << std::defaultfloat << error;
 	cgetch();
 }
 
-void CRootFinding::SaveSolutions(const unsigned int& iteration, const double& root)
+void CRootFinding::SaveSolutions(const unsigned int& iteration, const double& currentError, const double& x, const double& y )
 {
-	//cout << "\nIteration " << iteracion << "\tRoot = " << raiz;
-
 	Solution sol;
-	sol.root = root;
+	sol.x = x;
+	sol.y = y;
 	sol.iterations = iteration;
-	xSolutions.push_back(sol);
+	sol.error = currentError;
+	rootSolutions.push_back(sol);
+}
+
+void CRootFinding::ShowSolutions(bool ShowY)
+{
+	textcolor(WHITE);
+	cout << "\n\nRoots table:\n";
+
+	for (auto& sol : rootSolutions) {
+		cout << "\nIteration " << sol.iterations << "\tx = " << sol.x;
+
+		if( ShowY )
+			cout << "\ty = " << sol.y;
+
+		cout << "\tError = " << sol.error;
+	}
+
 }
 
 int main()
@@ -305,6 +451,7 @@ int main()
 		"SECANT METHOD",
 		"NEWTON-RAPHSON METHOD",
 		"FIXED POINT METHOD",
+		"NEWTON METHOD(2 VARIABLES)",
 		"Exit" }; //inicializacion del menu
 
 	char opc = 0; //definicion de variables	
@@ -313,11 +460,12 @@ int main()
 	while (opc != -1)
 	{
 		clrscr();
-		menu.DrawBox(12, 6, 52, 15, LIGHTRED);
+		menu.DrawBox(12, 6, 52, 16, LIGHTRED);
 		gotoxy(14, 8);
 		textcolor(LIGHTCYAN);
-		printf("NUMERICAL METHODS FOR FINDING ROOTS OF A FUNCTION");
-		gotoxy(25, 9); printf("f(x)=xtan(x)-x^2-0.168=0");
+		cout << "NUMERICAL METHODS FOR FINDING ROOTS OF A FUNCTION";
+		gotoxy(25, 9); 
+		cout << "f(x)=xtan(x)-x^2-0.168=0";
 
 		opc = menu.DrawOptions(rootFinding, 20, 11, WHITE);//se crea el menu de opciones
 
@@ -332,15 +480,16 @@ int main()
 			break;
 
 		case -1:
-		case  7:
+		case  8:
 			clrscr();
 			gotoxy(25, 12);
-			printf("Are you sure you want to leave Y/N?: ");
-			opc = toupper(cgetch());
-			if (opc == 'Y')
-			{
+			cout << "Are you sure you want to leave Y/N?: ";
+			
+			if (toupper(cgetch()) == 'Y')
 				opc = -1;
-			}
+			else
+				opc = 0;
+
 			break;
 
 		}
@@ -348,8 +497,12 @@ int main()
 		if ( opc > 1 )
 		{
 			clrscr();
-			cout << rootFinding[opc];
-			cout << "\n\nTabla de Raices:\n";
+			rf.rootSolutions.clear();
+			cout << rootFinding[opc] << endl;
+
+			bool ShowY = false;
+			AddOns::chronoStart(); // Init chronometer	
+			
 			switch (opc)
 			{
 			case 2: rf.Bisection(); break;
@@ -357,76 +510,41 @@ int main()
 			case 4: rf.Secant(); break;
 			case 5: rf.Newton_Raphson(); break;
 			case 6: rf.Fixed_Point(); break;
+			case 7: 
+			{
+				textcolor(LIGHTCYAN);
+				cout << endl;
+				cout << "If you have 2 functions: F(x,y)=0 and G(x,y)=0, you can find" << endl;
+				cout << "the solution sets (x,y) that simultaneously verify this pair" << endl;
+				cout << "of equations using this method" << endl;
+				cout << "Example for:" << endl;
+				cout << "F(x) = xy^2-y-2 = 0 and  G(x) = x^3y-6x-9 = 0" << endl << endl;
+
+				textcolor(LIGHTGRAY);
+				cout << "Recommended test values so that they do not diverge: Xo = 4, Yo = 5" << endl;
+
+				textcolor(WHITE);
+				double x, y;
+				cout << "\nEnter Xo = "; cin >> x;
+				cout << "Enter Yo = "; cin >> y;
+
+				AddOns::chronoStart(); // Init chronometer	
+
+				rf.Newton2Variables(x, y);
+				ShowY = true;
 			}
+			break;
+			}
+
+			AddOns::chronoEnd(); // End chronometer and show elapsed time
+
+			rf.ShowSolutions(ShowY);
 			cgetch();
 		}
-
-		/*
-		if (error == 0)
-		{
-			textcolor(LIGHTCYAN);
-			clrscr();
-			gotoxy(20, 12);
-			printf("Initial values have not been entered");
-			gotoxy(17, 13);
-			printf("Please select the option ");
-			textcolor(LIGHTGREEN);
-			printf("Enter initial values");
-			cgetch();
-		}*/
 
 	}
 	return 1;
 }
 
 
-//METODO DE NEWTON(2 VARIABLES)
-// Si se tiene 2 funciones: F(x,y)=0 y G(x,y)=0
-// se puede hallar los conjuntos de solución (x,y)
-//que verifiquen simultaneamente este par de ecuaciones
-//utilizando este método 
 
-double F(double x, double y)
-{
-	return x * y*y - y - 2;          //  F(x) = xy^2-y-2 = 0
-}                            //  G(x) = x^3y-6x-9 = 0
-double G(double x, double y)
-{
-	return x * x*x*y - 6 * x - 9;
-}
-double Fx(double x, double y)
-{
-	return y * y;
-}
-double Fy(double x, double y)
-{
-	return 2 * y*x - 1;
-}
-double Gx(double x, double y)
-{
-	return 3 * x*x*y - 6;
-}
-double Gy(double x, double y)
-{
-	return x * x*x;
-}
-void Newton2Variables()
-{
-	double x, y, e, f, g, fx, fy, gx, gy, x1, y1;
-	clrscr();
-	cout << "\n\tMETODO DE NEWTON (2 VARIABLES)\n";
-	cout << "\n\tIngrese Xo = "; cin >> x;
-	cout << "\tIngrese Yo = "; cin >> y;
-	cout << "\tIngrese Error = "; cin >> e;
-	do {
-		x1 = x; y1 = y;
-		f = F(x, y); g = G(x, y);
-		fx = Fx(x, y); fy = Fy(x, y);
-		gx = Gx(x, y); gy = Gy(x, y);
-		x = x + (-f * gy + g * fy) / (fx*gy - gx * fy);
-		y = y + (-g * fx + gx * f) / (fx*gy - gx * fy);
-		cout << "\n\tSoluci¢n X = " << x;
-		cout << "\tSoluci¢n Y = " << y;
-	} while (sqrt((x1 - x)*(x1 - x) + (y1 - y)*(y1 - y)) > e);
-	cgetch();
-}
