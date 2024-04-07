@@ -23,43 +23,23 @@ Developed by:
 
 HISTORY...
 
-  >> Version 2 - 04-IV-2024
-	- Code is updated and improved
-	- Merges all numerical methods that solve differential equations
-	  in a single file
-	- Porting to VC++ 2017
-	- Translate functions name
-	- Change float variables to double
-	- The function y' = f(x,y) is unified into a single function that
-	  is reused in all methods
-	- Unused variables are eliminated
-	- The ModifiedEuler and Predictor_Corrector method is corrected
-	- Order 4 Runge Kutta method added
-	- A menu is added in text mode to select the numerical method to
-	  use in the solution
-	- Unnecessary files are removed
-	- The code is modernized, converting it into the
-	  CNumericalMethodsSolvingODE class
-	- Traces of old C function fabs, etc... are removed and replaced
-	  with their modern equivalents
-	- The maximum width at which a menu box can be created is increased
-	- Change project name to SolvingODE
-	- Comments are translated from Spanish to English
-	- Credits are added
-	- The visualization of the x and y calculation tables is improved,
-	  in each method, always showing the values in the range [a, b]
-	- A chronometer is added to measure the time that each method takes,
-	  and the seconds that each method has taken to process the solution
-	  are shown, in order to obtain a point of comparison between the
-	  efficiency of the algorithms.
-	- The ShowSolutions method is added to display the solutions after
-	  the numerical method algorithm code has finished. In such a way
-	  that the time of each algorithm can be measured correctly and
-	  then display the results on the screen.
-	- The FormulaParser library is added to define an ODE y'=f(x,y) from
-	  a text string entered by the user, and in this way the user will
-	  be able to customize the ODE equation that will be solved by the
-	  numerical methods implemented.
+  >> Version 2 - 06-IV-2024
+	- Change project name from "metodos\raices de funciones f(x)=0"
+	  to "NumericalMethods\RootFinding"
+	- Merges all numerical methods that Root Finding in a single file
+	- Porting to VC++ 2017 using winbgi
+	- Fixed some errors that prevented compilation
+	- Removed old files after change project name from
+	  "metodos\raices de funciones f(x)=0" to "NumericalMethods\RootFinding"
+	- The code is modernized, converting it into the CRootFinding class
+	- Add FormulaParser Library and AddOns Library
+	- The Newton Raphson method is added to solve a system of nonlinear
+	  equations with 2 unknowns
+	- The FormulaParser library is added to define an y=f(x) from a
+	  text string entered by the user, and in this way the user will
+	  be able to customize the f(x) equation that will be solved by
+	  the numerical methods implemented
+	- Update version history
 
   >> Version 1 - 30-XI-1999
 	- First version for Borland C++ 3.1 and Turbo C 3.0
@@ -112,7 +92,7 @@ public:
 	void Newton2Variables(double x, double y);
 
 	void InitVariables();
-	//void InitFunction();
+	void InitFunction();
 	void VisualizeSystem();
 	void SaveSolutions(const unsigned int& iteration, const double& currentError, const double& x, const double& y = 0 );
 	void ShowSolutions(bool ShowY=false);
@@ -124,15 +104,21 @@ public:
 
 	// Root solutions
 	list<Solution> rootSolutions;
+
+	string formulaFX; // Formula for the function f(x)
+private:
+
+	CFormulaParser fpFX;
 };
 
 
 
 CRootFinding::CRootFinding()
+	: fpFX("", "x")
 {
 	xmin = 1;
 	xmax = 5;
-	Xo = 2;
+	Xo = 1.5;
 	error = 1e-6;
 }
 
@@ -143,14 +129,17 @@ CRootFinding::~CRootFinding()
 //definicion de la funcion f(x)
 double CRootFinding::f(double x)
 {
-	//f(x)=xtan(x)-x^2-0.168=0
-	return x * tan(x) - x * x - 0.168;
+	if (formulaFX.empty())
+		// Deault f(x) = xtan(x)- x^2 - 0.168 = 0
+		return x * tan(x) - x * x - 0.168;
+	else
+		return fpFX.f(x);
 }
 
-//definicion de la funcion g(x)
-//para obtener g(x) se despeja convenientemente f(x)
-//de forma que quede x=g(x) donde g'(x)<1 ( derivada de g(x) <1 )
-//esta funcion se utiliza en el metodo del punto fijo
+// definition of the function g(x) to obtain g(x) conveniently
+// solve for f(x) so that x=g(x) where 
+// g'(x)<1 (derivative of g(x) <1 ) this function
+// is used in the fixed point method
 double CRootFinding::g(double x)
 {
 	//x=g(x)=(x^2+0.168)/tan(x);
@@ -159,17 +148,18 @@ double CRootFinding::g(double x)
 
 double CRootFinding::fderivada(double x)
 {	
-	/*
-	derivamos por definicion
-	 lim  ( f(x+h)-f(x) )/h
-	h->0
-	*/
+	
+	// we derive by definition
+	//
+	// lim  ( f(x+h)-f(x) )/h
+	// h->0
+	
 	double h = 1e-6;
 	return (f(x + h) - f(x)) / h;
 
 }
 
-//Metodo de Newton-Raphson
+// Newton-Raphson method
 double CRootFinding::Newton_Raphson()
 {
 	double x = Xo, currentError;
@@ -192,28 +182,37 @@ double CRootFinding::Newton_Raphson()
 
 }
 
-//Metodo de la bisecci¢n
+// Bisection method
 double CRootFinding::Bisection()
 {
 	double a = xmin, b = xmax, currentError;
 
-	double m;
+	double m, fm, errormaxfx = 1e-6;
 	unsigned int iteration = 1;
 	do
 	{
 		m = (a + b) / 2;
-		if (f(a)*f(m) < 0)b = m;
-		else a = m;
+		fm = f(m);
+
+		if (f(a)*fm < 0)						// f(a)*f(m) < 0
+			b = m;
+		else if ( std::abs(fm) < errormaxfx) {	// f(n)==0
+			SaveSolutions(iteration++, errormaxfx, m);
+			break; // Find solution
+		}
+		else									// f(a)*f(m) < 0
+			a = m; 
 		
 		currentError = std::abs(a - b);
 		SaveSolutions(iteration++, currentError, (a + b) / 2);
 
 	} while (currentError > error);
 
-	return (a + b) / 2;
+	//return (a + b) / 2;
+	return m;
 }
 
-//Metodo de la falsa posici¢n
+// False position method
 void CRootFinding::False_Position()
 {
 	double a = xmin, b = xmax, currentError;
@@ -235,7 +234,7 @@ void CRootFinding::False_Position()
 	} while (currentError > error);
 }
 
-//Metodo de la secante
+// Secant method
 void CRootFinding::Secant()
 {
 	double x1 = xmin, x2 = xmax, currentError;
@@ -254,6 +253,7 @@ void CRootFinding::Secant()
 	} while (currentError > error);
 }
 
+// Fixed Point method
 void CRootFinding::Fixed_Point()
 {
 	double x = Xo, currentError;
@@ -397,9 +397,45 @@ void CRootFinding::InitVariables()
 	}
 }
 
+void CRootFinding::InitFunction()
+{
+	clrscr();
+
+	textcolor(LIGHTGRAY);
+
+	cout << "If you enter Y it will ask you to enter a string with the function f(x)," << endl
+		<< "the processing of the algorithms will be slower, if you enter N the formula " << endl
+		<< "parser will be deactivated, the default function f(x) = xtan(x)- x^2 - 0.168 = 0 will be used," << endl
+		<< "and the processing of the algorithms will be faster." << endl;
+
+	textcolor(WHITE);
+	cout << "\nActivate parser formula for the f(x) Y/N? ";
+
+	char subOption = toupper(cgetch());
+
+	if (subOption == 'Y') {
+		cout << "\n\tEnter f(x) = ";
+		cin >> formulaFX;
+	}
+	else
+		formulaFX.clear();
+
+	fpFX = CFormulaParser(formulaFX, "x");
+}
+
 void CRootFinding::VisualizeSystem()
 {
 	clrscr();
+
+	if (formulaFX.empty()) {
+
+		cout << "f(x) without formula parser: f(x) = xtan(x)- x^2 - 0.168 = 0  --> Unknown: x" << endl << endl;
+	}
+	else {
+
+		cout << "f(x) WITH formula parser: f(x) = " << formulaFX << " --> Unknown: x" << endl << endl;
+	}
+
 	cout << "\n\n";
 	textcolor(YELLOW);
 	cout << "Interval [a,b] where you want to search for the root = [ " << std::defaultfloat << xmin << " , " << xmax << " ]";
@@ -445,6 +481,7 @@ int main()
 
 	vector<string> rootFinding = {
 		"Enter initial values",		
+		"Enter f(x) function",
 		"View initial values",
 		"BISECTION METHOD",
 		"FALSE POSITION METHOD",
@@ -460,12 +497,15 @@ int main()
 	while (opc != -1)
 	{
 		clrscr();
-		menu.DrawBox(12, 6, 52, 16, LIGHTRED);
+		menu.DrawBox(12, 6, 52, 17, LIGHTRED);
 		gotoxy(14, 8);
 		textcolor(LIGHTCYAN);
 		cout << "NUMERICAL METHODS FOR FINDING ROOTS OF A FUNCTION";
-		gotoxy(25, 9); 
-		cout << "f(x)=xtan(x)-x^2-0.168=0";
+		gotoxy(23, 9); 
+		cout << "f(x) = " << (rf.formulaFX.empty() ? "xtan(x) -x^2 - 0.168 = 0 " : rf.formulaFX);
+		textcolor(LIGHTGREEN);
+		gotoxy(37, 24);
+		cout << "Developed by Yacsha Software";
 
 		opc = menu.DrawOptions(rootFinding, 20, 11, WHITE);//se crea el menu de opciones
 
@@ -474,13 +514,17 @@ int main()
 		case 0:
 			rf.InitVariables();
 			break;
-
+		
 		case 1:
+			rf.InitFunction();
+		break;
+
+		case 2:
 			rf.VisualizeSystem();
 			break;
 
 		case -1:
-		case  8:
+		case  9:
 			clrscr();
 			gotoxy(25, 12);
 			cout << "Are you sure you want to leave Y/N?: ";
@@ -494,7 +538,7 @@ int main()
 
 		}
 
-		if ( opc > 1 )
+		if ( opc > 2 )
 		{
 			clrscr();
 			rf.rootSolutions.clear();
@@ -505,12 +549,17 @@ int main()
 			
 			switch (opc)
 			{
-			case 2: rf.Bisection(); break;
-			case 3: rf.False_Position(); break;
-			case 4: rf.Secant(); break;
-			case 5: rf.Newton_Raphson(); break;
-			case 6: rf.Fixed_Point(); break;
+			case 3: rf.Bisection(); break;
+			case 4: rf.False_Position(); break;
+			case 5: rf.Secant(); break;
+			case 6: rf.Newton_Raphson(); break;
 			case 7: 
+				if (rf.formulaFX.empty())
+					rf.Fixed_Point();
+				else
+					cout << "This method cannot be used when a formula for f(x) has been customized" << endl;
+				break;
+			case 8: 
 			{
 				textcolor(LIGHTCYAN);
 				cout << endl;
