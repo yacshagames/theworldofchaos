@@ -61,6 +61,8 @@ HISTORY...
 	  a text string entered by the user, and in this way the user will
 	  be able to customize the ODE equation that will be solved by the
 	  numerical methods implemented.
+	- Added ExampleOfUse to the "Enter ODE: y' = f(x,y)" option, to inform
+	  the user how to enter the formulation of the mathematical function
 
   >> Version 1 - 30-XI-1999
 	- First version for Borland C++ 3.1 and Turbo C 3.0
@@ -179,6 +181,10 @@ void CNumericalMethodsSolvingODE::InitODE()
 	char subOption = toupper(cgetch());
 
 	if (subOption == 'Y') {
+		textcolor(LIGHTCYAN);
+		cout << endl << endl << fpODE.ExampleOfUse() << endl;
+
+		textcolor(WHITE);
 		cout << "\n\tEnter ODE: y' = f(x,y) = ";
 		cin >> formulaODE;
 	}
