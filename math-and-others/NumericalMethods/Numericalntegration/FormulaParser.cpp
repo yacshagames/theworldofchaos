@@ -285,12 +285,12 @@ string CFormulaParser::ExampleOfUse()
 		formula = string("1-(") + vars[0] + "^2*sin(" + vars[0] + ")/(2*" + vars[0] + "^2+3*" + vars[0] + "+1)";
 		break;
 	case 2:
-		varlist = vars[0] + ","+ vars[1];
+		varlist = string(1,vars[0]) + ","+ vars[1];
 		// formula = 1-(y^2*sin(x)/(2*x^2+3*y+1)
 		formula = string("1-(") + vars[1] + "^2*sin(" + vars[0] + ")/(2*" + vars[0] + "^2+3*" + vars[1] + "+1)";
 		break;
 	case 3:
-		varlist = vars[0] + "," + vars[1] + string(",") + vars[2];
+		varlist = string(1, vars[0]) + "," + vars[1] + string(",") + vars[2];
 		// formula = 1-(y^2*sin(x)/(2*z^2+3*y+1)
 		formula = string("1-(") + vars[1] + "^2*sin(" + vars[0] + ")/(2*" + vars[3] + "^2+3*" + vars[1] + "+1)";
 		break;
