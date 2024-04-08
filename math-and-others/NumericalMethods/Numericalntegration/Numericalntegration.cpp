@@ -63,7 +63,7 @@ CNumericalIntegration::~CNumericalIntegration()
 double CNumericalIntegration::f(double x)
 {
 	if (formulaFX.empty())
-		// Deault f(x) =  exp(-x^2) / sqrt(2 * 3.141592)
+		// Deault f(x) =  exp(-x^2) / sqr(2 * 3.141592)
 		return exp(-x * x) / sqrt(2 * 3.141592);
 	else
 		return fpFX.f(x);
@@ -136,7 +136,7 @@ void CNumericalIntegration::InitFunction()
 
 	cout << "If you enter Y it will ask you to enter a string with the function f(x)," << endl
 		<< "the processing of the algorithms will be slower, if you enter N the formula " << endl
-		<< "parser will be deactivated, the default function f(x) = exp(-x^2) / sqrt(2 * 3.141592) will be used," << endl
+		<< "parser will be deactivated, the default function f(x) = exp(-x^2) / sqr(2 * 3.141592) will be used," << endl
 		<< "and the processing of the algorithms will be faster." << endl;
 
 	textcolor(WHITE);
@@ -145,6 +145,10 @@ void CNumericalIntegration::InitFunction()
 	char subOption = toupper(cgetch());
 
 	if (subOption == 'Y') {
+		textcolor(LIGHTCYAN);
+		cout << endl << endl << fpFX.ExampleOfUse() << endl;
+
+		textcolor(WHITE);
 		cout << "\n\tEnter f(x) = ";
 		cin >> formulaFX;
 	}
@@ -160,7 +164,7 @@ void CNumericalIntegration::VisualizeSystem()
 
 	if (formulaFX.empty()) {
 
-		cout << "f(x) without formula parser: f(x) = exp(-x^2) / sqrt(2 * 3.141592)  --> Unknown: x" << endl << endl;
+		cout << "f(x) without formula parser: f(x) = exp(-x^2) / sqr(2 * 3.141592)  --> Unknown: x" << endl << endl;
 	}
 	else {
 
@@ -208,7 +212,7 @@ int main() {
 		textcolor(LIGHTCYAN);
 		cout << "NUMERICAL INTEGRATION";
 		gotoxy(23, 9);
-		cout << "f(x) = " << (ni.formulaFX.empty() ? "exp(-x^2) / sqrt(2 * 3.141592)" : ni.formulaFX);
+		cout << "f(x) = " << (ni.formulaFX.empty() ? "exp(-x^2) / sqr(2 * 3.141592)" : ni.formulaFX);
 		textcolor(LIGHTGREEN);
 		gotoxy(37, 24);
 		cout << "Developed by Yacsha Software";
