@@ -1,3 +1,45 @@
+/*********************************************************************
+NUMERICAL INTEGRATION
+
+Is solved using the following numerical method algorithms:
+
+	- Trapezoidal Rule
+	- Simpson's Rule
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+  >> Version 2 - 07-IV-2024
+	- Merges all numerical methods that Root Finding in a single file
+	- The code is modernized, converting it into the
+	  CNumericalIntegration class
+	- Add FormulaParser Library and AddOns Library
+	- The FormulaParser library is added to define an y=f(x) from a text
+	  string entered by the user, and in this way the user will be able to
+	  customize the f(x) equation that will be solved by the numerical
+	  methods implemented
+	- The ExampleOfUse method is added, to FormulaParser Library, show
+	  example code, at runtime, on how to use the FormulaParser library.
+	  Very useful to inform the user of how to enter the formulation of
+	  the mathematical function
+	- Added ExampleOfUse to the "Enter f(x) function" option, to inform
+	  the user how to enter the formulation of the mathematical function
+
+  >> Version 1 - 30-XI-1999
+	- First version for Borland C++ 3.1 and Turbo C 3.0
+
+**********************************************************************/
 #include <iostream>
 #include <list>
 #include "conio.h"
