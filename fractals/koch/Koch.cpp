@@ -1,27 +1,34 @@
-/***********************************************************************
- ::: LA CURVA DE KOCH :::
-  >> Versión 1.0 28-XII-2001
+/*********************************************************************
+::: THE KOCH CURVE :::
+  Diagram of the Koch curve:
 
- Diagramado de la curva de Koch:
+  "Starting from a segment which is divided into three equal parts.
+  The central part is replaced by two segments of the same size as
+  the eliminated. The same process is successively repeated for each
+  formed segment".
 
- "Partiendo de un segmento el cual es dividido en tres partes iguales.
- La parte central se sustituye por dos segmentos del mismo tamaño que
- el eliminado. Sucesivamente se repite el mismo proceso por cada
- segmento formado".
+Developed by:
 
- :::Programado por:::
- José Luis De La Cruz Lázaro
- YACSHA - Software & Desing 2002
-  >> yacsha@elmundodelcaos.tk
-  >> www.elmundodelcaos.tk -> EL MUNDO DEL CAOS - Unlimited Programming
-  >> www.foros3d.tk  -> Foros de discusión  Flash/ActionScript - C/C++
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
 
-***********************************************************************/
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
 
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+  >> Version 2 - 10-IV-2024
+	- Porting to VC++ 2017 using winbgi
+
+  >> Version 1 - 28-XII-2001
+	- First version for Borland C++ 3.1 and Turbo C 3.0
+
+**********************************************************************/
 #include "graphics.h"
-#include "conio.h"
-#include "math.h"
-#include "dos.h"
 
 int n = 0;
 
@@ -56,10 +63,12 @@ void koch(double x0, double y0, double x1, double y1) {
 
 void main() {
 
-	int gd = DETECT, gm;
-	initgraph(&gd, &gm, "");
+	// Init WinBGI window
+	initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
+
 	koch(10, 100, 600, 100);
 	getch();
+
 	closegraph();
 
 }
