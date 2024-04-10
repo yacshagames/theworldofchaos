@@ -432,7 +432,7 @@ int main()
 
 	//int gd = DETECT, gm;
 	//initgraph(&gd, &gm, "");//modifica esta linea si tienes problemas con el bgi
-	initwindow(650, 490);
+	initwindow(650, 490, "The world of chaos in C++ - Unlimited Programming");
 
 	//se ajusta los valores aleatorios que arrojara la funcion random
 	//mediante la funcion srand, la cual toma como argumento una variable segundos
