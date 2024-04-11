@@ -24,6 +24,22 @@ Developed by:
 
 HISTORY...
 
+  >> Version 3 - 11-IV-2024
+	- Update graphics/dmandel - Porting to VC++ 2017 using winbgi
+	- Porting to VC++ 2017 completed
+	- Update credits and history
+	- The credits have been translated from Spanish to English
+	- Update from version 1.0(01-XI-1999) to version 1.5(23-II-2002)
+	- Simple example of fractal diagramming. Optimization of version 1.0,
+	  now you can customize the palette of 256 colors that our fractal will
+	  use, using the setrgbpallete function of the BGI
+	- Update code format
+	- Update credits
+	- Enabled coordinates for plot "Lightning Mandelbrot"
+	- Stop using the winbgi putpixel function and use the CScreenBitmap
+	  class instead, to speed up the drawing of the fractal on the screen
+	- The conio.h library is used to display the end credits
+
   >> Version 2 - 25-III-2024
 	- Update graphics/dmandel - Porting to VC++ 2017 using winbgi
 
@@ -38,15 +54,11 @@ HISTORY...
 *****************************************************************************/
 
 #include "graphics.h"
-//#include "conio.h"
+#include "conio.h"
 #include "complex.h"
-
-void CambiarColores(int red, int green, int blue) {
-
-	for (int i = 0; i < 256; i++)
-		setrgbpalette(i, i*red, i*green, i*blue);
-}
-
+#include "screenbitmap.h"
+#include <iostream>
+using std::cout;
 
 int main()
 {
@@ -75,43 +87,20 @@ int main()
 	IMAGMIN = y1;    //{MODIFICAR LOS VALORES PARA HACER ZOOM}
 	IMAGMAX = y2;
 	  
-
 	int  i, j, ITERACION;
 
 	complex Z, C;
 
 	// Init WinBGI window
 	int maxx = 1024, maxy = 768;
-	initwindow(maxx + 10, maxy + 10, "The world of chaos in C++ - Unlimited Programming");
-	
-	//muestra una precarga mientras se carga los colores
-	  //en la paleta
-	/*setrgbpalette(255, 255, 255, 255); //color blanco
-	setcolor(255);
-	outtextxy(280, 240, "CARGANDO...");*/
+	initwindow(maxx + 10, maxy + 10, "The world of chaos in C++ - Unlimited Programming");	
+
+	CScreenBitmap scrBitmap(maxx, maxy);
 
 	//Cambia la paleta de 256 colores en funcion lineal a los tonos
 	//red=10 , green=5, blue=1
-	CambiarColores(10, 5, 1);
-	/*
-	//borra la precarga
-	setcolor(0);
-	outtextxy(280, 240, "CARGANDO...");	
+	scrBitmap.setpalette(10, 5, 1);
 
-	//TITULOS Y CREDITOS
-	setcolor(115);
-	outtextxy(130, 5, "THE MANDELBROT-RAYOS: Z^2+C");
-	setcolor(10);
-	settextstyle(7, 1, 1);
-	outtextxy(10, 5, "<< MANDELX 1.5 >>");
-	setcolor(114);
-	settextstyle(7, 0, 1);
-	outtextxy(220, 450, "por YACSHA - Software & Desing");
-	setcolor(12);
-	settextstyle(10, 1, 1);
-	outtextxy(10, 230, "UNI-FIEE");
-	rectangle(120, 20, 550, 450);
-	*/
 	//PROCESO DE DIAGRAMADO
 	for (j = 0; j < maxy; j++)
 		for (i = 0; i < maxx; i++)
@@ -130,15 +119,22 @@ int main()
 				if (abs(Z) > DIVERGE)break;
 			} while (ITERACION < ITERMAX);
 
-			if (ITERACION != ITERMAX)putpixel(i, j, ITERACION + 50);
+			if (ITERACION != ITERMAX)
+				scrBitmap.putpixel(i, j, ITERACION + 50);
+				
 
 		}
 
+	scrBitmap.draw(0,0);
 
-	getch();
-	setcolor(GREEN);
-	printf("<< Mandel 2.0 >>\n");
-	printf("Programmed by Jose Luis De la Cruz Lazaro\n\n\n\n\n\n\n\n\n");
+	getch();	
 	closegraph();
+
+	textcolor(LIGHTRED);
+	cout << "<< DMandel >>\n";
+	textcolor(LIGHTCYAN);
+	cout << "Programmed by Jose Luis De la Cruz Lazaro - YACSHA-Software\n\n\n\n\n\n\n\n\n";	
+	textcolor(LIGHTGRAY);
+	
 	return 1;
 }

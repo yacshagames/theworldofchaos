@@ -154,11 +154,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="complex.cpp" />
+    <ClCompile Include="screenbitmap.cpp" />
     <ClCompile Include="MANDEL.CPP" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex.h" />
+    <ClInclude Include="conio.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="screenbitmap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
