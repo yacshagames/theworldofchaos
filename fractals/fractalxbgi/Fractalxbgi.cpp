@@ -32,16 +32,16 @@ Universidad Nacional de Ingenier¡a - Lima Per£
 
 */
 
-#include <iostream.h>
-#include <graphics.h>
-#include <math.h>
-#include <conio.h>
-#include <complex.h>
+#include <iostream>
+#include "complex.h"
+#include "graphics.h"
+#include "conio.h"
 #include <time.h>
-#include <ctype.h>
-
 #include "mousebgi.h"
 
+using namespace std;
+
+/*
 void Paleta(unsigned char r, unsigned char g, unsigned char b)
 {
 	unsigned char cont1, Paleta[256][3];
@@ -58,8 +58,8 @@ void Paleta(unsigned char r, unsigned char g, unsigned char b)
 	cont = 0;
 	cont1 = 0;
 
-	/* El c¢digo que sigue a continuaci¢n pasa el contenido del array "Paleta"
-	a la paleta de la VGA */
+	// El c¢digo que sigue a continuaci¢n pasa el contenido del array "Paleta"
+	// a la paleta de la VGA 
 	for (cont = 0; cont < 256; cont++)
 	{
 		outportb(0x03c8, cont);
@@ -69,6 +69,7 @@ void Paleta(unsigned char r, unsigned char g, unsigned char b)
 	}
 
 }
+*/
 
 
 void linea_inversa(int x1, int y1, int x2, int y2)
@@ -127,22 +128,28 @@ struct RegionXY
 
 int zoom(RegionXY &PC)
 {
-	mouseshow();
+	//mouseshow();
 
-	int x = 0, y = 0, c;
-	int ButonDown = 1, Lx, Ly, x0, y0;
+	//int x = 0, y = 0, c;
+	//int ButonDown = 1, Lx, Ly, x0, y0;
+	int Lx=0, Ly=0, x0=0, y0=0;
+
+	Evento raton;	// estructura que contiene datos sobre la posicion y
+					// la tecla presionada. Para mas informacion vea la
+					// definicion de la estructura Evento en MOUSEBGI.H
 
 	while (1)
 	{
 
 		if (kbhit())
 		{
-			c = toupper(getch());
-
-			switch (c)
+			//c = toupper(getch());
+			raton = MouseBGI::Detectar_click_o_tecla();
+			
+			switch (raton.tecla)
 			{
 			case 13:
-
+			{
 				double ex = (PC.xmax - PC.xmin) / getmaxx();//escalax
 				double ey = (PC.ymax - PC.ymin) / getmaxy();//escalay
 
@@ -150,16 +157,20 @@ int zoom(RegionXY &PC)
 				PC.ymax = PC.ymax - (y0 - Ly) * ey;
 				PC.xmax = PC.xmin + 2 * Lx * ex;
 				PC.ymin = PC.ymax - 2 * Ly * ey;
-				return c;
+				return raton.tecla;
+			}
 			case 27:
 			case 'M':
 			case'+':
 			case'-':
-				return c;
+				return raton.tecla;
 			}
 
 		}
-		switch (mouseevent(&x, &y))
+		/*
+		int &x = raton.x, &y = raton.y;
+
+		switch (raton.evento)
 		{
 
 		case LBUTTON_STILL_DOWN:
@@ -168,8 +179,8 @@ int zoom(RegionXY &PC)
 
 				mousestatus(&x0, &y0);
 				ButonDown = 0;
-			}
-			else rectangulo_inverso(x0 - Lx, y0 - Ly, x0 + Lx, y0 + Ly);
+			} else
+				rectangulo_inverso(x0 - Lx, y0 - Ly, x0 + Lx, y0 + Ly);
 
 			Lx = abs(x - x0);
 			Ly = getmaxy()*(double)Lx / getmaxx();
@@ -182,13 +193,13 @@ int zoom(RegionXY &PC)
 			ButonDown = 1;
 			break;
 		}
-
+		*/
 	}
 
 
 }
 
-
+/*
 int Cambiar_Paleta_Fractal(char tecla, unsigned char r, unsigned char g, unsigned char b)
 {
 	unsigned char esc = 0, i = 1;
@@ -217,26 +228,31 @@ int Cambiar_Paleta_Fractal(char tecla, unsigned char r, unsigned char g, unsigne
 	}
 	return 0;
 }
+*/
 
-
-
-int huge Detect()
+void ModoGrafico(int resolucion)
 {
-	return (0);
-}
+	std::string sTittle = "The world of chaos in C++ - Unlimited Programming";
 
-void ModoGrafico(int modo)
-{
-	switch (modo)
+	//se instala la resolucion deseada
+	switch (resolucion)
 	{
 	case 0:
 		closegraph();
+	case 1: //_320x200:
+		initwindow(320, 200, sTittle.c_str());
 		break;
-	case 1:
-		int gd = DETECT, gm;
-		installuserdriver("svga256", Detect);
-		initgraph(&gd, &gm, "");
+	case 2: //_640x400:
+		initwindow(640, 400, sTittle.c_str());
 		break;
+	case 3: // _640x480:
+		initwindow(640, 480, sTittle.c_str());
+		break;
+	case 4: // _800x600:
+		initwindow(800, 600, sTittle.c_str());
+		break;
+	case 5: //_1024x768:
+		initwindow(1024, 768, sTittle.c_str());
 	}
 }
 
@@ -244,7 +260,7 @@ void ModoGrafico(int modo)
 void Mandelbrot1(RegionXY PC, double DIVERGE = 4, double ITERMAX = 155)
 {
 
-	int  i, j, ITERACION, des = 10, k, q;
+	int  i, j, ITERACION, des = 10, k;
 
 	complex Z, C;
 
@@ -268,7 +284,7 @@ void Mandelbrot1(RegionXY PC, double DIVERGE = 4, double ITERMAX = 155)
 				{
 					Z = Z * Z + C;
 					ITERACION++;
-					if (norm(Z) > DIVERGE)break;
+					if ( abs(Z) > DIVERGE)break;
 				} while (ITERACION < ITERMAX);
 
 				if (ITERACION != ITERMAX) putpixel(i, j, ITERACION);
@@ -300,7 +316,7 @@ void mandelpunto(int &i, int &j, RegionXY &PC, double DIVERGE = 4, int ITERMAX =
 	{
 		Z = Z * Z + C;
 		ITERACION++;
-		if (norm(Z) > DIVERGE)break;
+		if (abs(Z) > DIVERGE)break;
 	} while (ITERACION < ITERMAX);
 
 	if (ITERACION != ITERMAX) putpixel(i, j, ITERACION);
@@ -311,7 +327,7 @@ void mandelpunto(int &i, int &j, RegionXY &PC, double DIVERGE = 4, int ITERMAX =
 
 int analizar_region(int &color, cuadricula &rect, int &xmax, int &ymax)
 {
-	int i, j, desx = rect.Ladox / 4, desy = rect.Ladoy / 4;
+	int i, desx = rect.Ladox / 4, desy = rect.Ladoy / 4;
 	color = getpixel(rect.xmin, rect.ymin);
 
 	for (i = 0; i < 3; i++)
@@ -393,7 +409,7 @@ void Mandelbrot2(RegionXY &PC, cuadricula rect)
 
 int Menu()
 {
-	int resolucion;
+	int resolucion = 0;
 
 	do
 	{
@@ -418,11 +434,15 @@ int Menu()
 
 		cin >> resolucion;
 
-		//mostrar creditos del autor
-		if (resolucion > 6 || resolucion < 1) return 0; ///salir
+		
+		
+		if (resolucion > 6 || resolucion < 1) 
+			return 0; // Salir
+
+		// mostrar creditos del autor
 		if (resolucion == 6)
 		{
-			ModoGrafico(1);
+			/*ModoGrafico(1);
 			setgraphmode(1);
 			PCX logos;
 			logos.Dibujar(10, 150, 16, "logouni.pcx");
@@ -441,17 +461,16 @@ int Menu()
 			outtextxy(160, 200, "el escarabajo de Mandelbrot");
 			setcolor(WHITE);
 			outtextxy(160, 220, "Pulse cualquier tecla para Salir");
-			getch();
+			getch();*/
 		}
 		else break;
 
 	} while (1);
 
+		
+	ModoGrafico(resolucion);
+	//Paleta(10, 5, 1);
 
-	ModoGrafico(1);
-	setgraphmode(resolucion - 1);
-	mousesetup(graphics);
-	Paleta(10, 5, 1);
 	return 1;
 }
 
@@ -459,7 +478,7 @@ int Menu()
 
 
 
-void main()
+int main()
 {
 
 	Menu();
@@ -475,9 +494,10 @@ void main()
 	do
 	{
 
-		if (!Cambiar_Paleta_Fractal(tecla, 3, 2, 1))
+		//if (!Cambiar_Paleta_Fractal(tecla, 3, 2, 1))
 		{
-			cleardevice();
+			//cleardevice();
+			clrscr();
 			MAXX = getmaxx();
 			MAXY = getmaxy();
 			iter = 0;
@@ -505,4 +525,6 @@ void main()
 	} while (salir && tecla != 27);
 
 	ModoGrafico(0);
+
+	return 1;
 }
