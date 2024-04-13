@@ -1,86 +1,105 @@
 #pragma once
 /******************************************************
 MOUSEBGI.H
-Rutinas para controlar el mouse:
+Routines to control the mouse, adapted to WinBGI
 
-MODIFICADO POR:
-Jos‚ Luis De la Cruz L zaro
-correos:
- jcruz@ec-red.com
- ramondc@hotmail.com
+Developed by:
 
-P gina Web (El Mundo del Caos):
- http://www.geocities.com/joseluisdl
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
 
-ICQ: 46906401
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
 
- Universidad Nacional de Ingenier¡a
-  Facultad de Ingenier¡a El‚ctrica y Electr¢nica
- Lima - Per£
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+ >> Version 3 - 12-IV-2024
+	- Update credits
+	- Translate variables name, credits and comments
+	  from spanish to english
 
  >> Version 2 - 24-III-2024
-	- Update graphics/MouseBGI - Porting to VC++ 2017 using winbgi
-	- The entire library is migrated to the MouseBGI class, using 
-	  the mouse functionalities of WinBGI
+	- Update graphics/MouseBGI - Porting to VC++ 2017
+	  using winbgi
+	- The entire library is migrated to the MouseBGI class,
+	  using the mouse functionalities of WinBGI
+	- All code from version 1.x is discarded, maintaining the
+	  declarations of the main functions (mouseevent and
+	  Detect_click_or_key), for better backward compatibility
+	  with programs that used previous versions of this library;
+	  and new code is developed for the implementations,
+	  from scratch, that is compatible with the
+	  WinBGI mouse functions
 
-Version 1.1a 06 - Agosto - 2000
--Ya pas¢ casi un a¤o desde que Silvia me dio el fuente original del
- presente. Y pues eso merece nuevas mejoras...
--Ahora se soporta el cursor estandar en el modo grafico
- 320x200 256 colores, y tambien el cursor estandar en modo texto.
--Se agrego las estructuras originales para cargar cursores estandar
- ( arrowcursor, handcursor y cruz )
--La funcion mousesetup es modificada para seleccionar el modo grafico
- y el tipo de cursor estandar a utilizar (por defecto es el arrowcursor)
+ >> Version 1.1a - 06-VIII-2000
+	- Almost a year has passed since Silvia gave me the
+	  original source of the present. And well, that
+	  deserves further improvements...
+	- The standard cursor is now supported in
+	  320x200 256 colors graphic mode, and also the standard
+	  cursor in text mode.
+	- Added the original structures to load standard cursors
+	  (arrowcursor, handcursor and cross)
+	- The mousesetup function is modified to select the graphic
+	  mode and the type of standard cursor to use
+	  (by default it is the arrowcursor)
 
-Version 1.1 - 28 Jun 1999
--Se borra el puntero despues de dibujarlo temporalmente para cargarlo a
- memoria ( ver funcion obtener_cursor )
+ >> Version 1.1 - 28-VI-2000
+	- The pointer is deleted after drawing it temporarily to
+	  load it into memory (see get_cursor function)
 
-Version 1.0b - 28 Dic 1999
--Se agrega una pausa de 5 milisegundos antes de llamar a la funcion
- "actualizar_puntero", esto se hace para mover el puntero del mouse
- suavemente por la pantalla, antes de esto el puntero se movia haciendo
- algunas pausas. Todo esto tiene lugar en la implementacion de la funcion
- "mousestatus".
+ >> Version 1.0b - 28-XII-1999
+	- A 5 millisecond pause is added before calling the function
+	  "update_pointer", this is done to move the mouse pointer
+	  smoothly across the screen, before this the pointer moved
+	  with some pauses. All this takes place in the implementation
+	  of the "mousestatus" function.
 
-Version 1.0a - 16 Nov 1999
--Se agregan comentarios detallados sobre el funcionamiento de todas
- las funciones
+ >> Version 1.0a - 16-XI-1999
+	- Detailed comments on the operation of all functions are added
 
-Version 1.0 - 11 Sep 1999
-- Modificacion de las rutinas originales
-  correspondientes a la cabecera mousec.h que trabaja solo con el
-  modo grafico en 16 colores
-- se trabaja perfectamente en el modo grafico de 256 colores
-  mediante con el controlador bgi svga256.bgi, esto se hace mediante las
-  funciones de control para la bgi creadas para este fin.
+ >> Version 1.0 - 11-IX-1999
+	- Modification of the original routines corresponding to the
+	  mousec.h header that works only with the graphic mode in
+	  16 colors
+	- It works perfectly in the 256-color graphic mode using the
+	  bgi svga256.bgi driver, this is done through the control
+	  functions for the bgi created for this purpose.
 
-Version 0 - 11 Agosto 1999
-- Fuentes originales extraidos de MOUSEC.H
-- gracias a Silvia Garcia - 16 Agosto 1999
+ >> Version 0 - 11-VIII-1999
+	- Original sources extracted from MOUSEC.H
+	- thanks to Silvia Garcia - August 16, 1999
 
 *******************************************************/
-//# include <dos.h>
-//# include <stdlib.h>
-#include "graphics.h"
-//#include <conio.h>
-//#include "pcxbgi.h"
-#include <vector>
 
-struct Evento;
+#include "graphics.h"
+#include <vector>
 
 class MouseBGI {
 
 public:
-	enum class EVENTO {
-		////////////////////////////////////////////////////////////////////////
-		//CONSTANTES DE CONTROL
-		// codigos de eventos del raton
-		IDLE,			//no hay eventos
-		LBUTTON_DOWN,	//se presiono el boton izquierdo del mouse
-		RBUTTON_DOWN	//se presiono el boton derecho del mouse
+	enum class EVENT {
+		////////////////////////////////////////////////// //////////////////////
+		//CONTROL CONSTANTS
+		// mouse event codes
+		IDLE, //no events
+		LBUTTON_DOWN, //the left mouse button was pressed
+		RBUTTON_DOWN //the right mouse button was pressed
 	};
+
+	// Structure that stores the events generated by the mouse and keyboard
+	struct Event
+	{
+		int x; //x position of the mouse pointer
+		int y; //position and of the mouse pointer
+		MouseBGI::EVENT event; //Current mouse event (see definition of Event codes below)
+		char key; //if a key is pressed from the keyboard, its ASCII code is stored here
+	};
+
 
 public:
 	MouseBGI();
@@ -98,10 +117,10 @@ public:
 	static void RegisterMouseEvents();
 
 	// obtiene el ultimo evento del raton
-	static EVENTO mouseevent(int&, int&);
+	static EVENT mouseevent(int&, int&);
 
 	//Retorna una estructura Evento, con los eventos generados por el ratón y teclado
-	static Evento Detectar_click_o_tecla();	
+	static Event Detect_click_or_key();	
 
 private:
 	// Variables for monitoring mouse clicks
@@ -110,16 +129,6 @@ private:
 	static bool bMOUSEMOVE;
 
 };
-
-//Estructura que almacena los eventos generados por el rat¢n y teclado
-struct Evento
-{
-	int x;	//posici¢n x del puntero del rat¢n
-	int y; //posici¢n y del puntero del rat¢n
-	MouseBGI::EVENTO evento; //Evento actual del rat¢n (ver definici¢n de codigos de Eventos m s abajo)
-	char tecla; //si se presiona alguna tecla desde el teclado, se almacena aqu¡ su codigo ASCII
-};
-
 
 MouseBGI::MouseBGI() {
 }
@@ -132,8 +141,7 @@ bool MouseBGI::bRBUTTONPRESSED = false;
 bool MouseBGI::bMOUSEMOVE = false;
 
 ///////////////////////////////////////////////////////////////////
-//FUNCIONES DE CONTROL ESTANDAR
-
+// STANDARD CONTROL FUNCTIONS
 
 void MouseBGI::OnLButtonDown(int x, int y) {
 	bLBUTTONPRESSED = true;
@@ -172,23 +180,23 @@ void MouseBGI::RegisterMouseEvents() {
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// obtiene el ultimo evento del raton
-MouseBGI::EVENTO MouseBGI::mouseevent(int& Mx, int& My) {
-	EVENTO E;
+// get the last mouse event
+MouseBGI::EVENT MouseBGI::mouseevent(int& Mx, int& My) {
+	EVENT E;
 
 	if (bLBUTTONPRESSED) {
-		E = EVENTO::LBUTTON_DOWN;
+		E = EVENT::LBUTTON_DOWN;
 		//cleardevice();
 		//outtext("L");			
 	}
 	else if (bRBUTTONPRESSED) {
-		E = EVENTO::RBUTTON_DOWN;
+		E = EVENT::RBUTTON_DOWN;
 		//cleardevice();
 		//outtext("R");
 
 	}
 	else
-		E = EVENTO::IDLE;
+		E = EVENT::IDLE;
 
 	Mx = mousex();
 	My = mousey();
@@ -197,19 +205,19 @@ MouseBGI::EVENTO MouseBGI::mouseevent(int& Mx, int& My) {
 }
 
 /////////////////////////////////////
-//IMPLEMENTACION DE EVENTOS
-Evento MouseBGI::Detectar_click_o_tecla()
+// IMPLEMENTATION OF EVENTS
+MouseBGI::Event MouseBGI::Detect_click_or_key()
 {
-	Evento p;
+	Event p;
 
-	p.evento = EVENTO::IDLE;
-	p.tecla = -1;
+	p.event = EVENT::IDLE;
+	p.key = -1;
 
-	p.evento = mouseevent(p.x, p.y);
+	p.event = mouseevent(p.x, p.y);
 
 	if (kbhit())
 	{
-		p.tecla = getch();
+		p.key = getch();
 	}
 
 	return p;
