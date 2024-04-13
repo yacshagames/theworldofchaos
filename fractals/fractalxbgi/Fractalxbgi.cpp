@@ -128,17 +128,18 @@ int zoom(RegionXY &PC)
 
 		switch (raton.key)
 		{
-		case 13:
-		{
-			double ex = (PC.xmax - PC.xmin) / getmaxx();//escalax
-			double ey = (PC.ymax - PC.ymin) / getmaxy();//escalay
+		case 13:		
+			if (Lx > 0 && Ly > 0) {
+				double ex = (PC.xmax - PC.xmin) / MAXX;//escalax
+				double ey = (PC.ymax - PC.ymin) / MAXY;//escalay
 
-			PC.xmin = PC.xmin + (x0 - Lx) * ex;
-			PC.ymax = PC.ymax - (y0 - Ly) * ey;
-			PC.xmax = PC.xmin + 2 * Lx * ex;
-			PC.ymin = PC.ymax - 2 * Ly * ey;
-			return raton.key;
-		}
+				PC.xmin = PC.xmin + (x0 - Lx) * ex;
+				PC.ymax = PC.ymax - (y0 - Ly) * ey;
+				PC.xmax = PC.xmin + 2 * Lx * ex;
+				PC.ymin = PC.ymax - 2 * Ly * ey;
+				return raton.key;
+			}
+		break;
 		case 27:
 		case 'M':
 		case'+':
@@ -168,8 +169,12 @@ int zoom(RegionXY &PC)
 
 		case MouseBGI::EVENT::RBUTTON_DOWN:
 			if (ButonDown == 0) {
+				// Erase rectangle selection
 				rectangle(x0 - Lx, y0 - Ly, x0 + Lx, y0 + Ly);
+				// Reset flag
 				ButonDown = 1;
+				// Reset rectangle selectión
+				Lx = Ly = 0.0;
 			}
 			break;
 		}		
