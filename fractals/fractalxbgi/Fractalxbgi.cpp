@@ -1,4 +1,4 @@
-/*********************************************************************
+/*****************************************************************************
 FractalX para la BGI
 Mandelbrot's Beetle Fractal Plotter
 
@@ -26,6 +26,8 @@ HISTORY...
 	- The use of the rectangulo_inverso function is discarded for
 	  "rectangle" function using setwritemode(XOR_PUT), which does the
 	  same thing but natively
+	- Stop using the winbgi putpixel function and use the CScreenBitmap
+	  class instead, to speed up the drawing of the fractal on the screen
 
 -Version 1.2 08/10/1999
  *Grafica el conjunto de Mandelbrot, utilizando solo el controlador bgi
@@ -52,7 +54,7 @@ HISTORY...
 -version 1.0 17/09/1998
  Grafica los conjuntos de Julia, ulizando el modo bgi VGA 16 colores
 
-*********************************************************************/
+*****************************************************************************/
 
 #include <iostream>
 #include "complex.h"
@@ -60,6 +62,7 @@ HISTORY...
 #include "conio.h"
 #include <time.h>
 #include "mousebgi.h"
+#include "screenbitmap.h"
 
 using namespace std;
 
@@ -96,53 +99,6 @@ void Paleta(unsigned char r, unsigned char g, unsigned char b)
 
 }
 */
-
-
-void linea_inversa(int x1, int y1, int x2, int y2)
-{
-	float m;
-	int x, y;
-
-	//si x1>x2 se intercambia valores
-	if (x1 > x2)
-	{
-		x = x1;
-		x1 = x2;
-		x2 = x;
-	}
-	//si y1>y2 se intercambia valores
-	if (y1 > y2)
-	{
-		y = y1;
-		y1 = y2;
-		y2 = y;
-	}
-
-	//se nesecita x1>y2 y y1>y2
-	if (x1 != x2)
-	{
-		m = (y2 - y1) / (float)(x2 - x1);
-
-		for (x = x1; x <= x2; x++)
-		{
-			y = m * x + y1 - m * x1;
-			putpixel(x, y, getpixel(x, y) ^ 200);
-		}
-	}
-	else
-		for (y = y1; y <= y2; y++)
-			putpixel(x1, y, getpixel(x1, y) ^ 200);
-
-
-}
-
-void rectangulo_inverso(int x1, int y1, int x2, int y2)
-{
-	linea_inversa(x1, y1, x1, y2);
-	linea_inversa(x1, y2, x2, y2);
-	linea_inversa(x2, y2, x2, y1);
-	linea_inversa(x2, y1, x1, y1);
-}
 
 struct RegionXY
 {
@@ -283,17 +239,17 @@ void ModoGrafico(int resolucion)
  }
 
 
-void Mandelbrot1(RegionXY PC, double DIVERGE = 4, double ITERMAX = 155)
+void Mandelbrot1(RegionXY PC, double& DIVERGE, const unsigned int& ITERMAX, CScreenBitmap& scrBitmap)
 {
 
-	int  i, j, ITERACION, des = 10, k;
+	unsigned int  i, j, ITERACION, des = 10, k, drawblind_step=3;
 
 	complex Z, C;
 
-	int maxy = getmaxy(), maxx = getmaxx();
+	int maxy = MAXY, maxx = MAXX;
 
 	//Modo de graficacion: TIPO PERSIANA
-	for (k = 0; k < des; k++)
+	for (k = 0; k < des; k++) {
 
 		for (j = k; j < maxy; j += des)
 		{
@@ -310,13 +266,19 @@ void Mandelbrot1(RegionXY PC, double DIVERGE = 4, double ITERMAX = 155)
 				{
 					Z = Z * Z + C;
 					ITERACION++;
-					if ( abs(Z) > DIVERGE)break;
+					if (abs(Z) > DIVERGE)break;
 				} while (ITERACION < ITERMAX);
 
-				if (ITERACION != ITERMAX) putpixel(i, j, ITERACION);
-
+				if (ITERACION != ITERMAX)
+					scrBitmap.putpixel(i, j, ITERACION);
 			}
 		}
+
+		// Shows the rolling shutter effect every certain number of steps, while the fractal is plotted
+		// Allows the user to see a preview of the fractal plot while it is calculated
+		if( k%drawblind_step ==0)
+			scrBitmap.draw(0,0);
+	}
 
 }
 
@@ -329,9 +291,9 @@ struct cuadricula
 };
 
 
-void mandelpunto(int &i, int &j, RegionXY &PC, double DIVERGE = 4, int ITERMAX = 155)
+void mandelpunto(int &i, int &j, RegionXY &PC, const double& DIVERGE, const unsigned int& ITERMAX, CScreenBitmap& scrBitmap)
 {
-	int  ITERACION = 0;
+	unsigned int  ITERACION = 0;
 	complex  Z = 0;
 
 	complex C = complex(PC.xmin + ((PC.xmax - PC.xmin)*i) / MAXX,
@@ -343,23 +305,29 @@ void mandelpunto(int &i, int &j, RegionXY &PC, double DIVERGE = 4, int ITERMAX =
 		if (abs(Z) > DIVERGE)break;
 	} while (ITERACION < ITERMAX);
 
-	if (ITERACION != ITERMAX) putpixel(i, j, ITERACION);
+	if (ITERACION != ITERMAX)
+		scrBitmap.putpixel(i, j, ITERACION);
 
 	iter++;
 
+	// Shows the Tesseral X effect every certain number of iterations, while the fractal is plotted
+	// Allows the user to see a preview of the fractal plot while it is calculated
+	if (iter % 50000 == 0)
+		scrBitmap.draw(0, 0);
 }
 
-int analizar_region(int &color, cuadricula &rect, int &xmax, int &ymax)
+int analizar_region(int &rgbColor, cuadricula &rect, int &xmax, int &ymax, CScreenBitmap& scrBitmap)
 {
 	int i, desx = rect.Ladox / 4, desy = rect.Ladoy / 4;
-	color = getpixel(rect.xmin, rect.ymin);
+	rgbColor = scrBitmap.getpixelRGB(rect.xmin, rect.ymin);
 
 	for (i = 0; i < 3; i++)
 	{
-		if (color != getpixel(xmax - i * desx, rect.ymin)) return 0;
-		if (color != getpixel(rect.xmin + i * desx, ymax)) return 0;
-		if (color != getpixel(rect.xmin, rect.ymin + i * desy)) return 0;
-		if (color != getpixel(xmax, ymax - i * desy)) return 0;
+		if(rgbColor != scrBitmap.getpixelRGB(xmax - i * desx, rect.ymin) ||
+			rgbColor != scrBitmap.getpixelRGB(rect.xmin + i * desx, ymax) ||
+			rgbColor != scrBitmap.getpixelRGB(rect.xmin, rect.ymin + i * desy) ||
+			rgbColor != scrBitmap.getpixelRGB(xmax, ymax - i * desy) )
+			return 0;		
 	}
 
 	return 1;
@@ -367,33 +335,33 @@ int analizar_region(int &color, cuadricula &rect, int &xmax, int &ymax)
 
 
 
-void Mandelbrot2(RegionXY &PC, cuadricula rect)
+void Mandelbrot2(RegionXY &PC, cuadricula rect, const double& DIVERGE, const unsigned int& ITERMAX, CScreenBitmap& scrBitmap )
 {
 
 	// getch();gotoxy(20,20);cout<<rect.Ladox;
 	int i, j, xmax = rect.xmin + rect.Ladox, ymax = rect.ymin + rect.Ladoy,
 		xmed = rect.xmin + rect.Ladox / 2, ymed = rect.ymin + rect.Ladoy / 2;
-	if (rect.Ladox == MAXX)
+	if (rect.Ladox == MAXX-1)
 	{
 		for (i = rect.xmin; i < rect.Ladox; i++)
 		{
-			mandelpunto(i, rect.ymin, PC);
-			mandelpunto(i, ymax, PC);
+			mandelpunto(i, rect.ymin, PC, DIVERGE, ITERMAX, scrBitmap);
+			mandelpunto(i, ymax, PC, DIVERGE, ITERMAX, scrBitmap);
 		}
 
 		for (j = rect.ymin; j < rect.Ladoy; j++)
 		{
-			mandelpunto(rect.xmin, j, PC);
-			mandelpunto(xmax, j, PC);
+			mandelpunto(rect.xmin, j, PC, DIVERGE, ITERMAX, scrBitmap);
+			mandelpunto(xmax, j, PC, DIVERGE, ITERMAX, scrBitmap);
 		}
 
 	}
 
-	int color;
-	if (analizar_region(color, rect, xmax, ymax))
+	int rgbColor;
+	if (analizar_region(rgbColor, rect, xmax, ymax, scrBitmap))
 	{
-		setfillstyle(1, color);
-		bar(rect.xmin + 1, rect.ymin + 1, xmax - 1, ymax - 1);
+		//setfillstyle(1, color);
+		scrBitmap.barRGB(rect.xmin + 1, rect.ymin + 1, xmax - 1, ymax - 1, rgbColor);
 		return;
 	}
 
@@ -403,18 +371,18 @@ void Mandelbrot2(RegionXY &PC, cuadricula rect)
 
 		for (j = rect.ymin + 1; j < ymax; j++)
 			for (i = rect.xmin + 1; i < xmax; i++)
-				mandelpunto(i, j, PC);
+				mandelpunto(i, j, PC, DIVERGE, ITERMAX, scrBitmap);
 		return;
 	}
 
 	for (j = rect.ymin + 1; j < ymax; j++)
-		mandelpunto(xmed, j, PC);
+		mandelpunto(xmed, j, PC, DIVERGE, ITERMAX, scrBitmap);
 
 	for (i = rect.xmin + 1; i < xmed; i++)
-		mandelpunto(i, ymed, PC);
+		mandelpunto(i, ymed, PC, DIVERGE, ITERMAX, scrBitmap);
 
 	for (i = xmed + 1; i < xmax; i++)
-		mandelpunto(i, ymed, PC);
+		mandelpunto(i, ymed, PC, DIVERGE, ITERMAX, scrBitmap);
 
 	int Ladox = rect.Ladox / 2, Ladoy = rect.Ladoy / 2;
 	cuadricula rect1[4] =
@@ -424,9 +392,9 @@ void Mandelbrot2(RegionXY &PC, cuadricula rect)
 	 xmed, ymed, rect.Ladox - Ladox, rect.Ladoy - Ladoy,
 	 rect.xmin, ymed, Ladox, rect.Ladoy - Ladoy
 	};
-
+	
 	for (i = 0; i < 4; i++)
-		Mandelbrot2(PC, rect1[i]);
+		Mandelbrot2(PC, rect1[i], DIVERGE, ITERMAX, scrBitmap);
 
 }
 
@@ -509,13 +477,15 @@ int main()
 {			
 	//PROCESO ESCARABAJO DE MANDELBROT
 
+	//////////////////////////
+	double DIVERGE = 200;   // valor de divergencia
+	unsigned int ITERMAX = 500;	// iteracion maxima
+
+	// Variables de GUI
 	char tecla = 0;
 	unsigned int mode, option;
 
-	clock_t inicio, fin;	
-
-	//ModoGrafico(resolucion);
-	//Paleta(10, 5, 1);	
+	clock_t inicio, fin;
 
 	do
 	{
@@ -527,16 +497,19 @@ int main()
 			break;// Salir
 
 		ModoGrafico(option);
-		//Paleta(10, 5, 1);
 
-		MAXX = getmaxx();
-		MAXY = getmaxy();
+		MAXX = getmaxx()+1;
+		MAXY = getmaxy()+1;
 
-		cuadricula rect = { 0,0,MAXX,MAXY };
+		cuadricula rect = { 0,0,MAXX-1,MAXY-1 };
+
+		CScreenBitmap scrBitmap(MAXX, MAXY);
+		scrBitmap.setpalette(10, 5, 1);
 
 		do {
 
-			cleardevice();
+			//cleardevice();
+			scrBitmap.clear();
 
 			iter = 0;
 
@@ -545,12 +518,15 @@ int main()
 			switch (mode)
 			{
 			case 1:  
-				Mandelbrot1(PlanoComplejo);
+				Mandelbrot1(PlanoComplejo, DIVERGE, ITERMAX, scrBitmap);
+				iter = MAXX * MAXY;
 				break;
 			case 2:				
-				Mandelbrot2(PlanoComplejo, rect);
+				Mandelbrot2(PlanoComplejo, rect, DIVERGE, ITERMAX, scrBitmap);
 				break;
 			}
+
+			scrBitmap.draw(0,0);
 
 			fin = clock();
 			cout << "\n\n" << double((fin - inicio)) / CLK_TCK << "\nIter: " << iter;
