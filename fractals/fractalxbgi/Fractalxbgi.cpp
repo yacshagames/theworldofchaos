@@ -1,9 +1,31 @@
-/*
-FractalX para DOS versi¢n 1.2
-GRAFICADOR DE FRACTALES
+/*********************************************************************
+FractalX para la BGI
+Mandelbrot's Beetle Fractal Plotter
 
-Programado por: Jos‚ Luis De la Cruz Lazaro
-Universidad Nacional de Ingenier¡a - Lima Per£
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+ >> Version 2 - 12-IV-2024
+	- Update fractals/fractalxbgi - Porting to VC++ 2017 using winbgi
+	- The menu in text mode is made independent of the functions to
+	  plot the fractal, in such a way as to have the GUI and the view
+	  separated
+	- The code of the old MouseBGI 1.x library is adapted to the new
+	  version 3 adapted to WinBGI
+	- The use of the rectangulo_inverso function is discarded for
+	  "rectangle" function using setwritemode(XOR_PUT), which does the
+	  same thing but natively
 
 -Version 1.2 08/10/1999
  *Grafica el conjunto de Mandelbrot, utilizando solo el controlador bgi
@@ -30,7 +52,7 @@ Universidad Nacional de Ingenier¡a - Lima Per£
 -version 1.0 17/09/1998
  Grafica los conjuntos de Julia, ulizando el modo bgi VGA 16 colores
 
-*/
+*********************************************************************/
 
 #include <iostream>
 #include "complex.h"
@@ -40,6 +62,10 @@ Universidad Nacional de Ingenier¡a - Lima Per£
 #include "mousebgi.h"
 
 using namespace std;
+
+
+int MAXX, MAXY;
+long iter;
 
 /*
 void Paleta(unsigned char r, unsigned char g, unsigned char b)
@@ -131,72 +157,67 @@ int zoom(RegionXY &PC)
 	//mouseshow();
 
 	//int x = 0, y = 0, c;
-	//int ButonDown = 1, Lx, Ly, x0, y0;
-	int Lx=0, Ly=0, x0=0, y0=0;
+	int ButonDown = 1, Lx=0, Ly=0, x0=0, y0=0;
 
-	Evento raton;	// estructura que contiene datos sobre la posicion y
+	MouseBGI::Event raton;	// estructura que contiene datos sobre la posicion y
 					// la tecla presionada. Para mas informacion vea la
 					// definicion de la estructura Evento en MOUSEBGI.H
 
-	while (1)
-	{
+	setwritemode(XOR_PUT);
 
-		if (kbhit())
+	while (1) {
+
+		raton = MouseBGI::Detect_click_or_key();
+		raton.key = toupper(raton.key);
+
+		switch (raton.key)
 		{
-			//c = toupper(getch());
-			raton = MouseBGI::Detectar_click_o_tecla();
-			
-			switch (raton.tecla)
-			{
-			case 13:
-			{
-				double ex = (PC.xmax - PC.xmin) / getmaxx();//escalax
-				double ey = (PC.ymax - PC.ymin) / getmaxy();//escalay
+		case 13:
+		{
+			double ex = (PC.xmax - PC.xmin) / getmaxx();//escalax
+			double ey = (PC.ymax - PC.ymin) / getmaxy();//escalay
 
-				PC.xmin = PC.xmin + (x0 - Lx) * ex;
-				PC.ymax = PC.ymax - (y0 - Ly) * ey;
-				PC.xmax = PC.xmin + 2 * Lx * ex;
-				PC.ymin = PC.ymax - 2 * Ly * ey;
-				return raton.tecla;
-			}
-			case 27:
-			case 'M':
-			case'+':
-			case'-':
-				return raton.tecla;
-			}
-
+			PC.xmin = PC.xmin + (x0 - Lx) * ex;
+			PC.ymax = PC.ymax - (y0 - Ly) * ey;
+			PC.xmax = PC.xmin + 2 * Lx * ex;
+			PC.ymin = PC.ymax - 2 * Ly * ey;
+			return raton.key;
 		}
-		/*
+		case 27:
+		case 'M':
+		case'+':
+		case'-':
+			return raton.key;
+		}
+		
 		int &x = raton.x, &y = raton.y;
 
-		switch (raton.evento)
+		switch (raton.event)
 		{
 
-		case LBUTTON_STILL_DOWN:
+		case MouseBGI::EVENT::LBUTTON_DOWN:
 
 			if (ButonDown) {
-
-				mousestatus(&x0, &y0);
+				x0 = x;
+				y0 = y;
 				ButonDown = 0;
 			} else
-				rectangulo_inverso(x0 - Lx, y0 - Ly, x0 + Lx, y0 + Ly);
+				rectangle(x0 - Lx, y0 - Ly, x0 + Lx, y0 + Ly);
 
 			Lx = abs(x - x0);
-			Ly = getmaxy()*(double)Lx / getmaxx();
+			Ly = int(double(MAXY) * (double)(Lx) / double(MAXX));
 
-			rectangulo_inverso(x0 - Lx, y0 - Ly, x0 + Lx, y0 + Ly);
+			rectangle(x0 - Lx, y0 - Ly, x0 + Lx, y0 + Ly);
 			break;
 
-		case RBUTTON_DOWN:
-			rectangulo_inverso(x0 - Lx, y0 - Ly, x0 + Lx, y0 + Ly);
-			ButonDown = 1;
+		case MouseBGI::EVENT::RBUTTON_DOWN:
+			if (ButonDown == 0) {
+				rectangle(x0 - Lx, y0 - Ly, x0 + Lx, y0 + Ly);
+				ButonDown = 1;
+			}
 			break;
-		}
-		*/
+		}		
 	}
-
-
 }
 
 /*
@@ -239,6 +260,7 @@ void ModoGrafico(int resolucion)
 	{
 	case 0:
 		closegraph();
+		break;
 	case 1: //_320x200:
 		initwindow(320, 200, sTittle.c_str());
 		break;
@@ -254,7 +276,11 @@ void ModoGrafico(int resolucion)
 	case 5: //_1024x768:
 		initwindow(1024, 768, sTittle.c_str());
 	}
-}
+
+	if( resolucion > 0 )
+		// starts register of mouse events by MouseBGI class
+		MouseBGI::RegisterMouseEvents();
+ }
 
 
 void Mandelbrot1(RegionXY PC, double DIVERGE = 4, double ITERMAX = 155)
@@ -302,8 +328,6 @@ struct cuadricula
 	int Ladoy;
 };
 
-int MAXX, MAXY;
-long iter;
 
 void mandelpunto(int &i, int &j, RegionXY &PC, double DIVERGE = 4, int ITERMAX = 155)
 {
@@ -407,122 +431,143 @@ void Mandelbrot2(RegionXY &PC, cuadricula rect)
 }
 
 
-int Menu()
+void Menu(unsigned int& option, unsigned int& mode)
 {
+	ModoGrafico(0);
+
 	int resolucion = 0;
 
-	do
+	cout << "FractalX-BGI\n"
+		<< "GRAFICADOR DE FRACTALES\n"
+		<< "\nTeclas que se usaran durante el ploteo del fractal:"
+		<< "\n\nSeleccione un rectangulo con el mouse y luego pulse ENTER para Hacer ZOOM"
+		<< "\nUse clic derecho para borrar el rectángulo de zoom"
+		<< "\n\nESC: para cancelar la graficacion"
+		<< "\ntecla M: para volver a este Menu"
+		<< "\n+,- : cambia la paleta de colores del fractal para cancelar pulse ENTER"		
+		<< "\n\n(1) 320x200\n"
+		<< "(2) 640x400\n"
+		<< "(3) 640x480\n"
+		<< "(4) 800x600\n"
+		<< "(5) 1024x768\n"
+		<< "(6) Acerca del Autor\n"
+		<< "(7) Salir\n"
+		<< "\nElija su resolucion: ";
+
+	cin >> option;
+
+
+
+	if (option > 6 || option < 1) {
+		option = 0;
+		mode = 0;
+		return; // Salir
+	}
+
+	// mostrar creditos del autor
+	if (option == 6)
 	{
-		ModoGrafico(0);
+		/*ModoGrafico(1);
+		setgraphmode(1);
+		PCX logos;
+		logos.Dibujar(10, 150, 16, "logouni.pcx");
+		logos.Dibujar(0, 0, 32, "fxlogo.pcx");
+		setrgbpalette(0, 0, 0, 0);
+
+		setcolor(LIGHTRED);
+		outtextxy(220, 70, "FractalX para DOS versi¢n 1.2");
+		outtextxy(220, 80, "GRAFICADOR DE FRACTALES");
+		setcolor(LIGHTGREEN);
+		outtextxy(160, 150, "Programado por: Jos‚ Luis De la Cruz Lazaro");
+		setcolor(LIGHTMAGENTA);
+		outtextxy(160, 170, "Universidad Nacional de Ingenier¡a - Lima Per£ - 1999");
+		setcolor(YELLOW);
+		outtextxy(160, 190, "Por el momento solo tengo implementado");
+		outtextxy(160, 200, "el escarabajo de Mandelbrot");
+		setcolor(WHITE);
+		outtextxy(160, 220, "Pulse cualquier tecla para Salir");
+		getch();*/
+
+		option = 0;
+		mode = 0;
+	}
+	else
+		//if (!Cambiar_Paleta_Fractal(tecla, 3, 2, 1))
+	{
+		//cleardevice();
 		clrscr();
+		cout << endl << endl;
+		cout << " (1) Diagramado Persiana" << endl << endl;
+		cout << " (2) Diagramado TesseralX" << endl << endl;
+		cout << " Ingrese el tipo de diagramado: ";
+		cin >> mode;
+	}
 
-		cout << "FractalX para DOS versi¢n 1.2\n"
-			<< "GRAFICADOR DE FRACTALES\n"
-			<< "\nTeclas que se usar n:"
-			<< "\n\nESC: para cancelar la graficaci¢n"
-			<< "\ntecla M: para volver a este Men£"
-			<< "\n+,- : cambia la paleta de colores del fractal para cancelar pulse ENTER"
-			<< "\n\nSeleccione un rectangulo con el mouse y luego pulse ENTER para Hacer ZOOM"
-			<< "\n\n(1) 320x200\n"
-			<< "(2) 640x400\n"
-			<< "(3) 640x480\n"
-			<< "(4) 800x600\n"
-			<< "(5) 1024x768\n"
-			<< "(6) Acerca del Autor\n"
-			<< "(7) Salir\n"
-			<< "\nElija su resoluci¢n: ";
-
-		cin >> resolucion;
-
-		
-		
-		if (resolucion > 6 || resolucion < 1) 
-			return 0; // Salir
-
-		// mostrar creditos del autor
-		if (resolucion == 6)
-		{
-			/*ModoGrafico(1);
-			setgraphmode(1);
-			PCX logos;
-			logos.Dibujar(10, 150, 16, "logouni.pcx");
-			logos.Dibujar(0, 0, 32, "fxlogo.pcx");
-			setrgbpalette(0, 0, 0, 0);
-
-			setcolor(LIGHTRED);
-			outtextxy(220, 70, "FractalX para DOS versi¢n 1.2");
-			outtextxy(220, 80, "GRAFICADOR DE FRACTALES");
-			setcolor(LIGHTGREEN);
-			outtextxy(160, 150, "Programado por: Jos‚ Luis De la Cruz Lazaro");
-			setcolor(LIGHTMAGENTA);
-			outtextxy(160, 170, "Universidad Nacional de Ingenier¡a - Lima Per£ - 1999");
-			setcolor(YELLOW);
-			outtextxy(160, 190, "Por el momento solo tengo implementado");
-			outtextxy(160, 200, "el escarabajo de Mandelbrot");
-			setcolor(WHITE);
-			outtextxy(160, 220, "Pulse cualquier tecla para Salir");
-			getch();*/
-		}
-		else break;
-
-	} while (1);
-
-		
-	ModoGrafico(resolucion);
-	//Paleta(10, 5, 1);
-
-	return 1;
 }
 
-
-
-
-
 int main()
-{
-
-	Menu();
-
-	RegionXY PlanoComplejo = { -3,2,-2,2 };
-
-
+{			
 	//PROCESO ESCARABAJO DE MANDELBROT
-	char tecla = 0, salir = 1;
-	int modo;
-	clock_t inicio, fin;
+
+	char tecla = 0;
+	unsigned int mode, option;
+
+	clock_t inicio, fin;	
+
+	//ModoGrafico(resolucion);
+	//Paleta(10, 5, 1);	
 
 	do
 	{
+		RegionXY PlanoComplejo = { -3,2,-2,2 };
 
-		//if (!Cambiar_Paleta_Fractal(tecla, 3, 2, 1))
-		{
-			//cleardevice();
-			clrscr();
-			MAXX = getmaxx();
-			MAXY = getmaxy();
+		Menu(option, mode);
+
+		if (option == 0)
+			break;// Salir
+
+		ModoGrafico(option);
+		//Paleta(10, 5, 1);
+
+		MAXX = getmaxx();
+		MAXY = getmaxy();
+
+		cuadricula rect = { 0,0,MAXX,MAXY };
+
+		do {
+
+			cleardevice();
+
 			iter = 0;
 
-			gotoxy(1, 3); cout << "(1) Diagramado Persiana";
-			gotoxy(1, 4); cout << "\n(2) Diagramado TesseralX";
-			gotoxy(1, 6); cout << "\n\nIngrese el tipo de diagramado: ";
-			cin >> modo;
-
 			inicio = clock();
-			switch (modo)
+
+			switch (mode)
 			{
-			case 1:  Mandelbrot1(PlanoComplejo); break;
-			case 2:
-				cuadricula rect = { 0,0,MAXX,MAXY };
+			case 1:  
+				Mandelbrot1(PlanoComplejo);
+				break;
+			case 2:				
 				Mandelbrot2(PlanoComplejo, rect);
 				break;
 			}
-			fin = clock();
-			cout << "\n\n" << (fin - inicio) / CLK_TCK << "\nIter: " << iter;
-		}
-		tecla = zoom(PlanoComplejo);
-		if (tecla == 'M')salir = Menu();
 
-	} while (salir && tecla != 27);
+			fin = clock();
+			cout << "\n\n" << double((fin - inicio)) / CLK_TCK << "\nIter: " << iter;
+
+			tecla = zoom(PlanoComplejo);
+
+			switch (tecla) {
+			case 'M':
+				break;
+			case '+':
+			case '-':
+				//Cambiar_Paleta_Fractal(tecla, 3, 2, 1);
+				break;
+			}
+		} while (tecla != 27 && tecla!='M');
+
+	} while (1);
 
 	ModoGrafico(0);
 
