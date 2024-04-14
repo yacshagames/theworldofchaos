@@ -1,5 +1,5 @@
 /*****************************************************************************
-FractalX para la BGI
+FractalX for WinBGI
 Mandelbrot's Beetle Fractal Plotter
 
 Developed by:
@@ -28,31 +28,55 @@ HISTORY...
 	  same thing but natively
 	- Stop using the winbgi putpixel function and use the CScreenBitmap
 	  class instead, to speed up the drawing of the fractal on the screen
+	- The Change_Fractal_Palette function is enabled, to be able to
+	  change the color palette of the fractal using the + and - keys,
+	  using the CScreenBitmap version 2 class
+	- The About screen is enabled showing the software credits
+	- The *.pcx files loaded in the credits are changed to *.bmp files,
+	  in such a way as to load them natively using the readimagefile
+	  function of WinBGI
+	- Translate GUI, credits and history version, from spanish to english
+	- Add colors to console GUI
+	- The modifications made in version 1.3 are added to the History version
+	- After each plot the coordinates (xmin,xmax) and (ymin, ymax) are shown.
+	  In addition to formatting the elapsed seconds and the number of
+	  iterations displayed
 
--Version 1.2 08/10/1999
- *Grafica el conjunto de Mandelbrot, utilizando solo el controlador bgi
-  SVGA256.BGI, posee 5 modos de resolucion grafica y 256 colores
- *Se utilizan las cabeceras pcxbgi.h y mousebgi.h para cargar archivos
-  graficos y el puntero del mouse respectivamente utilizando solo la bgi.
- *Se implementa el modo de graficacion tipo persiana, a diferencia
-  del modo anterior que barria la pantalla de arriba a abajo.
- *Se implementa un menu en modo texto para cambiar la resolucion.
- *Con las teclas + y - se rotan los colores de la paleta en sentido
-  horario y antihorario respectivamente.
- *se mejora la rutina para hacer zoom, ahora solo se hace un rectangulo
-  proporcional a la pantalla para que la escala del fractal no se cambie
- *se a¤ade una pantalla de creditos.
+>> Version 1.3 - 02-XI-1999
+	- The Blind plotting mode is added (fuction Mandelbrot1), in such a
+	  way as to show the plot progressively as if it were a blind
+	- The TesseralX plotting mode is added (function Mandelbrot2),
+	  which uses an algorithm that divides the screen into 4 quadrants and
+	  in each quadrant analyzes whether the 4 corners of the quadrant have
+	  the same color, if so, a rectangle filled with the color of one of
+	  them is painted the corners and otherwise the same algorithm is
+	  carried out in each of the quadrants recursively.
+	  This algorithm is more efficient when the fractal has several areas
+	  with the same color, since it avoids iterating the complex equation
+	  in the quadrants that have the same color in their corners.
 
--Version 1.1 02/05/1999
- *grafica solo el conjunto de Mandelbrot, utilizando la interrupcion 10h
-  subfuncion 13h (320x200 de resolucion y 256 colores) incluye
-  subrutinas graficas en lenguaje ensamblador, incluidas en la
-  cabecera Color256.h
- *Se rota los colores de la paleta del fractal en sentido horario
- *Se implementa una rutina para el zoom, utilizando el mouse.
+ >> Version 1.2 - 08-X-1999
+	- Plots the Mandelbrot set, using only the SVGA256.BGI bgi driver,
+      has 5 graphic resolution modes and 256 colors
+	- The pcxbgi.h and mousebgi.h headers are used to load graphic files
+	  and the mouse pointer respectively using only the bgi.
+	  previous mode that swept the screen from top to bottom.
+	- With the + and - keys the colors of the palette are rotated
+	  clockwise and counterclockwise respectively.
+	- the routine for zooming is improved, now only a rectangle is made
+	  proportional to the screen so that the scale of the fractal
+	  is not changed
+	- a credits screen is added.
 
--version 1.0 17/09/1998
- Grafica los conjuntos de Julia, ulizando el modo bgi VGA 16 colores
+ >> Version 1.1 - 02-V-1999
+	- Plots only the Mandelbrot set, using the interrupt 10h subfunction 13h
+	  (320x200 resolution and 256 colors) includes graphical subroutines in
+	  assembly language, included in the Color256.h header
+	- The colors of the fractal palette are rotated clockwise
+	- A routine is implemented for zooming, using the mouse.
+
+ >> Version 1.0 - 17-IX-1999
+	- Plot Julia's sets, using the 16-color VGA bgi mode
 
 *****************************************************************************/
 
@@ -66,39 +90,8 @@ HISTORY...
 
 using namespace std;
 
-
 int MAXX, MAXY;
 long iter;
-
-/*
-void Paleta(unsigned char r, unsigned char g, unsigned char b)
-{
-	unsigned char cont1, Paleta[256][3];
-	int cont;
-
-	for (cont = 0; cont < 256; cont++)
-	{
-		Paleta[cont][0] = r * (cont + 1);
-		Paleta[cont][1] = g * (cont + 1);
-		Paleta[cont][2] = b * (cont + 1);
-	}
-
-
-	cont = 0;
-	cont1 = 0;
-
-	// El c¢digo que sigue a continuaci¢n pasa el contenido del array "Paleta"
-	// a la paleta de la VGA 
-	for (cont = 0; cont < 256; cont++)
-	{
-		outportb(0x03c8, cont);
-		for (cont1 = 0; cont1 < 3; cont1++)
-			outportb(0x03c9, Paleta[cont][cont1]);
-		//cout<<Paleta
-	}
-
-}
-*/
 
 struct RegionXY
 {
@@ -181,14 +174,14 @@ int zoom(RegionXY &PC)
 	}
 }
 
-/*
-int Cambiar_Paleta_Fractal(char tecla, unsigned char r, unsigned char g, unsigned char b)
+
+int Change_Fractal_Palette(char tecla, unsigned char r, unsigned char g, unsigned char b, CScreenBitmap& scrBitmap)
 {
 	unsigned char esc = 0, i = 1;
 
 	if (tecla == '+' || tecla == '-')
 	{
-		mousehide();
+		//mousehide();
 		while (1)
 		{
 
@@ -199,18 +192,30 @@ int Cambiar_Paleta_Fractal(char tecla, unsigned char r, unsigned char g, unsigne
 				break;
 			case'-':
 				i--;
+				break;
 			}
-			if (i)Paleta(r + i, g + i, b + i);
-			delay(400);
-			if (kbhit())esc = getch();
-			if (esc == 13)return 1;
-			if (esc == '+' || esc == '-') tecla = esc;
+			if (i) {
+				//Paleta(r + i, g + i, b + i);
+				scrBitmap.setpalette(r + i, g + i, b + i);
+				scrBitmap.draw();
+			}
+			
+			delay(100);
+			
+			if (kbhit())
+				esc = getch();
+			
+			if (esc == 13)
+				return 1;
+
+			if (esc == '+' || esc == '-')
+				tecla = esc;
 
 		}
 	}
 	return 0;
 }
-*/
+
 
 void ModoGrafico(int resolucion)
 {
@@ -321,17 +326,17 @@ void mandelpunto(int &i, int &j, RegionXY &PC, const double& DIVERGE, const unsi
 		scrBitmap.draw(0, 0);
 }
 
-int analizar_region(int &rgbColor, cuadricula &rect, int &xmax, int &ymax, CScreenBitmap& scrBitmap)
+int analizar_region(unsigned char &paletteColor, cuadricula &rect, int &xmax, int &ymax, CScreenBitmap& scrBitmap)
 {
 	int i, desx = rect.Ladox / 4, desy = rect.Ladoy / 4;
-	rgbColor = scrBitmap.getpixelRGB(rect.xmin, rect.ymin);
+	paletteColor = scrBitmap.getpixel(rect.xmin, rect.ymin);
 
 	for (i = 0; i < 3; i++)
 	{
-		if(rgbColor != scrBitmap.getpixelRGB(xmax - i * desx, rect.ymin) ||
-			rgbColor != scrBitmap.getpixelRGB(rect.xmin + i * desx, ymax) ||
-			rgbColor != scrBitmap.getpixelRGB(rect.xmin, rect.ymin + i * desy) ||
-			rgbColor != scrBitmap.getpixelRGB(xmax, ymax - i * desy) )
+		if( paletteColor != scrBitmap.getpixel(xmax - i * desx, rect.ymin) ||
+			paletteColor != scrBitmap.getpixel(rect.xmin + i * desx, ymax) ||
+			paletteColor != scrBitmap.getpixel(rect.xmin, rect.ymin + i * desy) ||
+			paletteColor != scrBitmap.getpixel(xmax, ymax - i * desy) )
 			return 0;		
 	}
 
@@ -362,11 +367,11 @@ void Mandelbrot2(RegionXY &PC, cuadricula rect, const double& DIVERGE, const uns
 
 	}
 
-	int rgbColor;
-	if (analizar_region(rgbColor, rect, xmax, ymax, scrBitmap))
+	unsigned char paletteColor;
+	if (analizar_region(paletteColor, rect, xmax, ymax, scrBitmap))
 	{
 		//setfillstyle(1, color);
-		scrBitmap.barRGB(rect.xmin + 1, rect.ymin + 1, xmax - 1, ymax - 1, rgbColor);
+		scrBitmap.bar(rect.xmin + 1, rect.ymin + 1, xmax - 1, ymax - 1, paletteColor);
 		return;
 	}
 
@@ -407,25 +412,32 @@ void Mandelbrot2(RegionXY &PC, cuadricula rect, const double& DIVERGE, const uns
 void Menu(unsigned int& option, unsigned int& mode)
 {
 	ModoGrafico(0);
+	clrscr();
 
 	int resolucion = 0;
 
-	cout << "FractalX-BGI\n"
-		<< "GRAFICADOR DE FRACTALES\n"
-		<< "\nTeclas que se usaran durante el ploteo del fractal:"
-		<< "\n\nSeleccione un rectangulo con el mouse y luego pulse ENTER para Hacer ZOOM"
-		<< "\nUse clic derecho para borrar el rectángulo de zoom"
-		<< "\n\nESC: para cancelar la graficacion"
-		<< "\ntecla M: para volver a este Menu"
-		<< "\n+,- : cambia la paleta de colores del fractal para cancelar pulse ENTER"		
-		<< "\n\n(1) 320x200\n"
+	textcolor(LIGHTCYAN);
+	cout << "FractalX for WinBGI\n";
+	textcolor(LIGHTRED);
+	cout << "MANDELBROT'S BEETLE FRACTAL PLOTTER\n";
+
+	textcolor(WHITE);
+	cout << "\nKeys that will be used during fractal plotting:"
+		<< "\n\nSelect a rectangle with the mouse and then press ENTER to ZOOM"
+		<< "\nUse right click to delete the zoom rectangle"
+		<< "\n\nESC: to cancel the graph"
+		<< "\nkey M: to return to this Menu"
+		<< "\n+,- : change the color palette of the fractal to cancel press ENTER";
+		
+	textcolor(LIGHTGRAY);
+	cout << "\n\n(1) 320x200\n"
 		<< "(2) 640x400\n"
 		<< "(3) 640x480\n"
 		<< "(4) 800x600\n"
 		<< "(5) 1024x768\n"
-		<< "(6) Acerca del Autor\n"
-		<< "(7) Salir\n"
-		<< "\nElija su resolucion: ";
+		<< "(6) About the Author\n"
+		<< "(7) Exit\n"
+		<< "\nChoose your resolution: ";
 
 	cin >> option;
 
@@ -440,39 +452,35 @@ void Menu(unsigned int& option, unsigned int& mode)
 	// mostrar creditos del autor
 	if (option == 6)
 	{
-		/*ModoGrafico(1);
-		setgraphmode(1);
-		PCX logos;
-		logos.Dibujar(10, 150, 16, "logouni.pcx");
-		logos.Dibujar(0, 0, 32, "fxlogo.pcx");
-		setrgbpalette(0, 0, 0, 0);
+		ModoGrafico(5);
+
+		readimagefile("logouni.bmp", 10, 150, 10+130, 150+167);
+		readimagefile("fxlogo.bmp", 0, 0, 204, 135);		
 
 		setcolor(LIGHTRED);
-		outtextxy(220, 70, "FractalX para DOS versi¢n 1.2");
-		outtextxy(220, 80, "GRAFICADOR DE FRACTALES");
+		outtextxy(220, 70, "FractalX for WinBGI");
+		outtextxy(220, 90, "MANDELBROT'S BEETLE FRACTAL PLOTTER");
 		setcolor(LIGHTGREEN);
-		outtextxy(160, 150, "Programado por: Jos‚ Luis De la Cruz Lazaro");
+		outtextxy(160, 150, "Developed by: Jose Luis De la Cruz Lazaro");
 		setcolor(LIGHTMAGENTA);
-		outtextxy(160, 170, "Universidad Nacional de Ingenier¡a - Lima Per£ - 1999");
+		outtextxy(160, 170, "Universidad Nacional de Ingenieria - Lima Peru - Since 1999");
 		setcolor(YELLOW);
-		outtextxy(160, 190, "Por el momento solo tengo implementado");
-		outtextxy(160, 200, "el escarabajo de Mandelbrot");
+		outtextxy(160, 190, "At the moment I only have implemented");
+		outtextxy(160, 210, "Mandelbrot's beetle");
 		setcolor(WHITE);
-		outtextxy(160, 220, "Pulse cualquier tecla para Salir");
-		getch();*/
+		outtextxy(160, 300, "Press any key to Exit");
+		getch();
 
-		option = 0;
-		mode = 0;
-	}
-	else
-		//if (!Cambiar_Paleta_Fractal(tecla, 3, 2, 1))
-	{
+		Menu(option, mode);
+
+	} else {
+
 		//cleardevice();
 		clrscr();
 		cout << endl << endl;
-		cout << " (1) Diagramado Persiana" << endl << endl;
-		cout << " (2) Diagramado TesseralX" << endl << endl;
-		cout << " Ingrese el tipo de diagramado: ";
+		cout << " (1) Blind plot" << endl << endl;
+		cout << " (2) TesseralX Plot" << endl << endl;
+		cout << " Enter the type of plotting: ";
 		cin >> mode;
 	}
 
@@ -508,7 +516,7 @@ int main()
 
 		cuadricula rect = { 0,0,MAXX-1,MAXY-1 };
 
-		CScreenBitmap scrBitmap(MAXX, MAXY);
+		CScreenBitmap scrBitmap(MAXX, MAXY, true);
 		scrBitmap.setpalette(10, 5, 1);
 
 		do {
@@ -534,7 +542,12 @@ int main()
 			scrBitmap.draw(0,0);
 
 			fin = clock();
-			cout << "\n\n" << double((fin - inicio)) / CLK_TCK << "\nIter: " << iter;
+
+			cout << endl << endl;
+			cout << "xmin,xmax : " << PlanoComplejo.xmin << "," << PlanoComplejo.xmax << endl;
+			cout << "ymin,ymax : " << PlanoComplejo.ymin << "," << PlanoComplejo.ymax << endl;
+			cout << "Elapsed time: " << double((fin - inicio)) / CLK_TCK << " seconds" << endl;
+			cout << "Iterations: " << iter;
 
 			tecla = zoom(PlanoComplejo);
 
@@ -543,7 +556,7 @@ int main()
 				break;
 			case '+':
 			case '-':
-				//Cambiar_Paleta_Fractal(tecla, 3, 2, 1);
+				Change_Fractal_Palette(tecla, 3, 2, 1, scrBitmap);
 				break;
 			}
 		} while (tecla != 27 && tecla!='M');
