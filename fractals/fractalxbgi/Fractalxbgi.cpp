@@ -16,7 +16,7 @@ Developed by:
 
 HISTORY...
 
- >> Version 2 - 12-IV-2024
+ >> Version 2 - 14-IV-2024
 	- Update fractals/fractalxbgi - Porting to VC++ 2017 using winbgi
 	- The menu in text mode is made independent of the functions to
 	  plot the fractal, in such a way as to have the GUI and the view
@@ -41,6 +41,11 @@ HISTORY...
 	- After each plot the coordinates (xmin,xmax) and (ymin, ymax) are shown.
 	  In addition to formatting the elapsed seconds and the number of
 	  iterations displayed
+	- The change parameters option is added, to change the parameters of
+	  maximum divergence, maximum iteration, and initial coordinates of the
+	  corners of the complex plane, this last option is great for loading
+	  a particular area of the mandelbrot beetle that you liked, just knowing
+	  its coordinates
 
 >> Version 1.3 - 02-XI-1999
 	- The Blind plotting mode is added (fuction Mandelbrot1), in such a
@@ -409,7 +414,7 @@ void Mandelbrot2(RegionXY &PC, cuadricula rect, const double& DIVERGE, const uns
 }
 
 
-void Menu(unsigned int& option, unsigned int& mode)
+void Menu(unsigned int& option, unsigned int& mode, RegionXY& PlanoComplejo, double& DIVERGE, unsigned int& ITERMAX )
 {
 	ModoGrafico(0);
 	clrscr();
@@ -435,23 +440,56 @@ void Menu(unsigned int& option, unsigned int& mode)
 		<< "(3) 640x480\n"
 		<< "(4) 800x600\n"
 		<< "(5) 1024x768\n"
-		<< "(6) About the Author\n"
-		<< "(7) Exit\n"
+		<< "(6) Change plotting parameters\n"
+		<< "(7) About the Author\n"
+		<< "(8) Exit\n"
 		<< "\nChoose your resolution: ";
 
 	cin >> option;
 
 
 
-	if (option > 6 || option < 1) {
+	if (option > 7 || option < 1) {
 		option = 0;
 		mode = 0;
 		return; // Salir
 	}
 
 	// mostrar creditos del autor
-	if (option == 6)
-	{
+	if (option == 6){
+
+		clrscr();
+		textcolor(YELLOW);
+		cout << "Change plotting parameters: " << endl;
+		
+		textcolor(WHITE);
+		cout << endl << "Divergence : [current value = " << DIVERGE << "]. Enter new value: ";
+		cin >> DIVERGE;
+		
+		cout << endl <<"Maximum iteration [current value = " << ITERMAX << "] Enter new value: ";
+		cin >> ITERMAX;
+
+		textcolor(LIGHTGRAY);
+		cout << endl << "Example: Coordinates for Lightning-Mandelbrot: (X: Real part, Y: Imaginary part)";
+		cout << endl << "Xmin:-1.19172737578084, Xmax:-1.18215986353386, Ymin: 0.307841264022174, Ymax= 0.298345102426701" <<endl;		
+
+		textcolor(WHITE);
+		cout << endl << "Xmin [current value = " << PlanoComplejo.xmin << "] Enter new value: ";
+		cin >> PlanoComplejo.xmin;
+
+		cout << endl << "Xmax [current value = " << PlanoComplejo.xmax << "] Enter new value: ";
+		cin >> PlanoComplejo.xmax;
+
+		cout << endl << "Ymin [current value = " << PlanoComplejo.ymin << "] Enter new value: ";
+		cin >> PlanoComplejo.ymin;
+
+		cout << endl << "Ymax [current value = " << PlanoComplejo.ymax << "] Enter new value: ";
+		cin >> PlanoComplejo.ymax;
+
+		//PlanoComplejo.ymax = PlanoComplejo.ymin + (PlanoComplejo.xmax - PlanoComplejo.xmin) * 1.3;
+
+
+	}else if (option == 7) {
 		ModoGrafico(5);
 
 		readimagefile("logouni.bmp", 10, 150, 10+130, 150+167);
@@ -470,8 +508,6 @@ void Menu(unsigned int& option, unsigned int& mode)
 		setcolor(WHITE);
 		outtextxy(160, 300, "Press any key to Exit");
 		getch();
-
-		Menu(option, mode);
 
 	} else {
 
@@ -504,7 +540,9 @@ int main()
 	{
 		RegionXY PlanoComplejo = { -3,2,-2,2 };
 
-		Menu(option, mode);
+		do {
+			Menu(option, mode, PlanoComplejo, DIVERGE, ITERMAX);
+		} while (option == 6 || option == 7);
 
 		if (option == 0)
 			break;// Salir
