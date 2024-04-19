@@ -55,39 +55,39 @@
 
 void main()
 {
- int cuadrado[17][17],x,y,n,N;
+	int cuadrado[17][17], x, y, n, N;
 
- //restricción del orden a los impares entre 3 y 17, por motivos
- //de dar mayor facilidad para entender el código
- do{
-  printf( "\nIngrese el orden ( impar entre 3 y 17 ): " );
-  scanf( "%i", &N );
- }while( !(N%2) );
- printf( "\nCuadrado Mágico de orden %ix%i :\n\n", N, N);
+	//restricción del orden a los impares entre 3 y 17, por motivos
+	//de dar mayor facilidad para entender el código
+	do {
+		printf("\nIngrese el orden ( impar entre 3 y 17 ): ");
+		scanf("%i", &N);
+	} while (!(N % 2));
+	printf("\nCuadrado Mágico de orden %ix%i :\n\n", N, N);
 
- //Se inicia los elementos del cuadrado mágico con ceros
- for(x=0;x<N;x++)
-  for(y=0;y<N;y++)
-   cuadrado[x][y]=0;
+	//Se inicia los elementos del cuadrado mágico con ceros
+	for (x = 0; x < N; x++)
+		for (y = 0; y < N; y++)
+			cuadrado[x][y] = 0;
 
- //Se aplica el algoritmo general para obtener cuadrados mágicos
- //de orden impar
- for( x=N/2,y=0,n=1; n<=N*N; ) //se hace N*N iteraciones...
-  if( !cuadrado[x][y] )  //si el elemento seleccionado es cero
-   cuadrado[x][y] = n++, //se inserta un número natural
-   x=lr(x+1,N),          //se incrementa x en 1
-   y=lr(y-1,N);          //se decrementa y en 1
-  else x=lr(x-1,N),      //se decrementa x en 1
-       y=lr(y+2,N);      //se incrementa y en 2
+	//Se aplica el algoritmo general para obtener cuadrados mágicos
+	//de orden impar
+	for (x = N / 2, y = 0, n = 1; n <= N * N; ) //se hace N*N iteraciones...
+		if (!cuadrado[x][y])  //si el elemento seleccionado es cero
+			cuadrado[x][y] = n++, //se inserta un número natural
+			x = lr(x + 1, N),          //se incrementa x en 1
+			y = lr(y - 1, N);          //se decrementa y en 1
+		else x = lr(x - 1, N),      //se decrementa x en 1
+			y = lr(y + 2, N);      //se incrementa y en 2
 
- //se imprime el cuadrado mágico en pantalla
- for(y=0;y<N;y++)
- {
-  printf("\n");
-  for(x=0;x<N;x++)
-   printf("%4i", cuadrado[x][y] );
- }
+	  //se imprime el cuadrado mágico en pantalla
+	for (y = 0; y < N; y++)
+	{
+		printf("\n");
+		for (x = 0; x < N; x++)
+			printf("%4i", cuadrado[x][y]);
+	}
 
- printf("\n\n Suma = %i\n\n", (N*(N*N+1))/2 );//se imprime la suma
+	printf("\n\n Suma = %i\n\n", (N*(N*N + 1)) / 2);//se imprime la suma
 
 }
