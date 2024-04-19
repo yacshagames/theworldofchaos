@@ -1,6 +1,6 @@
 /***********************************************************************
- :::CUADRADOS MAGICOS:::
-  >> Versión 1.0 17-IV-2001
+ :::SUDOKU - CUADRADOS MAGICOS:::
+
  Solución al clásico problema matemático del cuadrado mágico (orden impar).
  Para los que no saben de que trata, se tiene que ubicar los n primeros
  numeros naturales (n impar) en una matriz de nxn de tal forma que la
@@ -35,35 +35,51 @@
    precedente, comenzando así un nuevo camino en la dirección de la
    diagonal.
 
- :::Programado por:::
- José Luis De La Cruz Lázaro
- YACSHA - Software & Desing 2002
-  >> yacsha@elmundodelcaos.tk    
-  >> www.elmundodelcaos.tk -> EL MUNDO DEL CAOS - Unlimited Programming
-  >> www.foros3d.tk  -> Foros de discusión  Flash/ActionScript - C/C++
+Programmed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+ HISTORY...
+
+ >> Version 2 - 19-IV-2024
+	- Update math-and-others\cuadmagi - Porting to VC++ 2017
+
+>> Version 1 - 17-IV-2001
+	- First version for Borland C++ 3.1 and Turbo C 3.0
 
 ***********************************************************************/
 
-
-
 //Códificación basada en el algoritmo anterior
 
-#include <stdio.h>
+#include <iostream>
+
+using namespace std;
 
 //limitar rango ( limita los valores de x al rango [0, N] )
 #define lr( x, N ) ( (x)<0 ? N+(x)%N : ( (x)>=N ? (x)%N : (x) ) )
 
-void main()
+int main()
 {
 	int cuadrado[17][17], x, y, n, N;
 
 	//restricción del orden a los impares entre 3 y 17, por motivos
 	//de dar mayor facilidad para entender el código
 	do {
+
 		printf("\nIngrese el orden ( impar entre 3 y 17 ): ");
-		scanf("%i", &N);
+		cin >> N;
+
 	} while (!(N % 2));
-	printf("\nCuadrado Mágico de orden %ix%i :\n\n", N, N);
+
+	cout << endl << "SUDOKU - Cuadrado Magico de orden "<< N << " x " << N << " :" << endl << endl;
 
 	//Se inicia los elementos del cuadrado mágico con ceros
 	for (x = 0; x < N; x++)
@@ -83,11 +99,13 @@ void main()
 	  //se imprime el cuadrado mágico en pantalla
 	for (y = 0; y < N; y++)
 	{
-		printf("\n");
+		cout << endl;
 		for (x = 0; x < N; x++)
-			printf("%4i", cuadrado[x][y]);
+			//printf("%4i", cuadrado[x][y]);
+			cout << " " << cuadrado[x][y];
 	}
 
-	printf("\n\n Suma = %i\n\n", (N*(N*N + 1)) / 2);//se imprime la suma
+	cout << endl << endl << "Suma = " << (N*(N*N + 1)) / 2 << endl << endl;
 
+	return 1;
 }
