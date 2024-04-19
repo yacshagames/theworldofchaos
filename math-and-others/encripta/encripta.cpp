@@ -58,87 +58,87 @@ PROXIMOS PROYECTOS
 #include "conio.h"
 #include "stdio.h"
 
-int Primo[56]={1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
+int Primo[56] = { 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
 		31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
 		79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131,
 		137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191,
 		193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257 };
 
-int Pi( int x )
+int Pi(int x)
 {
- int i=0;
- while( x>=Primo[i] )i++;
- return i-1;
+	int i = 0;
+	while (x >= Primo[i])i++;
+	return i - 1;
 }
 
 
 int main()
 {
-clrscr();
+	clrscr();
 
-int opcion;
+	int opcion;
 
-char ruta1[255],ruta2[255],*p;
-
-
-cout<<"\tENCRIPTADOR NATURAL 1.0\n\n";
-cout<<"\t\t(1) CODIFICACION\n\n";
-cout<<"\t\t(2) DECODIFICACION\n\n";
-cout<<"\t\t(3) Salir\n\n";
-cout<<"\t\tElija una opci¢n: ";
-cin>>opcion;
-
-clrscr();
-if(opcion==3)return 0;
-if(opcion==1)cout<<"CODIFICACION:\n\n";
-if(opcion==2)cout<<"DECODIFICACION:\n\n";
-cout<<"\tIngrese la ruta del archivo fuente:\n>>\t";
-cin>>ruta1;
-cout<<"\tIngrese la ruta del archivo destino:\n>>\t";
-cin>>ruta2;
+	char ruta1[255], ruta2[255], *p;
 
 
-//Abre el archivo para lectura
-FILE *Alec,*Aesc;
-p=ruta1;
-Alec=fopen(p,"r");
-p=ruta2;
-Aesc=fopen(p,"w");
+	cout << "\tENCRIPTADOR NATURAL 1.0\n\n";
+	cout << "\t\t(1) CODIFICACION\n\n";
+	cout << "\t\t(2) DECODIFICACION\n\n";
+	cout << "\t\t(3) Salir\n\n";
+	cout << "\t\tElija una opci¢n: ";
+	cin >> opcion;
+
+	clrscr();
+	if (opcion == 3)return 0;
+	if (opcion == 1)cout << "CODIFICACION:\n\n";
+	if (opcion == 2)cout << "DECODIFICACION:\n\n";
+	cout << "\tIngrese la ruta del archivo fuente:\n>>\t";
+	cin >> ruta1;
+	cout << "\tIngrese la ruta del archivo destino:\n>>\t";
+	cin >> ruta2;
 
 
-if(Alec==NULL)
-{
- cout<<"\n\n\t­­­El archivo fuente no Existe!!!";
- return 1;
-}
+	//Abre el archivo para lectura
+	FILE *Alec, *Aesc;
+	p = ruta1;
+	Alec = fopen(p, "r");
+	p = ruta2;
+	Aesc = fopen(p, "w");
 
 
-unsigned char arg,res,caracter;
-
-if( opcion==1 )
- //CODIFICACION
- while(fscanf(Alec,"%c",&caracter)!=EOF)
- {
-  arg=Pi(caracter);
-  res= caracter-Primo[arg];
-  fprintf(Aesc,"%c%c",32+arg,32+res);
- }
-
-if( opcion==2 )
- //DECODIFICACION
- while( fscanf(Alec,"%c%c",&arg,&res)!=EOF )
- {
-  arg-=32;
-  res-=32;
-  caracter= Primo[arg]+res;
-  fprintf(Aesc,"%c",caracter);
- }
-
-fcloseall();
-gotoxy(30,12);cout<<"PROCESO TERMINADO";
-
-getch();
+	if (Alec == NULL)
+	{
+		cout << "\n\n\t­­­El archivo fuente no Existe!!!";
+		return 1;
+	}
 
 
-return 0;
+	unsigned char arg, res, caracter;
+
+	if (opcion == 1)
+		//CODIFICACION
+		while (fscanf(Alec, "%c", &caracter) != EOF)
+		{
+			arg = Pi(caracter);
+			res = caracter - Primo[arg];
+			fprintf(Aesc, "%c%c", 32 + arg, 32 + res);
+		}
+
+	if (opcion == 2)
+		//DECODIFICACION
+		while (fscanf(Alec, "%c%c", &arg, &res) != EOF)
+		{
+			arg -= 32;
+			res -= 32;
+			caracter = Primo[arg] + res;
+			fprintf(Aesc, "%c", caracter);
+		}
+
+	fcloseall();
+	gotoxy(30, 12); cout << "PROCESO TERMINADO";
+
+	getch();
+
+
+	return 0;
 }
