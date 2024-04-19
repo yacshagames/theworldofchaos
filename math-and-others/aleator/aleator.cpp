@@ -20,7 +20,7 @@ Programmed by:
 
  HISTORY...
 
- >> Version 2 - 27-III-2024
+ >> Version 2 - 19-IV-2024
 	- Update math-and-others\aleator - Porting to VC++ 2017 using winbgi
 
 >> Version 1 - 25-V-2001
