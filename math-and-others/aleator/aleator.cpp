@@ -1,24 +1,39 @@
 /***********************************************************************
  ::: DEFINIENDO NUESTRA PROPIA FUNCION ALEATORIA :::
-  >> Versión 1.0 25-V-2001
- Tres formas diferentes de definir una función que retorne números
- aleatorios, al mismo estilo de la función random. Es una forma
- excelente de definir aleatorios si su compilador no dispone de
- la función random (no ANSI C ).
 
- :::Programado por:::
- José Luis De La Cruz Lázaro
- YACSHA - Software & Desing 2002
-  >> yacsha@elmundodelcaos.tk    
-  >> www.elmundodelcaos.tk -> EL MUNDO DEL CAOS - Unlimited Programming
-  >> www.foros3d.tk  -> Foros de discusión  Flash/ActionScript - C/C++
+Tres formas diferentes de definir una función que retorne números
+aleatorios, al mismo estilo de la función random. Es una forma
+excelente de definir aleatorios si su compilador no dispone de
+la función random (no ANSI C )
+
+Programmed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+ HISTORY...
+
+ >> Version 2 - 27-III-2024
+	- Update math-and-others\aleator - Porting to VC++ 2017 using winbgi
+
+>> Version 1 - 25-V-2001
+	- First version for Borland C++ 3.1 and Turbo C 3.0
 
 ***********************************************************************/
 
-#include <iostream.h>
+#include <iostream>
 #include <time.h>
 
-void main()
+using namespace std;
+
+int main()
 {
  //1ra forma ( la que sugieres )
 
@@ -54,4 +69,5 @@ void main()
 
  cout<<"\nAleatorio 3: "<<N;
 
+ return 1;
 }
