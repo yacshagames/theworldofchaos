@@ -35,39 +35,39 @@ using namespace std;
 
 int main()
 {
- //1ra forma ( la que sugieres )
+	//1ra forma ( Sugerida por un seguidor de The World of Chaos )
 
- long N, No=2254, X;
- do
-  N = (No++,       //Incrementamos la semilla
-       N=No*No,   // elevamos N al cuadrado
-       X = N/100L, // quitamos las 2 £ltimas cifras
-       X - (X/10000L)*10000L); //quitamos las 2 primeras cifras
- while( N<1000); //mientras N<1000
+	long N, No = 2254, X;
+	do
+		N = (No++,       //Incrementamos la semilla
+			N = No * No,   // elevamos N al cuadrado
+			X = N / 100L, // quitamos las 2 £ltimas cifras
+			X - (X / 10000L) * 10000L); //quitamos las 2 primeras cifras
+	while (N < 1000); //mientras N<1000
 
- cout<<"\nAleatorio 1: "<<N;
+	cout << "\nAleatorio 1: " << N;
 
- //2da forma (similar al algoritmo de random )
- //(genera un pseudoaletorio en funci¢n del tiempo actual,
- // comprendido entre 1000 y 9999
+	//2da forma (similar al algoritmo de random )
+	//(genera un pseudoaletorio en funcion del tiempo actual,
+	// comprendido entre 1000 y 9999
 
-  N = 1000 + (long) time(NULL)  % 9000;
+	N = 1000 + (long)time(NULL) % 9000;
 
- cout<<"\nAleatorio 2: "<<N;
+	cout << "\nAleatorio 2: " << N;
 
- //3ra forma (la que mas me gusta, a pesar de ser mas lenta)
- //( Una combinaci¢n de ambos m‚todos )
+	//3ra forma (la que mas me gusta, a pesar de ser mas lenta)
+	//( Una combinacion de ambos metodos )
 
- No = 1000 + (long) time(NULL)  % 9000; //semilla
+	No = 1000 + (long)time(NULL) % 9000; //semilla
 
- do
-  N = (No++,       //Incrementamos la semilla
-       N=No*No,   // elevamos N al cuadrado
-       X = N/100L, // quitamos las 2 £ltimas cifras
-       X - (X/10000L)*10000L); //quitamos las 2 primeras cifras
- while( N<1000); //mientras N<1000
+	do
+		N = (No++,       //Incrementamos la semilla
+			N = No * No,   // elevamos N al cuadrado
+			X = N / 100L, // quitamos las 2 ultimas cifras
+			X - (X / 10000L) * 10000L); //quitamos las 2 primeras cifras
+	while (N < 1000); //mientras N<1000
 
- cout<<"\nAleatorio 3: "<<N;
+	cout << "\nAleatorio 3: " << N;
 
- return 1;
+	return 1;
 }
