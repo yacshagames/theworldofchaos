@@ -1,10 +1,5 @@
 /*************************************************************************
-JOSE LUIS DE LA CRUZ LAZARO   UNI-FIEE
-ramondc@hotmail.com
-
-ENCRIPTADOR GAUSSIANO
-
-VERSION 1.0 10/06/99
+:::ENCRIPTADOR GAUSSIANO:::
 
 Programa que encripta un documento de texto ACSII, utilizando la funcion
 Gaussiana Pi(x) y la funcion Primo(n)
@@ -13,7 +8,7 @@ Donde:
 
 * Pi(x) es el numero de primos menor o igual que un numero positivo x
   Ejm Pi(4)= 2 ; Pi(20)=8
-* Primo(n) es el n-‚simo primo contado a partir desde 1
+* Primo(n) es el n-esimo primo contado a partir desde 1
   Ejm Primo(11)=29
 
 Algoritmo:
@@ -52,11 +47,32 @@ PROXIMOS PROYECTOS
  ARCHIVO DESTINO ENCRIPTADO A LAS 8:01am, A PESAR DE QUE LAS 2
  ENCRIPTACIONES PROVIENEN DE UN MISMO ARCHIVO FUENTE...
 
+ Programmed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+ HISTORY...
+
+ >> Version 2 - 19-IV-2024
+	- Update math-and-others\encripta - Porting to VC++ 2017 using winbgi
+	- Using strcpy_s and strcat_s instead old and not secure strcpy and strcat
+
+>> Version 1 - 10-VI-1999
+	- First version for Borland C++ 3.1 and Turbo C 3.0
+
 *************************************************************************/
 
-#include "iostream.h"
-#include "conio.h"
-#include "stdio.h"
+#include <iostream>
+
+using namespace std;
 
 int Primo[56] = { 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
 		31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
@@ -74,8 +90,6 @@ int Pi(int x)
 
 int main()
 {
-	clrscr();
-
 	int opcion;
 
 	char ruta1[255], ruta2[255], *p;
@@ -88,7 +102,6 @@ int main()
 	cout << "\t\tElija una opci¢n: ";
 	cin >> opcion;
 
-	clrscr();
 	if (opcion == 3)return 0;
 	if (opcion == 1)cout << "CODIFICACION:\n\n";
 	if (opcion == 2)cout << "DECODIFICACION:\n\n";
@@ -101,9 +114,9 @@ int main()
 	//Abre el archivo para lectura
 	FILE *Alec, *Aesc;
 	p = ruta1;
-	Alec = fopen(p, "r");
+	fopen_s(&Alec, p, "r");
 	p = ruta2;
-	Aesc = fopen(p, "w");
+	fopen_s(&Aesc , p, "w");
 
 
 	if (Alec == NULL)
@@ -117,28 +130,27 @@ int main()
 
 	if (opcion == 1)
 		//CODIFICACION
-		while (fscanf(Alec, "%c", &caracter) != EOF)
+		while (fscanf_s(Alec, "%c", &caracter) != EOF)
 		{
 			arg = Pi(caracter);
 			res = caracter - Primo[arg];
-			fprintf(Aesc, "%c%c", 32 + arg, 32 + res);
+			fprintf_s(Aesc, "%c%c", 32 + arg, 32 + res);
 		}
 
 	if (opcion == 2)
 		//DECODIFICACION
-		while (fscanf(Alec, "%c%c", &arg, &res) != EOF)
+		while (fscanf_s(Alec, "%c%c", &arg, &res) != EOF)
 		{
 			arg -= 32;
 			res -= 32;
 			caracter = Primo[arg] + res;
-			fprintf(Aesc, "%c", caracter);
+			fprintf_s(Aesc, "%c", caracter);
 		}
 
-	fcloseall();
-	gotoxy(30, 12); cout << "PROCESO TERMINADO";
+	fclose(Alec);
+	fclose(Aesc);
+	
+	cout << "PROCESO TERMINADO";
 
-	getch();
-
-
-	return 0;
+	return 1;
 }
