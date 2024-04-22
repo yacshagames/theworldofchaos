@@ -60,6 +60,7 @@ Programmed by:
 //Códificación basada en el algoritmo anterior
 
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -102,7 +103,7 @@ int main()
 		cout << endl;
 		for (x = 0; x < N; x++)
 			//printf("%4i", cuadrado[x][y]);
-			cout << " " << cuadrado[x][y];
+			cout << setfill(' ') << setw(4) << cuadrado[x][y];
 	}
 
 	cout << endl << endl << "Suma = " << (N*(N*N + 1)) / 2 << endl << endl;
