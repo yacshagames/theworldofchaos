@@ -49,6 +49,10 @@ Programmed by:
 
  HISTORY...
 
+  >> Version 3 - 21-IV-2024
+	- Use setfill(' ') setw(4) in cout, to replace the old printf("%4d")
+	  and display the matrices arranged symmetrically by rows and columns
+
  >> Version 2 - 19-IV-2024
 	- Update math-and-others\cuadmagi - Porting to VC++ 2017
 
