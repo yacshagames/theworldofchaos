@@ -38,7 +38,7 @@
 
   HISTORY:
 
- >> Version 3 - 04-IV-2024
+ >> Version 3 - 07-IV-2024
 	- Change project name from RSF.H to FormulaParser.h
 	- Separate files in to FormulaParser.h and FormulaParser.cpp
 	- The RSF_COMPLEX definition is added that allows defining whether the
@@ -51,6 +51,9 @@
 	  std::algorithm libraries.
 	- An example code on how to use the FormulaParser library is added to
 	  the credits of FormulaParser.h
+	- The ExampleOfUse method is added to show example code, at runtime, on
+	  how to use the FormulaParser library. Very useful to inform the user
+	  of how to enter the formulation of the mathematical function
 
  >> Version 2 - 24-III-2024
 	- Update graphics/RSF - Porting to VC++ 2017 using winbgi
@@ -99,21 +102,7 @@ using std::vector;
 
 class CFormulaParser
 {
-private:
-	
-	string Variables;
-	string Formula;
-	char c;
-	unsigned int p, ruptura;
-	double FF, VarReal[3];
-
-	static const string Numeros;
-	static const vector<string> funcion;
-	static const double M_PI;
-
 public:
-
-	int error;
 	//constructor
 	CFormulaParser(const string& formula, const string& vars);
 	~CFormulaParser();
@@ -134,7 +123,25 @@ private:
 	//double Entrar_Funcion( char Cadena[] );
 public:
 	double f(double x, double y = 0, double z = 0);
+	
+	// ExampleOfUse 
+	string ExampleOfUse();
 
+private:
+
+	string Variables;
+	string Formula;
+	char c;
+	unsigned int p, ruptura;
+	double FF, VarReal[3];
+
+	static const string Numeros;
+	static const vector<string> funcion;
+	static const double M_PI;
+
+public:
+
+	int error;
 
 	/*
 	void f( char Cadena[], char Vars[],

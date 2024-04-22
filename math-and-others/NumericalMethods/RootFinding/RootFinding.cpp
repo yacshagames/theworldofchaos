@@ -40,6 +40,8 @@ HISTORY...
 	  be able to customize the f(x) equation that will be solved by
 	  the numerical methods implemented
 	- Update version history
+	- Added ExampleOfUse to the "Enter f(x) function" option, to inform
+	  the user how to enter the formulation of the mathematical function
 
   >> Version 1 - 30-XI-1999
 	- First version for Borland C++ 3.1 and Turbo C 3.0
@@ -414,6 +416,10 @@ void CRootFinding::InitFunction()
 	char subOption = toupper(cgetch());
 
 	if (subOption == 'Y') {
+		textcolor(LIGHTCYAN);
+		cout << endl << endl << fpFX.ExampleOfUse() << endl;
+
+		textcolor(WHITE);
 		cout << "\n\tEnter f(x) = ";
 		cin >> formulaFX;
 	}

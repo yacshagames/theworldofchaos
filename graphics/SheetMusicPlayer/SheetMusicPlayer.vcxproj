@@ -18,11 +18,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SheetMusicPlayer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="conio.h" />
+    <ClInclude Include="graphics.h" />
+    <ClInclude Include="play2wav.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{1E9C4B9D-8AA2-490D-A92F-163CA0868B47}</ProjectGuid>
+    <ProjectGuid>{E9E3CBB9-2406-49E3-91B5-3B53BD59BC2B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>dmandel</RootNamespace>
+    <RootNamespace>SheetMusicPlayer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -104,7 +112,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -141,7 +149,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -152,17 +160,6 @@
       <AdditionalDependencies>$(Platform)\$(Configuration)\bgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="complex.cpp" />
-    <ClCompile Include="screenbitmap.cpp" />
-    <ClCompile Include="MANDEL.CPP" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="complex.h" />
-    <ClInclude Include="conio.h" />
-    <ClInclude Include="graphics.h" />
-    <ClInclude Include="screenbitmap.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

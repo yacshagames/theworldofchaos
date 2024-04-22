@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{1E9C4B9D-8AA2-490D-A92F-163CA0868B47}</ProjectGuid>
+    <ProjectGuid>{934ED605-5EB4-47BE-9C1C-F32BFE99ADE4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>dmandel</RootNamespace>
+    <RootNamespace>fractalxbgi</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -154,13 +154,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="complex.cpp" />
+    <ClCompile Include="fractalxbgi.cpp" />
     <ClCompile Include="screenbitmap.cpp" />
-    <ClCompile Include="MANDEL.CPP" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex.h" />
     <ClInclude Include="conio.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="mousebgi.h" />
     <ClInclude Include="screenbitmap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

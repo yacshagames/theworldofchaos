@@ -15,27 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MANDEL.CPP">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="complex.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="screenbitmap.cpp">
+    <ClCompile Include="koch.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="complex.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="graphics.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="conio.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="screenbitmap.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

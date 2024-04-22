@@ -268,6 +268,42 @@ double CFormulaParser::f(double x, double y, double z)
 	return Calcular_formula();
 }
 
+string CFormulaParser::ExampleOfUse()
+{
+	unsigned int nVariables = static_cast<unsigned int>(Variables.size());
+
+	string vars= Variables; // Variables in lowercase
+	// To uppercase
+	std::transform(vars.begin(), vars.end(), vars.begin(), ::tolower);
+
+	string formula, varlist;
+
+	switch (nVariables) {
+	default:
+		varlist = vars[0];
+		// formula = 1-(x^2*sin(x)/(2*x^2+3*x+1)
+		formula = string("1-(") + vars[0] + "^2*sin(" + vars[0] + ")/(2*" + vars[0] + "^2+3*" + vars[0] + "+1)";
+		break;
+	case 2:
+		varlist = string(1,vars[0]) + ","+ vars[1];
+		// formula = 1-(y^2*sin(x)/(2*x^2+3*y+1)
+		formula = string("1-(") + vars[1] + "^2*sin(" + vars[0] + ")/(2*" + vars[0] + "^2+3*" + vars[1] + "+1)";
+		break;
+	case 3:
+		varlist = string(1, vars[0]) + "," + vars[1] + string(",") + vars[2];
+		// formula = 1-(y^2*sin(x)/(2*z^2+3*y+1)
+		formula = string("1-(") + vars[1] + "^2*sin(" + vars[0] + ")/(2*" + vars[3] + "^2+3*" + vars[1] + "+1)";
+		break;
+	}
+
+	return 
+		"Example Usage : A f("+varlist+") function can be written as" +
+		"\n     " + formula +
+		"\nRecognized operators : + - * / ^" +
+		"\nRecognized math funtions : sin cos log tan exp sqr" +
+		"\nMore info en FormulaParser.h library --> by Yacsha Software";
+}
+
 /*
   void CFuncad::f( char Cadena[], char Vars[],
 		double var1 = 0 , double var2 = 0, double var3 = 0 )
