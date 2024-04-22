@@ -66,7 +66,9 @@ Programmed by:
 #include <iostream>
 #include <iomanip>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::cin;
 
 //limitar rango ( limita los valores de x al rango [0, N] )
 #define lr( x, N ) ( (x)<0 ? N+(x)%N : ( (x)>=N ? (x)%N : (x) ) )
@@ -79,7 +81,7 @@ int main()
 	//de dar mayor facilidad para entender el código
 	do {
 
-		printf("\nIngrese el orden ( impar entre 3 y 17 ): ");
+		cout << "\nIngrese el orden ( impar entre 3 y 17 ): ";
 		cin >> N;
 
 	} while (!(N % 2));
@@ -107,7 +109,7 @@ int main()
 		cout << endl;
 		for (x = 0; x < N; x++)
 			//printf("%4i", cuadrado[x][y]);
-			cout << setfill(' ') << setw(4) << cuadrado[x][y];
+			cout << std::setfill(' ') << std::setw(4) << cuadrado[x][y];
 	}
 
 	cout << endl << endl << "Suma = " << (N*(N*N + 1)) / 2 << endl << endl;
