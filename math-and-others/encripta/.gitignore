@@ -1,13 +1,14 @@
 x64/Debug/*
 !x64/Debug/*.dll
 !x64/Debug/*.lib
+!x64/Release/*.txt
 x64/Release/*
 !x64/Release/*.dll
 !x64/Release/*.lib
+!x64/Release/*.txt
 Debug/*
 !Debug/*.dll
 !Debug/*.lib
 Release/*
 !Release/*.dll
 !Release/*.lib
-!Release/*.txt

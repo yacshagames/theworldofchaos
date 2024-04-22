@@ -61,6 +61,10 @@ PROXIMOS PROYECTOS
 
  HISTORY...
 
+ >> Version 3 - 22-IV-2024
+	- The modern C++ ifstream and ofstream classes are used, instead
+	  of the old C language FILE library, to read and write binary files.
+
  >> Version 2 - 19-IV-2024
 	- Update math-and-others\encripta - Porting to VC++ 2017 using winbgi
 	- Using strcpy_s and strcat_s instead old and not secure strcpy and strcat
@@ -71,8 +75,13 @@ PROXIMOS PROYECTOS
 *************************************************************************/
 
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::cin;
 
 int Primo[56] = { 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
 		31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
@@ -92,65 +101,86 @@ int main()
 {
 	int opcion;
 
-	char ruta1[255], ruta2[255], *p;
+	std::string ruta1, ruta2;
 
-
-	cout << "\tENCRIPTADOR NATURAL 1.0\n\n";
-	cout << "\t\t(1) CODIFICACION\n\n";
-	cout << "\t\t(2) DECODIFICACION\n\n";
-	cout << "\t\t(3) Salir\n\n";
-	cout << "\t\tElija una opci¢n: ";
+	cout << "ENCRIPTADOR NATURAL 1.0\n\n";
+	cout << "\t(1) CODIFICACION\n\n";
+	cout << "\t(2) DECODIFICACION\n\n";
+	cout << "\t(3) Salir\n\n";
+	cout << "\tElija una opcion: ";
 	cin >> opcion;
 
-	if (opcion == 3)return 0;
-	if (opcion == 1)cout << "CODIFICACION:\n\n";
-	if (opcion == 2)cout << "DECODIFICACION:\n\n";
-	cout << "\tIngrese la ruta del archivo fuente:\n>>\t";
+	if (opcion == 3)
+		return 0;
+
+	cout << endl;
+
+	if (opcion == 1)
+		cout << "\tCODIFICACION:\n\n";
+
+	if (opcion == 2)
+		cout << "\tDECODIFICACION:\n\n";
+
+	cout << "\tIngrese la ruta del archivo fuente:\n\t>> ";
 	cin >> ruta1;
-	cout << "\tIngrese la ruta del archivo destino:\n>>\t";
+
+	cout << "\tIngrese la ruta del archivo destino:\n\t>> ";
 	cin >> ruta2;
 
 
 	//Abre el archivo para lectura
-	FILE *Alec, *Aesc;
-	p = ruta1;
-	fopen_s(&Alec, p, "r");
-	p = ruta2;
-	fopen_s(&Aesc , p, "w");
+	std::ifstream Alec(ruta1, std::ios::binary);
+	std::ofstream Aesc(ruta2, std::ios::binary);
 
-
-	if (Alec == NULL)
+	if (Alec.is_open()==false)
 	{
-		cout << "\n\n\t­­­El archivo fuente no Existe!!!";
+		cout << "\n\n\tEl archivo fuente no Existe!!!";
 		return 1;
 	}
 
+	if (Aesc.is_open()==false)
+	{
+		cout << "\n\n\tNo se pudo crear el archivo destino!!!";
+		return 1;
+	}
 
-	unsigned char arg, res, caracter;
+	// Copia el archivo de lectura en un buffer
+	std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(Alec), {});
+
+	char arg, res, caracter;
 
 	if (opcion == 1)
 		//CODIFICACION
-		while (fscanf_s(Alec, "%c", &caracter) != EOF)
+		for( auto& caracter : buffer)
 		{
 			arg = Pi(caracter);
-			res = caracter - Primo[arg];
-			fprintf_s(Aesc, "%c%c", 32 + arg, 32 + res);
+			res = caracter - Primo[arg] + 32;
+			arg += 32;
+			// Escribe arg y res en Aes
+			Aesc.write(&arg, 1);
+			Aesc.write(&res, 1);
 		}
 
-	if (opcion == 2)
+	if (opcion == 2) {
 		//DECODIFICACION
-		while (fscanf_s(Alec, "%c%c", &arg, &res) != EOF)
-		{
-			arg -= 32;
-			res -= 32;
-			caracter = Primo[arg] + res;
-			fprintf_s(Aesc, "%c", caracter);
-		}
+		if (buffer.empty()==false) {
+			unsigned int i, size = static_cast<unsigned int>(buffer.size()) - 1;
+			for (i = 0; i < size; i += 2)
+			{
+				arg = buffer[i] - 32;
+				res = buffer[i + 1] - 32;
+				caracter = Primo[arg] + res;
 
-	fclose(Alec);
-	fclose(Aesc);
+				// Escribe caracter en Aes
+				Aesc.write(&caracter, 1);
+			}
+		}
+	}
+
+	Alec.close();
+	Aesc.close();
 	
-	cout << "PROCESO TERMINADO";
+	cout << endl << "PROCESO TERMINADO" << endl;
 
 	return 1;
 }
