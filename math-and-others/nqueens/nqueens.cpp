@@ -25,40 +25,47 @@ NOVEDADES:
 
 #include <iostream>
 #include <iomanip>
+#include <vector>
+#include "AddOns.h"
 
 using std::cout;
 using std::cin;
 
-int pos[15], solucion = 1;
+std::vector<int> pos;
+std::vector<std::vector<int>> vSolutions;
 
 //Halla una posicion donde ninguna reina se ataque
-int pos_sin_ataque(int &N)
+int pos_sin_ataque(const unsigned int &N)
 {
 	for (int i = 0; i < N - 1; i++)
 		for (int r = i + 1; r < N; r++)
 		{
-			if (i == r || pos[i] == pos[r]) return 0;
-			if (abs(i - r) == abs(pos[i] - pos[r])) return 0;
+			if (i == r || pos[i] == pos[r])
+				return 0;
+
+			if (std::abs(i - r) == std::abs(pos[i] - pos[r]))
+				return 0;
 		}
 	return 1;
 }
 
 //Existe una solucion y se la muestra en pantalla
-void Mostrar_Solucion(int &N)
+void Mostrar_Solucion(const unsigned int& solution, const std::vector<int>& pos_solution)
 {
-	int x, y;
-	cout << std::endl << std::endl << "Solution " << solucion++ << ":" << std::endl;
+	unsigned int x, y, N = static_cast<unsigned int>(pos_solution.size());
+
+	cout << std::endl << std::endl << "Solution " << solution << ":" << std::endl;
 
 
 	for (x = 0; x < N; x++)
 	{
 		//se muestra la posicion de las reinas
-		cout << "fil(" << x + 1 << "),col(" << pos[x] + 1 << ") ";
+		cout << "fil(" << x + 1 << "),col(" << pos_solution[x] + 1 << ") ";
 
 		for (y = 0; y < N; y++) {
 			//se muestra los casilleros del tablero
 			// 0 si está vacío ó * si lleva una reina
-			cout << std::setfill(' ') << std::setw(2) << (y == pos[x] ? "*" : "0");
+			cout << std::setfill(' ') << std::setw(2) << (y == pos_solution[x] ? "*" : "0");
 		}
 
 		cout << std::endl;
@@ -66,19 +73,20 @@ void Mostrar_Solucion(int &N)
 	}
 }
 
-int norepet(int &n)
+int norepet(const int &n)
 {
 	for (int r = 0; r < n - 1; r++)
 		for (int s = r + 1; s < n; s++)
-			if (pos[r] == pos[s]) return 0;
+			if (pos[r] == pos[s])
+				return 0;
 
 	return 1;
 }
 
 //Calcula las permutaciones
-void Nreinas(int &N, int iter)
+void Nreinas(const unsigned int &N, const unsigned int& iter)
 {
-	int k, i;
+	unsigned int k, i;
 
 	for (i = 0; i < N; i++)
 	{
@@ -86,22 +94,25 @@ void Nreinas(int &N, int iter)
 
 		if (norepet(iter)) //acelerador #1 de la permutacion
 		{
-			if (iter < N - 1) Nreinas(N, iter + 1);
+			if (iter < N - 1)
+				Nreinas(N, iter + 1);
 			else
 			{
 				if (norepet(N)) //acelerador #2 de la permutacion
-					if (pos_sin_ataque(N)) Mostrar_Solucion(N);
+					if (pos_sin_ataque(N)) {
+						vSolutions.push_back(pos);
+						//Mostrar_Solucion(N);
+					}
 			}
 		}
 	}
 }
 
 
-void main()
+int main()
 {
+	unsigned int i, N, num_solutions;
 
-
-	int N;
 	cout << ":: N-ROOTS ::" << std::endl << std::endl;
 	cout << "Enter the number of queens: ";
 	cin >> N;
@@ -109,7 +120,27 @@ void main()
 	cout << std::endl << std::endl;
 	cout << N << "x" << N << " Chessboard" << std::endl;
 	
+	pos.resize(N);
+	
+	AddOns::chronoStart(); // Init chronometer	
+	
 	Nreinas(N, 0);
+	
+	AddOns::chronoEnd(); // End chronometer and show elapsed time
+
+	num_solutions = static_cast<unsigned int>(vSolutions.size());
+	cout << num_solutions << " solutions found." << std::endl << std::endl;
+
+	unsigned int p;
+	cout << "Enter 1 to show solutions or 0 to exit: ";
+	cin >> p;
+
+	if (p == 0)
+		return 1;
+
+	// Show all solutions
+	for (i = 0; i < num_solutions;i++) 
+		Mostrar_Solucion(i + 1, vSolutions[i]);
 
 	/*************************************************
 	NUMERO DE SOLUCIONES HASTA N=9
@@ -121,4 +152,6 @@ void main()
 		 9 	     352
 		 10				****me cansé de ver tantas****
 	**************************************************/
+
+	return 1;
 }
