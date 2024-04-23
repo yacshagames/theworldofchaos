@@ -22,9 +22,12 @@ NOVEDADES:
  ahora lo hace en 52 segundos (sin pausas)
 
 *****************************************************************************/
-#include"fstream.h"
-#include"conio.h"
-#include"math.h"
+
+#include <iostream>
+#include <iomanip>
+
+using std::cout;
+using std::cin;
 
 int pos[15], solucion = 1;
 
@@ -44,28 +47,23 @@ int pos_sin_ataque(int &N)
 void Mostrar_Solucion(int &N)
 {
 	int x, y;
-	clrscr();
-	cout << "***NReinas Versi¢n 1.9***\n\nTablero de " << N << "*" << N;
-	cout << "\n\nSoluci¢n " << solucion++ << ":";
+	cout << std::endl << std::endl << "Solution " << solucion++ << ":" << std::endl;
+
 
 	for (x = 0; x < N; x++)
 	{
 		//se muestra la posicion de las reinas
-		gotoxy(1, x + 7);
-		cout << "fila: " << x + 1 << " col: " << pos[x] + 1 << "\n";
-		//se muestra los casilleros vacios
-		for (y = 0; y < N; y++)
-		{
-			gotoxy(20 + 2 * y, 7 + x);
-			cout << "0";
+		cout << "fil(" << x + 1 << "),col(" << pos[x] + 1 << ") ";
+
+		for (y = 0; y < N; y++) {
+			//se muestra los casilleros del tablero
+			// 0 si está vacío ó * si lleva una reina
+			cout << std::setfill(' ') << std::setw(2) << (y == pos[x] ? "*" : "0");
 		}
-		//se muestra casilleros con una reina
-		gotoxy(20 + 2 * pos[x], 7 + x);
-		cout << "*";
+
+		cout << std::endl;
+
 	}
-	gotoxy(1, 22);
-	cout << "Presione cualquier tecla para mostrar la siguiente soluci¢n...";
-	getch();
 }
 
 int norepet(int &n)
@@ -102,22 +100,25 @@ void Nreinas(int &N, int iter)
 void main()
 {
 
-	clrscr();
 
 	int N;
-	cout << "***NReinas Versi¢n 1.9***\n\nIngrese el n£mero de reinas: ";
+	cout << ":: N-ROOTS ::" << std::endl << std::endl;
+	cout << "Enter the number of queens: ";
 	cin >> N;
 
+	cout << std::endl << std::endl;
+	cout << N << "x" << N << " Chessboard" << std::endl;
+	
 	Nreinas(N, 0);
 
-	/*******************************************
+	/*************************************************
 	NUMERO DE SOLUCIONES HASTA N=9
 	#N (Reinas)  #Soluciones
 		 4       2
 		 5	     10
 		 7 	     40
-		 8	     92    *****La m s solicitada****
+		 8	     92		****La más solicitada****
 		 9 	     352
-		 10      ****me canse de ver tantas****
-	*********************************************/
+		 10				****me cansé de ver tantas****
+	**************************************************/
 }
