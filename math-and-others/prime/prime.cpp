@@ -1,35 +1,93 @@
 /***********************************************************************
- ::: NUMERO PRIMO :::
-  >> Versión 1.0 17-IV-2001
- Programa que determina si un número ingresado es un número primo.
+ ::: PRIME NUMBER - NUMERO PRIMO :::
+  
+Program that determines if an entered number is a prime number.
 
- :::Programado por:::
- José Luis De La Cruz Lázaro
- YACSHA - Software & Desing 2002
-  >> yacsha@elmundodelcaos.tk
-  >> www.elmundodelcaos.tk -> EL MUNDO DEL CAOS - Unlimited Programming
-  >> www.foros3d.tk  -> Foros de discusión  Flash/ActionScript - C/C++
+Programa que determina si un número ingresado es un número primo.
+
+Programmed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+ HISTORY...
+
+ >> Version 2 - 24-IV-2024
+	- Update math-and-others\prime - Porting to VC++ 2017
+	- Update code to C++17
+	- To determine the prime number the modified Eratosthenes Algorithm
+	  is now used. Only go through odd numbers to speed up the calculation
+	- It works with unsigned long long values, which allows the program
+	  to work with natural numbers less than or equal to 18446744073709551615
+	- The program GUI informs if the number entered is greater than the
+	  maximum supported value
+	- If the number entered is not prime, the first divisor found is
+	  displayed.
+
+ >> Version 1.0 - 17-IV-2001
+	- First version for Borland C++ 3.1 and Turbo C 3.0
 
 ***********************************************************************/
 
-#include <iostream.h> //cout, cin
-#include <math.h>
+#include <iostream>
+#include <limits>
 
-void main()
+using std::cout;
+using std::cin;
+
+int main()
 {
-	int N, k, raiz;
+	unsigned long long N, k=0, sqroot, first_divisor;
 
-	cout << "Ingrese un n£mero: ";
-	cin >> N;
+	cout << "Enter a natural number: ";
+	if (!(cin >> N)) {
+		cout << std::endl << "The value entered must be less than " 
+			 << std::numeric_limits<unsigned long long>::max() << std::endl;
+		return 2;
+	}
 
-	raiz = (int)sqrt(N);
 
-	// N ser  un primo, si solo es divisible por N
-	// o por la unidad.
-	for (k = 2; N%k && k <= raiz; k++);
+	// YOU FIND OUT IF A NUMBER IS PRIME USING THE
+	// ERATOSTENES ALGORITHM
 
-	//Si se llego a dividir N entre todos los números
-	//menores que su raíz cuadrada entonces es un primo
-	cout << "\nEl n£mero " << (k == raiz + 1 ? "si" : "no") << " es primo";
+	// Square root of the number to analyze
+	sqroot = (unsigned long long)std::sqrt(N);
+
+
+	// Definition: 
+	// N will be a prime, if it is only divisible by N or by unity.
+
+	// Eratostenes Algorimth modified
+	// Only go through odd numbers to speed up the calculation	
+
+	if (N % 2 != 0) { // First check if the number is even
+
+		// Check all odd numbers from 3 to the square root of N
+		for (k = 3; N%k && k <= sqroot; k += 2);
+
+		// Get a first divisor
+		first_divisor = k;
+
+	} else
+		// First divisor is 2
+		first_divisor = 2;
+
+	// If the previous loop is not traversed completely (k <= sqroot)
+	// then the number is prime
+	bool bIsNotPrime = (k <= sqroot);
+	cout << std::endl << "The number " << (bIsNotPrime ? "is not" : "is") << " prime" << std::endl;
+
+	if(bIsNotPrime)
+		// Se muestra el primer divisor de N
+		cout << "The first divisor found is: " << first_divisor << std::endl;
+
+	return 1;
 
 }
