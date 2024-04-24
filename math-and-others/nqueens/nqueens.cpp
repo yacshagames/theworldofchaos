@@ -221,7 +221,7 @@ int main()
 {
 	unsigned int i, N, num_solutions;
 
-	cout << ":: N-ROOTS ::" << std::endl << std::endl;
+	cout << ":: N-QUEENS :: NREINAS ::" << std::endl << std::endl;
 	cout << "Enter the number of queens: ";
 	cin >> N;
 
