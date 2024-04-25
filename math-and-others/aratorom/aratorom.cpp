@@ -48,6 +48,11 @@ Programmed by:
 	  from Arabic to Roman numerals and vice versa in a single program
 	- Update code to C++17
 	- The program is translated from Spanish to English.
+	- The romtoara algorithm is optimized to perform the conversion within a loop
+	- Update credits and version historyu in Spanish and English
+	- In the aratorom GUI, a validation is added indicating that only Arabic
+	  numerals less than 4000 can be entered, because the maximum Roman numeral
+	  is M (1000).
 
  >> Version 1 - 31-X-2000
 	- First version for Borland C++ 3.1 and Turbo C 3.0
@@ -60,12 +65,12 @@ Programmed by:
 using std::cout;
 using std::cin;
 
-std::string aratorom_1unit(const unsigned int& cifra, const unsigned int& orden) {
+std::string aratorom_1unit(const unsigned int& digit, const unsigned int& order) {
 
 	char  ui, um, uf;
 	std::string roman;
 
-	switch (orden) {
+	switch (order) {
 
 	case 0: ui = 'I';
 		um = 'V';
@@ -81,8 +86,16 @@ std::string aratorom_1unit(const unsigned int& cifra, const unsigned int& orden)
 		break;
 	case 3: ui = 'M';
 		break;
+	default:
+		// Arabic number should only have digits up to order 3
+		return "";
 	}
-	switch (cifra) {
+
+	// Arabic number must be less than 4000
+	if( order==3 && digit>=4)
+		return "";
+
+	switch (digit) {
 
 	case 1: roman = std::string(1,ui); break;
 	case 2: roman = std::string(1, ui) + ui;  break;
@@ -98,34 +111,33 @@ std::string aratorom_1unit(const unsigned int& cifra, const unsigned int& orden)
 	return roman;
 }
 
-std::string aratorom(const unsigned int& N) {
+std::string aratorom(const unsigned int& arabicNumber) {
 
-	unsigned int a, b, c, d;
+	std::string roman;
+	unsigned int digit, N = arabicNumber, order = 0;
 
-	d = N % 10;
-	c = N % 100 / 10;
-	b = N % 1000 / 100;
-	a = N / 1000;
+	while (N > 0)
+	{
+		digit = N % 10;
+		N /= 10;
+		roman.insert(0, aratorom_1unit(digit, order++));
+	}
 
-	return	aratorom_1unit(a, 3) + 
-			aratorom_1unit(b, 2) +
-			aratorom_1unit(c, 1) +
-			aratorom_1unit(d, 0);
-
+	return roman;
 }
 
-int romtoara_2unit(const int& cifraIZQ, const int& cifraDER)
+int romtoara_2unit(const int& leftDigit, const int& rightDigit)
 {
-	if (cifraIZQ >= cifraDER)
-		return cifraIZQ;
+	if (leftDigit >= rightDigit)
+		return leftDigit;
 	else
-		return -cifraIZQ;
+		return -leftDigit;
 }
 
 //retorna el equivalente decimal de la cifra romana ingresada
-unsigned int romtoara_1unit(const char& cifraROMANA)
+unsigned int romtoara_1unit(const char& romanDigit)
 {
-	switch (cifraROMANA)
+	switch (romanDigit)
 	{
 	case 'I':  return 1;
 	case 'V':  return 5;
@@ -156,7 +168,9 @@ int main() {
 	unsigned int arabicNumber, option;
 	std::string romanNumber;
 
-	cout << ":: ROMAN TO ARABIC NUMBERS CONVERTER ::" << std::endl << std::endl;
+	cout << ":: ROMAN TO ARABIC NUMBERS CONVERTER ::" << std::endl;
+	cout << ":: CONVERTIDOR DE NUMEROS ROMANOS A ARABIGOS ::" << std::endl << std::endl;
+
 
 	cout << "1) Arabic to Roman" << std::endl;
 	cout << "2) Romans to Arabic" << std::endl << std::endl;
@@ -171,12 +185,16 @@ int main() {
 		cin >> arabicNumber;
 
 		cout << std::endl;
-		cout << "The Roman equivalent is: " << aratorom(arabicNumber);
+
+		if (arabicNumber<4000)
+			cout << "The Roman equivalent is: " << aratorom(arabicNumber);
+		else
+			cout << "Enter a number less than 4000";
 
 	}
 	else {
 
-		cout << "Enter an Arabic number: ";
+		cout << "Enter an Roman number: ";
 		cin >> romanNumber;
 
 		cout << std::endl;
