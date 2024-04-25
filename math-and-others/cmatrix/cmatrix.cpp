@@ -1,23 +1,22 @@
 #include "cmatrix.h"
 
-
 //////////////////////////////////////////////////////////////////////
 //CONSTRUYE LA MATRIZ CON VALORES POR DEFECTO: FIL=COL=10;
-CMatriz::CMatriz(void)
+CMatrix::CMatrix(void)
 {
-	FIL = COL = ORDEN = _MAX;//La matriz es cuadrada
-	Inicializar(0);
+	FIL = COL = ORDEN = 0;//La matriz es cuadrada
 }
 //////////////////////////////////////////////////////////////////////
 //CONSTRUYE UNA MATRIZ CUADRADA DE ORDEN "orden"
-CMatriz::CMatriz(int orden)
+CMatrix::CMatrix(int orden)
 {
 	FIL = COL = ORDEN = orden;//La matriz es cuadrada
-	Inicializar(0);
+
+	Elemento.resize(orden, FILE(orden, 0.0));
 }
 //////////////////////////////////////////////////////////////////////
 //CONSTRUYE UNA MATRIZ ESPECIFICANDO EL NUMERO DE FILAS Y COLUMNAS
-CMatriz::CMatriz(int filas, int columnas)
+CMatrix::CMatrix(int filas, int columnas)
 {
 	FIL = filas;
 	COL = columnas;
@@ -25,11 +24,12 @@ CMatriz::CMatriz(int filas, int columnas)
 	if (FIL == COL)ORDEN = FIL;//La matriz es cuadrada
 	else ORDEN = -1; //para detectar cuando una matriz no es cuadrada: Orden =-1
 
-	Inicializar(0);
+	Elemento.resize(filas, FILE(columnas, 0.0));
 }
+/*
 //////////////////////////////////////////////////////////////////////
 //INICIALIZAR LOS ELEMENTOS DE LA MATRIZ
-void CMatriz::Inicializar(double elemento)
+void CMatrix::Inicializar(double elemento)
 {
 
 	for (int i = 0; i < FIL; i++)
@@ -40,7 +40,7 @@ void CMatriz::Inicializar(double elemento)
 
 //////////////////////////////////////////////////////////////////////
 //SE INGRESAN LOS ELEMENTOS DE LA MATRIZ, DESDE EL TECLADO, UNO POR UNO
-void CMatriz::IngresarElementos()
+void CMatrix::IngresarElementos()
 {
 	int i, j;
 	float elemento;
@@ -55,7 +55,7 @@ void CMatriz::IngresarElementos()
 }
 //////////////////////////////////////////////////////////////////////
 //ESCRIBE LA MATRIZ EN LA PANTALLA
-void CMatriz::Escribir()
+void CMatrix::Escribir()
 {
 	printf("\n\n");
 	for (int i = 0; i < FIL; i++)
@@ -65,28 +65,28 @@ void CMatriz::Escribir()
 		printf("\n");
 	}
 }
-
+*/
 //////////////////////////////////////////////////////////////////////
 //OPERADORES BINARIOS
 //////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////
 //NEGATIVO DE UNA MATRIZ (-A)
-CMatriz operator-(CMatriz &A)
+CMatrix operator-(CMatrix &A)
 {
-	CMatriz *M = new CMatriz;
+	CMatrix *M = new CMatrix;
 
 	*M = A;
 
 	for (int i = 0; i < A.Fil(); i++)
 		for (int j = 0; j < A.Col(); j++)
-			M->Elemento[i][j] *= -1;
+			M->Elemento[i][j] *= -1.0;
 
 	return *M;
 }
 //////////////////////////////////////////////////////////////////////
 //SUMA DE MATRICES (A+B)
-CMatriz operator+(CMatriz &A, CMatriz &B)
+CMatrix operator+(CMatrix &A, CMatrix &B)
 {
 
 	//Consistencia:
@@ -95,7 +95,7 @@ CMatriz operator+(CMatriz &A, CMatriz &B)
 		return A;
 	}
 
-	CMatriz *M = new CMatriz(A.Fil(), A.Col());
+	CMatrix *M = new CMatrix(A.Fil(), A.Col());
 	for (int i = 0; i < A.Fil(); i++)
 		for (int j = 0; j < A.Col(); j++)
 			M->Elemento[i][j] = A.Elemento[i][j] + B.Elemento[i][j];
@@ -103,15 +103,15 @@ CMatriz operator+(CMatriz &A, CMatriz &B)
 }
 //////////////////////////////////////////////////////////////////////
 //DIFERENCIA DE MATRICES (A-B)
-CMatriz operator-(CMatriz &A, CMatriz &B)
+CMatrix operator-(CMatrix &A, CMatrix &B)
 {
 	return (A + (-B));
 }
 //////////////////////////////////////////////////////////////////////
 //CONSTANTE POR MATRIZ (k*A)
-CMatriz operator*(double k, CMatriz &A)
+CMatrix operator*(double k, CMatrix &A)
 {
-	CMatriz *M = new CMatriz(A.Fil(), A.Col());
+	CMatrix *M = new CMatrix(A.Fil(), A.Col());
 
 	for (int i = 0; i < A.Fil(); i++)
 		for (int j = 0; j < A.Col(); j++)
@@ -120,7 +120,7 @@ CMatriz operator*(double k, CMatriz &A)
 }
 //////////////////////////////////////////////////////////////////////
 //MULTIPLICACION DE MATRICES (A*B)
-CMatriz operator*(CMatriz &A, CMatriz &B)
+CMatrix operator*(CMatrix &A, CMatrix &B)
 {
 	//Consistencia:  A.Col()==B.Fil()
 	if (A.Col() != B.Fil())
@@ -132,7 +132,7 @@ CMatriz operator*(CMatriz &A, CMatriz &B)
 	{
 		int i, j, k, n = A.Col();
 
-		CMatriz *M = new CMatriz(A.Fil(), B.Col());
+		CMatrix *M = new CMatrix(A.Fil(), B.Col());
 		for (i = 0; i < M->Fil(); i++)
 			for (j = 0; j < M->Col(); j++)
 			{
@@ -157,11 +157,11 @@ CMatriz operator*(CMatriz &A, CMatriz &B)
 //POR EL METODO DE COFACTORES
 //!!!Nesecita que se le ingrese el orden de la matriz
 //////////////////////////////////////////////////////////////////////
-double DetCofact(CMatriz &A, int orden)
+double DetCofact(CMatrix &A, int orden)
 {
 
 	double D = 0;
-	CMatriz B;
+	CMatrix B;
 	int x, i, j;
 
 	if (orden >= 2)
@@ -191,7 +191,7 @@ double DetCofact(CMatriz &A, int orden)
 //CALCULA LA DETERMINANTE DE A INVOCANDO A LA FUNCION DetCofact
 //!!!No nesecita que se le ingrese el orden de la matriz
 //////////////////////////////////////////////////////////////////////
-double Det(CMatriz &A)
+double Det(CMatrix &A)
 {
 	//Consistencia:
 	if (A.Orden() == -1) {
@@ -214,7 +214,7 @@ double Det(CMatriz &A)
 //METODO: A^-1 = (1/|A|) * (C)^t
 //donde C = matiz cofactor de A
 //////////////////////////////////////////////////////////////////////
-CMatriz InvCofact(CMatriz M)
+CMatrix InvCofact(CMatrix M)
 {
 
 	//Consistencia:
@@ -231,8 +231,8 @@ CMatriz InvCofact(CMatriz M)
 
 	int i, j, x, y;
 
-	CMatriz Ct(M.Orden());
-	CMatriz B(M.Orden() - 1);
+	CMatrix Ct(M.Orden());
+	CMatrix B(M.Orden() - 1);
 	//se crea la submatriz B de orden n-1
 	//pivoteando en x,y
 
@@ -261,7 +261,7 @@ CMatriz InvCofact(CMatriz M)
 //CALCULA LA INVERSA DE LA MATRIZ POR EL METODO DE REDUCCION GAUSSIANA
 // A^-1 = { A^-1 ; tal que  G = [ A | I ] = [ I | A^-1 ]  }
 //////////////////////////////////////////////////////////////////////
-CMatriz InvGauss(CMatriz M)
+CMatrix InvGauss(CMatrix M)
 {
 
 	int m = M.Orden();
