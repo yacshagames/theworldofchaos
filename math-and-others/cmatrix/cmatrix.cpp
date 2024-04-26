@@ -1,4 +1,5 @@
 #include "cmatrix.h"
+#include <cstdlib>
 
 //////////////////////////////////////////////////////////////////////
 //CONSTRUYE LA MATRIZ CON VALORES POR DEFECTO: FIL=COL=10;
@@ -12,8 +13,9 @@ CMatrix::CMatrix(int orden)
 {
 	FIL = COL = ORDEN = orden;//La matriz es cuadrada
 
-	Elemento.resize(orden, FILE(orden, 0.0));
+	Elemento.resize(orden, ROW(orden, 0.0));
 }
+
 //////////////////////////////////////////////////////////////////////
 //CONSTRUYE UNA MATRIZ ESPECIFICANDO EL NUMERO DE FILAS Y COLUMNAS
 CMatrix::CMatrix(int filas, int columnas)
@@ -24,8 +26,26 @@ CMatrix::CMatrix(int filas, int columnas)
 	if (FIL == COL)ORDEN = FIL;//La matriz es cuadrada
 	else ORDEN = -1; //para detectar cuando una matriz no es cuadrada: Orden =-1
 
-	Elemento.resize(filas, FILE(columnas, 0.0));
+	Elemento.resize(filas, ROW(columnas, 0.0));
 }
+
+CMatrix::~CMatrix()
+{
+}
+
+int CMatrix::Fil() const
+{
+	return FIL;
+}
+int CMatrix::Col() const
+{
+	return COL;
+}
+int CMatrix::Orden() const
+{
+	return ORDEN;
+}
+
 /*
 //////////////////////////////////////////////////////////////////////
 //INICIALIZAR LOS ELEMENTOS DE LA MATRIZ
@@ -72,7 +92,7 @@ void CMatrix::Escribir()
 
 //////////////////////////////////////////////////////////////////////
 //NEGATIVO DE UNA MATRIZ (-A)
-CMatrix operator-(CMatrix &A)
+CMatrix operator -(const CMatrix &A)
 {
 	CMatrix *M = new CMatrix;
 
@@ -86,7 +106,7 @@ CMatrix operator-(CMatrix &A)
 }
 //////////////////////////////////////////////////////////////////////
 //SUMA DE MATRICES (A+B)
-CMatrix operator+(CMatrix &A, CMatrix &B)
+CMatrix operator +(const CMatrix &A, const CMatrix &B)
 {
 
 	//Consistencia:
@@ -103,13 +123,13 @@ CMatrix operator+(CMatrix &A, CMatrix &B)
 }
 //////////////////////////////////////////////////////////////////////
 //DIFERENCIA DE MATRICES (A-B)
-CMatrix operator-(CMatrix &A, CMatrix &B)
+CMatrix operator -(const CMatrix &A, const CMatrix &B)
 {
 	return (A + (-B));
 }
 //////////////////////////////////////////////////////////////////////
 //CONSTANTE POR MATRIZ (k*A)
-CMatrix operator*(double k, CMatrix &A)
+CMatrix operator *(const double& k, const CMatrix &A)
 {
 	CMatrix *M = new CMatrix(A.Fil(), A.Col());
 
@@ -120,7 +140,7 @@ CMatrix operator*(double k, CMatrix &A)
 }
 //////////////////////////////////////////////////////////////////////
 //MULTIPLICACION DE MATRICES (A*B)
-CMatrix operator*(CMatrix &A, CMatrix &B)
+CMatrix operator *(const CMatrix &A, const CMatrix &B)
 {
 	//Consistencia:  A.Col()==B.Fil()
 	if (A.Col() != B.Fil())
@@ -157,11 +177,11 @@ CMatrix operator*(CMatrix &A, CMatrix &B)
 //POR EL METODO DE COFACTORES
 //!!!Nesecita que se le ingrese el orden de la matriz
 //////////////////////////////////////////////////////////////////////
-double DetCofact(CMatrix &A, int orden)
+double CMatrix::DetCofact(const CMatrix &A, const int& orden)const
 {
 
 	double D = 0;
-	CMatrix B;
+	CMatrix B(orden);;
 	int x, i, j;
 
 	if (orden >= 2)
@@ -173,8 +193,10 @@ double DetCofact(CMatrix &A, int orden)
 			for (i = 0; i < orden - 1; i++)
 				for (j = 1; j < orden; j++)
 				{
-					if (i < x) B.Elemento[i][j - 1] = A.Elemento[i][j];
-					else  B.Elemento[i][j - 1] = A.Elemento[i + 1][j];
+					if (i < x) 
+						B.Elemento[i][j - 1] = A.Elemento[i][j];
+					else  
+						B.Elemento[i][j - 1] = A.Elemento[i + 1][j];
 				}
 
 			D += pow(-1, x) * A.Elemento[x][0] * DetCofact(B, orden - 1);
@@ -183,50 +205,67 @@ double DetCofact(CMatrix &A, int orden)
 		return D;
 
 	}
-	else return A.Elemento[0][0];
+	else 
+		return A.Elemento[0][0];
 
+}
+
+CMatrix CMatrix::Transposed() const
+{
+	int i, j, rows = this->Fil(), cols = this->Col();
+
+	CMatrix T(cols, rows);
+	//se intercambia valores de los elementos simetricos de la matriz
+	//(definicion de matriz transpuesta)
+	for (i = 0; i < rows; i++)
+		for (j = 0; j < cols; j++){
+			T.Elemento[j][i] = this->Elemento[i][j];
+		}
+
+	return T;
 }
 
 //////////////////////////////////////////////////////////////////////
 //CALCULA LA DETERMINANTE DE A INVOCANDO A LA FUNCION DetCofact
 //!!!No nesecita que se le ingrese el orden de la matriz
 //////////////////////////////////////////////////////////////////////
-double Det(CMatrix &A)
+double CMatrix::DetCofact() const
 {
 	//Consistencia:
-	if (A.Orden() == -1) {
-		printf("La matriz no es cuadrada");
-		return 0;
+	if (ORDEN == -1) {
+		//printf("La matriz no es cuadrada");
+		return 0.0;
 	}
 
-	return DetCofact(A, A.Orden());
-
+	return DetCofact(*this, ORDEN);
 }
 
 //********************************************************************
 //CALCULO DE LA INVERSA DE UNA MATRIZ
 //********************************************************************
 
-
 //////////////////////////////////////////////////////////////////////
 //CALCULA LA INVERSA DE LA MATRIZ POR EL METODO DE LA TRANSPUESTA DE
 //DE LA MATRIZ DE COFACTORES:
 //METODO: A^-1 = (1/|A|) * (C)^t
-//donde C = matiz cofactor de A
+//donde C = matriz cofactor de A
 //////////////////////////////////////////////////////////////////////
-CMatrix InvCofact(CMatrix M)
+bool CMatrix::InvCofact(CMatrix& Inverse) const
 {
-
 	//Consistencia:
-	if (M.Orden() == -1) {
-		printf("La matriz no es cuadrada");
-		return M;
+	if (ORDEN == -1) {
+		//printf("La matriz no es cuadrada");
+		return false;
 	}
+
+	const CMatrix& M = *this;
+
 	//Consistencia: Determinante!=0 para que Exista Inversa
-	double DET = Det(M);
-	if (DET == 0) {
-		printf("La Matriz no es inversible, su determinante es 0");
-		return M;
+	double DET = M.DetCofact();
+
+	if (std::abs(DET) < 1e-10) { // DET==0
+		//printf("La Matriz no es inversible, su determinante es 0");
+		return false;
 	}
 
 	int i, j, x, y;
@@ -237,42 +276,55 @@ CMatrix InvCofact(CMatrix M)
 	//pivoteando en x,y
 
 	for (x = 0; x < M.Orden(); x++)
-		for (y = 0; y < M.Orden(); y++)
-		{
+		for (y = 0; y < M.Orden(); y++){
+
 			for (i = 0; i < M.Orden() - 1; i++)
-				for (j = 0; j < M.Orden() - 1; j++)
-				{
-					if (i < x && j < y) B.Elemento[i][j] = M.Elemento[i][j];
-					else if (i < x && j >= y) B.Elemento[i][j] = M.Elemento[i][j + 1];
-					else if (i >= x && j < y) B.Elemento[i][j] = M.Elemento[i + 1][j];
-					else if (i >= x && j >= y) B.Elemento[i][j] = M.Elemento[i + 1][j + 1];
+				for (j = 0; j < M.Orden() - 1; j++){
+
+					if (i < x && j < y) 
+						B.Elemento[i][j] = M.Elemento[i][j];
+					else if (i < x && j >= y)
+						B.Elemento[i][j] = M.Elemento[i][j + 1];
+					else if (i >= x && j < y)
+						B.Elemento[i][j] = M.Elemento[i + 1][j];
+					else if (i >= x && j >= y)
+						B.Elemento[i][j] = M.Elemento[i + 1][j + 1];
 				}
 
 			//Se halla la transpuesta de la matriz de cofactores
-			Ct.Elemento[y][x] = pow(-1, x + y) * Det(B);
+			Ct.Elemento[y][x] = pow(-1, x + y) * B.DetCofact();
 
 		}
 
-	return pow(DET, -1)*Ct;
-}
+	Inverse = pow(DET, -1)*Ct;
 
+	return true;
+}
 
 //////////////////////////////////////////////////////////////////////
 //CALCULA LA INVERSA DE LA MATRIZ POR EL METODO DE REDUCCION GAUSSIANA
 // A^-1 = { A^-1 ; tal que  G = [ A | I ] = [ I | A^-1 ]  }
 //////////////////////////////////////////////////////////////////////
-CMatrix InvGauss(CMatrix M)
+bool CMatrix::InvGauss(CMatrix& Inverse) const
 {
+	//Consistencia:
+	if (ORDEN == -1) {
+		//printf("La matriz no es cuadrada");
+		return false;
+	}
+
+	const CMatrix& M = *this;
 
 	int m = M.Orden();
 
 	//Consistencia:
 	if (m == -1) {
-		printf("La matriz no es cuadrada");
-		return M;
+		//printf("La matriz no es cuadrada");
+		return false;
 	}
 
-	double G[_MAX][2 * _MAX];//Arreglo Gaussiano
+	//double G[_MAX][2 * _MAX];//Arreglo Gaussiano
+	MATRIX G(ORDEN, ROW(2 * ORDEN, 0.0));
 
 	int i, j, k, s, t;
 	double T, tmp, DET = 1;
@@ -286,7 +338,10 @@ CMatrix InvGauss(CMatrix M)
 	//Reduccion Gaussiana
 	for (i = 0; i <= m - 1; i++)
 		for (j = m; j <= 2 * m - 1; j++) {
-			if (i + m == j)G[i][j] = 1; else G[i][j] = 0;
+			if (i + m == j)
+				G[i][j] = 1;
+			else
+				G[i][j] = 0;
 		}
 
 	//Se reduce la matriz por operaciones elementales comenzando por G[0][0]
@@ -302,20 +357,24 @@ CMatrix InvGauss(CMatrix M)
 				}
 
 			DET *= T;
-			if (T == 0)continue;
+			// Consistencia
+			if (std::abs(T) < 1e-10) // T==0
+				// printf("La Matriz no es inversible, su determinante es 0");
+				return false;
 
 			for (j = 2 * m - 1; j >= 0; j--) {	//Se disminuye el valor de j para que el valor de G[i][0] solo sea alterado al final
-				if (i == k)G[i][j] /= T; //se divide a la primera fila por el primer termino de la fila
-				else G[i][j] = G[i][j] / T - G[k][j]; //(A partir de la segunda fila) se divide la fila i por el primer termino de la fila i
+				if (i == k)
+					G[i][j] /= T; //se divide a la primera fila por el primer termino de la fila
+				else
+					G[i][j] = G[i][j] / T - G[k][j]; //(A partir de la segunda fila) se divide la fila i por el primer termino de la fila i
 			}
 		}
 
 	//Consistencia
-	if (DET == 0)
-	{
-		printf("La Matriz no es inversible, su determinante es 0");
-		return M;
-	}
+	//if (std::abs(DET) < 1e-10) { // DET==0
+		//printf("La Matriz no es inversible, su determinante es 0");
+	//	return false;
+	//}
 
 	//Se reduce la matriz triangular superior de la izquierda de G
 	//a una matriz identidad
@@ -327,11 +386,13 @@ CMatrix InvGauss(CMatrix M)
 		}
 
 	//Por lo tanto en la parte derecha de G queda la matriz Inversa
-	//que es asignada de vuelta a M para ser retornada
+	//que es asignada a R para ser retornada
+	Inverse = CMatrix(m);
+
 	for (i = 0; i < m; i++)
 		for (j = 0; j < m; j++)
-			M.Elemento[i][j] = G[i][j + m];
+			Inverse.Elemento[i][j] = G[i][j + m];
 
-	return M;
+	return true;
 
 }

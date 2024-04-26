@@ -42,23 +42,18 @@ Pagina Web ( EL MUNDO DEL CAOS ):
 
 class CMatrix
 {
-	//    protected:
 private:
-	//VARIABLES MIEMBRO
-	int FIL;
-	int COL;
-	int ORDEN;
-
-	typedef std::vector<double> FILE;
-	typedef std::vector<FILE> MATRIX;
+	typedef double ELEMENT;
+	typedef std::vector<ELEMENT> ROW;
+	typedef std::vector<ROW> MATRIX;
 
 public:
-	MATRIX Elemento; //Contiene los elementos de la matriz
+	
 	//CONSTRUCTORES
 	CMatrix(); //constuye una matriz cuadrada de orden _MAX
-	CMatrix(int filas, int columnas); //constructor para matrices no cuadradas
+	CMatrix(int filas, int columnas); //constructor para matrices no cuadradas	
 	CMatrix(int orden); //constructor para matrices cuadradas
-	~CMatrix() { }; //destructor
+	~CMatrix(); //destructor
 
 	//FUNCIONES
 /*private:
@@ -71,18 +66,41 @@ public:
 	void Escribir(); //Escribe la matriz en pantalla
 	*/
 public:
-	int Fil() { return FIL; }  //retorna el numero de filas de la matriz
-	int Col() { return COL; }  //retorna el numero de columnas de la matriz
-	int Orden() { return ORDEN; }//retorna el orden de la matriz en caso
-					//de ser una matriz cuadrada y en caso
-					//contrario retorna -1
+	
+	//retorna el numero de filas de la matriz
+	int Fil() const;
+	
+	//retorna el numero de columnas de la matriz
+	int Col() const;
+
+	//retorna el orden de la matriz en caso de ser una
+	// matriz cuadrada y en caso contrario retorna -1
+	int Orden() const;
 
 	//DEFINE LAS OPERACIONES ENTRE MATRICES
-	friend CMatrix operator-(CMatrix &A); 		 //operacion -A  NEGATIVO DE UNA MATRIZ
-	friend CMatrix operator+(CMatrix &A, CMatrix &B); //operaci¢n A+B SUMA DE MATRICES
-	friend CMatrix operator-(CMatrix &A, CMatrix &B); //operaci¢n A-B RESTA DE MATRICES
-	friend CMatrix operator*(double k, CMatrix &A);  //operaci¢n k*B (k es una constante)
-	friend CMatrix operator*(CMatrix &A, CMatrix &B);//operaci¢n A*B (Producto matricial)
+	friend CMatrix operator -(const CMatrix &A); 		 //operacion -A  NEGATIVO DE UNA MATRIZ
+	friend CMatrix operator +(const CMatrix &A, const CMatrix &B); //operaci¢n A+B SUMA DE MATRICES
+	friend CMatrix operator -(const CMatrix &A, const CMatrix &B); //operaci¢n A-B RESTA DE MATRICES
+	friend CMatrix operator *(const double& k, const CMatrix &A);  //operaci¢n k*B (k es una constante)
+	friend CMatrix operator *(const CMatrix &A, const CMatrix &B);//operaci¢n A*B (Producto matricial)
+
+
+	// MÉTODOS
+private:
+	double DetCofact(const CMatrix & A, const int & orden) const;
+public:
+	CMatrix Transposed() const;
+	double DetCofact() const;	
+	bool InvCofact(CMatrix& Inverse) const;
+	bool InvGauss(CMatrix& Inverse) const;
+
+private:
+	//VARIABLES MIEMBRO
+	int FIL;
+	int COL;
+	int ORDEN;
+public:
+	MATRIX Elemento; //Contiene los elementos de la matriz
 };
 
 /*
