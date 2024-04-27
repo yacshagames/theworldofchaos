@@ -210,6 +210,85 @@ double CMatrix::DetCofact(const CMatrix &A, const int& orden)const
 
 }
 
+
+void CMatrix::escalonada(MATRIX& G, const unsigned int& orden, ELEMENT& Determinant, const int& osm) const {
+	
+	//osm: Orden de la SubMatriz
+	const int& m = orden;
+	int i, j, k, s, t, _2m =2*m;	
+	
+	double tmp, T;
+
+	k = orden - osm; // k:columnas
+	
+	//SE HALLA LA INVERSA DE R por Gauss J.
+	//Se reduce la matriz por operaciones elementales comenzando por G[0][0]
+	for (i = k; i < m; i++) { // i:filas
+
+		T = G[i][k];
+
+		// Si T==0 se intercambia la fila i con la fila i+1,i+2... hasta que T!=0
+		for (s = i; s < m - 1 && IsZero(T); s++)   // s: filas
+			for (t = 0; t < _2m; t++) { // t: columnas
+				tmp = G[i][t];
+				G[i][t] = G[s + 1][t];
+				G[s + 1][t] = tmp;
+				T = G[i][k];
+			}
+
+		//T = G[i][k];
+		// Consistencia
+		if (IsZero(T)) // T==0
+			// La Matriz no es inversible, su determinante es 0
+			//return false;
+			continue;
+
+		Determinant *= T;
+
+		for (j = _2m - 1; j >= 0; j--) {	//Se disminuye el valor de j para que el valor de A[i][0] solo sea alterado al final
+			if (i == k)
+				G[i][j] /= T; //se divide a la primera fila por el primer termino de la fila
+			else 
+				G[i][j] = G[i][j] / T - G[k][j]; //(A partir de la segunda fila) se divide la fila i por el primer termino de la fila i
+		}
+
+		Determinant *= T;
+	}
+
+	if (osm != 0)
+		escalonada(G, orden, Determinant, osm - 1);
+
+
+}//fin de la funcion escalonada
+
+
+void CMatrix::inversa(MATRIX& G, const unsigned int& orden, const int& osm) const {
+	//osm:orden de la submatriz
+	
+	const unsigned int& m = orden;
+	unsigned int j, k, t, _2m = 2 * m;
+
+	double T;
+
+	k = orden - osm;
+
+	for (t = k + 1; t < m; t++) {
+		T = G[k][t];
+		for (j = 0; j < _2m; j++)
+			G[k][j] -= T * G[t][j];
+	}
+
+	if (osm != 0)
+		return inversa(G, orden, osm - 1);
+
+}//fin de la funcion inversa
+
+
+bool CMatrix::IsZero(const ELEMENT &element)
+{
+	return std::abs(element) < 1e-10;
+}
+
 CMatrix CMatrix::Transposed() const
 {
 	int i, j, rows = this->Fil(), cols = this->Col();
@@ -263,7 +342,7 @@ bool CMatrix::InvCofact(CMatrix& Inverse) const
 	//Consistencia: Determinante!=0 para que Exista Inversa
 	double DET = M.DetCofact();
 
-	if (std::abs(DET) < 1e-10) { // DET==0
+	if (IsZero(DET)) { // DET==0
 		//printf("La Matriz no es inversible, su determinante es 0");
 		return false;
 	}
@@ -301,11 +380,106 @@ bool CMatrix::InvCofact(CMatrix& Inverse) const
 	return true;
 }
 
-//////////////////////////////////////////////////////////////////////
-//CALCULA LA INVERSA DE LA MATRIZ POR EL METODO DE REDUCCION GAUSSIANA
+
+//CALCULA LA INVERSA DE LA MATRIZ POR EL METODO DE REDUCCION GAUSSIANA (Método 1)
 // A^-1 = { A^-1 ; tal que  G = [ A | I ] = [ I | A^-1 ]  }
-//////////////////////////////////////////////////////////////////////
-bool CMatrix::InvGauss(CMatrix& Inverse) const
+bool CMatrix::InvGaussJordan1(CMatrix& Inverse) const
+{
+
+	//Consistencia:
+	if (ORDEN == -1) {
+		//printf("La matriz no es cuadrada");
+		return false;
+	}
+
+	const CMatrix& M = *this;
+
+	// Arreglo Gaussiano
+	MATRIX G(ORDEN, ROW(2 * ORDEN, 0.0));
+
+	int n = M.Orden(), _2n = 2 * n, i, j, k, m;
+	ELEMENT cte;
+
+	//Se Asigna el contenido de la Matriz M al arreglo Gaussiano G
+	for (i = 0; i < n; i++)
+		for (j = 0; j < n; j++)
+			G[i][j] = M.Elemento[i][j];
+
+	//Aumentando matriz identidad
+	for (i = 0; i < n; i++)
+	{
+		for (j = n; j < _2n; j++)
+		{
+			if (i == j - n)
+				G[i][j] = 1.0;
+			else
+				G[i][j] = 0.0;
+		}
+	}
+
+	//Pivotear matriz aumentada
+	for (j = 0; j < n; j++)
+		for (i = 0; i < n; i++)
+		{
+			if (IsZero(G[j][j]) == false) { // G[j][j] != 0
+
+				if (i != j) {
+
+					cte = G[i][j] / G[j][j];
+					for (k = 0; k < _2n; k++)
+						G[i][k] = G[i][k] - cte * G[j][k];
+				}
+
+			}
+			else {
+
+				for (k = j + 1; k < n; k++) {
+
+					for (m = 0; m < _2n; m++)
+						G[j][m] = G[j][m] + G[k][m];
+
+					if (IsZero(G[j][j]) == false) // G[j][j] != 0
+						break;
+				}
+
+				if (IsZero(G[j][j])) // G[j][j] == 0
+					// La Matriz no es inversible, su determinante es 0
+					return false;
+
+				if (i != j) {
+
+					for (k = 0; k < _2n; k++)
+						G[i][k] = G[i][k] - (G[i][j] / G[j][j])*G[j][k];
+				}
+			}
+		}
+
+
+	// El lado izquierdo de la matriz G es convertido en una matriz identidad
+	for (i = 0; i < n; i++) {
+
+		cte = G[i][i];
+
+		for (j = 0; j < _2n; j++)
+			G[i][j] = G[i][j] / cte;
+	}
+
+
+	//Por lo tanto en la parte derecha de G queda la matriz Inversa
+	//que es asignada a R para ser retornada
+	Inverse = CMatrix(n);
+
+	for (i = 0; i < n; i++)
+		for (j = 0; j < n; j++)
+			Inverse.Elemento[i][j] = G[i][j + n];
+
+	return true;
+}
+
+//CALCULA LA INVERSA DE LA MATRIZ POR EL METODO DE REDUCCION GAUSSIANA (Método 2)
+// (Este método también calcula la determinante)
+// A^-1 = { A^-1 ; tal que  G = [ A | I ] = [ I | A^-1 ]  }
+bool CMatrix::InvGaussJordan2(CMatrix& Inverse, ELEMENT& Determinant ) const
 {
 	//Consistencia:
 	if (ORDEN == -1) {
@@ -327,7 +501,9 @@ bool CMatrix::InvGauss(CMatrix& Inverse) const
 	MATRIX G(ORDEN, ROW(2 * ORDEN, 0.0));
 
 	int i, j, k, s, t;
-	double T, tmp, DET = 1;
+	ELEMENT T, tmp;
+
+	Determinant = 1;
 
 	//Se Asigna el contenido de la Matriz M al arreglo Gaussiano G
 	for (i = 0; i < m; i++)
@@ -346,21 +522,27 @@ bool CMatrix::InvGauss(CMatrix& Inverse) const
 
 	//Se reduce la matriz por operaciones elementales comenzando por G[0][0]
 	//a una matriz triangular superior
-	for (k = 0; k < m; k++)
-		for (i = k; i < m; i++) {
+	for (k = 0; k < m; k++) // k:columnas
+		for (i = k; i < m; i++) { // i:filas
+
 			T = G[i][k];
-			for (s = i; s < m - 1 && T == 0; s++)
-				for (t = 0; t < 2 * m; t++) {
+
+			// Si T==0 se intercambia la fila i con la fila i+1,i+2... hasta que T!=0
+			for (s = i; s < m - 1 && IsZero(T); s++)  // s: filas
+				for (t = 0; t < 2 * m; t++) { // t: columnas
 					tmp = G[s][t];
 					G[s][t] = G[s + 1][t];
 					G[s + 1][t] = tmp;
+					T = G[i][k];
 				}
-
-			DET *= T;
+			
 			// Consistencia
-			if (std::abs(T) < 1e-10) // T==0
-				// printf("La Matriz no es inversible, su determinante es 0");
-				return false;
+			if (IsZero(T)) // T==0
+				// La Matriz no es inversible, su determinante es 0
+				//return false;
+				continue;
+
+			Determinant *= T;
 
 			for (j = 2 * m - 1; j >= 0; j--) {	//Se disminuye el valor de j para que el valor de G[i][0] solo sea alterado al final
 				if (i == k)
@@ -368,13 +550,19 @@ bool CMatrix::InvGauss(CMatrix& Inverse) const
 				else
 					G[i][j] = G[i][j] / T - G[k][j]; //(A partir de la segunda fila) se divide la fila i por el primer termino de la fila i
 			}
+
+			//if(IsZero(G[i][i])) // G[i][i]==0
+			//	return false;
 		}
 
 	//Consistencia
-	//if (std::abs(DET) < 1e-10) { // DET==0
-		//printf("La Matriz no es inversible, su determinante es 0");
-	//	return false;
-	//}
+	for (i = 0; i < m; i++) 
+		if (IsZero(G[i][i])) {
+			// Si alguno de los elementos de la diagonal es cero,
+			// a Matriz no es inversible, su determinante es 0
+			Determinant = 0.0;
+			return false;
+		}
 
 	//Se reduce la matriz triangular superior de la izquierda de G
 	//a una matriz identidad
@@ -384,6 +572,73 @@ bool CMatrix::InvGauss(CMatrix& Inverse) const
 			for (j = 0; j < 2 * m; j++)
 				G[k][j] -= T * G[t][j];
 		}
+
+	//Por lo tanto en la parte derecha de G queda la matriz Inversa
+	//que es asignada a R para ser retornada
+	Inverse = CMatrix(m);
+
+	for (i = 0; i < m; i++)
+		for (j = 0; j < m; j++)
+			Inverse.Elemento[i][j] = G[i][j + m];
+
+	return true;
+
+}
+
+//CALCULA LA INVERSA DE LA MATRIZ POR EL METODO DE REDUCCION GAUSSIANA (Método 2 recursivo)
+// (Este método también calcula la determinante)
+// A^-1 = { A^-1 ; tal que  G = [ A | I ] = [ I | A^-1 ]  }
+bool CMatrix::InvGaussJordan3(CMatrix& Inverse, ELEMENT& Determinant) const
+{
+	//Consistencia:
+	if (ORDEN == -1) {
+		//printf("La matriz no es cuadrada");
+		return false;
+	}
+
+	const CMatrix& M = *this;
+
+	int m = M.Orden();
+
+	//Consistencia:
+	if (m == -1) {
+		//printf("La matriz no es cuadrada");
+		return false;
+	}
+
+	// Arreglo Gaussiano
+	MATRIX G(ORDEN, ROW(2 * ORDEN, 0.0));
+
+	int i, j;// , k, s, t;
+	Determinant = 1;
+
+	//Se Asigna el contenido de la Matriz M al arreglo Gaussiano G
+	for (i = 0; i < m; i++)
+		for (j = 0; j < m; j++)
+			G[i][j] = M.Elemento[i][j];
+
+	//Se anexa a esta matriz una matriz identidad de orden m para aplicar
+	//Reduccion Gaussiana
+	for (i = 0; i <= m - 1; i++)
+		for (j = m; j <= 2 * m - 1; j++) {
+			if (i + m == j)
+				G[i][j] = 1;
+			else
+				G[i][j] = 0;
+		}
+
+	escalonada(G, m, Determinant, m);
+
+	//Consistencia
+	for (i = 0; i < m; i++)
+		if (IsZero(G[i][i])) {
+			// Si alguno de los elementos de la diagonal es cero,
+			// a Matriz no es inversible, su determinante es 0
+			Determinant = 0.0;
+			return false;
+		}
+
+	inversa(G, m, m);
 
 	//Por lo tanto en la parte derecha de G queda la matriz Inversa
 	//que es asignada a R para ser retornada

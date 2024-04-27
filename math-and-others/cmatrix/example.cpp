@@ -112,6 +112,7 @@ int main()
 	//getch();
 	pausa();
 
+
 	//ImprimirTitulo(); //T¡tulo de la Demo de CMatriz 1.4
 
 	cout << "\n\nLa determinante de la matriz A es: " << A.DetCofact();
@@ -121,7 +122,7 @@ int main()
 	cout << "\n\nLa inversa de la matriz A por el M‚todo de Reducci¢n Gaussiana es:\n";
 
 	CMatrix I;
-	if (A.InvGauss(I))
+	if (A.InvGaussJordan1(I))
 		//Escribe la inversa de A en pantalla, por el m‚todo de reducci¢n Gaussiana
 		Escribir(I); 
 	else
@@ -139,7 +140,7 @@ int main()
 
 	pausa(); //se hace una pausa
 
-	//LA DIFERENCIA ENTRE InvGauss e InvCofact es que la primera necesita
+	//LA DIFERENCIA ENTRE InvGaussJordan1 e InvCofact es que la primera necesita
 	//de menos memoria que la segunda, pero la segunda hace menos operaciones
 	//que la primera, por la tanto InvCofact es mas r pida
 
@@ -170,7 +171,7 @@ int main()
 
 	//printf("\n\nPresione una tecla para ver la matriz ingresada...");
 	pausa();
-
+	
 	//ImprimirTitulo(); //T¡tulo de la Demo de CMatriz 1.4
 
 	cout << "\n\nUsted ingres¢ la siguiente Matriz B";
@@ -250,7 +251,7 @@ int main()
 	//es X = Inversa(A)*B
 	
 	// CMatrix I;
-	if (A.InvGauss(I)){
+	if (A.InvGaussJordan1(I)){
 		//asignamos a X la soluci¢n del sistema
 		X = I * B;
 		cout << "\nLa soluci¢n del sistema es:";
@@ -273,6 +274,6 @@ int main()
 	cout << "\n email: ramondc@hotmail.com";
 	cout << "\nPagina Web ( EL MUNDO DEL CAOS ):";
 	cout << "\n\nFIN DE LA DEMO... ;(";	
-
+	
 	return 1;
 }
