@@ -27,8 +27,7 @@ char AddOns::pause()
 bool AddOns::pauseAndExit()
 {
 	textcolor(LIGHTGRAY);
-	std::cout << "Press any key to continue or SPACE key to return to menu..." << std::endl;
-	return cgetch();
+	std::cout << "Press any key to continue or SPACE key to return to menu..." << std::endl;	
 
 	if (cgetch() == 32) // SPACE key = 32
 		return true;

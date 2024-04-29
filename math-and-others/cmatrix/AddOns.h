@@ -20,6 +20,8 @@ HISTORY...
 
   >> Version 2 - 28-IV-2024
 	- pause, pauseAndExit and pauseYesOrNot functions added	
+	- Fixed a bug in the pauseAndExit function in the AddOns library,
+	  which prevented it from being executed correctly.
 
   >> Version 1 - 04-IV-2024
 	- chronoStart and chronoEnd functions added	
