@@ -74,7 +74,7 @@
 	- Se fusionan los proyectos cmatriz4, matrices y mattripak en cmatrix
 	- Se separa la clase CMatrix en archivos .h y .cpp
 	- Se cambia el nombre de la clase CMatriz por CMatrix
-	- Actualización a C++ 17, usando std::vector en lugar de matrices antiguas
+	- Actualización a C++ 17, usando std::vector en lugar de los viejos arrays
 	- En la clase CMatrix se agregan los métodos DetCofact, InvCofact e InvGauss;
 	  calcular el determinante mediante el método del cofactor;
 	  Inversa de una matriz por el método del cofactor e inversa de una matriz por

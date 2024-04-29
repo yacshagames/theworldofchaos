@@ -1,5 +1,6 @@
 #include "cmatrix.h"
 #include <cstdlib>
+#include <iostream>
 
 //////////////////////////////////////////////////////////////////////
 //CONSTRUYE LA MATRIZ CON VALORES POR DEFECTO: FIL=COL=10;
@@ -111,7 +112,7 @@ CMatrix operator +(const CMatrix &A, const CMatrix &B)
 
 	//Consistencia:
 	if (A.Fil() != B.Fil() || A.Col() != B.Col()) {
-		printf("Las matrices no tienen la misma dimensi¢n");
+		std::cout << "The arrays do not have the same dimension";
 		return A;
 	}
 
@@ -145,7 +146,7 @@ CMatrix operator *(const CMatrix &A, const CMatrix &B)
 	//Consistencia:  A.Col()==B.Fil()
 	if (A.Col() != B.Fil())
 	{
-		printf("\nNo se puede multiplicar las matrices");
+		std::cout << "cannot multiply matrices";
 		return A;
 	}
 	else
