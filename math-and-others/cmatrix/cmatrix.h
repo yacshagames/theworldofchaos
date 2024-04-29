@@ -22,7 +22,7 @@
 
  HISTORY...
 
- >> Version 2 - 26-IV-2024
+ >> Version 2 - 29-IV-2024
 	- Update math-and-others\cmatrix - Porting to VC++ 2017
 	- Merge cmatriz4, matrices and matripak in cmatrix
 	- Separate the CMatrix class into .h and .cpp files
@@ -68,6 +68,12 @@
 	- Version history and credits are updated.
 	- Translations from Spanish to English are added to the version history
 	- Obsolete files are removed
+	- Some methods and member variables are translated from Spanish to English
+	- Bug is corrected in the calculation of the sign of the determinant in the
+	  InvGaussJordan2 and InvGaussJordan3 methods
+	- The default commented example of the CMatrix class has been removed, as it has
+	  become obsolete. We suggest seeing the example.cpp file, to see a complete example
+	  on the use of CMatrix
 
 	 Spanish:
 	- Se actualiza math-and-others\cmatrix - Se hace el porting a VC++ 2017
@@ -115,6 +121,12 @@
 	- Se actualiza el historial de versiones y los créditos
 	- Se agregan traducciones del español al ingles en el historial de versiones
 	- Se eliminan archivos obsoletos
+	- Se traducen algunos métodos y variables miembro del español al ingles
+	- Se corrige bug en el cálculo del signo del determinante en los métodos
+	  InvGaussJordan2 e InvGaussJordan3
+	- Se elimina el ejemplo comentado por defecto de la clase CMatrix, ya que quedó
+	  obsoleto. Sugerimos ver el archivo example.cpp, para ver un completo ejemplo
+	  sobre el uso de CMatrix
 
  >> Version 1.4.1 - 31-X-2000
   	- InvGaussJordan1: Tercera versión de la implementación del
@@ -195,8 +207,8 @@ public:
 	
 	//CONSTRUCTORES
 	CMatrix(); //constuye una matriz cuadrada de orden _MAX
-	CMatrix(int filas, int columnas); //constructor para matrices no cuadradas	
-	CMatrix(int orden); //constructor para matrices cuadradas
+	CMatrix(int rows, int cols); //constructor para matrices no cuadradas	
+	CMatrix(int order); //constructor para matrices cuadradas
 	~CMatrix(); //destructor
 
 	//FUNCIONES
@@ -212,14 +224,14 @@ public:
 public:
 	
 	//retorna el numero de filas de la matriz
-	int Fil() const;
+	int Rows() const;
 	
 	//retorna el numero de columnas de la matriz
-	int Col() const;
+	int Cols() const;
 
 	//retorna el orden de la matriz en caso de ser una
 	// matriz cuadrada y en caso contrario retorna -1
-	int Orden() const;
+	int Order() const;
 
 	//DEFINE LAS OPERACIONES ENTRE MATRICES
 	friend CMatrix operator -(const CMatrix &A); 		 //operacion -A  NEGATIVO DE UNA MATRIZ
@@ -266,46 +278,9 @@ public:
 
 private:
 	//VARIABLES MIEMBRO
-	int FIL;
-	int COL;
-	int ORDEN;
+	int _Rows;
+	int _Cols;
+	int _Order;
 public:
-	MATRIX Elemento; //Contiene los elementos de la matriz
+	MATRIX Element; //Contiene los elementos de la matriz
 };
-
-/*
-//UN EJEMPLO
-void main()
-{
-
- double B[3][3]={-1,-2,3,4,5,6,7,8,9},
-	C[3][3]={2,5,7,1,4,2,4,5,9};
-
- CMatrix M(3),N(3),P(3);//se declaran 3 matrices cuadradas de orden 3
-
- CMatrix I;//para crear memoria virtual
-
- //Se asigna los arreglos B y C a las matrices M y N respectivamente
- for(int i=0;i<M.Fil();i++)
-  for(int j=0;j<M.Col();j++)
-  {
-   M.Elemento[i][j]=B[i][j];
-   N.Elemento[i][j]=C[i][j];
-  }
-
- clrscr();
-
- P=( InvGaussJordan1( (Det(M)*N+Det(N)*M) ) )*(120*N);
- I=( InvCofact( (Det(M)*N+Det(N)*M) ) )*(120*N);
-
- //I=Inv1( M+N );
-
- I.Escribir(); //Escribe la matriz en pantalla
-
- M.Escribir(); //Escribe la matriz en pantalla
-
- P.Escribir(); //Escribe la matriz en pantalla
-
- getch();
-}
-  */
