@@ -252,7 +252,6 @@ void CMatrix::escalonada(MATRIX& G, const unsigned int& orden, ELEMENT& Determin
 				G[i][j] = G[i][j] / T - G[k][j]; //(A partir de la segunda fila) se divide la fila i por el primer termino de la fila i
 		}
 
-		Determinant *= T;
 	}
 
 	if (osm != 0)
@@ -489,7 +488,7 @@ bool CMatrix::InvGaussJordan2(CMatrix& Inverse, ELEMENT& Determinant ) const
 
 	const CMatrix& M = *this;
 
-	int m = M.Orden();
+	int m = M.Orden(), _2m = 2 * m;
 
 	//Consistencia:
 	if (m == -1) {
@@ -513,7 +512,7 @@ bool CMatrix::InvGaussJordan2(CMatrix& Inverse, ELEMENT& Determinant ) const
 	//Se anexa a esta matriz una matriz identidad de orden m para aplicar
 	//Reduccion Gaussiana
 	for (i = 0; i <= m - 1; i++)
-		for (j = m; j <= 2 * m - 1; j++) {
+		for (j = m; j <= _2m - 1; j++) {
 			if (i + m == j)
 				G[i][j] = 1;
 			else
@@ -529,7 +528,7 @@ bool CMatrix::InvGaussJordan2(CMatrix& Inverse, ELEMENT& Determinant ) const
 
 			// Si T==0 se intercambia la fila i con la fila i+1,i+2... hasta que T!=0
 			for (s = i; s < m - 1 && IsZero(T); s++)  // s: filas
-				for (t = 0; t < 2 * m; t++) { // t: columnas
+				for (t = 0; t < _2m; t++) { // t: columnas
 					tmp = G[s][t];
 					G[s][t] = G[s + 1][t];
 					G[s + 1][t] = tmp;
@@ -544,7 +543,7 @@ bool CMatrix::InvGaussJordan2(CMatrix& Inverse, ELEMENT& Determinant ) const
 
 			Determinant *= T;
 
-			for (j = 2 * m - 1; j >= 0; j--) {	//Se disminuye el valor de j para que el valor de G[i][0] solo sea alterado al final
+			for (j = _2m - 1; j >= 0; j--) {	//Se disminuye el valor de j para que el valor de G[i][0] solo sea alterado al final
 				if (i == k)
 					G[i][j] /= T; //se divide a la primera fila por el primer termino de la fila
 				else
