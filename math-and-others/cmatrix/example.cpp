@@ -1,27 +1,85 @@
 /***************************************************************************
-EJEMPLO DEL USO DE CMATRIZ versi¢n 1.4
+ :: CMATRIX DEMO :: 
+-- EXAMPLE OF USING CMATRIZ -- EJEMPLO DEL USO DE CMATRIZ --
 
-Este ejemplo muestra como usar la poderosa clase CMatriz, para trabajar
-con matrices. Y mostrar como esta clase se puede incluir f cilmente en
-sus aplicaciones matem ticas.
+ This example shows how to use the powerful CMatriz class to work
+ with matrices. And show how this class can be easily included in
+ your mathematical applications.
+
+ Spanish:
+ Este ejemplo muestra como usar la poderosa clase CMatriz, para trabajar
+ con matrices. Y mostrar como esta clase se puede incluir facilmente en
+ sus aplicaciones matematicas.
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+  >> Version 2 - 28-IV-2024
+	- Update math-and-others\cmatrix - Porting to VC++ 2017
+	- All the tests in the example are updated to work with the CMatrix
+	  version 2 library.
+	- AddOns (version2) is added
+	- The conio.h and Menu.h libraries are added to make the user
+	  interface of the example more friendly
+	- Example.cpp is adapted to the new GUI incorporated by Menu.h.
+	  All examples can now be accessed in an orderly manner from an
+	  options menu
+	- Added the following menu options:
+		* Enter matrix values
+		* Generate a random matrix
+		* View the entered matrix values
+		* SUM, DIFFERENCE AND MULTIPLICATION OF MATRICES
+		* TRANSPOSED MATRIX
+		* COFACTORS: DETERMINANT OF THE MATRIX
+		* COFACTORS: INVERSE MATRIX
+		* GAUSS JORDAN 1: INVERSE MATRIX
+		* GAUSS JORDAN 2: INVERSE AND DETERMINING MATRIX
+		* GAUSS JORDAN 3(RECURSIVE): INVERSE AND DETERMINANT MATRIX
+		* SOLVING SYSTEMS OF LINEAR EQUATIONS: x = A^-1*b
+		* Exit
+	- Version history and credits are updated.
+	- All messages from the GUI console and user menu interface are
+	  translated from Spanish to English
+	- It is adapted to work with the CMatrix library translated into
+	  English
+	- The use examples are updated to version 2 of CMatrix, which includes
+	  an interface with an options menu, which makes it easier to test the
+	  examples; and the previous examples interface is deleted.
+
+  >> Version 1 - 17-VIII-2000
+	- First version for Borland C++ 3.1 and Turbo C 3.0
+	- This example shows how to use the powerful CMatriz class to work
+	  with matrices. And show how this class can be easily included in
+	  your mathematical applications.
+	- To process an array of 5000 elements, it takes 240, 455 and 450
+	  seconds for the methods InvGaussJordan1, InvGaussJordan2 and
+	  InvGaussJordan3, respectively, and each function occupies
+	  approximately 600MB of RAM during the execution of the algorithm.
+
+	  Spanish:
+  >> Version 1 - 17-VIII-2000
+	- Este ejemplo muestra como usar la poderosa clase CMatriz, para
+	  trabajar con matrices. Y mostrar como esta clase se puede incluir
+	  facilmente en sus aplicaciones matematicas.
+	- Para procesar una matriz de 5000 elementos se demora 240, 455 y
+	  450 segundos para los métodos  InvGaussJordan1, InvGaussJordan2 e
+	  InvGaussJordan3, respectivamente y cada función ocupa aproximadamente
+	  600MB de memoria RAM, durante la ejecución del algoritmo.
 
 
-Para procesar una matriz de 5000 elementos se demora 240, 455 y 450 segundos
-para los métodos  InvGaussJordan1, InvGaussJordan2 e InvGaussJordan3,
-respectivamente y cada función ocupa aproximadamente 600MB de memoria RAM,
-durante la ejecución del algoritmo.
-
-
-programado por:
- JOSE LUIS DE LA CRUZ LAZARO
-correos:
- jcruz@ec-red.com
- ramondc@hotmail.com
-Pagina Web ( EL MUNDO DEL CAOS ):
- http://www.geocities.com/joseluisdl
 ***************************************************************************/
 
-//#include <conio.h>
 #include <iostream>
 #include <string>
 #include <random>
@@ -37,33 +95,33 @@ using std::endl;
 
 //////////////////////////////////////////////////////////////////////
 //SE INGRESAN LOS ELEMENTOS DE LA MATRIZ, DESDE EL TECLADO, UNO POR UNO
-void IngresarElementos( CMatrix& A, string MatrixName, const unsigned int& Cols=0 )
+void EnterElements( CMatrix& A, string MatrixName, const unsigned int& Cols=0 )
 {
 
-	cout << "Ingrese elementos de la matriz " << MatrixName << std::endl;
+	cout << "Enter array elements " << MatrixName << std::endl;
 
-	int i, j, FIL = A.Fil(), COL = Cols==0 ? A.Col() : Cols;
+	int i, j, _Rows = A.Rows(), _Cols = Cols == 0 ? A.Cols() : Cols;
 
-	for (i = 0; i < FIL; i++)
-		for (j = 0; j < COL; j++)
+	for (i = 0; i < _Rows; i++)
+		for (j = 0; j < _Cols; j++)
 		{
-			cout << "Elemento ( Fil="<< i <<  ", Col=" << j << " ) = ";
+			cout << "Element ( Rows=" << i << ", Cols=" << j << " ) = ";
 			// se ingresan los elementos al arreglo Elemento, el cual es miembro de la matriz A
-			cin >> A.Elemento[i][j];
+			cin >> A.Element[i][j];
 		}
 }
 //////////////////////////////////////////////////////////////////////
 //ESCRIBE LA MATRIZ EN LA PANTALLA
-void Escribir(const CMatrix& A)
+void ShowMatrix(const CMatrix& A)
 {
 	cout << endl << endl;
 
-	int i, j, FIL = A.Fil(), COL = A.Col();
+	int i, j, _Rows = A.Rows(), _Cols = A.Cols();
 
-	for (i = 0; i < FIL; i++){
+	for (i = 0; i < _Rows; i++){
 
-		for (j = 0; j < COL; j++)
-			cout << A.Elemento[i][j] << '\t';
+		for (j = 0; j < _Cols; j++)
+			cout << A.Element[i][j] << '\t';
 
 		cout << endl;
 	}
@@ -79,12 +137,12 @@ void GenerateRandomMatrices(CMatrix& A, bool isDiagonallyDominant)
 
 	if (isDiagonallyDominant) {
 
-		if (A.Orden() > 0) {
+		if (A.Order() > 0) {
 
 			// A diagonally dominant matrix is created with random elements in the pre-specified
 			// range. So that it can be successfully processed by the Cholesky and Gauss-Seidel algorithms
 
-			const int& n = A.Orden();
+			const int& n = A.Order();
 			//double matrixDimension = double(n);
 
 			// Distribution values between matrixDimension*1.2 and matrixDimension*1.5
@@ -95,14 +153,14 @@ void GenerateRandomMatrices(CMatrix& A, bool isDiagonallyDominant)
 			int i, j;
 			for (i = 0; i < n; i++)
 				for (j = 0; j < n; j++)
-					A.Elemento[i][j] = i == j ?
+					A.Element[i][j] = i == j ?
 					distributionDiagonal(engine) :	// Random values between -1 and 1
 					distribution(engine);			// Random values between matrixDimension*1.2 and matrixDimension*1.5
 		}
 	}
 	else {
 
-		for (auto& element : A.Elemento) {
+		for (auto& element : A.Element) {
 
 			std::mt19937 engine(rd()); // Mersenne twister MT19937
 			auto generator = std::bind(distribution, engine);
@@ -112,213 +170,6 @@ void GenerateRandomMatrices(CMatrix& A, bool isDiagonallyDominant)
 	}
 
 }
-
-/*
-//UN EJEMPLO
-//IMPORTANTE: Si al correr el programa, este compila sin errores pero
-//al momento de ejecutarlo se cuelga el programa, mostrando un error
-//esto puede deberse a que no hay memoria suficiente para crear las matrices
-//sugiero que cambie el valor de _MAX (definido en CMATRIZ.H )
-//a un valor menoral que contiene actualmente
-int main()
-{
-	/////////////////////////////////////////////////////////////////////////
-	//PRIMER EJEMPLO
-	/////////////////////////////////////////////////////////////////////////
-	ImprimirTitulo(); //T¡tulo de la Demo de CMatriz 1.4
-
-	printf("\n\nIngresar datos de la matriz A (Matriz cuadrada)");
-	printf("\n\nIngrese el orden de la matriz: ");
-
-	int orden;
-	cin >> orden;
-
-	CMatrix A(orden); //se declara una matriz del orden especificado
-
-	printf("\nIngrese los elementos de la matriz A:\n\n");
-
-	IngresarElementos(A); // se ingresan los elementos de la matriz A desde el
-				 // teclado
-
-	//printf("\n\nPresione una tecla para ver la matriz ingresada...");
-	//getch();
-	pausa();
-
-	//ImprimirTitulo(); //T¡tulo de la Demo de CMatriz 1.4
-
-	cout << "\n\nUsted ingres¢ la siguiente Matriz A";
-
-	Escribir(A); //muestra la matriz en pantalla
-
-	//printf("\n\nPresione una tecla para ver su determinante y su inversa...");
-	//getch();
-	pausa();
-
-
-	//ImprimirTitulo(); //T¡tulo de la Demo de CMatriz 1.4
-
-	cout << "\n\nLa determinante de la matriz A es: " << A.DetCofact();
-
-	pausa(); //se hace una pausa
-
-	cout << "\n\nLa inversa de la matriz A por el M‚todo de Reducci¢n Gaussiana es:\n";
-
-	CMatrix I;
-	if (A.InvGaussJordan1(I))
-		//Escribe la inversa de A en pantalla, por el m‚todo de reducci¢n Gaussiana
-		Escribir(I); 
-	else
-		cout << "\n\nLa matriz no es inversible, su determinante es 0.\n";
-
-	pausa(); //se hace una pausa
-
-	printf("\n\nLa inversa de la matriz A por el M‚todo de la transpuesta\nde la matriz de cofactores es:\n");
-
-	if (A.InvCofact(I))
-		//Escribe la inversa de A en pantalla, por el m‚todo de la transpuesta de la matriz de cofactores
-		Escribir(I);
-	else
-		cout << "\n\nLa matriz no es inversible, su determinante es 0.\n";
-
-	pausa(); //se hace una pausa
-
-	//LA DIFERENCIA ENTRE InvGaussJordan1 e InvCofact es que la primera necesita
-	//de menos memoria que la segunda, pero la segunda hace menos operaciones
-	//que la primera, por la tanto InvCofact es mas r pida
-
-	/////////////////////////////////////////////////////////////////////////
-	//SEGUNDO EJEMPLO
-	/////////////////////////////////////////////////////////////////////////
-	ImprimirTitulo(); //T¡tulo de la Demo de CMatriz 1.4
-
-	cout << "\n\nComprobando las operaciones entre matrices (Suma, Resta, multiplicaci¢n)";
-	cout << "\n\nA continuaci¢n se le pedir  que ingrese los datos una matriz B, la cual se";
-	cout << "\noperar  con A. Entonces usted ya sabe que el orden de dicha matriz debe ser";
-	cout << "\nigual al orden de A, pero si usted quiere probar la facilidad con que CMatrix,";
-	cout << "\ndetecta errores en las dimensiones entre A y B al hacer operaciones, ingrese";
-	cout << "\nun orden para B diferente al de A";
-
-	cout << "\n\nIngresar datos de la matriz B (Matriz cuadrada)";
-	cout << "\n\nIngrese el orden de la matriz: ";
-
-	cin >> orden;
-
-	//se declara una matriz del orden especificado
-	CMatrix B(orden);
-
-	cout << "\nIngrese los elementos de la matriz B:\n\n";
-
-	// se ingresan los elementos de la matriz A desde el teclado
-	IngresarElementos(B);
-
-	//printf("\n\nPresione una tecla para ver la matriz ingresada...");
-	pausa();
-	
-	//ImprimirTitulo(); //T¡tulo de la Demo de CMatriz 1.4
-
-	cout << "\n\nUsted ingres¢ la siguiente Matriz B";
-
-	Escribir(B); //muestra la matriz en pantalla
-
-	cout << "\n\nPresione una tecla para ver las operaciones entre A y B...";
-
-	//ImprimirTitulo(); //T¡tulo de la Demo de CMatriz 1.4
-
-	CMatrix C(orden); //se declara una matriz C para contener la operaci¢n entre A y B
-
-	cout << "\nSuma de A y B:";
-
-	C = A + B; //Suma de matrices
-
-	Escribir(C); //se escribe la matriz C en pantalla
-
-	pausa(); //se hace una pausa
-
-	cout << "\nDiferencia de A y B:";
-
-	C = A - B; //Suma de matrices
-
-	Escribir(C); //se escribe la matriz C en pantalla
-
-	pausa(); //se hace una pausa
-
-	cout << "\nMultiplicaci¢n de A y B:";
-
-	C = A * B; //Suma de matrices
-
-	Escribir(C); //se escribe la matriz C en pantalla
-
-	pausa(); //se hace una pausa
-
-	/////////////////////////////////////////////////////////////////////////
-	//TERCER EJEMPLO
-	/////////////////////////////////////////////////////////////////////////
-	ImprimirTitulo(); //T¡tulo de la Demo de CMatriz 1.4
-
-	cout << "\n\nComo £ltimo ejemplo vamos a resolver un sistema de 3 ecuaciones";
-	cout << "\ncon 3 inc¢gnitas:";
-
-	//matriz de coeficientes
-	A = CMatrix(3);//se declara una matriz de orden 3
-
-	//matriz de terminos independientes
-	B = CMatrix(3, 1);//se declara una matriz con 3 filas y una columna
-
-	//matriz de soluciones
-	CMatrix X(3, 1);//se declara una matriz con 3 filas y una columna
-
-	//Se crea el sistema matricial A*X = B
-	//se obtienen los elementos de la matriz A y la matriz B
-	int i, j;
-	double elemento;
-
-	cout << "\n\nIngrese los coeficientes de las 3 ecuaciones:";
-
-	for (i = 0; i < 3; i++)
-	{
-		cout << "\n\nIngrese los coeficientes a" << i + 1 << ", b" << i + 1 << ", c" << i + 1 << " y d" << i + 1;
-		cout << "\nde la ecuaci¢n a" << i + 1 << "x + b" << i + 1 << "y + c" << i + 1 << "z = d" << i + 1 << "\n\n";
-
-		for (j = 0; j < 4; j++)
-		{
-			cout << std::string(1, 'a' + j) << i + 1 << ": ";
-			cin >> elemento;
-			if (j < 3)
-				A.Elemento[i][j] = elemento;
-			else
-				B.Elemento[i][0] = elemento;
-		}
-	}
-	//por el Algebra matricial sabemos que la soluci¢n de  A*X = B
-	//es X = Inversa(A)*B
-	
-	// CMatrix I;
-	if (A.InvGaussJordan1(I)){
-		//asignamos a X la soluci¢n del sistema
-		X = I * B;
-		cout << "\nLa soluci¢n del sistema es:";
-
-		//mostramos la soluci¢n del sistema
-		for (i = 0; i < 3; i++)
-			cout << "\nX" << i + 1 << " = " << X.Elemento[i][0];
-	}
-	else {
-		cout << "\n\nEl sistema es indeterminado. No se pudo encontrar una solución.\n";
-	}
-
-	pausa(); //se hace una pausa
-
-	ImprimirTitulo(); //T¡tulo de la Demo de CMatrix
-
-	//gotoxy(1, 4);
-	cout << "\nfue programado por:";
-	cout << "\n JOSE LUIS DE LA CRUZ LAZARO";
-	cout << "\n email: ramondc@hotmail.com";
-	cout << "\nPagina Web ( EL MUNDO DEL CAOS ):";
-	cout << "\n\nFIN DE LA DEMO... ;(";	
-	
-	return 1;
-}*/
 
 int main() {
 
@@ -361,7 +212,7 @@ int main() {
 
 
 		// Se verifica que la matriz A esté inicializada
-		if ( A.Orden() <= 0 )
+		if ( A.Order() <= 0 )
 			if (opc != 0 && opc != 1 && opc != 11) {
 
 				clrscr();
@@ -380,26 +231,22 @@ int main() {
 
 			clrscr();
 
-			cout << "\n\nIngrese el orden de la matriz: ";
+			cout << "\n\nEnter the order of the matrix: ";
 			int orden;
 			cin >> orden;
 			A = CMatrix(orden); //se declara una matriz del orden especificado
 
-			IngresarElementos(A, "A");
+			EnterElements(A, "A");
 
 			break;
 		case 1:
 		{
 			clrscr();
-			cout << "\n\nIngrese el orden de la matriz: ";
+			cout << "\n\nEnter the order of the matrix: ";
 			int orden;
 			cin >> orden;
 			A = CMatrix(orden); //se declara una matriz del orden especificado
-
-			//textcolor(LIGHTGRAY);
-			//cout << "\nIf you create a diagonally dominant matrix, it can be successfully processed" << endl;
-			//cout << "by the Cholesky and Gauss-Seidel algorithms." << endl << endl;
-
+						
 			cout << endl << endl;
 
 			textcolor(WHITE);
@@ -414,11 +261,11 @@ int main() {
 			
 			clrscr();
 
-			cout << "\n\nUsted ingreso la siguiente Matriz A :";
+			cout << "\n\nYou entered the following Matrix A:";
 
-			Escribir(A); //muestra la matriz en pantalla
+			ShowMatrix(A); //display the matrix on the screen
 
-			cout << std::endl << "Pres any key to continue ... ";
+			cout << std::endl << "Press any key to continue...";
 
 			cgetch();
 
@@ -430,15 +277,15 @@ int main() {
 			cout << Metodo_Matricial[opc] << endl;
 
 			textcolor(LIGHTGRAY);
-			cout << "\n\nComprobando las operaciones entre matrices (Suma, Resta, multiplicaci¢n)";
-			cout << "\n\nA continuaci¢n se le pedir  que ingrese los datos una matriz B, la cual se";
-			cout << "\noperar  con A. Entonces usted ya sabe que el orden de dicha matriz debe ser";
-			cout << "\nigual al orden de A, pero si usted quiere probar la facilidad con que CMatrix,";
-			cout << "\ndetecta errores en las dimensiones entre A y B al hacer operaciones, ingrese";
-			cout << "\nun orden para B diferente al de A";
+			cout << "\n\nChecking operations between matrices (Addition, Subtraction, multiplication)";
+			cout << "\n\nYou will then be asked to enter the data in a matrix B, which is";
+			cout << "\noperate with A. Then you already know that the order of said array must be";
+			cout << "\nsame as the order of A, but if you want to test the ease with which CMatrix,";
+			cout << "\ndetect errors in the dimensions between A and B when doing operations, please enter";
+			cout << "\nan order for B different from that of A";
 
-			cout << "\n\nIngresar datos de la matriz B (Matriz cuadrada)";
-			cout << "\n\nIngrese el orden de la matriz: ";
+			cout << "\n\nEnter data from matrix B (Square matrix)";
+			cout << "\n\nEnter the order of the array: ";
 
 			cin >> orden;
 
@@ -447,7 +294,7 @@ int main() {
 
 
 			textcolor(WHITE);
-			cout << "Desea ingresar la matriz B manualmente (Y/N)? ";
+			cout << "Do you want to enter matrix B manually (Y/N)?";
 			char subOption = toupper(cgetch());
 
 			textcolor(LIGHTGRAY);
@@ -455,49 +302,49 @@ int main() {
 			cout << endl << endl;
 
 			if (subOption == 'Y')
-				IngresarElementos(B, "B", 1);
+				EnterElements(B, "B", 1);
 			else {
 
 				// Se genera una matriz con elementos aleatorios
 				GenerateRandomMatrices(B, false);
 
-				cout << "Se generó una matriz 'B' con elementos aleatorios." << endl << endl;
+				cout << "An array 'B' with random elements was generated." << endl << endl;
 			}
 
-			if (AddOns::pauseYesOrNot("Desea visualizar las matrices A y B (Y/N)?") ) {
+			if (AddOns::pauseYesOrNot("Do you want to display matrices A and B (Y/N)?")) {
 
-				cout << "\nUsted ingreso la siguiente Matriz A";
+				cout << "\nYou entered the following Matrix A";
 
-				Escribir(A); //muestra la matriz en pantalla
+				ShowMatrix(A); //display the matrix on the screen
 
-				cout << "\nUsted ingreso la siguiente Matriz B";
+				cout << "\nYou entered the following Matrix B";
 
-				Escribir(B); //muestra la matriz en pantalla
+				ShowMatrix(B); //display the matrix on the screen
 			}
 
 			textcolor(LIGHTGRAY);
 
-			cout << "\n\nPresione una tecla para ver las operaciones entre A y B...";
+			cout << "\n\nPress a key to see the operations between A and B...";
 
 			cgetch();
 
-			CMatrix C(orden); //se declara una matriz C para contener la operaci¢n entre A y B
+			CMatrix C(orden); //an array C is declared to contain the operation between A and B
 
-			//------------------------------------------
-			
-			cout << "\nSuma de A y B:" << endl;					   
+			//---------------------------------------
 
-			AddOns::chronoStart(); // Init chronometer	
+			cout << "\nSum of A and B:" << endl;
 
-			C = A + B; //Suma de matrices
+			AddOns::chronoStart(); //Init chronometer
+
+			C = A + B; //Addition of matrices
 
 			AddOns::chronoEnd(); // End chronometer and show elapsed time
 
 			cout << endl;
 
-			if (AddOns::pauseYesOrNot("Desea visualizar la matriz C=A+B (Y/N)?")) {
+			if (AddOns::pauseYesOrNot("Do you want to display the matrix C=A+B (Y/N)?")) {
 			
-				Escribir(C); //se escribe la matriz C en pantalla				
+				ShowMatrix(C); //se escribe la matriz C en pantalla				
 			}
 
 			cout << endl;
@@ -506,45 +353,45 @@ int main() {
 			
 			//------------------------------------------
 			
-			cout << "\nDiferencia de A y B:" << endl;
+			cout << "\nDifference of A and B:" << endl;
 
-			AddOns::chronoStart(); // Init chronometer	
-			
-			C = A - B; //Suma de matrices
+			AddOns::chronoStart(); //Init chronometer
+
+			C = A - B; //Addition of matrices
 
 			AddOns::chronoEnd(); // End chronometer and show elapsed time
 
 			cout << endl;
 
-			if (AddOns::pauseYesOrNot("Desea visualizar la matriz C=A-B (Y/N)?")) {
+			if (AddOns::pauseYesOrNot("Do you want to display the matrix C=A-B (Y/N)?")) {
 
-				Escribir(C); //se escribe la matriz C en pantalla				
+				ShowMatrix(C); //the matrix C is written on the screen
 
 			}
 			cout << endl;
 
-			AddOns::pause(); //se hace una pausa
+			AddOns::pause(); //pause
 
 			//------------------------------------------
 
-			cout << "\nMultiplicaci¢n de A y B:" << endl;;
+			cout << "\nMultiplication of A and B:" << endl;;
 
-			AddOns::chronoStart(); // Init chronometer	
+			AddOns::chronoStart(); //Init chronometer
 
-			C = A * B; //Suma de matrices
+			C = A * B; //Addition of matrices
 
 			AddOns::chronoEnd(); // End chronometer and show elapsed time
 
 			cout << endl;
 
-			if (AddOns::pauseYesOrNot("Desea visualizar la matriz C=A*B (Y/N)?")) {
+			if (AddOns::pauseYesOrNot("Do you want to display the matrix C=A*B (Y/N)?")) {
 
-				Escribir(C); //se escribe la matriz C en pantalla				
+				ShowMatrix(C); //the matrix C is written on the screen
 			}
 
 			cout << endl;
 
-			AddOns::pause(); //se hace una pausa		
+			AddOns::pause(); //pause
 		}
 			break;
 		case  4:
@@ -556,7 +403,7 @@ int main() {
 
 			AddOns::chronoStart(); // Init chronometer			
 
-			cout << "\n\nLa transpuesta de la matriz A es:";
+			cout << "\n\nThe transpose of matrix A is:";
 
 			CMatrix T = A.Transposed();
 
@@ -565,7 +412,7 @@ int main() {
 			if (AddOns::pauseAndExit())
 				break;
 
-			Escribir(T);
+			ShowMatrix(T);
 
 			cout << std::endl << "Pres any key to continue ... ";
 
@@ -590,7 +437,7 @@ int main() {
 			if (AddOns::pauseAndExit())
 				break;
 
-			cout << "\n\nEl determinante de la matriz A es: " << Determinant;
+			cout << "\n\nThe determinant of matrix A is: " << Determinant;
 
 			cout << std::endl << std::endl << "Pres any key to continue ... ";
 
@@ -617,13 +464,13 @@ int main() {
 			if (AddOns::pauseAndExit())
 				break;
 
-			cout << "\n\nLa inversa de la matriz A por el Metodo de la transpuesta\nde la matriz de cofactores es:\n";
+			cout << "\n\nThe inverse of matrix A by the Transpose Method\nthe cofactor matrix is:\n";
 
 			if (ret)
-				//Escribe la inversa de A en pantalla, por el m‚todo de la transpuesta de la matriz de cofactores
-				Escribir(I);
+				//Write the inverse of A on the screen, by the transpose method of the cofactor matrix
+				ShowMatrix(I);
 			else
-				cout << "\n\nLa matriz no es inversible, su determinante es 0.\n";
+				cout << "\n\nThe matrix is not invertible, its determinant is 0.\n";
 
 			cout << std::endl << "Pres any key to continue ... ";
 
@@ -650,13 +497,13 @@ int main() {
 			if (AddOns::pauseAndExit())
 				break;
 
-			cout << "\n\nLa inversa de la matriz A es:\n";
+			cout << "\n\nThe inverse of matrix A is:\n";
 
 			if (ret)
-				//Escribe la inversa de A en pantalla, por el m‚todo de la transpuesta de la matriz de cofactores
-				Escribir(I);
+				//Write the inverse of A on the screen, by the transpose method of the cofactor matrix
+				ShowMatrix(I);
 			else
-				cout << "\n\nLa matriz no es inversible, su determinante es 0.\n";
+				cout << "\n\nThe matrix is not invertible, its determinant is 0.\n";
 
 			cout << std::endl << "Pres any key to continue ... ";
 
@@ -684,15 +531,15 @@ int main() {
 			if (AddOns::pauseAndExit())
 				break;
 
-			cout << "\n\nEl determinante de la matriz A es: " << Determinant;
+			cout << "\n\nThe determinant of matrix A is: " << Determinant;
 
-			cout << "\n\nLa inversa de la matriz A es:\n";
+			cout << "\n\nThe inverse of matrix A is:\n";
 
 			if (ret)
-				//Escribe la inversa de A en pantalla, por el m‚todo de la transpuesta de la matriz de cofactores
-				Escribir(I);
+				//Write the inverse of A on the screen, by the transpose method of the cofactor matrix
+				ShowMatrix(I);
 			else
-				cout << "\n\nLa matriz no es inversible, su determinante es 0.\n";
+				cout << "\n\nThe matrix is not invertible, its determinant is 0.\n";
 
 			cout << std::endl << "Pres any key to continue ... ";
 
@@ -720,15 +567,15 @@ int main() {
 			if (AddOns::pauseAndExit())
 				break;
 
-			cout << "\n\nEl determinante de la matriz A es: " << Determinant;
+			cout << "\n\nThe determinant of matrix A is: " << Determinant;
 
-			cout << "\n\nLa inversa de la matriz A es:\n";
+			cout << "\n\nThe inverse of matrix A is:\n";
 
 			if (ret)
-				//Escribe la inversa de A en pantalla, por el m‚todo de la transpuesta de la matriz de cofactores
-				Escribir(I);
+				//Write the inverse of A on the screen, by the transpose method of the cofactor matrix
+				ShowMatrix(I);
 			else
-				cout << "\n\nLa matriz no es inversible, su determinante es 0.\n";
+				cout << "\n\nThe matrix is not invertible, its determinant is 0.\n";
 
 			cout << std::endl << "Pres any key to continue ... ";
 
@@ -747,15 +594,15 @@ int main() {
 			CMatrix I;
 
 			//matriz de terminos independientes
-			CMatrix B(A.Orden(),1);
+			CMatrix B(A.Order(),1);
 
 			textcolor(LIGHTGRAY);
-			cout << "\nSi consideramos el sistema AX=b" << endl;
-			cout << "Se procederá al cálculo de X = A^-1 b" << endl;
-			cout << "Donde la matriz inversa A^-1 se calculara con el método Gauss Jordan 1" << endl << endl;
+			cout << "\nIf we consider the system AX=b" << endl;
+			cout << "The calculation of X = A^-1 b will be carried out" << endl;
+			cout << "Where the inverse matrix A^-1 will be calculated with the Gauss Jordan 1 method" << endl << endl;
 
 			textcolor(WHITE);
-			cout << "Desea ingresar la matriz b manualmente (Y/N)? ";
+			cout << "Do you want to enter matrix b manually (Y/N)?";
 			char subOption = toupper(cgetch());
 
 			textcolor(LIGHTGRAY);
@@ -763,30 +610,30 @@ int main() {
 			cout << endl << endl;
 
 			if (subOption == 'Y')				
-				IngresarElementos(B, "b", 1);
+				EnterElements(B, "b", 1);
 			else {	
 
-				// Se genera una matriz con elementos aleatorios
+				// An array is generated with random elements
 				GenerateRandomMatrices(B, false);
 
-				cout << "Se generó una matriz 'b' con elementos aleatorios." << endl << endl;
+				cout << "An array 'b' with random elements was generated." << endl << endl;
 			}
-			
-			//matriz de soluciones
-			//se declara una matriz con n filas y una columna
-			CMatrix X(A.Orden(), 1);			
 
-			AddOns::chronoStart(); // Init chronometer						
+			//solution matrix
+			//declare a matrix with n rows and one column
+			CMatrix X(A.Order(), 1);
 
-			bool ret = A.InvGaussJordan1(I);			
+			AddOns::chronoStart(); //Init chronometer
 
-			//por el Algebra matricial sabemos que la soluci¢n de  A*X = B
-			//es X = Inversa(A)*B
+			bool ret = A.InvGaussJordan1(I);
+
+			//through Matrix Algebra we know that the solution of A*X = B
+			//is X = Inverse(A)*B
 
 			if (ret) {
-				//asignamos a X la soluci¢n del sistema
+				//assign X the solution of the system
 				X = I * B;
-				
+
 			}
 
 			AddOns::chronoEnd(); // End chronometer and show elapsed time
@@ -796,14 +643,14 @@ int main() {
 
 			if (ret) {
 
-				int i, j, n = A.Orden();
+				int i, j, n = A.Order();
 
 				cout << "\n\nSystem Ax=B Entered: \n";
 
 				textcolor(YELLOW);
 				cout << "Matrix A";
 				
-				gotoxy(9 * A.Orden(), wherey());
+				gotoxy(9 * A.Order(), wherey());
 				textcolor(LIGHTGREEN);
 				cout << "Matrix B" << endl;
 
@@ -812,23 +659,23 @@ int main() {
 					// Show Matriz A
 					textcolor(YELLOW);
 					for (j = 0; j < n; j++)
-						cout << A.Elemento[i][j] << '\t';
+						cout << A.Element[i][j] << '\t';
 
 					// Show Matriz B
 					textcolor(LIGHTGREEN);
-					cout << B.Elemento[i][0] << endl;
+					cout << B.Element[i][0] << endl;
 				}
 				
 				textcolor(LIGHTGRAY);
 
-				cout << endl << endl << "La solucion del sistema es:";
+				cout << endl << endl << "The system solution is:";
 
 				//mostramos la solucion del sistema				
-				for (i = 0; i < X.Fil(); i++)
-					cout << "\nX" << i + 1 << " = " << X.Elemento[i][0];
+				for (i = 0; i < X.Rows(); i++)
+					cout << "\nX" << i + 1 << " = " << X.Element[i][0];
 			}
 			else {
-				cout << "\n\nEl sistema es indeterminado. No se pudo encontrar una solución.\n";
+				cout << "\n\nThe system is indeterminate. A solution could not be found.\n";
 			}
 
 			cgetch();
