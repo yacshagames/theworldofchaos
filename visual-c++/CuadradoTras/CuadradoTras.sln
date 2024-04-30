@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.34729.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CuadradoTras", "CuadradoTras.vcxproj", "{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+		Template|x64 = Template|x64
+		Template|x86 = Template|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Debug|x64.ActiveCfg = Debug|x64
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Debug|x64.Build.0 = Debug|x64
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Debug|x86.ActiveCfg = Debug|Win32
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Debug|x86.Build.0 = Debug|Win32
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Release|x64.ActiveCfg = Release|x64
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Release|x64.Build.0 = Release|x64
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Release|x86.ActiveCfg = Release|Win32
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Release|x86.Build.0 = Release|Win32
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Template|x64.ActiveCfg = Template|x64
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Template|x64.Build.0 = Template|x64
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Template|x86.ActiveCfg = Template|Win32
+		{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}.Template|x86.Build.0 = Template|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C5C05BF4-2BAA-413D-A0F1-32DCA5E52250}
+	EndGlobalSection
+EndGlobal
