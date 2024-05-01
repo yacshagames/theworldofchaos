@@ -1,0 +1,124 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Practica - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x80a /fo"Debug/Practica.res" /d "_DEBUG" /d "_AFXDLL" "C:\WINDOWS\Escritorio\Amelia\Cubo\Practica.rc"" 
+Creating temporary file "C:\WINDOWS\TEMP\RSPD2C0.TMP" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/Practica.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\WINDOWS\Escritorio\Amelia\Cubo\Practica.cpp"
+"C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPD2C0.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSPD2C1.TMP" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/Practica.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\WINDOWS\Escritorio\Amelia\Cubo\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPD2C1.TMP" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Practica.pdb" /debug /machine:I386 /out:"Debug/Practica.exe" /pdbtype:sept  .\Debug\Practica.obj .\Debug\PracticaDlg.obj .\Debug\StdAfx.obj .\Debug\Practica.res "
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+Practica.cpp
+PracticaDlg.cpp
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(419) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(419) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(420) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(420) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(421) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(421) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(422) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(422) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(423) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(423) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(425) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(425) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(426) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(426) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(427) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(427) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(428) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(428) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(429) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(429) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(431) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(431) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(432) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(432) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(433) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(433) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(434) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(434) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(435) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(435) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(436) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(436) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(437) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(437) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(438) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(438) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(482) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(482) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(483) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(483) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(484) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(484) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(485) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(485) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(486) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(486) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(487) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(487) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(496) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(496) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(497) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(497) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(498) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(498) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(499) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(499) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(500) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(500) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(502) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(502) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(503) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(503) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(504) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(504) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(505) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(505) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(506) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(506) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(508) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(508) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(509) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(509) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(510) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(510) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(511) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(511) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(512) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(512) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(513) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(513) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(514) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(514) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(515) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\WINDOWS\Escritorio\Amelia\Cubo\PracticaDlg.cpp(515) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+Practica.exe - 0 error(s), 84 warning(s)
+</pre>
+</body>
+</html>
