@@ -36,7 +36,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v141</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -261,8 +261,10 @@
   <ItemGroup>
     <ClInclude Include="Cuadrado3D.h" />
     <ClInclude Include="Cuadrado3DDlg.h" />
+    <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Cuadrado3D.ico" />
