@@ -1,9 +1,11 @@
 // LAGRANGEDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "pch.h"
+#include "framework.h"
 #include "LAGRANGE.h"
 #include "LAGRANGEDlg.h"
+#include "afxdialogex.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -285,7 +287,7 @@ Escalamiento(0.5,0.5,0.5);
 void CLAGRANGEDlg::OnButton10() 
 {  CClientDC di(this);
 	// Rotar X
-di.TextOut((c[1]-42.5*cos(angulo[0])+120*cos(angulo[1])),(c[2]+42.5*sin(angulo[0])+120*sin(angulo[1])-62.5),'p');
+di.TextOutW((c[1]-42.5*cos(angulo[0])+120*cos(angulo[1])),(c[2]+42.5*sin(angulo[0])+120*sin(angulo[1])-62.5),_T("p"));
 LimpiaCurva(c[1],c[2]);
 RotaX(0.872664646);
 LimpiaCurva(c[1],c[2]);
