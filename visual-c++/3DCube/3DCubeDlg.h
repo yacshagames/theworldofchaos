@@ -11,11 +11,11 @@
 /////////////////////////////////////////////////////////////////////////////
 // CPracticaDlg dialog
 
-class CPracticaDlg : public CDialog
+class C3DCubeDlg : public CDialog
 {
 // Construction
 public:
-	CPracticaDlg(CWnd* pParent = NULL);	// standard constructor
+	C3DCubeDlg(CWnd* pParent = NULL);	// standard constructor
 double eje[4][4];
 	double ejec[4][3];
 	double c[2];
@@ -59,6 +59,10 @@ protected:
 	afx_msg void OnButton4();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedButton5();
+	afx_msg void OnBnClickedButton6();
+	afx_msg void OnBnClickedButton7();
 };
 
 //{{AFX_INSERT_LOCATION}}

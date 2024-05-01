@@ -277,6 +277,7 @@
     <ClInclude Include="StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\3dcube.ico" />
     <Image Include="res\Practica.ico" />
   </ItemGroup>
   <ItemGroup>

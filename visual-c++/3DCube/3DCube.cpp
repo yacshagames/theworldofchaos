@@ -2,8 +2,8 @@
 //
 
 #include "stdafx.h"
-#include "Practica.h"
-#include "PracticaDlg.h"
+#include "3DCube.h"
+#include "3DCubeDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -14,7 +14,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CPracticaApp
 
-BEGIN_MESSAGE_MAP(CPracticaApp, CWinApp)
+BEGIN_MESSAGE_MAP(C3DCubeApp, CWinApp)
 	//{{AFX_MSG_MAP(CPracticaApp)
 		// NOTE - the ClassWizard will add and remove mapping macros here.
 		//    DO NOT EDIT what you see in these blocks of generated code!
@@ -25,7 +25,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CPracticaApp construction
 
-CPracticaApp::CPracticaApp()
+C3DCubeApp::C3DCubeApp()
 {
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
@@ -34,12 +34,12 @@ CPracticaApp::CPracticaApp()
 /////////////////////////////////////////////////////////////////////////////
 // The one and only CPracticaApp object
 
-CPracticaApp theApp;
+C3DCubeApp theApp;
 
 /////////////////////////////////////////////////////////////////////////////
 // CPracticaApp initialization
 
-BOOL CPracticaApp::InitInstance()
+BOOL C3DCubeApp::InitInstance()
 {
 	AfxEnableControlContainer();
 
@@ -54,7 +54,7 @@ BOOL CPracticaApp::InitInstance()
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 
-	CPracticaDlg dlg;
+	C3DCubeDlg dlg;
 	m_pMainWnd = &dlg;
 	int nResponse = dlg.DoModal();
 	if (nResponse == IDOK)

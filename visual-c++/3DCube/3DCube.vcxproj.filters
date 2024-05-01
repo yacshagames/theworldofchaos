@@ -43,6 +43,9 @@
     <Image Include="res\Practica.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\3dcube.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

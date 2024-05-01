@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
-// Used by Practica.rc
+// Archivo de inclusión generado de Microsoft Visual C++.
+// Usado por 3DCube.rc
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
@@ -10,7 +10,10 @@
 #define IDC_BUTTON1                     1000
 #define IDC_BUTTON2                     1001
 #define IDC_BUTTON3                     1002
+#define IDC_BUTTON5                     1003
 #define IDC_BUTTON4                     1004
+#define IDC_BUTTON6                     1005
+#define IDC_BUTTON7                     1006
 
 // Next default values for new objects
 // 

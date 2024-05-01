@@ -19,10 +19,10 @@
 // See Practica.cpp for the implementation of this class
 //
 
-class CPracticaApp : public CWinApp
+class C3DCubeApp : public CWinApp
 {
 public:
-	CPracticaApp();
+	C3DCubeApp();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
