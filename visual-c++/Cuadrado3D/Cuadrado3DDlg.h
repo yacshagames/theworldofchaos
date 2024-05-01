@@ -28,7 +28,8 @@ public:
 	void RotarX( double angulo );
 	void DibujarEjes();	
 	double ox,oy,ix,iy,jx,jy,zy;
-	double Punto[4][3];
+	double Pivote[3];
+	double Punto[5][3];
 	double PuntoReflejado[4][3];
 
 	void Dibujar();
@@ -39,6 +40,7 @@ public:
 	enum { IDD = IDD_CUADRADO3D_DIALOG };
 	BOOL	m_Sentido;
 	BOOL	m_Direccion;
+	int		m_Pivote;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
@@ -67,6 +69,8 @@ protected:
 	afx_msg void OnReflejarxz();
 	afx_msg void OnReflejaryz();
 	afx_msg void OnReiniciar();
+	afx_msg void OnLimpiarreflexion();
+	afx_msg void OnReflejarOrigen();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

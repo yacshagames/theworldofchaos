@@ -66,6 +66,7 @@ CCuadrado3DDlg::CCuadrado3DDlg(CWnd* pParent /*=NULL*/)
 	//{{AFX_DATA_INIT(CCuadrado3DDlg)
 	m_Sentido = FALSE;
 	m_Direccion = FALSE;
+	m_Pivote = 0;
 	//}}AFX_DATA_INIT
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -77,6 +78,7 @@ void CCuadrado3DDlg::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CCuadrado3DDlg)
 	DDX_Check(pDX, IDC_SENTIDO, m_Sentido);
 	DDX_Check(pDX, IDC_DIRECCION, m_Direccion);
+	DDX_Radio(pDX, IDC_PIVOTE, m_Pivote);
 	//}}AFX_DATA_MAP
 }
 
@@ -95,6 +97,8 @@ BEGIN_MESSAGE_MAP(CCuadrado3DDlg, CDialog)
 	ON_BN_CLICKED(IDC_REFLEJARXZ, OnReflejarxz)
 	ON_BN_CLICKED(IDC_REFLEJARYZ, OnReflejaryz)
 	ON_BN_CLICKED(IDC_REINICIAR, OnReiniciar)
+	ON_BN_CLICKED(IDC_LIMPIARREFLEXION, OnLimpiarreflexion)
+	ON_BN_CLICKED(IDC_REFLEJARORIGEN, OnReflejarOrigen)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -132,8 +136,8 @@ BOOL CCuadrado3DDlg::OnInitDialog()
 	
 	//coordenadas del origen de coordenadas
 	//en el plano 2D de la pantalla
-	ox=250; //coordenada x
-	oy=200; //coordenada y
+	ox=300; //coordenada x
+	oy=300; //coordenada y
 	
 	//coordenadas de los vectores unitarios i,j,k
 	//en el plano 2D de la pantalla
@@ -261,11 +265,11 @@ void CCuadrado3DDlg::RotarX(double angulo)
 
 	for(int i=0;i<4;i++)
 	{
-	 Y=Punto[i][1];
-	 Z=Punto[i][2];	
+	 Y=Punto[i][1]-Pivote[1];
+	 Z=Punto[i][2]-Pivote[2];	
 
-	 Punto[i][1]= Y*cos(angulo)+Z*sin(angulo);
-	 Punto[i][2]= -Y*sin(angulo)+Z*cos(angulo);
+	 Punto[i][1]= Pivote[1]+Y*cos(angulo)+Z*sin(angulo);
+	 Punto[i][2]= Pivote[2]-Y*sin(angulo)+Z*cos(angulo);
 	}
 }
 
@@ -276,11 +280,11 @@ void CCuadrado3DDlg::RotarY(double angulo)
 
 	for(int i=0;i<4;i++)
 	{
-	 X=Punto[i][0];
-	 Z=Punto[i][2];	
+	 X=Punto[i][0]-Pivote[0];
+	 Z=Punto[i][2]-Pivote[2];	
 
-	 Punto[i][0]= X*cos(angulo)-Z*sin(angulo);
-	 Punto[i][2]= X*sin(angulo)+Z*cos(angulo);
+	 Punto[i][0]= Pivote[0]+X*cos(angulo)-Z*sin(angulo);
+	 Punto[i][2]= Pivote[2]+X*sin(angulo)+Z*cos(angulo);
 	}
 }
 
@@ -291,32 +295,32 @@ void CCuadrado3DDlg::RotarZ(double angulo)
 
 	for(int i=0;i<4;i++)
 	{
-	 X=Punto[i][0];
-	 Y=Punto[i][1];	
+	 X=Punto[i][0]-Pivote[0];
+	 Y=Punto[i][1]-Pivote[1];	
 
-	 Punto[i][0]= X*cos(angulo)+Y*sin(angulo);
-	 Punto[i][1]= -X*sin(angulo)+Y*cos(angulo);
+	 Punto[i][0]= Pivote[0]+X*cos(angulo)+Y*sin(angulo);
+	 Punto[i][1]= Pivote[1]-X*sin(angulo)+Y*cos(angulo);
 	}
 }
 
 //traslada el cuadrado paralelo al eje x
 void CCuadrado3DDlg::TrasladarX( int desplazamiento )
 {
- 	for(int i=0;i<4;i++)
+ 	for(int i=0;i<5;i++)
 	 Punto[i][0]+=desplazamiento;
 }
 
 //traslada el cuadrado paralelo al eje y
 void CCuadrado3DDlg::TrasladarY( int desplazamiento )
 {
-  for(int i=0;i<4;i++)
+  for(int i=0;i<5;i++)
 	 Punto[i][1]+=desplazamiento;
 }
 
 //traslada el cuadrado paralelo al eje z
 void CCuadrado3DDlg::TrasladarZ( int desplazamiento )
 {
-  for(int i=0;i<4;i++)
+  for(int i=0;i<5;i++)
 	 Punto[i][2]+=desplazamiento;
 }
 
@@ -329,6 +333,15 @@ void CCuadrado3DDlg::OnRotarx()
     UpdateData(true);
 	int s;
     if( m_Sentido ) s=1; else s=-1;
+
+	if( m_Pivote )
+	{
+		Pivote[0]=0; Pivote[1]=0; Pivote[2]=0; //Pivote es el origen
+	}
+	else
+	{
+		Pivote[0]=Punto[4][0]; Pivote[1]=Punto[4][1]; Pivote[2]=Punto[4][2]; //Pivote es el centro
+	}
 
 	RotarX(0.087266*s);
 	Invalidate();
@@ -344,6 +357,15 @@ void CCuadrado3DDlg::OnRotary()
 	UpdateData(true);
 	int s;
     if( m_Sentido ) s=1; else s=-1;
+	
+	if( m_Pivote )
+	{
+		Pivote[0]=0; Pivote[1]=0; Pivote[2]=0; //Pivote es el origen
+	}
+	else
+	{
+		Pivote[0]=Punto[4][0]; Pivote[1]=Punto[4][1]; Pivote[2]=Punto[4][2]; //Pivote es el centro
+	}
 
 	RotarY(0.087266*s);
 	Invalidate();	
@@ -358,6 +380,15 @@ void CCuadrado3DDlg::OnRotarz()
 	UpdateData(true);
 	int s;
     if( m_Sentido ) s=1; else s=-1;
+	
+	if( m_Pivote )
+	{
+		Pivote[0]=0; Pivote[1]=0; Pivote[2]=0; //Pivote es el origen
+	}
+	else
+	{
+		Pivote[0]=Punto[4][0]; Pivote[1]=Punto[4][1]; Pivote[2]=Punto[4][2]; //Pivote es el centro
+	}
 
 	RotarZ(0.087266*s);
 	Invalidate();	
@@ -409,7 +440,7 @@ void CCuadrado3DDlg::ReflejarXY()
   {
    PuntoReflejado[i][0]=Punto[i][0];
    PuntoReflejado[i][1]=Punto[i][1];
-   PuntoReflejado[i][2]=0;
+   PuntoReflejado[i][2]=-Punto[i][2];
   }
   
 }
@@ -421,7 +452,7 @@ void CCuadrado3DDlg::ReflejarXZ()
   for(int i=0;i<4;i++)
   {
    PuntoReflejado[i][0]=Punto[i][0];
-   PuntoReflejado[i][1]=0;
+   PuntoReflejado[i][1]=-Punto[i][1];
    PuntoReflejado[i][2]=Punto[i][2];
   }
 }
@@ -432,7 +463,7 @@ void CCuadrado3DDlg::ReflejarYZ()
 
   for(int i=0;i<4;i++)
   {
-   PuntoReflejado[i][0]=0;
+   PuntoReflejado[i][0]=-Punto[i][0];
    PuntoReflejado[i][1]=Punto[i][1];
    PuntoReflejado[i][2]=Punto[i][2];
   }
@@ -492,12 +523,32 @@ void CCuadrado3DDlg::OnReiniciar()
 
 void CCuadrado3DDlg::InicializarPuntos()
 {
-	double Punto1[4][3] = { 10, 10, 0,
-							110,10,0,
-							110,110,0,
-							10,110,0};
+	double Punto1[5][3] = { -50, -50, 0,
+							 50, -50, 0,
+							 50,  50, 0,
+							-50,  50, 0,
+							  0,   0, 0 };
 	int i,j;
-	for( i=0;i<4;i++)
+	for( i=0;i<5;i++)
 		for(j=0;j<3;j++)
 			Punto[i][j]=Punto1[i][j];
+}
+
+void CCuadrado3DDlg::OnLimpiarreflexion() 
+{
+	// TODO: Add your control notification handler code here
+	Invalidate();
+}
+
+void CCuadrado3DDlg::OnReflejarOrigen() 
+{
+	// TODO: Add your control notification handler code here
+	for(int i=0;i<4;i++)
+  {
+   PuntoReflejado[i][0]=-Punto[i][0];
+   PuntoReflejado[i][1]=-Punto[i][1];
+   PuntoReflejado[i][2]=-Punto[i][2];
+  }
+	
+	DibujarReflejo();
 }
