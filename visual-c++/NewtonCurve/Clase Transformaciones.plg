@@ -1,0 +1,71 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Clase Transformaciones - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x280a /fo"Debug/Clase Transformaciones.res" /d "_DEBUG" /d "_AFXDLL" "G:\W3312\Jandia3\Clase Curva Newton\Clase Transformaciones.rc"" 
+Creating temporary file "C:\TEMP\RSP2.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/Clase Transformaciones.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"G:\W3312\Jandia3\Clase Curva Newton\Clase Transformaciones.cpp"
+"G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP2.tmp" 
+Creating temporary file "C:\TEMP\RSP3.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/Clase Transformaciones.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"G:\W3312\Jandia3\Clase Curva Newton\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP3.tmp" 
+Creating temporary file "C:\TEMP\RSP4.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/Clase Transformaciones.pdb" /debug /machine:I386 /out:"Debug/Clase Transformaciones.exe" /pdbtype:sept 
+".\Debug\Clase Transformaciones.obj"
+".\Debug\Clase TransformacionesDlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\Clase Transformaciones.res"
+]
+Creating command line "link.exe @C:\TEMP\RSP4.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+Clase Transformaciones.cpp
+Clase TransformacionesDlg.cpp
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(428) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(428) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(455) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(455) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(464) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(464) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(489) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(489) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(598) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(598) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(599) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(599) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(600) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(600) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(601) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(601) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(602) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(602) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(603) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+G:\W3312\Jandia3\Clase Curva Newton\Clase TransformacionesDlg.cpp(603) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+Generating Code...
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/Clase Transformaciones.bsc"  ".\Debug\StdAfx.sbr" ".\Debug\Clase Transformaciones.sbr" ".\Debug\Clase TransformacionesDlg.sbr""
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+Clase Transformaciones.exe - 0 error(s), 20 warning(s)
+</pre>
+</body>
+</html>
