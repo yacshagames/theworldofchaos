@@ -364,7 +364,7 @@ void CGokucaricaturaDlg::MatxPto1()
 	p2[1][1] =  160; p2[1][2] =    20;
 	p2[2][1] =  216; p2[2][2] =    122;
 	
-
+	int k;
 	for ( k=0; k<=n; k++)
 	{
 		
@@ -1482,8 +1482,9 @@ void CGokucaricaturaDlg::MatxPto2()
 	p1[1][1] =  110; p1[1][2] =    70;
 	p1[2][1] =  112; p1[2][2] =    122;
 	
+	int k;
 
-	for (int k=0; k<=n; k++)
+	for (k=0; k<=n; k++)
 	{
 		
 		
