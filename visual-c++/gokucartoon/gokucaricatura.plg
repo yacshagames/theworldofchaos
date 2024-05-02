@@ -1,0 +1,50 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: gokucaricatura - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSPF1E0.TMP" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/gokucaricatura.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPF1E0.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSPF1E1.TMP" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/gokucaricatura.pdb" /debug /machine:I386 /out:"Debug/gokucaricatura.exe" /pdbtype:sept 
+".\Debug\gokucaricatura.obj"
+".\Debug\gokucaricaturaDlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\gokucaricatura.res"
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSPF1E1.TMP"
+<h3>Output Window</h3>
+Compiling...
+gokucaricaturaDlg.cpp
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(224) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(224) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(248) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(248) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(278) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(278) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(297) : warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(1388) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(1388) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(1413) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(1413) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(1452) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(1452) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(1456) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Mis documentos\Proyectos_C++\gokucaricatura\gokucaricaturaDlg.cpp(1456) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+Linking...
+
+
+
+<h3>Results</h3>
+gokucaricatura.exe - 0 error(s), 15 warning(s)
+</pre>
+</body>
+</html>
