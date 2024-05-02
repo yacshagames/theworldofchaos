@@ -1,5 +1,36 @@
-// gokucaricaturaDlg.cpp : implementation file
-//
+/******************************************************************************
+:: GOKU CARTOON :: GOKU CARICATURA ::
+Draw Goku's face using the Bezier, open B-spline and closed B-spline methods.
+
+Spanish:
+Dibuja la cara de Goku usando los métodos Bezier, B-spline abierto y
+B-spline cerrado.
+
+Developed by:
+
+Original authors: Eduardo Denegri y Sergio Dongo
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 02-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Update visual-c++\gokucartoon - Porting to VC++ 2017.
+	- Add goku face icon.
+
+  >> Version 1 - 06-VI-2000
+	- First version developed by Eduardo Denegri y Sergio Dongo
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
+
+
 
 #include "stdafx.h"
 #include "gokucaricatura.h"
