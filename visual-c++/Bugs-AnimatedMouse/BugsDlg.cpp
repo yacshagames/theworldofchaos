@@ -1,5 +1,41 @@
-// BugsDlg.cpp : implementation file
-//
+/******************************************************************************
+:: BUGS - ANIMATED MOUSE :: BUGS - RATÓN ANIMADO ::
+
+Draws a mouse's face using Bezier curves, and then animates the mouse's face,
+like a cartoon.
+
+Spanish:
+Dibuja la cara de un raton usando curvas de Bezier, y luego se anima
+la cara del ratón, como un dibujo animado.
+
+Developed by:
+
+Original authors: Amelia
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 02-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Update visual-c++\Bugs-MouseAnimated - Porting to VC++ 2017.
+	- Added mouse face icon
+	- Update format code
+	- Various bugs are corrected, which do not allow correct mouse animation.
+	- A frame with a white background is added, to better show the animation,
+	  and to eliminate the bug that caused the buttons to disappear when
+	  starting the animation
+
+  >> Version 1 - 02-VI-2000
+	- First version developed by Amelia
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "stdafx.h"
 #include "Bugs.h"
@@ -68,14 +104,17 @@ CBugsDlg::CBugsDlg(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+
+	m_Detener = false;
 }
 
 void CBugsDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CBugsDlg)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	// NOTE: the ClassWizard will add DDX and DDV calls here
 	//}}AFX_DATA_MAP
+	DDX_Control(pDX, IDC_CUADRO, m_Cuadro);
 }
 
 BEGIN_MESSAGE_MAP(CBugsDlg, CDialog)
@@ -83,8 +122,10 @@ BEGIN_MESSAGE_MAP(CBugsDlg, CDialog)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDCANCEL2, OnCancel2)
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(ID_ANIMATE_BUTTON, &CBugsDlg::OnBnClickedAnimateButton)
+	ON_BN_CLICKED(ID_STOP_BUTTON, &CBugsDlg::OnBnClickedStopButton)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -168,7 +209,7 @@ void CBugsDlg::OnPaint()
 	{
 		CDialog::OnPaint();
 	}
-	Inicio();
+	//Animar();
 }
 
 // The system calls this to obtain the cursor to display while the user drags
@@ -183,7 +224,9 @@ HCURSOR CBugsDlg::OnQueryDragIcon()
 void CBugsDlg::Caritura()
 {
 
-	CClientDC dibu(this);
+	//CClientDC dibu(this);
+
+	CDC& dibu = *GetDC();
 
 	int i, k;
 	double tt;
@@ -336,239 +379,249 @@ int CBugsDlg::Factorial(int num)
 	}
 }
 
-void CBugsDlg::OnCancel2()
-{
-	if (anim == 0) anim = 1;
-	else anim = 0;
-	Inicio();
-}
-
-void CBugsDlg::Inicio()
+void CBugsDlg::Animar()
 {
 	angulo[0] = 0.26179;                             // 15/180*PI
 	angulo[1] = 0.52358;                             // 30/180*PI
-	t[0] = 0; t[1] = 1; t[1] = 1; t[3] = 1; t[4] = 1;
+	t[0] = 0; t[1] = 1; t[2] = 1; t[3] = 1; t[4] = 1;
 
 	c[0] = 200;
 	c[1] = 200;
 	densidad = 10;
 
-	if (anim == 0)
-	{
-		//boca-21
-		npuntos = 3;
-		p[0][0] = 100;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -55;
-		p[1][0] = 20;	p[1][1] = 180 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -50;
-		p[2][0] = 20;	p[2][1] = 50 + p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -30;
+	anim = 0;
+	int Velocidad = 100;
 
-		//Borrar();
-		Invalidate();
-		//boca-10
-		npuntos = 4;
-		p[0][0] = 100;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -55;
-		p[1][0] = 20;	p[1][1] = 180 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -50;
-		p[2][0] = 70;	p[2][1] = 400 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -50;
-		p[3][0] = 100;	p[3][1] = 50 + p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = -55;
+	while (m_Detener == false) {	
+
+		//Borra la pantalla
+		CRect rect;
+		m_Cuadro.GetClientRect(rect);
+		CDC& dibu = *m_Cuadro.GetDC();
+		dibu.Rectangle(rect);
+
+		if (anim == 0)
+		{/*
+			//boca-21
+			npuntos = 3;
+			p[0][0] = 100;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -55;
+			p[1][0] = 20;	p[1][1] = 180 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -50;
+			p[2][0] = 20;	p[2][1] = 50 + p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -30;
+			*/
+			//Borrar();
+			//Invalidate();			
+			
+			//boca-10
+			npuntos = 4;
+			p[0][0] = 100;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -55;
+			p[1][0] = 20;	p[1][1] = 180 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -50;
+			p[2][0] = 70;	p[2][1] = 400 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -50;
+			p[3][0] = 100;	p[3][1] = 50 + p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = -55;			
+
+			Caritura();
+
+		}
+		else
+		{/*
+			//boca-10
+			npuntos = 4;
+			p[0][0] = 100;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -55;
+			p[1][0] = 20;	p[1][1] = 180 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -50;
+			p[2][0] = 70;	p[2][1] = 400 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -50;
+			p[3][0] = 100;	p[3][1] = 50 + p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = -55;
+			*/
+			//Borrar();
+			//Invalidate();
+			
+			//boca-21			
+			npuntos = 4;
+			p[0][0] = 100;	p[0][1] = 50+p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -55;
+			p[1][0] = 20;	p[1][1] = 180+p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -340;
+			p[2][0] = 20;	p[2][1] = 50-p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -150;
+			p[3][0] = 100;	p[3][1] = 50+p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = -55;
+
+			Caritura();
+		}
+		
+		// Se resetea anim
+		if (++anim == 2)
+			anim = 0;
+
+		//orejaI-1
+		npuntos = 5;
+		p[0][0] = 20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
+		p[1][0] = 20;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 500;
+		p[2][0] = 520;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = 500;
+		p[3][0] = 520;	p[3][1] = -p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = 0;
+		p[4][0] = 20;	p[4][1] = -p[4][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[4][2] = 0;
 
 		Caritura();
 
-	}
-	else
-	{
-		//boca-10
+		//orejaIch-2
 		npuntos = 4;
-		p[0][0] = 100;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -55;
-		p[1][0] = 20;	p[1][1] = 180 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -50;
-		p[2][0] = 70;	p[2][1] = 400 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -50;
-		p[3][0] = 100;	p[3][1] = 50 + p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = -55;
-
-		//Borrar();
-		Invalidate();
-		//boca-21
-		npuntos = 3;
-		p[0][0] = 100;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -55;
-		p[1][0] = 20;	p[1][1] = 180 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -50;
-		p[2][0] = 20;	p[2][1] = 50 + p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -30;
+		p[0][0] = 20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
+		p[1][0] = 100;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 300;
+		p[2][0] = 300;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = 100;
+		p[3][0] = 20;	p[3][1] = -p[4][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = 0;
 
 		Caritura();
+
+
+		//orejaD-3
+		npuntos = 5;
+		p[0][0] = -20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
+		p[1][0] = -20;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 500;
+		p[2][0] = -520;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = 500;
+		p[3][0] = -520;	p[3][1] = -p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = 0;
+		p[4][0] = -20;	p[4][1] = -p[4][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[4][2] = 0;
+
+		Caritura();
+
+		//orejaDch-4
+		npuntos = 4;
+		p[0][0] = -20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
+		p[1][0] = -100;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 300;
+		p[2][0] = -300;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = 100;
+		p[3][0] = -20;	p[3][1] = -p[4][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = 0;
+
+		Caritura();
+		//cabeza-5
+		npuntos = 3;
+		p[0][0] = -20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
+		p[1][0] = 0;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 50;
+		p[2][0] = 20;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = 0;
+
+		Caritura();
+
+		//cara-6
+		npuntos = 5;
+		p[0][0] = 20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
+		p[1][0] = 600;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -300;
+		p[2][0] = 0;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -1500;
+		p[3][0] = -600;	p[3][1] = -p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = -300;
+		p[4][0] = -20;	p[4][1] = -p[4][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[4][2] = 0;
+
+		Caritura();
+
+		//ojoI-7
+		npuntos = 5;
+		p[0][0] = 20;	p[0][1] = 10;    p[0][2] = 0;
+		p[1][0] = 220;	p[1][1] = 10;    p[1][2] = 0;
+		p[2][0] = 220;	p[2][1] = 10;    p[2][2] = -300;
+		p[3][0] = 20;	p[3][1] = 10;    p[3][2] = -300;
+		p[4][0] = 20;	p[4][1] = 10;    p[4][2] = 0;
+
+		Caritura();
+
+		//ojoD-8
+		npuntos = 5;
+		p[0][0] = 10;	p[0][1] = 30;    p[0][2] = 10;
+		p[1][0] = 10;	p[1][1] = 30 + 580 * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 10;
+		p[2][0] = 10;	p[2][1] = p[1][1];    p[2][2] = -280;
+		p[3][0] = 10;	p[3][1] = 30;    p[3][2] = -280;
+		p[4][0] = 10;	p[4][1] = 30;    p[4][2] = 10;
+
+		Caritura();
+
+		//nariz-9
+		npuntos = 4;
+		p[0][0] = 0;	p[0][1] = p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -90;
+		p[1][0] = 200;	p[1][1] = p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -140;
+		p[2][0] = -50;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -140;
+		p[3][0] = 0;	p[3][1] = p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = -90;
+
+		Caritura();
+
+
+		//ojoIch-11
+		npuntos = 5;
+		p[0][0] = 20;	p[0][1] = 10;    p[0][2] = -20;
+		p[1][0] = 220;	p[1][1] = 10;    p[1][2] = 0;
+		p[2][0] = 220;	p[2][1] = 10;    p[2][2] = -300;
+		p[3][0] = 20;	p[3][1] = 10;    p[3][2] = -300;
+		p[4][0] = 20;	p[4][1] = 10;    p[4][2] = -20;
+
+		Caritura();
+
+		//ojoD-12
+		npuntos = 5;
+		p[0][0] = 10;	p[0][1] = 30;    p[0][2] = -10;
+		p[1][0] = 10;	p[1][1] = 30 + 580 * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 10;
+		p[2][0] = 10;	p[2][1] = p[1][1];    p[2][2] = -280;
+		p[3][0] = 10;	p[3][1] = 30;    p[3][2] = -280;
+		p[4][0] = 10;	p[4][1] = 30;    p[4][2] = -10;
+
+		Caritura();
+
+		//bigoteI1-13
+		npuntos = 3;
+		p[0][0] = 80;	p[0][1] = 30 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -30;
+		p[1][0] = 120;	p[1][1] = p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -50;
+		p[2][0] = 180;   p[2][1] = p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -20;
+
+		Caritura();
+
+		//bigoteI1-14
+		npuntos = 3;
+		p[0][0] = 80;	p[0][1] = 30 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -25;
+		p[1][0] = 120;	p[1][1] = p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -45;
+		p[2][0] = 180;   p[2][1] = p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -15;
+
+		Caritura();
+
+		//bigoteI1-15
+		npuntos = 3;
+		p[0][0] = 80;	p[0][1] = 30 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -20;
+		p[1][0] = 120;	p[1][1] = p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -40;
+		p[2][0] = 180;   p[2][1] = p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -10;
+
+		Caritura();
+
+		//bigoteI1-16
+		npuntos = 3;
+		p[0][0] = 80;	p[0][1] = 30 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -35;
+		p[1][0] = 120;	p[1][1] = p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -55;
+		p[2][0] = 180;   p[2][1] = p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -25;
+
+		Caritura();
+
+		//bigoteD2-17
+		npuntos = 3;
+		p[0][0] = 40;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -35;
+		p[1][0] = 20;	p[1][1] = 20 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -100;
+		p[2][0] = -60;   p[2][1] = 100 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -35;
+
+		Caritura();
+
+		//bigoteD2-18
+		npuntos = 3;
+		p[0][0] = 40;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -30;
+		p[1][0] = 20;	p[1][1] = 20 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -95;
+		p[2][0] = -60;   p[2][1] = 100 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -30;
+
+		Caritura();
+
+		//bigoteD2-19
+		npuntos = 3;
+		p[0][0] = 40;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -40;
+		p[1][0] = 20;	p[1][1] = 20 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -105;
+		p[2][0] = -60;   p[2][1] = 100 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -40;
+
+		Caritura();
+
+		//bigoteD2-20
+		npuntos = 3;
+		p[0][0] = 40;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -45;
+		p[1][0] = 20;	p[1][1] = 20 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -110;
+		p[2][0] = -60;   p[2][1] = 100 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -45;
+
+		Caritura();
+
+		//Pone una pausa de "m_Velocidad" milisegundos entre cada cuadro
+		//si se presiona el boton Detener se sale del bucle
+		if (Pausa(Velocidad))
+			break;
 	}
-
-	//orejaI-1
-	npuntos = 5;
-	p[0][0] = 20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
-	p[1][0] = 20;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 500;
-	p[2][0] = 520;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = 500;
-	p[3][0] = 520;	p[3][1] = -p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = 0;
-	p[4][0] = 20;	p[4][1] = -p[4][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[4][2] = 0;
-
-	Caritura();
-
-	//orejaIch-2
-	npuntos = 4;
-	p[0][0] = 20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
-	p[1][0] = 100;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 300;
-	p[2][0] = 300;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = 100;
-	p[3][0] = 20;	p[3][1] = -p[4][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = 0;
-
-	Caritura();
-
-
-	//orejaD-3
-	npuntos = 5;
-	p[0][0] = -20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
-	p[1][0] = -20;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 500;
-	p[2][0] = -520;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = 500;
-	p[3][0] = -520;	p[3][1] = -p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = 0;
-	p[4][0] = -20;	p[4][1] = -p[4][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[4][2] = 0;
-
-	Caritura();
-
-	//orejaDch-4
-	npuntos = 4;
-	p[0][0] = -20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
-	p[1][0] = -100;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 300;
-	p[2][0] = -300;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = 100;
-	p[3][0] = -20;	p[3][1] = -p[4][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = 0;
-
-	Caritura();
-	//cabeza-5
-	npuntos = 3;
-	p[0][0] = -20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
-	p[1][0] = 0;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 50;
-	p[2][0] = 20;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = 0;
-
-	Caritura();
-
-	//cara-6
-	npuntos = 5;
-	p[0][0] = 20;	p[0][1] = -p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = 0;
-	p[1][0] = 600;	p[1][1] = -p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -300;
-	p[2][0] = 0;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -1500;
-	p[3][0] = -600;	p[3][1] = -p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = -300;
-	p[4][0] = -20;	p[4][1] = -p[4][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[4][2] = 0;
-
-	Caritura();
-
-	//ojoI-7
-	npuntos = 5;
-	p[0][0] = 20;	p[0][1] = 10;    p[0][2] = 0;
-	p[1][0] = 220;	p[1][1] = 10;    p[1][2] = 0;
-	p[2][0] = 220;	p[2][1] = 10;    p[2][2] = -300;
-	p[3][0] = 20;	p[3][1] = 10;    p[3][2] = -300;
-	p[4][0] = 20;	p[4][1] = 10;    p[4][2] = 0;
-
-	Caritura();
-
-	//ojoD-8
-	npuntos = 5;
-	p[0][0] = 10;	p[0][1] = 30;    p[0][2] = 10;
-	p[1][0] = 10;	p[1][1] = 30 + 580 * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 10;
-	p[2][0] = 10;	p[2][1] = p[1][1];    p[2][2] = -280;
-	p[3][0] = 10;	p[3][1] = 30;    p[3][2] = -280;
-	p[4][0] = 10;	p[4][1] = 30;    p[4][2] = 10;
-
-	Caritura();
-
-	//nariz-9
-	npuntos = 4;
-	p[0][0] = 0;	p[0][1] = p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -90;
-	p[1][0] = 200;	p[1][1] = p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -140;
-	p[2][0] = -50;	p[2][1] = -p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -140;
-	p[3][0] = 0;	p[3][1] = p[3][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][2] = -90;
-
-	Caritura();
-
-
-	//ojoIch-11
-	npuntos = 5;
-	p[0][0] = 20;	p[0][1] = 10;    p[0][2] = -20;
-	p[1][0] = 220;	p[1][1] = 10;    p[1][2] = 0;
-	p[2][0] = 220;	p[2][1] = 10;    p[2][2] = -300;
-	p[3][0] = 20;	p[3][1] = 10;    p[3][2] = -300;
-	p[4][0] = 20;	p[4][1] = 10;    p[4][2] = -20;
-
-	Caritura();
-
-	//ojoD-12
-	npuntos = 5;
-	p[0][0] = 10;	p[0][1] = 30;    p[0][2] = -10;
-	p[1][0] = 10;	p[1][1] = 30 + 580 * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = 10;
-	p[2][0] = 10;	p[2][1] = p[1][1];    p[2][2] = -280;
-	p[3][0] = 10;	p[3][1] = 30;    p[3][2] = -280;
-	p[4][0] = 10;	p[4][1] = 30;    p[4][2] = -10;
-
-	Caritura();
-
-	//bigoteI1-13
-	npuntos = 3;
-	p[0][0] = 80;	p[0][1] = 30 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -30;
-	p[1][0] = 120;	p[1][1] = p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -50;
-	p[2][0] = 180;   p[2][1] = p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -20;
-
-	Caritura();
-
-	//bigoteI1-14
-	npuntos = 3;
-	p[0][0] = 80;	p[0][1] = 30 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -25;
-	p[1][0] = 120;	p[1][1] = p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -45;
-	p[2][0] = 180;   p[2][1] = p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -15;
-
-	Caritura();
-
-	//bigoteI1-15
-	npuntos = 3;
-	p[0][0] = 80;	p[0][1] = 30 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -20;
-	p[1][0] = 120;	p[1][1] = p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -40;
-	p[2][0] = 180;   p[2][1] = p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -10;
-
-	Caritura();
-
-	//bigoteI1-16
-	npuntos = 3;
-	p[0][0] = 80;	p[0][1] = 30 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -35;
-	p[1][0] = 120;	p[1][1] = p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -55;
-	p[2][0] = 180;   p[2][1] = p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -25;
-
-	Caritura();
-
-	//bigoteD2-17
-	npuntos = 3;
-	p[0][0] = 40;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -35;
-	p[1][0] = 20;	p[1][1] = 20 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -100;
-	p[2][0] = -60;   p[2][1] = 100 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -35;
-
-	Caritura();
-
-	//bigoteD2-18
-	npuntos = 3;
-	p[0][0] = 40;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -30;
-	p[1][0] = 20;	p[1][1] = 20 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -95;
-	p[2][0] = -60;   p[2][1] = 100 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -30;
-
-	Caritura();
-
-	//bigoteD2-19
-	npuntos = 3;
-	p[0][0] = 40;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -40;
-	p[1][0] = 20;	p[1][1] = 20 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -105;
-	p[2][0] = -60;   p[2][1] = 100 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -40;
-
-	Caritura();
-
-	//bigoteD2-20
-	npuntos = 3;
-	p[0][0] = 40;	p[0][1] = 50 + p[0][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][2] = -45;
-	p[1][0] = 20;	p[1][1] = 20 + p[1][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[1][2] = -110;
-	p[2][0] = -60;   p[2][1] = 100 + p[2][0] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][2] = -45;
-
-	Caritura();
-}
-
-void CBugsDlg::OnCancel()
-{
-	// TODO: Add extra cleanup here
-
-	CDialog::OnCancel();
 }
 
 void CBugsDlg::Borrar()
@@ -745,4 +798,49 @@ double CBugsDlg::N(int i, int k, double tta)
 	}
 
 	return No;
+}
+
+
+void CBugsDlg::OnBnClickedAnimateButton()
+{
+	m_Detener = false;
+	/*
+	if (anim == 0) 
+		anim = 1;
+	else 
+		anim = 0;
+	*/
+	Animar();
+	
+}
+
+
+void CBugsDlg::OnBnClickedStopButton()
+{
+	m_Detener = true;
+}
+
+//Pone una pausa durante "TiempoPausa" milisengundos
+BOOL CBugsDlg::Pausa(time_t TiempoPausa)
+{
+	MSG msg;
+	clock_t goal;
+	goal = TiempoPausa + clock();
+	while (goal > clock())
+		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+			// If it's a quit message, we're out of here.
+			if (msg.message == WM_QUIT || m_Detener)
+				return 1;
+			// Otherwise, dispatch the message.
+			DispatchMessage(&msg);
+		} // End of PeekMessage while loop.
+
+	return false;
+}
+
+
+void CBugsDlg::OnClose()
+{
+	m_Detener = false;
+	CDialog::OnClose();
 }

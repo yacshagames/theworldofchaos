@@ -19,7 +19,7 @@ public:
 	double N(int i, int k, double tta);
 	//void Spline();
 	void Borrar();
-	void Inicio();
+	void Animar();
 	int anim;
 	int Factorial(int num);
 	double Bezier(double tt,int k,int n);
@@ -35,6 +35,8 @@ public:
 	double puntoaux[3];
 	double punto[3][3];
 	int npuntos;
+
+	bool m_Detener;
 // Dialog Data
 	//{{AFX_DATA(CBugsDlg)
 	enum { IDD = IDD_BUGS_DIALOG };
@@ -56,11 +58,15 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
-	afx_msg HCURSOR OnQueryDragIcon();
-	afx_msg void OnCancel2();
-	virtual void OnCancel();
+	afx_msg HCURSOR OnQueryDragIcon();	
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedAnimateButton();
+	afx_msg void OnBnClickedStopButton();
+	BOOL Pausa(time_t TiempoPausa);
+	CStatic m_Cuadro;
+	afx_msg void OnClose();
 };
 
 //{{AFX_INSERT_LOCATION}}
