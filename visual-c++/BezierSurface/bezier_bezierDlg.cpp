@@ -1011,7 +1011,7 @@ void CBezier_bezierDlg::OnSuperficie()
 	// TODO: Add your control notification handler code here
 
 		CClientDC area(this);
-area.TextOut(cx-104.25*cos(alfa)+118*cos(beta),cy+104.25*sin(alfa)+118*sin(beta)-118,'p1*');
+area.TextOut(cx-104.25*cos(alfa)+118*cos(beta),cy+104.25*sin(alfa)+118*sin(beta)-118,_T("p1*"));
 
 		
 		
