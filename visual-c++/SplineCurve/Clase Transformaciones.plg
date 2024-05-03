@@ -1,0 +1,58 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Clase Transformaciones - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSPC394.TMP" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/Clase Transformaciones.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPC394.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSPC395.TMP" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/Clase Transformaciones.pdb" /debug /machine:I386 /out:"Debug/Clase Transformaciones.exe" /pdbtype:sept 
+".\Debug\Clase Transformaciones.obj"
+".\Debug\Clase TransformacionesDlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\Clase Transformaciones.res"
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSPC395.TMP"
+<h3>Output Window</h3>
+Compiling...
+Clase TransformacionesDlg.cpp
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(309) : warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(520) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(520) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(528) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(528) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(538) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(538) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(573) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(573) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(577) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(577) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(688) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(688) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(689) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(689) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(690) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(690) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(691) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(691) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(692) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(692) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(693) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Uni-Fiee\Visual C++\Amelia2\splinee\Clase TransformacionesDlg.cpp(693) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+Linking...
+
+
+
+<h3>Results</h3>
+Clase Transformaciones.exe - 0 error(s), 23 warning(s)
+</pre>
+</body>
+</html>
