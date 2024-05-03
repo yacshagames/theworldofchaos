@@ -1,5 +1,34 @@
-// SuperficieLagrangeDlg.cpp : implementation file
-//
+/******************************************************************************
+:: LAGRANGE SURFACE :: SUPERFICIE LAGRANGE ::
+
+Draw a Lagrange surface
+
+Developed by:
+
+Original authors: Amelia
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 03-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Update visual-c++\BezierSurface - Porting to VC++ 2017.
+	- Various bugs are corrected, which do not allow correct mouse animation.
+	- Added a new icon to the project
+	- Add credits and version history
+	- Translate GUI from spanish to english
+
+  >> Version 1 - 18-II-2002
+	- First version developed by Amelia
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "stdafx.h"
 #include "SuperficieLagrange.h"
