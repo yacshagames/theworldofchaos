@@ -1,6 +1,34 @@
-// bezier_bezierDlg.cpp : implementation file
-//
+/******************************************************************************
+:: BEZIER SURFACE :: SUPERFICIE BEZIER ::
 
+Draw a bezier surface
+
+Developed by:
+
+Original authors: Amelia
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 03-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Update visual-c++\BezierSurface - Porting to VC++ 2017.
+	- Various bugs are corrected, which do not allow correct mouse animation.
+	- Added a new icon to the project
+	- Add credits and version history
+	- Translate GUI from spanish to english
+
+  >> Version 1 - 18-II-2002
+	- First version developed by Amelia
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 #include "stdafx.h"
 #include "bezier_bezier.h"
 #include "bezier_bezierDlg.h"
@@ -141,6 +169,8 @@ BOOL CBezier_bezierDlg::OnInitDialog()
 
 	// TODO: Add extra initialization here
 
+	OnSuperficie();
+
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -219,6 +249,9 @@ void CBezier_bezierDlg::OnPaint()
 
 	////////////////////////////////////////////////////////////////
 
+
+	DrawBezierSurface();
+
 }
 
 // The system calls this to obtain the cursor to display while the user drags
@@ -256,153 +289,10 @@ long double Bernstein(int h, int k, long double t)
 	return B;
 }
 
-
-void CBezier_bezierDlg::OncmdRotarZ()
-{
-	// TODO: Add your control notification handler code here
+void CBezier_bezierDlg::DrawBezierSurface() {
 
 	CClientDC area(this);
 
-	///////BORRA LA ULTIMA CURVA DIBUJADA
-	area.SelectObject(&colorgris);
-	for (v = 0; v <= 1; v = v + 1. / densidad)
-	{
-		//Mueve a S[0][v]
-		u = 0;
-		b = v * densidad;
-		S[0][b][0] = 0; S[0][b][1] = 0; S[0][b][2] = 0;
-		for (j = 0; j <= m; ++j)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-			}
-			b = v * densidad;
-			S[0][b][0] = S[0][b][0] + ptoaux[0] * Bernstein(m, j, v);
-			S[0][b][1] = S[0][b][1] + ptoaux[1] * Bernstein(m, j, v);
-			S[0][b][2] = S[0][b][2] + ptoaux[2] * Bernstein(m, j, v);
-		}
-		b = v * densidad;
-		Q[0] = cx - S[0][b][0] * cos(alfa) + S[0][b][1] * cos(beta);
-		Q[1] = cy + S[0][b][0] * sin(alfa) + S[0][b][1] * sin(beta) - S[0][b][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (u = 0; u <= 1; u = u + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (i = 0; i <= n; ++i)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(m, j, v);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(m, j, v);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(m, j, v);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
-
-	//Curvas verticales
-	for (u = 0; u <= 1; u = u + 1. / densidad)
-	{
-		//Mueve a S[u][0]
-		v = 0;
-		a = u * densidad;
-		S[a][0][0] = 0; S[a][0][1] = 0; S[a][0][2] = 0;
-		for (i = 0; i <= n; ++i)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-			}
-			a = u * densidad;
-			S[a][0][0] = S[a][0][0] + ptoaux[0] * Bernstein(n, i, u);
-			S[a][0][1] = S[a][0][1] + ptoaux[1] * Bernstein(n, i, u);
-			S[a][0][2] = S[a][0][2] + ptoaux[2] * Bernstein(n, i, u);
-		}
-		a = u * densidad;
-		Q[0] = cx - S[a][0][0] * cos(alfa) + S[a][0][1] * cos(beta);
-		Q[1] = cy + S[a][0][0] * sin(alfa) + S[a][0][1] * sin(beta) - S[a][0][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (v = 0; v <= 1; v = v + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (j = 0; j <= m; ++j)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(n, i, u);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(n, i, u);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(n, i, u);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
-	///////////////////////////////////////Fin superficie bezier-bezier///////////
-
-		///////////////////DIBUJA EJES/////////////////////////////////
-	for (i = 0; i <= 3; ++i)
-	{
-		EJES[i][0] = cx - P1[i][0] * cos(alfa) + P1[i][1] * cos(beta);
-		EJES[i][1] = cy + P1[i][0] * sin(alfa) + P1[i][1] * sin(beta) - P1[i][2];
-	}
-
-	CPen colorazul(PS_SOLID, 1, RGB(0, 0, 0));
-	area.SelectObject(&colorazul);
-	area.MoveTo(EJES[0][0], EJES[0][1]);
-	area.LineTo(EJES[1][0], EJES[1][1]);
-	area.MoveTo(EJES[0][0], EJES[0][1]);
-	area.LineTo(EJES[2][0], EJES[2][1]);
-	area.MoveTo(EJES[0][0], EJES[0][1]);
-	area.LineTo(EJES[3][0], EJES[3][1]);
-	////////////////////////////////////////////////////////////////
-	//rota Z+
-	for (i = 0; i <= n; ++i)
-	{
-		for (j = 0; j <= m; ++j)
-		{
-			QR[i][j][0] = P[i][j][0] * cos(rot) - P[i][j][1] * sin(rot);
-			QR[i][j][1] = P[i][j][0] * sin(rot) + P[i][j][1] * cos(rot);
-			QR[i][j][2] = P[i][j][2];
-		}
-	}
-	//EQUIVALENCIAS
-	for (i = 0; i <= n; ++i)
-	{
-		for (j = 0; j <= m; ++j)
-		{
-			P[i][j][0] = QR[i][j][0];
-			P[i][j][1] = QR[i][j][1];
-			P[i][j][2] = QR[i][j][2];
-		}
-	}
 	//////////Dibuja superficie bezier-bezier
 	area.SelectObject(&colorrojo);
 	//Curvas horizontales
@@ -508,134 +398,38 @@ void CBezier_bezierDlg::OncmdRotarZ()
 	}
 	///////////////////////////////////////Fin superficie bezier-bezier///////////
 
+}
+
+void CBezier_bezierDlg::OncmdRotarZ()
+{
+	//rota Z+
+	for (i = 0; i <= n; ++i)
+	{
+		for (j = 0; j <= m; ++j)
+		{
+			QR[i][j][0] = P[i][j][0] * cos(rot) - P[i][j][1] * sin(rot);
+			QR[i][j][1] = P[i][j][0] * sin(rot) + P[i][j][1] * cos(rot);
+			QR[i][j][2] = P[i][j][2];
+		}
+	}
+
+	//EQUIVALENCIAS
+	for (i = 0; i <= n; ++i)
+	{
+		for (j = 0; j <= m; ++j)
+		{
+			P[i][j][0] = QR[i][j][0];
+			P[i][j][1] = QR[i][j][1];
+			P[i][j][2] = QR[i][j][2];
+		}
+	}
+
+	Invalidate();	
 
 }
 
 void CBezier_bezierDlg::OncmdRotarX()
-{
-	// TODO: Add your control notification handler code here
-	CClientDC area(this);
-
-	///////BORRA LA ULTIMA CURVA DIBUJADA
-	area.SelectObject(&colorgris);
-	for (v = 0; v <= 1; v = v + 1. / densidad)
-	{
-		//Mueve a S[0][v]
-		u = 0;
-		b = v * densidad;
-		S[0][b][0] = 0; S[0][b][1] = 0; S[0][b][2] = 0;
-		for (j = 0; j <= m; ++j)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-			}
-			b = v * densidad;
-			S[0][b][0] = S[0][b][0] + ptoaux[0] * Bernstein(m, j, v);
-			S[0][b][1] = S[0][b][1] + ptoaux[1] * Bernstein(m, j, v);
-			S[0][b][2] = S[0][b][2] + ptoaux[2] * Bernstein(m, j, v);
-		}
-		b = v * densidad;
-		Q[0] = cx - S[0][b][0] * cos(alfa) + S[0][b][1] * cos(beta);
-		Q[1] = cy + S[0][b][0] * sin(alfa) + S[0][b][1] * sin(beta) - S[0][b][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (u = 0; u <= 1; u = u + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (i = 0; i <= n; ++i)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(m, j, v);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(m, j, v);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(m, j, v);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
-
-	//Curvas verticales
-	for (u = 0; u <= 1; u = u + 1. / densidad)
-	{
-		//Mueve a S[u][0]
-		v = 0;
-		a = u * densidad;
-		S[a][0][0] = 0; S[a][0][1] = 0; S[a][0][2] = 0;
-		for (i = 0; i <= n; ++i)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-			}
-			a = u * densidad;
-			S[a][0][0] = S[a][0][0] + ptoaux[0] * Bernstein(n, i, u);
-			S[a][0][1] = S[a][0][1] + ptoaux[1] * Bernstein(n, i, u);
-			S[a][0][2] = S[a][0][2] + ptoaux[2] * Bernstein(n, i, u);
-		}
-		a = u * densidad;
-		Q[0] = cx - S[a][0][0] * cos(alfa) + S[a][0][1] * cos(beta);
-		Q[1] = cy + S[a][0][0] * sin(alfa) + S[a][0][1] * sin(beta) - S[a][0][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (v = 0; v <= 1; v = v + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (j = 0; j <= m; ++j)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(n, i, u);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(n, i, u);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(n, i, u);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
-	///////////////////////////////////////Fin superficie bezier-bezier///////////
-
-		///////////////////DIBUJA EJES/////////////////////////////////
-	for (i = 0; i <= 3; ++i)
-	{
-		EJES[i][0] = cx - P1[i][0] * cos(alfa) + P1[i][1] * cos(beta);
-		EJES[i][1] = cy + P1[i][0] * sin(alfa) + P1[i][1] * sin(beta) - P1[i][2];
-	}
-
-	CPen colorazul(PS_SOLID, 1, RGB(0, 0, 0));
-	area.SelectObject(&colorazul);
-	area.MoveTo(EJES[0][0], EJES[0][1]);
-	area.LineTo(EJES[1][0], EJES[1][1]);
-	area.MoveTo(EJES[0][0], EJES[0][1]);
-	area.LineTo(EJES[2][0], EJES[2][1]);
-	area.MoveTo(EJES[0][0], EJES[0][1]);
-	area.LineTo(EJES[3][0], EJES[3][1]);
-	////////////////////////////////////////////////////////////////
+{	
 	//rota X+
 	for (i = 0; i <= n; ++i)
 	{
@@ -656,240 +450,14 @@ void CBezier_bezierDlg::OncmdRotarX()
 			P[i][j][1] = QR[i][j][1];
 			P[i][j][2] = QR[i][j][2];
 		}
-	}
-	//////////Dibuja superficie bezier-bezier
-	area.SelectObject(&colorrojo);
-	//Curvas horizontales
-	for (v = 0; v <= 1; v = v + 1. / densidad)
-	{
-		//Mueve a S[0][v]
-		u = 0;
-		b = v * densidad;
-		S[0][b][0] = 0; S[0][b][1] = 0; S[0][b][2] = 0;
-		for (j = 0; j <= m; ++j)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-			}
-			b = v * densidad;
-			S[0][b][0] = S[0][b][0] + ptoaux[0] * Bernstein(m, j, v);
-			S[0][b][1] = S[0][b][1] + ptoaux[1] * Bernstein(m, j, v);
-			S[0][b][2] = S[0][b][2] + ptoaux[2] * Bernstein(m, j, v);
-		}
-		b = v * densidad;
-		Q[0] = cx - S[0][b][0] * cos(alfa) + S[0][b][1] * cos(beta);
-		Q[1] = cy + S[0][b][0] * sin(alfa) + S[0][b][1] * sin(beta) - S[0][b][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (u = 0; u <= 1; u = u + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (i = 0; i <= n; ++i)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(m, j, v);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(m, j, v);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(m, j, v);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
+	}	
 
-	//Curvas verticales
-	for (u = 0; u <= 1; u = u + 1. / densidad)
-	{
-		//Mueve a S[u][0]
-		v = 0;
-		a = u * densidad;
-		S[a][0][0] = 0; S[a][0][1] = 0; S[a][0][2] = 0;
-		for (i = 0; i <= n; ++i)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-			}
-			a = u * densidad;
-			S[a][0][0] = S[a][0][0] + ptoaux[0] * Bernstein(n, i, u);
-			S[a][0][1] = S[a][0][1] + ptoaux[1] * Bernstein(n, i, u);
-			S[a][0][2] = S[a][0][2] + ptoaux[2] * Bernstein(n, i, u);
-		}
-		a = u * densidad;
-		Q[0] = cx - S[a][0][0] * cos(alfa) + S[a][0][1] * cos(beta);
-		Q[1] = cy + S[a][0][0] * sin(alfa) + S[a][0][1] * sin(beta) - S[a][0][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (v = 0; v <= 1; v = v + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (j = 0; j <= m; ++j)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(n, i, u);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(n, i, u);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(n, i, u);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
-	//////////////////////////////////////Fin superficie bezier-bezier///////////
+	Invalidate();
 
 }
 
 void CBezier_bezierDlg::OncmdRotarY()
 {
-	// TODO: Add your control notification handler code here
-	CClientDC area(this);
-
-	///////BORRA LA ULTIMA CURVA DIBUJADA
-	area.SelectObject(&colorgris);
-	for (v = 0; v <= 1; v = v + 1. / densidad)
-	{
-		//Mueve a S[0][v]
-		u = 0;
-		b = v * densidad;
-		S[0][b][0] = 0; S[0][b][1] = 0; S[0][b][2] = 0;
-		for (j = 0; j <= m; ++j)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-			}
-			b = v * densidad;
-			S[0][b][0] = S[0][b][0] + ptoaux[0] * Bernstein(m, j, v);
-			S[0][b][1] = S[0][b][1] + ptoaux[1] * Bernstein(m, j, v);
-			S[0][b][2] = S[0][b][2] + ptoaux[2] * Bernstein(m, j, v);
-		}
-		b = v * densidad;
-		Q[0] = cx - S[0][b][0] * cos(alfa) + S[0][b][1] * cos(beta);
-		Q[1] = cy + S[0][b][0] * sin(alfa) + S[0][b][1] * sin(beta) - S[0][b][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (u = 0; u <= 1; u = u + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (i = 0; i <= n; ++i)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(m, j, v);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(m, j, v);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(m, j, v);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
-
-	//Curvas verticales
-	for (u = 0; u <= 1; u = u + 1. / densidad)
-	{
-		//Mueve a S[u][0]
-		v = 0;
-		a = u * densidad;
-		S[a][0][0] = 0; S[a][0][1] = 0; S[a][0][2] = 0;
-		for (i = 0; i <= n; ++i)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-			}
-			a = u * densidad;
-			S[a][0][0] = S[a][0][0] + ptoaux[0] * Bernstein(n, i, u);
-			S[a][0][1] = S[a][0][1] + ptoaux[1] * Bernstein(n, i, u);
-			S[a][0][2] = S[a][0][2] + ptoaux[2] * Bernstein(n, i, u);
-		}
-		a = u * densidad;
-		Q[0] = cx - S[a][0][0] * cos(alfa) + S[a][0][1] * cos(beta);
-		Q[1] = cy + S[a][0][0] * sin(alfa) + S[a][0][1] * sin(beta) - S[a][0][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (v = 0; v <= 1; v = v + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (j = 0; j <= m; ++j)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(n, i, u);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(n, i, u);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(n, i, u);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
-	///////////////////////////////////////Fin superficie bezier-bezier///////////
-
-		///////////////////DIBUJA EJES/////////////////////////////////
-	for (i = 0; i <= 3; ++i)
-	{
-		EJES[i][0] = cx - P1[i][0] * cos(alfa) + P1[i][1] * cos(beta);
-		EJES[i][1] = cy + P1[i][0] * sin(alfa) + P1[i][1] * sin(beta) - P1[i][2];
-	}
-
-	CPen colorazul(PS_SOLID, 1, RGB(0, 0, 0));
-
-	area.SelectObject(&colorazul);
-	area.MoveTo(EJES[0][0], EJES[0][1]);
-	area.LineTo(EJES[1][0], EJES[1][1]);
-	area.MoveTo(EJES[0][0], EJES[0][1]);
-	area.LineTo(EJES[2][0], EJES[2][1]);
-	area.MoveTo(EJES[0][0], EJES[0][1]);
-	area.LineTo(EJES[3][0], EJES[3][1]);
-	////////////////////////////////////////////////////////////////
 	//rota Y+
 	for (i = 0; i <= n; ++i)
 	{
@@ -912,121 +480,12 @@ void CBezier_bezierDlg::OncmdRotarY()
 			P[i][j][2] = QR[i][j][2];
 		}
 	}
-	//////////Dibuja superficie bezier-bezier
-	area.SelectObject(&colorrojo);
-	//Curvas horizontales
-	for (v = 0; v <= 1; v = v + 1. / densidad)
-	{
-		//Mueve a S[0][v]
-		u = 0;
-		b = v * densidad;
-		S[0][b][0] = 0; S[0][b][1] = 0; S[0][b][2] = 0;
-		for (j = 0; j <= m; ++j)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-			}
-			b = v * densidad;
-			S[0][b][0] = S[0][b][0] + ptoaux[0] * Bernstein(m, j, v);
-			S[0][b][1] = S[0][b][1] + ptoaux[1] * Bernstein(m, j, v);
-			S[0][b][2] = S[0][b][2] + ptoaux[2] * Bernstein(m, j, v);
-		}
-		b = v * densidad;
-		Q[0] = cx - S[0][b][0] * cos(alfa) + S[0][b][1] * cos(beta);
-		Q[1] = cy + S[0][b][0] * sin(alfa) + S[0][b][1] * sin(beta) - S[0][b][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (u = 0; u <= 1; u = u + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (i = 0; i <= n; ++i)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(m, j, v);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(m, j, v);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(m, j, v);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
 
-	//Curvas verticales
-	for (u = 0; u <= 1; u = u + 1. / densidad)
-	{
-		//Mueve a S[u][0]
-		v = 0;
-		a = u * densidad;
-		S[a][0][0] = 0; S[a][0][1] = 0; S[a][0][2] = 0;
-		for (i = 0; i <= n; ++i)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-			}
-			a = u * densidad;
-			S[a][0][0] = S[a][0][0] + ptoaux[0] * Bernstein(n, i, u);
-			S[a][0][1] = S[a][0][1] + ptoaux[1] * Bernstein(n, i, u);
-			S[a][0][2] = S[a][0][2] + ptoaux[2] * Bernstein(n, i, u);
-		}
-		a = u * densidad;
-		Q[0] = cx - S[a][0][0] * cos(alfa) + S[a][0][1] * cos(beta);
-		Q[1] = cy + S[a][0][0] * sin(alfa) + S[a][0][1] * sin(beta) - S[a][0][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (v = 0; v <= 1; v = v + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (j = 0; j <= m; ++j)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(n, i, u);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(n, i, u);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(n, i, u);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
-	//////////////////////////////////////Fin superficie bezier-bezier///////////
-
+	Invalidate();
 }
 
 void CBezier_bezierDlg::OnSuperficie()
 {
-	// TODO: Add your control notification handler code here
-
-	CClientDC area(this);
-	area.TextOut(cx - 104.25*cos(alfa) + 118 * cos(beta), cy + 104.25*sin(alfa) + 118 * sin(beta) - 118, _T("p1*"));
-
-
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	/***********************************************************************************///////
@@ -1036,7 +495,7 @@ void CBezier_bezierDlg::OnSuperficie()
 
 	n = 2;
 	m = 2;
-	area.SelectObject(&colorrojo);
+	//area.SelectObject(&colorrojo);
 
 	P[0][0][0] = 50; P[0][0][1] = 0;  P[0][0][2] = 0;   	//P00
 	P[0][1][0] = 0; P[0][1][1] = 50;  P[0][1][2] = 250; 	//P01
@@ -1053,112 +512,5 @@ void CBezier_bezierDlg::OnSuperficie()
 	P[2][2][0] = 150; P[2][2][1] = 150; P[2][2][2] = 0;  	//P22
 	P[2][2][0] = 100; P[2][2][1] = 200; P[2][2][2] = 50;
 
-
-
-
-
-
-	//Curvas horizontales
-	for (v = 0; v <= 1; v = v + 1. / densidad)
-	{
-		//Mueve a S[0][v]
-		u = 0;
-		b = v * densidad;
-		S[0][b][0] = 0; S[0][b][1] = 0; S[0][b][2] = 0;
-		for (j = 0; j <= m; ++j)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-			}
-			b = v * densidad;
-			S[0][b][0] = S[0][b][0] + ptoaux[0] * Bernstein(m, j, v);
-			S[0][b][1] = S[0][b][1] + ptoaux[1] * Bernstein(m, j, v);
-			S[0][b][2] = S[0][b][2] + ptoaux[2] * Bernstein(m, j, v);
-		}
-		b = v * densidad;
-		Q[0] = cx - S[0][b][0] * cos(alfa) + S[0][b][1] * cos(beta);
-		Q[1] = cy + S[0][b][0] * sin(alfa) + S[0][b][1] * sin(beta) - S[0][b][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (u = 0; u <= 1; u = u + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (i = 0; i <= n; ++i)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(n, i, u)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(n, i, u)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(n, i, u)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(m, j, v);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(m, j, v);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(m, j, v);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
-
-	//Curvas verticales
-	for (u = 0; u <= 1; u = u + 1. / densidad)
-	{
-		//Mueve a S[u][0]
-		v = 0;
-		a = u * densidad;
-		S[a][0][0] = 0; S[a][0][1] = 0; S[a][0][2] = 0;
-		for (i = 0; i <= n; ++i)
-		{
-			ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-			for (j = 0; j <= m; ++j)
-			{
-				ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-				ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-				ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-			}
-			a = u * densidad;
-			S[a][0][0] = S[a][0][0] + ptoaux[0] * Bernstein(n, i, u);
-			S[a][0][1] = S[a][0][1] + ptoaux[1] * Bernstein(n, i, u);
-			S[a][0][2] = S[a][0][2] + ptoaux[2] * Bernstein(n, i, u);
-		}
-		a = u * densidad;
-		Q[0] = cx - S[a][0][0] * cos(alfa) + S[a][0][1] * cos(beta);
-		Q[1] = cy + S[a][0][0] * sin(alfa) + S[a][0][1] * sin(beta) - S[a][0][2];
-		area.MoveTo(Q[0], Q[1]);
-		///////
-		for (v = 0; v <= 1; v = v + 1. / densidad)
-		{
-			a = u * densidad; b = v * densidad;
-			S[a][b][0] = 0; S[a][b][1] = 0; S[a][b][2] = 0;
-			for (i = 0; i <= n; ++i)
-			{
-				ptoaux[0] = 0; ptoaux[1] = 0; ptoaux[2] = 0;
-				for (j = 0; j <= m; ++j)
-				{
-					ptoaux[0] = ptoaux[0] + Bernstein(m, j, v)*P[i][j][0];
-					ptoaux[1] = ptoaux[1] + Bernstein(m, j, v)*P[i][j][1];
-					ptoaux[2] = ptoaux[2] + Bernstein(m, j, v)*P[i][j][2];
-				}
-				a = u * densidad; b = v * densidad;
-				S[a][b][0] = S[a][b][0] + ptoaux[0] * Bernstein(n, i, u);
-				S[a][b][1] = S[a][b][1] + ptoaux[1] * Bernstein(n, i, u);
-				S[a][b][2] = S[a][b][2] + ptoaux[2] * Bernstein(n, i, u);
-			}
-			a = u * densidad; b = v * densidad;
-			Q[0] = cx - S[a][b][0] * cos(alfa) + S[a][b][1] * cos(beta);
-			Q[1] = cy + S[a][b][0] * sin(alfa) + S[a][b][1] * sin(beta) - S[a][b][2];
-			area.LineTo(Q[0], Q[1]);
-		}
-	}
-
-
+	Invalidate();
 }

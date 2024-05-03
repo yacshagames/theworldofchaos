@@ -41,7 +41,9 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnKillFocus(CWnd* pNewWnd);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
-	afx_msg void OncmdRotarZ();
+	afx_msg
+		void DrawBezierSurface();
+	void OncmdRotarZ();
 	afx_msg void OncmdRotarX();
 	afx_msg void OncmdRotarY();
 	afx_msg void OnSuperficie();

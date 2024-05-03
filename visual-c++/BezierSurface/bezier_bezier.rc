@@ -38,15 +38,15 @@ END
 IDD_BEZIER_BEZIER_DIALOG DIALOGEX 0, 0, 530, 303
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "Superficie Bezier"
+CAPTION "Bezier Surface"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "Aceptar",IDOK,473,36,50,14
-    PUSHBUTTON      "Rotar Z",cmdRotarZ,465,260,50,14
-    PUSHBUTTON      "Rotar X",cmdRotarX,465,225,50,14
-    PUSHBUTTON      "Rotar Y",cmdRotarY,466,242,50,14
-    DEFPUSHBUTTON   "Superficie",IDC_Superficie,475,5,50,14
-    GROUPBOX        "Translaciones",IDC_STATIC,450,215,75,70
+    DEFPUSHBUTTON   "Exit",IDOK,473,36,50,14
+    PUSHBUTTON      "Rotate Z",cmdRotarZ,465,260,50,14
+    PUSHBUTTON      "Rotate X",cmdRotarX,465,225,50,14
+    PUSHBUTTON      "Rotate Y",cmdRotarY,466,242,50,14
+    DEFPUSHBUTTON   "Reset",IDC_Superficie,475,5,50,14
+    GROUPBOX        "Transformations",IDC_STATIC,450,215,75,70,BS_CENTER
 END
 
 
@@ -113,6 +113,17 @@ BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_BEZIER_BEZIER_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
 
 
 /////////////////////////////////////////////////////////////////////////////
