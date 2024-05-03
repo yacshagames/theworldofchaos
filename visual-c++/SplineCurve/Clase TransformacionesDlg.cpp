@@ -598,7 +598,7 @@ double CClaseTransformacionesDlg::W(int i, double tt)
 
 void CClaseTransformacionesDlg::Obtener_An() 
 {
-	MessageBox("loco");
+	//AfxMessageBox(_T("loco"));
 	for (int z=0; z<=n; z++)		//Q[i][0] = P[i]
 	{
 		Q[z][0][1] = p3d[z][1];
