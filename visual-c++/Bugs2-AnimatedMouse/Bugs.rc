@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -13,21 +13,19 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Spanish (Modern) resources
+// Español (España, alfabetización internacional) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)
-#ifdef _WIN32
 LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MODERN
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUTBOX DIALOG 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Acerca de Bugs"
 FONT 8, "MS Sans Serif"
 BEGIN
@@ -38,10 +36,10 @@ BEGIN
 END
 
 IDD_BUGS_DIALOG DIALOGEX 0, 0, 267, 274
-STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "Bugs"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "Salir",IDCANCEL,200,252,50,14
     PUSHBUTTON      "Curva Abierta",IDC_CURVABIERTA,200,189,50,14
@@ -52,7 +50,6 @@ BEGIN
 END
 
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -75,15 +72,13 @@ BEGIN
     BEGIN
         BLOCK "0C0A04B0"
         BEGIN
-            VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "Aplicación MFC Bugs\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "Bugs\0"
-            VALUE "LegalCopyright", "Copyright (C) 2000\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "Bugs.EXE\0"
-            VALUE "ProductName", "Aplicación Bugs\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "FileDescription", "Aplicación MFC Bugs"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "Bugs"
+            VALUE "LegalCopyright", "Copyright (C) 2000"
+            VALUE "OriginalFilename", "Bugs.EXE"
+            VALUE "ProductName", "Aplicación Bugs"
+            VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -92,8 +87,6 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -101,7 +94,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -130,23 +123,21 @@ END
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "&Acerca de Bugs..."
 END
 
-#endif    // Spanish (Modern) resources
+#endif    // Español (España, alfabetización internacional) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Spanish (Castilian) (unknown sub-lang: 0xA) resources
+// Español (Perú) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESR)
-#ifdef _WIN32
-LANGUAGE LANG_SPANISH, 0xA
+LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_PERU
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -154,18 +145,18 @@ LANGUAGE LANG_SPANISH, 0xA
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -178,7 +169,7 @@ BEGIN
     "#pragma code_page(1252)\r\n"
     "#endif //_WIN32\r\n"
     "#include ""res\\Bugs.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
-    "#include ""l.esp\\afxres.rc""          // Standard components\r\n"
+    "//#include ""l.esp\\afxres.rc""          // Standard components\r\n"
     "#endif\r\n"
     "\0"
 END
@@ -193,8 +184,9 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\Bugs.ico"
-#endif    // Spanish (Castilian) (unknown sub-lang: 0xA) resources
+IDR_MAINFRAME           ICON                    "res\\Bugs.ico"
+
+#endif    // Español (Perú) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -215,7 +207,7 @@ LANGUAGE 10, 3
 #pragma code_page(1252)
 #endif //_WIN32
 #include "res\Bugs.rc2"  // non-Microsoft Visual C++ edited resources
-#include "l.esp\afxres.rc"          // Standard components
+//#include "l.esp\afxres.rc"          // Standard components
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
