@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -13,36 +13,33 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Spanish (Modern) resources
+// Español (España, alfabetización internacional) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)
-#ifdef _WIN32
 LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MODERN
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUTBOX DIALOG 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Acerca de Clase Transformaciones"
 FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "Clase Transformaciones Versión 1.0",IDC_STATIC,40,10,
-                    119,8,SS_NOPREFIX
+    LTEXT           "Clase Transformaciones Versión 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2000",IDC_STATIC,40,25,119,8
     DEFPUSHBUTTON   "Aceptar",IDOK,178,7,50,14,WS_GROUP
 END
 
 IDD_CLASETRANSFORMACIONES_DIALOG DIALOGEX 0, 0, 566, 343
-STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "Transformaciones"
-FONT 8, "MS Sans Serif"
+CAPTION "Transformations - Bezier Curve"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Salir de Programa",IDOK,435,320,105,15
     PUSHBUTTON      "TxP",IDC_BUTTON1,453,21,19,20
@@ -94,7 +91,6 @@ BEGIN
 END
 
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -117,15 +113,13 @@ BEGIN
     BEGIN
         BLOCK "0C0A04B0"
         BEGIN
-            VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "Aplicación MFC Clase Transformaciones\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "Clase Transformaciones\0"
-            VALUE "LegalCopyright", "Copyright (C) 2000\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "Clase Transformaciones.EXE\0"
-            VALUE "ProductName", "Aplicación Clase Transformaciones\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "FileDescription", "Aplicación MFC Clase Transformaciones"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "Clase Transformaciones"
+            VALUE "LegalCopyright", "Copyright (C) 2000"
+            VALUE "OriginalFilename", "Clase Transformaciones.EXE"
+            VALUE "ProductName", "Aplicación Clase Transformaciones"
+            VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -134,8 +128,6 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -143,7 +135,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -166,26 +158,35 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_CLASETRANSFORMACIONES_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "&Acerca de Clase Transformaciones..."
 END
 
-#endif    // Spanish (Modern) resources
+#endif    // Español (España, alfabetización internacional) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Spanish (Castilian) (unknown sub-lang: 0xA) resources
+// Español (Perú) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESR)
-#ifdef _WIN32
-LANGUAGE LANG_SPANISH, 0xA
+LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_PERU
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -193,18 +194,18 @@ LANGUAGE LANG_SPANISH, 0xA
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -217,7 +218,7 @@ BEGIN
     "#pragma code_page(1252)\r\n"
     "#endif //_WIN32\r\n"
     "#include ""res\\Clase Transformaciones.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
-    "#include ""l.esp\\afxres.rc""          // Standard components\r\n"
+    "//#include ""l.esp\\afxres.rc""          // Standard components\r\n"
     "#endif\r\n"
     "\0"
 END
@@ -232,8 +233,9 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\Clase Transformaciones.ico"
-#endif    // Spanish (Castilian) (unknown sub-lang: 0xA) resources
+IDR_MAINFRAME           ICON                    "res\\Clase Transformaciones.ico"
+
+#endif    // Español (Perú) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -254,6 +256,7 @@ LANGUAGE 10, 3
 #pragma code_page(1252)
 #endif //_WIN32
 #include "res\Clase Transformaciones.rc2"  // non-Microsoft Visual C++ edited resources
+//#include "l.esp\afxres.rc"          // Standard components
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
