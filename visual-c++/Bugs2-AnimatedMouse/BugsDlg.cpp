@@ -1,5 +1,43 @@
-// BugsDlg.cpp : implementation file
-//
+/******************************************************************************
+:: BUGS2 - ANIMATED MOUSE :: BUGS2 - RATÓN ANIMADO ::
+
+Another style of drawing Bugs:
+Draws a mouse's face using Bezier curves, and then animates the mouse's face,
+like a cartoon.
+
+Spanish:
+Otro estilo de dibujar a Bugs:
+Dibuja la cara de un raton usando curvas de Bezier, y luego se anima
+la cara del ratón, como un dibujo animado.
+
+Developed by:
+
+Original authors: Amelia
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 03-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Update visual-c++\Bugs-MouseAnimated - Porting to VC++ 2017.
+	- Added mouse face icon
+	- Update format code
+	- Various bugs are corrected, which do not allow correct mouse animation.
+	- A frame with a white background is added, to better show the animation,
+	  and to eliminate the bug that caused the buttons to disappear when
+	  starting the animation
+
+  >> Version 1 - 02-VI-2000
+	- First version developed by Amelia
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "stdafx.h"
 #include "Bugs.h"
@@ -275,7 +313,7 @@ void CBugsDlg::Inicio()
 		//boca-21
 
 
-		Borrar();
+		//Borrar();
 		//boca-10
 		npuntos = 3;
 
@@ -295,7 +333,7 @@ void CBugsDlg::Inicio()
 
 		c[1] = 520;
 		c[2] = 880;
-
+		
 		//boca-10
 
 		npuntos = 4;
@@ -304,7 +342,7 @@ void CBugsDlg::Inicio()
 		p[2][1] = 70;	p[2][2] = 400 + p[2][1] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[2][3] = -50;
 		p[3][1] = 100;	p[3][2] = 50 + p[3][1] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[3][3] = -55;
 
-		Borrar();
+		//Borrar();
 		//boca-21
 		npuntos = 3;
 		p[0][1] = 100;	p[0][2] = 50 + p[0][1] * sin(angulo[0]) / (sin(angulo[0] + angulo[1])*cos(angulo[0]));    p[0][3] = -55;
