@@ -1,6 +1,33 @@
-// Clase TransformacionesDlg.cpp : implementation file
-//
+/******************************************************************************
+:: LAGRANGE CURVE :: CURVA DE LAGRANGE ::
 
+Draw a Lagrange Curve
+
+Developed by:
+
+Original authors: Manuel Paredes
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 03-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Porting to VC++ 2017.
+	- Added a new icon to the project
+	- Add credits and version history
+	- Translate GUI from spanish to english
+
+  >> Version 1 - 18-II-2002
+	- First version developed by Manuel Paredes
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 #include "stdafx.h"
 #include "Clase Transformaciones.h"
 #include "Clase TransformacionesDlg.h"
