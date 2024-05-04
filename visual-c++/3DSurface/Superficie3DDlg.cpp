@@ -1,5 +1,55 @@
-// Superficie3DDlg.cpp : implementation file
-//
+/******************************************************************************
+:: 3D SURFACE :: SUPERFICIE 3D ::
+
+Plot a 3D surface, and rotate it randomly about the 3 coordinate axes,
+periodically.
+
+Examples included:
+Jester's Hat:	z = -sin(3 * (x^2 + y^2))
+Saddle:			z = x^2 - y^2
+
+Spanish:
+Grafica una superficie 3D, y la rota aleatoriamente sobre los 3 ejes coordenados,
+de manera periodica.
+
+Ejemplos incluidos:
+El Sombrero de Bufón:	z = -sin(3 * (x^2 + y^2))
+La silla de Montar:		z = x^2 - y^2
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+  >> Version 2 - 03-V-2024	
+	- Update visual-c++\3DSurface - Porting to VC++ 2017.
+	- Various bugs are corrected.
+	- Added a new icon to the project
+	- Add credits and version history
+	- Translate GUI from spanish to english
+	- It is possible to select the type of surface to plot, from a combo box.
+	  For now there are only 2 examples:
+	  * Jester's Hat: z = -sin(3 * (x^2 + y^2))
+	  * Saddle: z = x^2 - y^2
+
+  >> Version 1 - 23-VI-2000
+	- First version developed by Yacsha for VC++ 6.0
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "stdafx.h"
 #include "Superficie3D.h"
@@ -62,6 +112,7 @@ END_MESSAGE_MAP()
 
 CSuperficie3DDlg::CSuperficie3DDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CSuperficie3DDlg::IDD, pParent)
+	, surfaceType(0)
 {
 	//{{AFX_DATA_INIT(CSuperficie3DDlg)
 	m_escala = 100;
@@ -83,6 +134,7 @@ void CSuperficie3DDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CMIN, m_CoordenadaMin);
 	DDX_Text(pDX, IDC_VELOCIDAD, m_Velocidad);
 	//}}AFX_DATA_MAP
+	DDX_CBIndex(pDX, IDC_COMBO_SURFACE_TYPE, surfaceType);
 }
 
 BEGIN_MESSAGE_MAP(CSuperficie3DDlg, CDialog)
@@ -226,9 +278,13 @@ void CSuperficie3DDlg::Animar()
 			y = a + ((b - a) / Yn)*j; //particion del eje Y
 
 			//Ejemplos de ecuaciones de superficie
-			z = -sin(3 * (x*x + y * y)); //El Sombrero de Bufon
-			//z=x*x-y*y; //La silla de Montar
-			  //z=5*sqrt(fabs(1-x*x/25-y*y/16)); //Una elipse
+			
+			if( surfaceType==0 )
+				z = -sin(3 * (x*x + y * y)); //El Sombrero de Bufon
+			else
+				z=x*x-y*y; //La silla de Montar
+
+			 // z=5*sqrt(fabs(1-x*x/25-y*y/16)); //Una elipse
 			//z=sqrt(1-x*x+y*y);
 			//if(z>0)z=4*sqrt(z);else z=0;//-sqrt(z);
 			//z=cos(x*x+y*y)-3*cos(x*y)+2*sin(x)+sin(y);
@@ -304,7 +360,15 @@ void CSuperficie3DDlg::Animar()
 		dibujo->Rectangle(rect);
 
 		//Muestra la ecuacion de superficie
-		dibujo->TextOut(10, 10, _T("z = -sin( 3 * (x^2+y^2) )"));
+		CString equation;
+
+		//Ejemplos de ecuaciones de superficie
+		if (surfaceType == 0)
+			equation = _T("z = -sin( 3 * (x^2+y^2) )");
+		else
+			equation = _T("z = x^2 - y^2");
+
+		dibujo->TextOut(10, 10, equation);
 
 		int alto = rect.Height(), ancho = rect.Width();
 
@@ -351,7 +415,7 @@ BOOL CSuperficie3DDlg::Pausa(time_t TiempoPausa)
 {
 	MSG msg;
 	clock_t goal;
-	goal = TiempoPausa + clock();
+	goal = static_cast<clock_t>(TiempoPausa) + clock();
 	while (goal > clock())
 		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 			// If it's a quit message, we're out of here.

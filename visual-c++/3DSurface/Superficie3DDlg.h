@@ -51,6 +51,8 @@ protected:
 	afx_msg void OnDetener();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	int surfaceType;
 };
 
 //{{AFX_INSERT_LOCATION}}
