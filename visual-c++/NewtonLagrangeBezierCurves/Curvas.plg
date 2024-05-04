@@ -1,0 +1,56 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Curvas - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSP5062.TMP" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/Curvas.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP5062.TMP" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Curvas.pdb" /debug /machine:I386 /out:"Debug/Curvas.exe" /pdbtype:sept  ".\Debug\Curvas.obj" ".\Debug\CurvasDlg.obj" ".\Debug\StdAfx.obj" ".\Debug\Curvas.res" "
+<h3>Output Window</h3>
+Compiling...
+CurvasDlg.cpp
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(325) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(325) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(326) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(326) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(327) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(327) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(328) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(328) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(329) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(329) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(330) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(330) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(522) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(522) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(548) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(548) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(592) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(592) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(616) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(616) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(632) : warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(660) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(660) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(690) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(690) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(708) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(708) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(716) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+c:\UNI-FIEE\VISUAL C++\MANUEL PAREDES\Curvas\CurvasDlg.cpp(716) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+Linking...
+
+
+
+<h3>Results</h3>
+Curvas.exe - 0 error(s), 29 warning(s)
+</pre>
+</body>
+</html>
