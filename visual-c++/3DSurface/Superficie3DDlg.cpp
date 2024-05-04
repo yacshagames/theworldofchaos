@@ -206,7 +206,7 @@ void CSuperficie3DDlg::Animar()
  
 // DibujarEjes();
 
- const Xn=25,Yn=25; //ancho y alto de cuadricula ( Malla )
+ const int Xn=25,Yn=25; //ancho y alto de cuadricula ( Malla )
 
  int Malla[Xn][Yn][2]; //Malla 2D de proyeccion de la superficie en la pantalla
  double Superficie[Xn][Yn][3]; //Malla 3D de puntos originales
