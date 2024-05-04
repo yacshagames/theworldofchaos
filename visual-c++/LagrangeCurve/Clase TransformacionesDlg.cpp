@@ -10,7 +10,7 @@ Improvements added from version 2, thanks to Yacsha.
 
 HISTORY...
 
-  >> Version 2 - 03-V-2024
+  >> Version 2 - 04-V-2024
 	* Thanks to the collaboration of a follower of "the world of chaos",
 	  we obtained the first version. From which we have made the
 	  following changes:
@@ -19,7 +19,7 @@ HISTORY...
 	- Add credits and version history
 	- Translate GUI from spanish to english
 
-  >> Version 1 - 18-II-2002
+  >> Version 1 - 16-V-2000
 	- First version developed by Manuel Paredes
 
 Warning!!!: These formulas may contain some errors, if you find them, let me
