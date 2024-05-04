@@ -1,8 +1,8 @@
 // Curvas.h : main header file for the CURVAS application
 //
 
-#if !defined(AFX_CURVAS_H__31599F04_FA7D_11D4_B225_DAA9ABABF23C__INCLUDED_)
-#define AFX_CURVAS_H__31599F04_FA7D_11D4_B225_DAA9ABABF23C__INCLUDED_
+#if !defined(AFX_CLASETRANSFORMACIONES_H__D94C0025_088B_11D4_B69F_0000214974A3__INCLUDED_)
+#define AFX_CLASETRANSFORMACIONES_H__D94C0025_088B_11D4_B69F_0000214974A3__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
@@ -13,10 +13,12 @@
 #endif
 
 #include "resource.h"		// main symbols
+#include "math.h"	    	// math functions
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CCurvasApp:
-// See Curvas.cpp for the implementation of this class
+// See Curvass.cpp for the implementation of this class
 //
 
 class CCurvasApp : public CWinApp
@@ -46,4 +48,4 @@ public:
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-#endif // !defined(AFX_CURVAS_H__31599F04_FA7D_11D4_B225_DAA9ABABF23C__INCLUDED_)
+#endif // !defined(AFX_CLASETRANSFORMACIONES_H__D94C0025_088B_11D4_B69F_0000214974A3__INCLUDED_)
