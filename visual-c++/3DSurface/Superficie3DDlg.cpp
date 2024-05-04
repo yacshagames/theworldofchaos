@@ -20,14 +20,14 @@ class CAboutDlg : public CDialog
 public:
 	CAboutDlg();
 
-// Dialog Data
-	//{{AFX_DATA(CAboutDlg)
+	// Dialog Data
+		//{{AFX_DATA(CAboutDlg)
 	enum { IDD = IDD_ABOUTBOX };
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
@@ -124,7 +124,7 @@ BOOL CSuperficie3DDlg::OnInitDialog()
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
-	
+
 	// TODO: Add extra initialization here
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -147,13 +147,13 @@ void CSuperficie3DDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CSuperficie3DDlg::OnPaint() 
+void CSuperficie3DDlg::OnPaint()
 {
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // device context for painting
 
-		SendMessage(WM_ICONERASEBKGND, (WPARAM) dc.GetSafeHdc(), 0);
+		SendMessage(WM_ICONERASEBKGND, (WPARAM)dc.GetSafeHdc(), 0);
 
 		// Center icon in client rectangle
 		int cxIcon = GetSystemMetrics(SM_CXICON);
@@ -177,172 +177,172 @@ void CSuperficie3DDlg::OnPaint()
 //  the minimized window.
 HCURSOR CSuperficie3DDlg::OnQueryDragIcon()
 {
-	return (HCURSOR) m_hIcon;
+	return (HCURSOR)m_hIcon;
 }
 
 void CSuperficie3DDlg::Animar()
 {
 
- //Recoje datos de las cajas de texto
- UpdateData(true);	
-	
- //coordenadas del origen de coordenadas ( en pixels )
- //en el plano 2D de la pantalla
- ox=250; //coordenada x
- oy=200; //coordenada y
- //coordenadas de los vectores unitarios i,j,k
- //en el plano 2D de la pantalla
- //se considera que 1 unidad = p pixels
- double p=m_escala;
- //vectores unitarios i,j,k
- ix=-0.9659258*p; //ix=-cos(15)
- iy=0.2588190*p;  //iy=sin(15)
- jx=0.8660254*p;  //jx=cos(30)
- jy=0.5*p;       //jy=sin(30)
- //kx=0;       //no es nesesario declararlo
- ky=-1*p;		  //ky=-1
+	//Recoje datos de las cajas de texto
+	UpdateData(true);
 
- double x,y,z;
- 
-// DibujarEjes();
+	//coordenadas del origen de coordenadas ( en pixels )
+	//en el plano 2D de la pantalla
+	ox = 250; //coordenada x
+	oy = 200; //coordenada y
+	//coordenadas de los vectores unitarios i,j,k
+	//en el plano 2D de la pantalla
+	//se considera que 1 unidad = p pixels
+	double p = m_escala;
+	//vectores unitarios i,j,k
+	ix = -0.9659258*p; //ix=-cos(15)
+	iy = 0.2588190*p;  //iy=sin(15)
+	jx = 0.8660254*p;  //jx=cos(30)
+	jy = 0.5*p;       //jy=sin(30)
+	//kx=0;       //no es nesesario declararlo
+	ky = -1 * p;		  //ky=-1
 
- const int Xn=25,Yn=25; //ancho y alto de cuadricula ( Malla )
+	double x, y, z;
 
- int Malla[Xn][Yn][2]; //Malla 2D de proyeccion de la superficie en la pantalla
- double Superficie[Xn][Yn][3]; //Malla 3D de puntos originales
- int i,j;
+	// DibujarEjes();
 
- //x pertenece al intervalo [a,b]
- //y pertenece al intervalo [a,b]
- double a=m_CoordenadaMin,b=m_CoordenadaMax;
+	const int Xn = 25, Yn = 25; //ancho y alto de cuadricula ( Malla )
 
- //construccion de la Malla 3D a partir de una ecuacion
- //de superficie z=f(x,y)
- for( i=0;i<Xn;i++ )
- {
-  x=a+((b-a)/Xn)*i; //particion del eje X
-  for( j=0;j<Yn;j++ )
-  {
-   y=a+((b-a)/Yn)*j; //particion del eje Y
+	int Malla[Xn][Yn][2]; //Malla 2D de proyeccion de la superficie en la pantalla
+	double Superficie[Xn][Yn][3]; //Malla 3D de puntos originales
+	int i, j;
 
-   //Ejemplos de ecuaciones de superficie
-   z=-sin(3*(x*x+y*y)); //El Sombrero de Bufon
-   //z=x*x-y*y; //La silla de Montar
-     //z=5*sqrt(fabs(1-x*x/25-y*y/16)); //Una elipse
-   //z=sqrt(1-x*x+y*y);
-   //if(z>0)z=4*sqrt(z);else z=0;//-sqrt(z);
-   //z=cos(x*x+y*y)-3*cos(x*y)+2*sin(x)+sin(y);
+	//x pertenece al intervalo [a,b]
+	//y pertenece al intervalo [a,b]
+	double a = m_CoordenadaMin, b = m_CoordenadaMax;
 
-   //Obteniendo Matriz de Superficie 3D
-   Superficie[i][j][0]=x;
-   Superficie[i][j][1]=y;
-   Superficie[i][j][2]=z;
-  }
- }
+	//construccion de la Malla 3D a partir de una ecuacion
+	//de superficie z=f(x,y)
+	for (i = 0; i < Xn; i++)
+	{
+		x = a + ((b - a) / Xn)*i; //particion del eje X
+		for (j = 0; j < Yn; j++)
+		{
+			y = a + ((b - a) / Yn)*j; //particion del eje Y
 
-int k,ejerot=0;
+			//Ejemplos de ecuaciones de superficie
+			z = -sin(3 * (x*x + y * y)); //El Sombrero de Bufon
+			//z=x*x-y*y; //La silla de Montar
+			  //z=5*sqrt(fabs(1-x*x/25-y*y/16)); //Una elipse
+			//z=sqrt(1-x*x+y*y);
+			//if(z>0)z=4*sqrt(z);else z=0;//-sqrt(z);
+			//z=cos(x*x+y*y)-3*cos(x*y)+2*sin(x)+sin(y);
 
-CDC *dibujo=m_Cuadro.GetDC();
+			//Obteniendo Matriz de Superficie 3D
+			Superficie[i][j][0] = x;
+			Superficie[i][j][1] = y;
+			Superficie[i][j][2] = z;
+		}
+	}
 
-CPen NewPen(PS_SOLID, 1, RGB(0,0,230) );   
+	int k, ejerot = 0;
+
+	CDC *dibujo = m_Cuadro.GetDC();
+
+	CPen NewPen(PS_SOLID, 1, RGB(0, 0, 230));
 	dibujo->SelectObject(&NewPen);
 
- //Aceleradores de calculos trigonometricos
- //esto se hace para no emplear las funciones sin() y cos() 
- //que vuelven lento el proceso de animacion y hace que la imagen
- //parpadee mucho
- //La rotacion sera de 0.1 radianes
-	double tsen=0.099833, //sin(0.1)
-           tcos=0.995004; //cos(0.1)
+	//Aceleradores de calculos trigonometricos
+	//esto se hace para no emplear las funciones sin() y cos() 
+	//que vuelven lento el proceso de animacion y hace que la imagen
+	//parpadee mucho
+	//La rotacion sera de 0.1 radianes
+	double tsen = 0.099833, //sin(0.1)
+		tcos = 0.995004; //cos(0.1)
 
 //Muestra la superficie 3D rotando alrededor de los 3 ejes
 //La animacion consiste de 300 cuadros
-for( k=0;k<300;k++)
-{
-	
-  //Se cambia el eje de rotacion cada 30 cuadros
-  if( !(k%30) ) {ejerot++; ejerot%=3;}
+	for (k = 0; k < 300; k++)
+	{
 
-  //rotacion de la Malla 3D
-  for( i=0;i<Xn;i++ )
- {
+		//Se cambia el eje de rotacion cada 30 cuadros
+		if (!(k % 30)) { ejerot++; ejerot %= 3; }
 
-  for( j=0;j<Yn;j++ )
-  {
+		//rotacion de la Malla 3D
+		for (i = 0; i < Xn; i++)
+		{
 
-   x=Superficie[i][j][0];
-   y=Superficie[i][j][1];
-   z=Superficie[i][j][2];
+			for (j = 0; j < Yn; j++)
+			{
 
-   switch(ejerot)
-   {
-   case 0: //rotacion alrededor del eje X
-    Superficie[i][j][1]=y*tcos-z*tsen;
-    Superficie[i][j][2]=y*tsen+z*tcos;
-    break;
-   case 1: //rotacion alrededor del eje Y
-    Superficie[i][j][0]=x*tcos+z*tsen;
-    Superficie[i][j][2]=-x*tsen+z*tcos;
-    break;
-   case 2: //rotacion alrededor del eje Z
-    Superficie[i][j][0]=x*tcos-y*tsen;
-    Superficie[i][j][1]=x*tsen+y*tcos;
-   }
+				x = Superficie[i][j][0];
+				y = Superficie[i][j][1];
+				z = Superficie[i][j][2];
 
-   //Se Proyecta los puntos 3D al plano 2D de la pantalla
-   Malla[i][j][0]=(int)(ox+Superficie[i][j][0]*ix+Superficie[i][j][1]*jx);
-   Malla[i][j][1]=(int)(oy+Superficie[i][j][0]*iy+Superficie[i][j][1]*jy+Superficie[i][j][2]*ky);
-  }
- }
+				switch (ejerot)
+				{
+				case 0: //rotacion alrededor del eje X
+					Superficie[i][j][1] = y * tcos - z * tsen;
+					Superficie[i][j][2] = y * tsen + z * tcos;
+					break;
+				case 1: //rotacion alrededor del eje Y
+					Superficie[i][j][0] = x * tcos + z * tsen;
+					Superficie[i][j][2] = -x * tsen + z * tcos;
+					break;
+				case 2: //rotacion alrededor del eje Z
+					Superficie[i][j][0] = x * tcos - y * tsen;
+					Superficie[i][j][1] = x * tsen + y * tcos;
+				}
+
+				//Se Proyecta los puntos 3D al plano 2D de la pantalla
+				Malla[i][j][0] = (int)(ox + Superficie[i][j][0] * ix + Superficie[i][j][1] * jx);
+				Malla[i][j][1] = (int)(oy + Superficie[i][j][0] * iy + Superficie[i][j][1] * jy + Superficie[i][j][2] * ky);
+			}
+		}
 
 
- int n,m;
+		int n, m;
 
- //Borra la pantalla
- CRect rect;
- m_Cuadro.GetClientRect(rect);
- dibujo->Rectangle(rect);
+		//Borra la pantalla
+		CRect rect;
+		m_Cuadro.GetClientRect(rect);
+		dibujo->Rectangle(rect);
 
- //Muestra la ecuacion de superficie
- dibujo->TextOut(10,10,_T("z = -sin( 3 * (x^2+y^2) )"));
+		//Muestra la ecuacion de superficie
+		dibujo->TextOut(10, 10, _T("z = -sin( 3 * (x^2+y^2) )"));
 
- int alto=rect.Height(), ancho=rect.Width();
+		int alto = rect.Height(), ancho = rect.Width();
 
- //Muestra la Malla 2D ( Proyeccion de la superficie sobre la pantalla)
- for( i=0;i<Xn;i++ )
-  for( j=0;j<Yn;j++ )   
-  {
+		//Muestra la Malla 2D ( Proyeccion de la superficie sobre la pantalla)
+		for (i = 0; i < Xn; i++)
+			for (j = 0; j < Yn; j++)
+			{
 
-   if( Malla[i][j][0] >0 && Malla[i][j][0] < ancho &&
-       Malla[i][j][1] >0 && Malla[i][j][1] < alto)	
-   {
-    dibujo->MoveTo(Malla[i][j][0],Malla[i][j][1]);
-    n=i+1;
-    if(n<Xn &&
-	   Malla[n][j][0] >0 && Malla[n][j][0] < ancho &&
-	   Malla[n][j][1] >0 && Malla[n][j][1] < alto  )
-     dibujo->LineTo(Malla[n][j][0],Malla[n][j][1]);
+				if (Malla[i][j][0] > 0 && Malla[i][j][0] < ancho &&
+					Malla[i][j][1] >0 && Malla[i][j][1] < alto)
+				{
+					dibujo->MoveTo(Malla[i][j][0], Malla[i][j][1]);
+					n = i + 1;
+					if (n < Xn &&
+						Malla[n][j][0] >0 && Malla[n][j][0] < ancho &&
+						Malla[n][j][1] >0 && Malla[n][j][1] < alto)
+						dibujo->LineTo(Malla[n][j][0], Malla[n][j][1]);
 
-    dibujo->MoveTo(Malla[i][j][0],Malla[i][j][1]);
-    m=j+1;
-    if(m<Yn &&
-	   Malla[i][m][0] >0 && Malla[i][m][0] < ancho &&
-	   Malla[i][m][1] >0 && Malla[i][m][1] < alto  )
-     dibujo->LineTo(Malla[i][m][0],Malla[i][m][1]);
+					dibujo->MoveTo(Malla[i][j][0], Malla[i][j][1]);
+					m = j + 1;
+					if (m < Yn &&
+						Malla[i][m][0] >0 && Malla[i][m][0] < ancho &&
+						Malla[i][m][1] >0 && Malla[i][m][1] < alto)
+						dibujo->LineTo(Malla[i][m][0], Malla[i][m][1]);
 
-   }
-  }
- //Pone una pausa de "m_Velocidad" milisegundos entre cada cuadro
- //si se presiona el boton Detener se sale del bucle
-  if( Pausa(m_Velocidad) )break;
+				}
+			}
+		//Pone una pausa de "m_Velocidad" milisegundos entre cada cuadro
+		//si se presiona el boton Detener se sale del bucle
+		if (Pausa(m_Velocidad))break;
+	}
+
 }
- 
-}
 
-void CSuperficie3DDlg::OnAnimar() 
+void CSuperficie3DDlg::OnAnimar()
 {
 	// TODO: Add your control notification handler code here
-	m_Detener= false;
+	m_Detener = false;
 	Animar();
 }
 
@@ -350,21 +350,21 @@ void CSuperficie3DDlg::OnAnimar()
 BOOL CSuperficie3DDlg::Pausa(time_t TiempoPausa)
 {
 	MSG msg;
-	clock_t goal; 
+	clock_t goal;
 	goal = TiempoPausa + clock();
-   while( goal > clock() )
-	   while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) { 
-                // If it's a quit message, we're out of here.
-                if (msg.message == WM_QUIT || m_Detener ) 
-					 return 1; 
-                // Otherwise, dispatch the message.
-                DispatchMessage(&msg); 
-            } // End of PeekMessage while loop.
+	while (goal > clock())
+		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+			// If it's a quit message, we're out of here.
+			if (msg.message == WM_QUIT || m_Detener)
+				return 1;
+			// Otherwise, dispatch the message.
+			DispatchMessage(&msg);
+		} // End of PeekMessage while loop.
 
-   return false;
+	return false;
 }
 
-void CSuperficie3DDlg::OnDetener() 
+void CSuperficie3DDlg::OnDetener()
 {
 	// TODO: Add your control notification handler code here
 	m_Detener = true;
