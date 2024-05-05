@@ -1,5 +1,52 @@
-// Piramide3DDlg.cpp : implementation file
-//
+/******************************************************************************
+:: 3D PYRAMID :: PIRÁMIDE 3D ::
+
+A pyramid is plotted in 3D. It is allowed to translate it on the Y axis
+and rotate it around the Y axis
+
+Spanish:
+Se plotea una piramide en 3D. Se permite trasladarla en el eje Y y 
+rotarla alrrededor del eje Y
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+  >> Version 2 - 04-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Porting to VC++ 2017.
+	- Add credits and version history
+	- Translate GUI from spanish to english
+	- Warnings due to lack of static_cast are corrected
+	- Bug is corrected in the translation on the Y axis
+	- Bug is corrected in the GUI, where it was indicated that it was
+	  translated along the X axis, when in reality the translation was
+	  along the Y axis
+	- Added button to rotate at -90° (counterclockwise)
+	- The button is added for translation parallel to the Y axis in the
+	  negative direction
+
+  >> Version 1 - 08-I-2001
+	- First version developed by Yacsha for VC++ 6.0
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "stdafx.h"
 #include "Piramide3D.h"
@@ -87,6 +134,8 @@ BEGIN_MESSAGE_MAP(CPiramide3DDlg, CDialog)
 	ON_BN_CLICKED(IDC_REINICIAR, OnReiniciar)
 	ON_BN_CLICKED(IDC_TRASX, OnTrasx)
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_ROTAR90_NEG, &CPiramide3DDlg::OnBnClickedRotar90Neg)
+	ON_BN_CLICKED(IDC_TRASX_NEG, &CPiramide3DDlg::OnBnClickedTrasxNeg)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -222,9 +271,9 @@ void CPiramide3DDlg::DibujarEjes()
   CPoint O,X,Y,Z;
   //longitud de los ejes = 110 unidades
   O=CPoint(ox,oy);
-  X=CPoint(110*ix,110*iy);
-  Y=CPoint(110*jx,110*jy);
-  Z=CPoint(0,110*ky);
+  X=CPoint(static_cast<int>(110.0*ix), static_cast<int>(110.0*iy));
+  Y=CPoint(static_cast<int>(110.0*jx), static_cast<int>(110.0*jy));
+  Z=CPoint(0, static_cast<int>(110.0*ky));
 
    dibujo->MoveTo(O);  
    dibujo->LineTo(O+X);
@@ -250,21 +299,21 @@ void CPiramide3DDlg::Dibujar()
    {
    	if( j==4 ) j=0;
 
-    dibujo->MoveTo(ox+Punto[i][0]*ix+Punto[i][1]*jx,
-	              oy+Punto[i][0]*iy+Punto[i][1]*jy+Punto[i][2]*ky);  
-   
-    dibujo->LineTo(ox+Punto[j][0]*ix+Punto[j][1]*jx,
-	              oy+Punto[j][0]*iy+Punto[j][1]*jy+Punto[j][2]*ky);
+	dibujo->MoveTo(	ox + static_cast<int>(Punto[i][0] * ix + Punto[i][1] * jx),
+					oy + static_cast<int>(Punto[i][0] * iy + Punto[i][1] * jy + Punto[i][2] * ky));
+
+	dibujo->LineTo(	ox + static_cast<int>(Punto[j][0] * ix + Punto[j][1] * jx),
+					oy + static_cast<int>(Punto[j][0] * iy + Punto[j][1] * jy + Punto[j][2] * ky));
    }
 
   //Une la base con la punta
   for(i=0;i<4;i++)
   {
-	  dibujo->MoveTo(ox+Punto[4][0]*ix+Punto[4][1]*jx,
-	              oy+Punto[4][0]*iy+Punto[4][1]*jy+Punto[4][2]*ky);  
+	  dibujo->MoveTo(	ox + static_cast<int>(Punto[4][0] * ix + Punto[4][1] * jx),
+						oy + static_cast<int>(Punto[4][0] * iy + Punto[4][1] * jy + Punto[4][2] * ky));
 
-	  dibujo->LineTo(ox+Punto[i][0]*ix+Punto[i][1]*jx,
-	              oy+Punto[i][0]*iy+Punto[i][1]*jy+Punto[i][2]*ky);  
+	  dibujo->LineTo(	ox + static_cast<int>(Punto[i][0] * ix + Punto[i][1] * jx),
+						oy + static_cast<int>(Punto[i][0] * iy + Punto[i][1] * jy + Punto[i][2] * ky));
 
   }
  
@@ -318,9 +367,27 @@ void CPiramide3DDlg::OnTrasx()
 	
 	for(int i=0;i<5;i++)
 	{
-	 Punto[i][0]+=60;
-	 Punto[i][1]+=60;
-	 Punto[i][2]+=50;
+	// Punto[i][0]+=60;
+	 Punto[i][1]+=10.0;
+	 //Punto[i][2]+=50;
+	}
+
+	DibujarTodo();
+}
+
+
+void CPiramide3DDlg::OnBnClickedRotar90Neg()
+{
+	RotarX(-3.141592 / 2); //rota 90 grados
+	DibujarTodo();
+}
+
+
+void CPiramide3DDlg::OnBnClickedTrasxNeg()
+{
+	for (int i = 0; i < 5; i++)
+	{
+		Punto[i][1] -= 10.0;
 	}
 
 	DibujarTodo();

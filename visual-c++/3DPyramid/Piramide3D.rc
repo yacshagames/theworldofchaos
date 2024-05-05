@@ -96,16 +96,18 @@ END
 IDD_PIRAMIDE3D_DIALOG DIALOGEX 0, 0, 415, 314
 STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "Cuadrado3D"
+CAPTION "3D Pyramid"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "S&alir",IDCANCEL,372,39,36,14
-    PUSHBUTTON      "&Reiniciar",IDC_REINICIAR,372,17,36,14
-    GROUPBOX        "Rotación alrededor de EjeX",IDC_STATIC,7,7,116,46
-    GROUPBOX        "Traslación en EjeX",IDC_STATIC,125,7,80,46
+    DEFPUSHBUTTON   "&Exit",IDCANCEL,372,39,36,14
+    PUSHBUTTON      "&Reset",IDC_REINICIAR,372,17,36,14
+    GROUPBOX        "Rotation around X-Axis",IDC_STATIC,7,7,116,46,BS_CENTER
+    GROUPBOX        "Translation in Y Axis",IDC_STATIC,125,7,80,46,BS_CENTER
     CONTROL         "",IDC_FONDO,"Static",SS_BLACKRECT,7,56,401,251,WS_EX_CLIENTEDGE
-    PUSHBUTTON      "Rotar 90°",IDC_ROTAR90,41,24,50,14
-    PUSHBUTTON      "Trasladar",IDC_TRASX,141,25,50,14
+    PUSHBUTTON      "Rotate +90°",IDC_ROTAR90,17,24,46,14
+    PUSHBUTTON      "+",IDC_TRASX,141,24,16,14
+    PUSHBUTTON      "Rotate -90°",IDC_ROTAR90_NEG,68,24,46,14
+    PUSHBUTTON      "-",IDC_TRASX_NEG,171,24,16,14
 END
 
 
@@ -177,6 +179,17 @@ BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_PIRAMIDE3D_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
 
 
 /////////////////////////////////////////////////////////////////////////////

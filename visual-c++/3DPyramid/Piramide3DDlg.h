@@ -55,6 +55,9 @@ protected:
 	afx_msg void OnTrasx();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedRotar90Neg();
+	afx_msg void OnBnClickedTrasxNeg();
 };
 
 //{{AFX_INSERT_LOCATION}}
