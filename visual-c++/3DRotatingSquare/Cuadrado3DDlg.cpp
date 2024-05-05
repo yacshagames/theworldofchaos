@@ -1,10 +1,14 @@
 /******************************************************************************
 :: 3D ROTATING SQUARE :: ROTA CUADRADO 3D ::
 
-A 3D square is plotted that supports translation, rotation, scaling, projection in the XY, XZ, YZ planes, and reflection with respect to X, Y, Z and the origin O
+A 3D square is plotted that supports translation, rotation, scaling,
+projection in the XY, XZ, YZ planes, and reflection with respect to X, Y, Z
+and the origin O
 
 Spanish:
-Se plotea un cuadrado 3D que soporta traslación, rotación, escalamiento, proyección en los planos XY, XZ, YZ, y reflexión con respecto a X, Y, Z y el origen O
+Se plotea un cuadrado 3D que soporta traslación, rotación, escalamiento,
+proyección en los planos XY, XZ, YZ, y reflexión con respecto a X, Y, Z
+y el origen O
 
 Developed by:
 
