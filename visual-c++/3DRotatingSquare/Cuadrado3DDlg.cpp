@@ -1,5 +1,43 @@
-// Cuadrado3DDlg.cpp : implementation file
-//
+/******************************************************************************
+:: 3D ROTATING SQUARE :: ROTA CUADRADO 3D ::
+
+A 3D square is plotted that supports translation, rotation, scaling, projection in the XY, XZ, YZ planes, and reflection with respect to X, Y, Z and the origin O
+
+Spanish:
+Se plotea un cuadrado 3D que soporta traslación, rotación, escalamiento, proyección en los planos XY, XZ, YZ, y reflexión con respecto a X, Y, Z y el origen O
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+  >> Version 2 - 05-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Porting to VC++ 2017.
+	- Add credits and version history
+	- Translate GUI from spanish to english
+	- Warnings due to lack of static_cast are corrected
+
+  >> Version 1 - 15-I-2001
+	- First version developed by Yacsha for VC++ 6.0
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "stdafx.h"
 #include "Cuadrado3D.h"
@@ -226,12 +264,12 @@ void CCuadrado3DDlg::Dibujar()
    {
    	if( j==4 ) j=0;
 
-    dibujo->MoveTo(ox+Punto[i][0]*ix+Punto[i][1]*jx,
-	              oy+Punto[i][0]*iy+Punto[i][1]*jy+Punto[i][2]*ky);  
-   
-    dibujo->LineTo(ox+Punto[j][0]*ix+Punto[j][1]*jx,
-	              oy+Punto[j][0]*iy+Punto[j][1]*jy+Punto[j][2]*ky);
-   }
+	dibujo->MoveTo(	static_cast<int>(ox + Punto[i][0] * ix + Punto[i][1] * jx),
+					static_cast<int>(oy + Punto[i][0] * iy + Punto[i][1] * jy + Punto[i][2] * ky));
+
+	dibujo->LineTo(	static_cast<int>(ox + Punto[j][0] * ix + Punto[j][1] * jx),
+					static_cast<int>(oy + Punto[j][0] * iy + Punto[j][1] * jy + Punto[j][2] * ky));
+  }
  
 }
 
@@ -246,10 +284,10 @@ void CCuadrado3DDlg::DibujarEjes()
 	
   CPoint O,X,Y,Z;
   //longitud de los ejes = 110 unidades
-  O=CPoint(ox,oy);
-  X=CPoint(110*ix,110*iy);
-  Y=CPoint(110*jx,110*jy);
-  Z=CPoint(0,110*ky);
+  O=CPoint(static_cast<int>(ox), static_cast<int>(oy));
+  X = CPoint(static_cast<int>(110.0*ix), static_cast<int>(110.0*iy));
+  Y = CPoint(static_cast<int>(110.0*jx), static_cast<int>(110.0*jy));
+  Z = CPoint(0, static_cast<int>(110.0*ky));
 
    dibujo->MoveTo(O);  
    dibujo->LineTo(O+X);
