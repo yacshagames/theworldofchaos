@@ -58,14 +58,14 @@ class CAboutDlg : public CDialog
 public:
 	CAboutDlg();
 
-// Dialog Data
-	//{{AFX_DATA(CAboutDlg)
+	// Dialog Data
+		//{{AFX_DATA(CAboutDlg)
 	enum { IDD = IDD_ABOUTBOX };
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
@@ -172,26 +172,26 @@ BOOL CCuadrado3DDlg::OnInitDialog()
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, TRUE);		// Set small icon
-	
+
 	// TODO: Add extra initialization here
-	
+
 	//coordenadas del origen de coordenadas
 	//en el plano 2D de la pantalla
 	CRect rect;
 	m_Fondo.GetClientRect(&rect);
 
-	ox = (rect.right-rect.left)/2; //coordenada x
-    oy = (rect.bottom-rect.top)/2; //coordenada y
+	ox = (rect.right - rect.left) / 2; //coordenada x
+	oy = (rect.bottom - rect.top) / 2; //coordenada y
 
 	//coordenadas de los vectores unitarios i,j,k
 	//en el plano 2D de la pantalla
 	//se considera que 1 unidad = 1 pixel
-	ix=-0.9659258; //ix=-cos(15)
-	iy=0.2588190;  //iy=sin(15)
-	jx=0.8660254;  //jx=cos(30)
-	jy=0.5;		  //jy=sin(30)
+	ix = -0.9659258; //ix=-cos(15)
+	iy = 0.2588190;  //iy=sin(15)
+	jx = 0.8660254;  //jx=cos(30)
+	jy = 0.5;		  //jy=sin(30)
 	//zx=0;       //no es nesesario declararlo
-	ky=-1;		  //zy=-1
+	ky = -1;		  //zy=-1
 
 	InicializarPuntos();
 
@@ -215,13 +215,13 @@ void CCuadrado3DDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CCuadrado3DDlg::OnPaint() 
+void CCuadrado3DDlg::OnPaint()
 {
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // device context for painting
 
-		SendMessage(WM_ICONERASEBKGND, (WPARAM) dc.GetSafeHdc(), 0);
+		SendMessage(WM_ICONERASEBKGND, (WPARAM)dc.GetSafeHdc(), 0);
 
 		// Center icon in client rectangle
 		int cxIcon = GetSystemMetrics(SM_CXICON);
@@ -239,7 +239,7 @@ void CCuadrado3DDlg::OnPaint()
 		CDialog::OnPaint();
 	}
 
-   DibujarTodo();
+	DibujarTodo();
 
 }
 
@@ -247,54 +247,54 @@ void CCuadrado3DDlg::OnPaint()
 //  the minimized window.
 HCURSOR CCuadrado3DDlg::OnQueryDragIcon()
 {
-	return (HCURSOR) m_hIcon;
+	return (HCURSOR)m_hIcon;
 }
 
 void CCuadrado3DDlg::Dibujar()
 {
-  CDC *dibujo = m_Fondo.GetDC();
+	CDC *dibujo = m_Fondo.GetDC();
 
-  //se selecciona el color y el grosor de la pluma
-  CPen NewPen(PS_SOLID, 2, RGB(255,255,255) );     
-  dibujo->SelectObject(&NewPen);
+	//se selecciona el color y el grosor de la pluma
+	CPen NewPen(PS_SOLID, 2, RGB(255, 255, 255));
+	dibujo->SelectObject(&NewPen);
 
-  int i,j;
+	int i, j;
 
-  for(j=1,i=0;i<4;i++,j++)
-   {
-   	if( j==4 ) j=0;
+	for (j = 1, i = 0; i < 4; i++, j++)
+	{
+		if (j == 4) j = 0;
 
-	dibujo->MoveTo(	static_cast<int>(ox + Punto[i][0] * ix + Punto[i][1] * jx),
-					static_cast<int>(oy + Punto[i][0] * iy + Punto[i][1] * jy + Punto[i][2] * ky));
+		dibujo->MoveTo(static_cast<int>(ox + Punto[i][0] * ix + Punto[i][1] * jx),
+			static_cast<int>(oy + Punto[i][0] * iy + Punto[i][1] * jy + Punto[i][2] * ky));
 
-	dibujo->LineTo(	static_cast<int>(ox + Punto[j][0] * ix + Punto[j][1] * jx),
-					static_cast<int>(oy + Punto[j][0] * iy + Punto[j][1] * jy + Punto[j][2] * ky));
-  }
- 
+		dibujo->LineTo(static_cast<int>(ox + Punto[j][0] * ix + Punto[j][1] * jx),
+			static_cast<int>(oy + Punto[j][0] * iy + Punto[j][1] * jy + Punto[j][2] * ky));
+	}
+
 }
 
 void CCuadrado3DDlg::DibujarEjes()
 {
 
-  CDC *dibujo = m_Fondo.GetDC();
-  
-  
-  CPen NewPen(PS_SOLID, 2, RGB(0,255,0) );   
-	dibujo->SelectObject(&NewPen);
-	
-  CPoint O,X,Y,Z;
-  //longitud de los ejes = 110 unidades
-  O=CPoint(static_cast<int>(ox), static_cast<int>(oy));
-  X = CPoint(static_cast<int>(110.0*ix), static_cast<int>(110.0*iy));
-  Y = CPoint(static_cast<int>(110.0*jx), static_cast<int>(110.0*jy));
-  Z = CPoint(0, static_cast<int>(110.0*ky));
+	CDC *dibujo = m_Fondo.GetDC();
 
-   dibujo->MoveTo(O);  
-   dibujo->LineTo(O+X);
-   dibujo->MoveTo(O);
-   dibujo->LineTo(O+Y);
-   dibujo->MoveTo(O);
-   dibujo->LineTo(O+Z);
+
+	CPen NewPen(PS_SOLID, 2, RGB(0, 255, 0));
+	dibujo->SelectObject(&NewPen);
+
+	CPoint O, X, Y, Z;
+	//longitud de los ejes = 110 unidades
+	O = CPoint(static_cast<int>(ox), static_cast<int>(oy));
+	X = CPoint(static_cast<int>(110.0*ix), static_cast<int>(110.0*iy));
+	Y = CPoint(static_cast<int>(110.0*jx), static_cast<int>(110.0*jy));
+	Z = CPoint(0, static_cast<int>(110.0*ky));
+
+	dibujo->MoveTo(O);
+	dibujo->LineTo(O + X);
+	dibujo->MoveTo(O);
+	dibujo->LineTo(O + Y);
+	dibujo->MoveTo(O);
+	dibujo->LineTo(O + Z);
 
 }
 
@@ -302,78 +302,78 @@ void CCuadrado3DDlg::DibujarEjes()
 void CCuadrado3DDlg::RotarX(double angulo)
 {
 
-	double Y,Z;
+	double Y, Z;
 
-	for(int i=0;i<4;i++)
+	for (int i = 0; i < 4; i++)
 	{
-	 Y=Punto[i][1];
-	 Z=Punto[i][2];	
+		Y = Punto[i][1];
+		Z = Punto[i][2];
 
-	 Punto[i][1]= Y*cos(angulo)+Z*sin(angulo);
-	 Punto[i][2]= -Y*sin(angulo)+Z*cos(angulo);
+		Punto[i][1] = Y * cos(angulo) + Z * sin(angulo);
+		Punto[i][2] = -Y * sin(angulo) + Z * cos(angulo);
 	}
 }
 
 //rota el cuadrado alrededor del eje y
 void CCuadrado3DDlg::RotarY(double angulo)
 {
-   double X,Z;
+	double X, Z;
 
-	for(int i=0;i<4;i++)
+	for (int i = 0; i < 4; i++)
 	{
-	 X=Punto[i][0];
-	 Z=Punto[i][2];	
+		X = Punto[i][0];
+		Z = Punto[i][2];
 
-	 Punto[i][0]= X*cos(angulo)-Z*sin(angulo);
-	 Punto[i][2]= X*sin(angulo)+Z*cos(angulo);
+		Punto[i][0] = X * cos(angulo) - Z * sin(angulo);
+		Punto[i][2] = X * sin(angulo) + Z * cos(angulo);
 	}
 }
 
 //rota el cuadrado alrededor del eje z
 void CCuadrado3DDlg::RotarZ(double angulo)
 {
-   double X,Y;
+	double X, Y;
 
-	for(int i=0;i<4;i++)
+	for (int i = 0; i < 4; i++)
 	{
-	 X=Punto[i][0];
-	 Y=Punto[i][1];	
+		X = Punto[i][0];
+		Y = Punto[i][1];
 
-	 Punto[i][0]= X*cos(angulo)+Y*sin(angulo);
-	 Punto[i][1]= -X*sin(angulo)+Y*cos(angulo);
+		Punto[i][0] = X * cos(angulo) + Y * sin(angulo);
+		Punto[i][1] = -X * sin(angulo) + Y * cos(angulo);
 	}
 }
 
 //traslada el cuadrado paralelo al eje x
-void CCuadrado3DDlg::TrasladarX( int desplazamiento )
+void CCuadrado3DDlg::TrasladarX(int desplazamiento)
 {
- 	for(int i=0;i<5;i++)
-	 Punto[i][0]+=desplazamiento;
+	for (int i = 0; i < 5; i++)
+		Punto[i][0] += desplazamiento;
 }
 
 //traslada el cuadrado paralelo al eje y
-void CCuadrado3DDlg::TrasladarY( int desplazamiento )
+void CCuadrado3DDlg::TrasladarY(int desplazamiento)
 {
-  for(int i=0;i<5;i++)
-	 Punto[i][1]+=desplazamiento;
+	for (int i = 0; i < 5; i++)
+		Punto[i][1] += desplazamiento;
 }
 
 //traslada el cuadrado paralelo al eje z
-void CCuadrado3DDlg::TrasladarZ( int desplazamiento )
+void CCuadrado3DDlg::TrasladarZ(int desplazamiento)
 {
-  for(int i=0;i<5;i++)
-	 Punto[i][2]+=desplazamiento;
+	for (int i = 0; i < 5; i++)
+		Punto[i][2] += desplazamiento;
 }
 
 
-void CCuadrado3DDlg::OnRotarx() 
+void CCuadrado3DDlg::OnRotarx()
 {
 	// TODO: Add your control notification handler code here
-	
+
 	//El angulo de rotación será 5° = 0.087266 radianes	
-    UpdateData(true);
+	UpdateData(true);
 	int s;
-    if( m_Sentido ) s=1; else s=-1;
+	if (m_Sentido) s = 1; else s = -1;
 
 	RotarX(0.087266*s);
 	DibujarTodo();
@@ -381,40 +381,40 @@ void CCuadrado3DDlg::OnRotarx()
 
 
 
-void CCuadrado3DDlg::OnRotary() 
+void CCuadrado3DDlg::OnRotary()
 {
 	// TODO: Add your control notification handler code here
-	
+
 	//El angulo de rotación será 5° = 0.087266 radianes	
 	UpdateData(true);
 	int s;
-    if( m_Sentido ) s=1; else s=-1;
+	if (m_Sentido) s = 1; else s = -1;
 
 	RotarY(0.087266*s);
-	DibujarTodo();	
+	DibujarTodo();
 }
 
 
-void CCuadrado3DDlg::OnRotarz() 
+void CCuadrado3DDlg::OnRotarz()
 {
 	// TODO: Add your control notification handler code here
-	
+
 	//El angulo de rotación será 5° = 0.087266 radianes	
 	UpdateData(true);
 	int s;
-    if( m_Sentido ) s=1; else s=-1;
+	if (m_Sentido) s = 1; else s = -1;
 
 	RotarZ(0.087266*s);
-	DibujarTodo();	
+	DibujarTodo();
 }
 
-void CCuadrado3DDlg::OnTrasladarx() 
+void CCuadrado3DDlg::OnTrasladarx()
 {
 	// TODO: Add your control notification handler code here
 	UpdateData(true);
 	int d;
-    //se trasladara 5 unidades segun la dirección indicada
-	if( m_Direccion ) d=-5; else d=5;
+	//se trasladara 5 unidades segun la dirección indicada
+	if (m_Direccion) d = -5; else d = 5;
 
 	TrasladarX(d);
 	DibujarTodo();
@@ -422,26 +422,26 @@ void CCuadrado3DDlg::OnTrasladarx()
 
 
 
-void CCuadrado3DDlg::OnTrasladary() 
+void CCuadrado3DDlg::OnTrasladary()
 {
 	// TODO: Add your control notification handler code here
 	UpdateData(true);
 	int d;
-    //se trasladara 5 unidades segun la dirección indicada
-	if( m_Direccion ) d=-5; else d=5;
+	//se trasladara 5 unidades segun la dirección indicada
+	if (m_Direccion) d = -5; else d = 5;
 
 	TrasladarY(d);
 	DibujarTodo();
 }
 
-void CCuadrado3DDlg::OnTrasladarz() 
+void CCuadrado3DDlg::OnTrasladarz()
 {
 	// TODO: Add your control notification handler code here
 	UpdateData(true);
 	int d;
-    //se trasladara 5 unidades segun la dirección indicada
-	if( m_Direccion ) d=-5; else d=5;
-	
+	//se trasladara 5 unidades segun la dirección indicada
+	if (m_Direccion) d = -5; else d = 5;
+
 	TrasladarZ(d);
 	DibujarTodo();
 }
@@ -449,66 +449,66 @@ void CCuadrado3DDlg::OnTrasladarz()
 //Refleja el cuadrado al plano XY
 void CCuadrado3DDlg::ReflejarXY()
 {
-  
-  for(int i=0;i<4;i++)
-  {
-   Punto[i][0]=Punto[i][0];
-   Punto[i][1]=Punto[i][1];
-   Punto[i][2]=-Punto[i][2];
-  }
-  
+
+	for (int i = 0; i < 4; i++)
+	{
+		Punto[i][0] = Punto[i][0];
+		Punto[i][1] = Punto[i][1];
+		Punto[i][2] = -Punto[i][2];
+	}
+
 }
 
 //Refleja el cuadrado al plano XZ
 void CCuadrado3DDlg::ReflejarXZ()
 {
 
-  for(int i=0;i<4;i++)
-  {
-   Punto[i][0]=Punto[i][0];
-   Punto[i][1]=-Punto[i][1];
-   Punto[i][2]=Punto[i][2];
-  }
+	for (int i = 0; i < 4; i++)
+	{
+		Punto[i][0] = Punto[i][0];
+		Punto[i][1] = -Punto[i][1];
+		Punto[i][2] = Punto[i][2];
+	}
 }
 
 //Refleja el cuadrado al plano YZ
 void CCuadrado3DDlg::ReflejarYZ()
 {
 
-  for(int i=0;i<4;i++)
-  {
-   Punto[i][0]=-Punto[i][0];
-   Punto[i][1]=Punto[i][1];
-   Punto[i][2]=Punto[i][2];
-  }
+	for (int i = 0; i < 4; i++)
+	{
+		Punto[i][0] = -Punto[i][0];
+		Punto[i][1] = Punto[i][1];
+		Punto[i][2] = Punto[i][2];
+	}
 }
 
-void CCuadrado3DDlg::OnReflejarxy() 
+void CCuadrado3DDlg::OnReflejarxy()
 {
 	// TODO: Add your control notification handler code here
-	ReflejarXY();	
- 	DibujarTodo();
+	ReflejarXY();
+	DibujarTodo();
 }
 
-void CCuadrado3DDlg::OnReflejarxz() 
+void CCuadrado3DDlg::OnReflejarxz()
 {
 	// TODO: Add your control notification handler code here
-	ReflejarXZ();	
- 	DibujarTodo();
+	ReflejarXZ();
+	DibujarTodo();
 }
 
-void CCuadrado3DDlg::OnReflejaryz() 
+void CCuadrado3DDlg::OnReflejaryz()
 {
 	// TODO: Add your control notification handler code here
-	ReflejarYZ();	
- 	DibujarTodo();
+	ReflejarYZ();
+	DibujarTodo();
 }
 
-void CCuadrado3DDlg::OnReiniciar() 
+void CCuadrado3DDlg::OnReiniciar()
 {
 	// TODO: Add your control notification handler code here
-   InicializarPuntos();
-   DibujarTodo();
+	InicializarPuntos();
+	DibujarTodo();
 }
 
 void CCuadrado3DDlg::InicializarPuntos()
@@ -518,72 +518,72 @@ void CCuadrado3DDlg::InicializarPuntos()
 							 50,  50, 0,
 							-50,  50, 0,
 							  0,   0, 0 };
-	int i,j;
-	for( i=0;i<5;i++)
-		for(j=0;j<3;j++)
-			Punto[i][j]=Punto1[i][j];
+	int i, j;
+	for (i = 0; i < 5; i++)
+		for (j = 0; j < 3; j++)
+			Punto[i][j] = Punto1[i][j];
 }
 
-void CCuadrado3DDlg::OnReflejarOrigen() 
+void CCuadrado3DDlg::OnReflejarOrigen()
 {
 	// TODO: Add your control notification handler code here
-	for(int i=0;i<4;i++)
-  {
-   Punto[i][0]=-Punto[i][0];
-   Punto[i][1]=-Punto[i][1];
-   Punto[i][2]=-Punto[i][2];
-  }
-	
+	for (int i = 0; i < 4; i++)
+	{
+		Punto[i][0] = -Punto[i][0];
+		Punto[i][1] = -Punto[i][1];
+		Punto[i][2] = -Punto[i][2];
+	}
+
 	DibujarTodo();
 }
 
-void CCuadrado3DDlg::OnReflejarx() 
+void CCuadrado3DDlg::OnReflejarx()
 {
 	// TODO: Add your control notification handler code here
-   for(int i=0;i<4;i++)
-  {
-   Punto[i][0]=Punto[i][0];
-   Punto[i][1]=-Punto[i][1];
-   Punto[i][2]=-Punto[i][2];
-  }
-	
+	for (int i = 0; i < 4; i++)
+	{
+		Punto[i][0] = Punto[i][0];
+		Punto[i][1] = -Punto[i][1];
+		Punto[i][2] = -Punto[i][2];
+	}
+
 	DibujarTodo();
 }
 
-void CCuadrado3DDlg::OnReflejary() 
+void CCuadrado3DDlg::OnReflejary()
 {
 	// TODO: Add your control notification handler code here
-   for(int i=0;i<4;i++)
-  {
-   Punto[i][0]=-Punto[i][0];
-   Punto[i][1]=Punto[i][1];
-   Punto[i][2]=-Punto[i][2];
-  }
-	
+	for (int i = 0; i < 4; i++)
+	{
+		Punto[i][0] = -Punto[i][0];
+		Punto[i][1] = Punto[i][1];
+		Punto[i][2] = -Punto[i][2];
+	}
+
 	DibujarTodo();
 }
 
-void CCuadrado3DDlg::OnReflejarz() 
+void CCuadrado3DDlg::OnReflejarz()
 {
 	// TODO: Add your control notification handler code here
-   for(int i=0;i<4;i++)
-  {
-   Punto[i][0]=-Punto[i][0];
-   Punto[i][1]=-Punto[i][1];
-   Punto[i][2]=Punto[i][2];
-  }
-	
-	DibujarTodo();	
+	for (int i = 0; i < 4; i++)
+	{
+		Punto[i][0] = -Punto[i][0];
+		Punto[i][1] = -Punto[i][1];
+		Punto[i][2] = Punto[i][2];
+	}
+
+	DibujarTodo();
 }
 
 void CCuadrado3DDlg::DibujarTodo()
 {
-   
-   m_Fondo.RedrawWindow();
-   //dibuja los ejes x y z
-   DibujarEjes();
-   //Dibuja el cuadrado en cualquier posición 
-   Dibujar();
+
+	m_Fondo.RedrawWindow();
+	//dibuja los ejes x y z
+	DibujarEjes();
+	//Dibuja el cuadrado en cualquier posición 
+	Dibujar();
 
 }
 
@@ -591,25 +591,25 @@ void CCuadrado3DDlg::DibujarTodo()
 void CCuadrado3DDlg::Escalamiento(double escala)
 {
 
-  for(int i=0;i<4;i++)
-  {
-   Punto[i][0]*=escala;
-   Punto[i][1]*=escala;
-   Punto[i][2]*=escala;
-  }
-	
+	for (int i = 0; i < 4; i++)
+	{
+		Punto[i][0] *= escala;
+		Punto[i][1] *= escala;
+		Punto[i][2] *= escala;
+	}
+
 }
 
-void CCuadrado3DDlg::OnMas() 
+void CCuadrado3DDlg::OnMas()
 {
 	// TODO: Add your control notification handler code here
-	Escalamiento( 1.2 );
+	Escalamiento(1.2);
 	DibujarTodo();
 }
 
-void CCuadrado3DDlg::OnMenos() 
+void CCuadrado3DDlg::OnMenos()
 {
 	// TODO: Add your control notification handler code here
-	Escalamiento( 0.8333 );
+	Escalamiento(0.8333);
 	DibujarTodo();
 }
