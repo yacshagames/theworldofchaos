@@ -1,6 +1,43 @@
-// Ejes3DDlg.cpp : implementation file
-//
+/******************************************************************************
+:: 3D AXIS :: EJES 3D ::
 
+The axes are plotted in 2 dimensions and 3 dimensions.
+
+Spanish:
+Se plotea los ejes en 2 dimensiones y en 3 dimensiones.
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+  >> Version 2 - 04-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Porting to VC++ 2017.
+	- Add credits and version history
+	- Translate GUI from spanish to english
+	- Warnings due to lack of static_cast are corrected
+
+  >> Version 1 - 08-I-2001
+	- First version developed by Yacsha for VC++ 6.0
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 #include "stdafx.h"
 #include "Ejes3D.h"
 #include "Ejes3DDlg.h"
@@ -231,14 +268,14 @@ void CEjes3DDlg::OnEjes3d()
   int Ox = (rect.right-rect.left)/2;
   int Oy = (rect.bottom-rect.top)/2;
 	
-  int P1x = Ox+100*ix;
-  int P1y = Oy+100*iy;
+  int P1x = Ox + static_cast<int>(100.0*ix);
+  int P1y = Oy + static_cast<int>(100.0*iy);
 
-  int P2x = Ox+100*jx;
-  int P2y = Oy+100*jy;
+  int P2x = Ox + static_cast<int>(100.0*jx);
+  int P2y = Oy + static_cast<int>(100.0*jy);
 
-  int P3x = Ox+100*kx;
-  int P3y = Oy+100*ky;
+  int P3x = Ox + static_cast<int>(100.0*kx);
+  int P3y = Oy + static_cast<int>(100.0*ky);
 
 
   CClientDC dibujo(this);

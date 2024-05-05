@@ -96,15 +96,15 @@ END
 IDD_EJES3D_DIALOG DIALOGEX 0, 0, 320, 200
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "Ejes3D"
+CAPTION "3D Axis"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    PUSHBUTTON      "Salir",IDCANCEL,273,7,40,14
-    PUSHBUTTON      "Ejes 2D",IDC_EJES2D,7,7,36,14
-    PUSHBUTTON      "Ejes 3D",IDC_EJES3D,113,7,36,14
-    PUSHBUTTON      "Punto Real 2D",IDC_PUNTOREAL2D,46,7,53,14
-    PUSHBUTTON      "Punto Real 3D",IDC_PUNTOREAL3D,152,7,53,14
-    PUSHBUTTON      "Limpiar",IDC_LIMPIAR,231,7,37,14
+    PUSHBUTTON      "Exit",IDCANCEL,273,7,40,14
+    PUSHBUTTON      "2D Axis",IDC_EJES2D,7,7,36,14
+    PUSHBUTTON      "3D Axis",IDC_EJES3D,113,7,36,14
+    PUSHBUTTON      "2D Real Point",IDC_PUNTOREAL2D,46,7,53,14
+    PUSHBUTTON      "3D Real Point",IDC_PUNTOREAL3D,152,7,53,14
+    PUSHBUTTON      "Reset",IDC_LIMPIAR,231,7,37,14
 END
 
 
@@ -171,6 +171,17 @@ BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_EJES3D_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
 
 
 /////////////////////////////////////////////////////////////////////////////
