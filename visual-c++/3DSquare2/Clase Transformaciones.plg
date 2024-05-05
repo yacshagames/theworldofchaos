@@ -1,0 +1,70 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Clase Transformaciones - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x280a /fo"Debug/Clase Transformaciones.res" /d "_DEBUG" /d "_AFXDLL" "C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase Transformaciones.rc"" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP90B3.TMP" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/Clase Transformaciones.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase Transformaciones.cpp"
+"C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP90B3.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP90B4.TMP" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/Clase Transformaciones.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP90B4.TMP" 
+Creating temporary file "C:\WINDOWS\TEMP\RSP90B5.TMP" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/Clase Transformaciones.pdb" /debug /machine:I386 /out:"Debug/Clase Transformaciones.exe" /pdbtype:sept 
+".\Debug\Clase Transformaciones.obj"
+".\Debug\Clase TransformacionesDlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\Clase Transformaciones.res"
+]
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP90B5.TMP"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+Clase Transformaciones.cpp
+Clase TransformacionesDlg.cpp
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(365) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(365) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(366) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(366) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(367) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(367) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(368) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(368) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(369) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(369) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(436) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(436) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(437) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(437) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(438) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(438) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(439) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(439) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(440) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(440) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(441) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\UNI-Fiee\Visual C++\manuel paredes\TodasTransformaciones19960488\Clase TransformacionesDlg.cpp(441) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+Clase Transformaciones.exe - 0 error(s), 22 warning(s)
+</pre>
+</body>
+</html>

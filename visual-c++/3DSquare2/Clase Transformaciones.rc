@@ -1,0 +1,262 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Spanish (Modern) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)
+#ifdef _WIN32
+LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MODERN
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Acerca de Clase Transformaciones"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            128,IDC_STATIC,11,17,20,20
+    LTEXT           "Clase Transformaciones Versión 1.0",IDC_STATIC,40,10,
+                    119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2000",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "Aceptar",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_CLASETRANSFORMACIONES_DIALOG DIALOGEX 0, 0, 566, 362
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Transformaciones"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "Salir de Programa",IDOK,435,334,103,14
+    PUSHBUTTON      "TxP",IDC_BUTTON1,460,67,19,20
+    LTEXT           "Traslaciones:",IDC_STATIC,432,51,110,13,SS_SUNKEN
+    PUSHBUTTON      "TxN",IDC_BUTTON2,460,89,19,20
+    PUSHBUTTON      "TyP",IDC_BUTTON3,480,67,19,20
+    PUSHBUTTON      "TyN",IDC_BUTTON4,480,89,19,20
+    PUSHBUTTON      "TzP",IDC_BUTTON5,500,67,19,20
+    PUSHBUTTON      "TzN",IDC_BUTTON6,500,89,19,20
+    PUSHBUTTON      "Eje 3D",IDC_BUTTON7,433,16,99,22
+    PUSHBUTTON      "RxP",IDC_BUTTON8,460,142,19,20
+    LTEXT           "Rotaciones:",IDC_STATIC,432,126,110,13,SS_SUNKEN
+    PUSHBUTTON      "RxN",IDC_BUTTON9,460,164,19,20
+    PUSHBUTTON      "RyP",IDC_BUTTON10,480,142,19,20
+    PUSHBUTTON      "RyN",IDC_BUTTON11,480,164,19,20
+    PUSHBUTTON      "RzP",IDC_BUTTON12,500,142,19,20
+    PUSHBUTTON      "RzN",IDC_BUTTON13,500,164,19,20
+    PUSHBUTTON      "+",IDC_BUTTON14,467,216,19,20
+    LTEXT           "Escalamiento",IDC_STATIC,432,201,110,13,SS_SUNKEN
+    PUSHBUTTON      "-",IDC_BUTTON16,492,216,19,20
+    PUSHBUTTON      "X",IDC_ReflexX,459,259,19,20
+    LTEXT           "Reflexion",IDC_STATIC,431,243,110,13,SS_SUNKEN
+    PUSHBUTTON      "XY",IDC_ReflexXY,459,281,19,20
+    PUSHBUTTON      "Y",IDC_ReflexY,479,259,19,20
+    PUSHBUTTON      "XZ",IDC_ReflexXZ,479,281,19,20
+    PUSHBUTTON      "Z",IDC_ReflexZ,499,259,19,20
+    PUSHBUTTON      "YZ",IDC_ReflexYZ,499,281,19,20
+    PUSHBUTTON      "Origen",IDC_ReflexO,460,305,59,13
+    CONTROL         135,IDC_STATIC,"Static",SS_BITMAP,14,307,133,41
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "0C0A04B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "Aplicación MFC Clase Transformaciones\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "Clase Transformaciones\0"
+            VALUE "LegalCopyright", "Copyright (C) 2000\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "Clase Transformaciones.EXE\0"
+            VALUE "ProductName", "Aplicación Clase Transformaciones\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0xc0a, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_CLASETRANSFORMACIONES_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 559
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 355
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "&Acerca de Clase Transformaciones..."
+END
+
+#endif    // Spanish (Modern) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Spanish (Castilian) (unknown sub-lang: 0xA) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESR)
+#ifdef _WIN32
+LANGUAGE LANG_SPANISH, 0xA
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESP)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 10, 3\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\Clase Transformaciones.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.esp\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Spanish (Castilian) (unknown sub-lang: 0xA) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Spanish (Castilian) (unknown sub-lang: 0x10) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESB)
+#ifdef _WIN32
+LANGUAGE LANG_SPANISH, 0x10
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON    DISCARDABLE     "res\\Icon163.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP1             BITMAP  DISCARDABLE     "res\\Banerg.bmp"
+#endif    // Spanish (Castilian) (unknown sub-lang: 0x10) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESP)
+#ifdef _WIN32
+LANGUAGE 10, 3
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\Clase Transformaciones.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.esp\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
