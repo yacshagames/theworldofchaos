@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Spanish (Mexican) resources
+// Español (México) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESM)
-#ifdef _WIN32
 LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MEXICAN
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -27,18 +25,18 @@ LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MEXICAN
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -51,7 +49,7 @@ BEGIN
     "#pragma code_page(1252)\r\n"
     "#endif //_WIN32\r\n"
     "#include ""res\\Piramide3D.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
-    "#include ""l.esp\\afxres.rc""          // Standard components\r\n"
+    "//#include ""l.esp\\afxres.rc""          // Standard components\r\n"
     "#endif\r\n"
     "\0"
 END
@@ -66,56 +64,51 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\Piramide3D.ico"
-#endif    // Spanish (Mexican) resources
+IDR_MAINFRAME           ICON                    "res\\Piramide3D.ico"
+
+#endif    // Español (México) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Spanish (Modern) resources
+// Español (España, alfabetización internacional) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)
-#ifdef _WIN32
 LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MODERN
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUTBOX DIALOG 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Acerca de Piramide3D"
 FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "Piramide3D Versión 1.0",IDC_STATIC,40,10,119,8,
-                    SS_NOPREFIX
+    LTEXT           "Piramide3D Versión 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2001",IDC_STATIC,40,25,119,8
     DEFPUSHBUTTON   "Aceptar",IDOK,178,7,50,14,WS_GROUP
 END
 
 IDD_PIRAMIDE3D_DIALOG DIALOGEX 0, 0, 415, 314
-STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | 
-    WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "Cuadrado3D"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "S&alir",IDCANCEL,372,39,36,14
     PUSHBUTTON      "&Reiniciar",IDC_REINICIAR,372,17,36,14
     GROUPBOX        "Rotación alrededor de EjeX",IDC_STATIC,7,7,116,46
     GROUPBOX        "Traslación en EjeX",IDC_STATIC,125,7,80,46
-    CONTROL         "",IDC_FONDO,"Static",SS_BLACKRECT,7,56,401,251,
-                    WS_EX_CLIENTEDGE
+    CONTROL         "",IDC_FONDO,"Static",SS_BLACKRECT,7,56,401,251,WS_EX_CLIENTEDGE
     PUSHBUTTON      "Rotar 90°",IDC_ROTAR90,41,24,50,14
     PUSHBUTTON      "Trasladar",IDC_TRASX,141,25,50,14
 END
 
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -138,15 +131,13 @@ BEGIN
     BEGIN
         BLOCK "0C0A04B0"
         BEGIN
-            VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "Aplicación MFC Piramide3D\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "Piramide3D\0"
-            VALUE "LegalCopyright", "Copyright (C) 2001\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "Piramide3D.EXE\0"
-            VALUE "ProductName", "Aplicación Piramide3D\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "FileDescription", "Aplicación MFC Piramide3D"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "Piramide3D"
+            VALUE "LegalCopyright", "Copyright (C) 2001"
+            VALUE "OriginalFilename", "Piramide3D.EXE"
+            VALUE "ProductName", "Aplicación Piramide3D"
+            VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -155,8 +146,6 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -164,7 +153,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -195,12 +184,12 @@ END
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "&Acerca de Piramide3D..."
 END
 
-#endif    // Spanish (Modern) resources
+#endif    // Español (España, alfabetización internacional) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -221,7 +210,7 @@ LANGUAGE 10, 3
 #pragma code_page(1252)
 #endif //_WIN32
 #include "res\Piramide3D.rc2"  // non-Microsoft Visual C++ edited resources
-#include "l.esp\afxres.rc"          // Standard components
+//#include "l.esp\afxres.rc"          // Standard components
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
