@@ -272,7 +272,7 @@ void CEjes3DDlg::OnPuntoreal2d()
 
   CString msg;
   
-  msg.Format("Centro con coordenandas reales de la pantalla es:\n(X = %i, Y= %i)", Ox, Oy);
+  msg.Format(_T("Centro con coordenandas reales de la pantalla es:\n(X = %i, Y= %i)"), Ox, Oy);
 
   MessageBox(msg);
 }
@@ -288,7 +288,7 @@ void CEjes3DDlg::OnPuntoreal3d()
 
   CString msg;
   
-  msg.Format("Centro con coordenandas reales de la pantalla es:\n(X = %i, Y= %i)", Ox, Oy);
+  msg.Format(_T("Centro con coordenandas reales de la pantalla es:\n(X = %i, Y= %i)"), Ox, Oy);
 
   MessageBox(msg);
 }

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.34729.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ejes3D", "Ejes3D.vcxproj", "{A349F037-9352-42B7-AB69-F870C4A22A2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A349F037-9352-42B7-AB69-F870C4A22A2E}.Debug|x64.ActiveCfg = Debug|x64
+		{A349F037-9352-42B7-AB69-F870C4A22A2E}.Debug|x64.Build.0 = Debug|x64
+		{A349F037-9352-42B7-AB69-F870C4A22A2E}.Debug|x86.ActiveCfg = Debug|Win32
+		{A349F037-9352-42B7-AB69-F870C4A22A2E}.Debug|x86.Build.0 = Debug|Win32
+		{A349F037-9352-42B7-AB69-F870C4A22A2E}.Release|x64.ActiveCfg = Release|x64
+		{A349F037-9352-42B7-AB69-F870C4A22A2E}.Release|x64.Build.0 = Release|x64
+		{A349F037-9352-42B7-AB69-F870C4A22A2E}.Release|x86.ActiveCfg = Release|Win32
+		{A349F037-9352-42B7-AB69-F870C4A22A2E}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AEBF08CB-2287-4ED7-A452-3A6ABC9A0BB0}
+	EndGlobalSection
+EndGlobal

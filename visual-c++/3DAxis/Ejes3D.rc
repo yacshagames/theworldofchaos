@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Spanish (Mexican) resources
+// Español (México) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESM)
-#ifdef _WIN32
 LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MEXICAN
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -27,18 +25,18 @@ LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MEXICAN
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -51,7 +49,7 @@ BEGIN
     "#pragma code_page(1252)\r\n"
     "#endif //_WIN32\r\n"
     "#include ""res\\Ejes3D.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
-    "#include ""l.esp\\afxres.rc""          // Standard components\r\n"
+    "//#include ""l.esp\\afxres.rc""          // Standard components\r\n"
     "#endif\r\n"
     "\0"
 END
@@ -66,27 +64,26 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\Ejes3D.ico"
-#endif    // Spanish (Mexican) resources
+IDR_MAINFRAME           ICON                    "res\\Ejes3D.ico"
+
+#endif    // Español (México) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Spanish (Modern) resources
+// Español (España, alfabetización internacional) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)
-#ifdef _WIN32
 LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MODERN
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUTBOX DIALOG 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Acerca de Ejes3D"
 FONT 8, "MS Sans Serif"
 BEGIN
@@ -97,10 +94,10 @@ BEGIN
 END
 
 IDD_EJES3D_DIALOG DIALOGEX 0, 0, 320, 200
-STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "Ejes3D"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "Salir",IDCANCEL,273,7,40,14
     PUSHBUTTON      "Ejes 2D",IDC_EJES2D,7,7,36,14
@@ -111,7 +108,6 @@ BEGIN
 END
 
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -134,15 +130,13 @@ BEGIN
     BEGIN
         BLOCK "0C0A04B0"
         BEGIN
-            VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "Aplicación MFC Ejes3D\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "Ejes3D\0"
-            VALUE "LegalCopyright", "Copyright (C) 2001\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "Ejes3D.EXE\0"
-            VALUE "ProductName", "Aplicación Ejes3D\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "FileDescription", "Aplicación MFC Ejes3D"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "Ejes3D"
+            VALUE "LegalCopyright", "Copyright (C) 2001"
+            VALUE "OriginalFilename", "Ejes3D.EXE"
+            VALUE "ProductName", "Aplicación Ejes3D"
+            VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -151,8 +145,6 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -160,7 +152,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -186,12 +178,12 @@ END
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "&Acerca de Ejes3D..."
 END
 
-#endif    // Spanish (Modern) resources
+#endif    // Español (España, alfabetización internacional) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -212,7 +204,7 @@ LANGUAGE 10, 3
 #pragma code_page(1252)
 #endif //_WIN32
 #include "res\Ejes3D.rc2"  // non-Microsoft Visual C++ edited resources
-#include "l.esp\afxres.rc"          // Standard components
+//#include "l.esp\afxres.rc"          // Standard components
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
