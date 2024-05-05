@@ -1,5 +1,44 @@
-// CurvasDlg.cpp : implementation file
-//
+/******************************************************************************
+:: NEWTON LAGRANGE BEZIER CURVES :: CURVAS DE NEWTON LAGRANGE BEZIER ::
+
+Newton, Lagrange and Bezier curves are plotted simultaneously, which
+interpolate a polygonal entered by the user
+
+Spanish:
+Se plotea las curvas de Newton, Lagrange y Bezier simultaneamente, que
+interpolan una poligonal ingresada por el usuario
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	ramondc@hotmail.com
+
+	UNIVERSIDAD NACIONAL DE INGENIERIA
+	Faculty of Electrical and Electronic Engineering
+	Lima-Peru
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+
+HISTORY...
+
+  >> Version 2 - 04-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Porting to VC++ 2017.
+	- Add credits and version history
+	- Translate GUI from spanish to english
+
+  >> Version 1 - 05-II-2001
+	- First version developed by Yacsha for VC++ 6.0
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "stdafx.h"
 #include "Curvas.h"
@@ -310,8 +349,8 @@ void CCurvasDlg::Transformar_eje3d()
 
   for (int i=0; i<=3; i++)
   {
-	  em[i][1] = Cx + e3d[i][2] * cos(rad(auxb)) - e3d[i][1] * cos(rad(auxa));
-	  em[i][2] = Cy - e3d[i][3] + e3d[i][2] * sin(rad(auxb)) + e3d[i][1] * sin(rad(auxa));
+	  em[i][1] = static_cast<int>( Cx + e3d[i][2] * cos(rad(auxb)) - e3d[i][1] * cos(rad(auxa)));
+	  em[i][2] = static_cast<int>(Cy - e3d[i][3] + e3d[i][2] * sin(rad(auxb)) + e3d[i][1] * sin(rad(auxa)));
   }
 
 }
@@ -517,8 +556,8 @@ void CCurvasDlg::Dibujar_Curva_Newton()
 	PtoAux[1] = p3d[0][1];
 	PtoAux[2] = p3d[0][2];
 	PtoAux[3] = p3d[0][3];
-	PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-	PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+	PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+	PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
     pDC->MoveTo(PtoAuxM[1], PtoAuxM[2]);
 	//Curva
 	CPen LapizVerde(PS_SOLID, 1, RGB(0,255,0));
@@ -542,8 +581,8 @@ void CCurvasDlg::Dibujar_Curva_Newton()
 			PtoAux[3] = (PtoAux[3] + (A[i][3] * W(i,tt)));
 		}
 
-		PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-		PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+		PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+		PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
 
         pDC->LineTo(PtoAuxM[1], PtoAuxM[2]);
 	}
@@ -587,8 +626,8 @@ void CCurvasDlg::Dibujar_Curva_Lagrange()
 	PtoAux[1] = p3d[0][1];
 	PtoAux[2] = p3d[0][2];
 	PtoAux[3] = p3d[0][3];
-	PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-	PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+	PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+	PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
     pDC->MoveTo(PtoAuxM[1], PtoAuxM[2]);
 
 	//Curva
@@ -611,8 +650,8 @@ void CCurvasDlg::Dibujar_Curva_Lagrange()
 			PtoAux[3] = (PtoAux[3] + (p3d[i][3] * Ln(i,tt)));
 		}
 
-		PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-		PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+		PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+		PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
 		pDC->LineTo(PtoAuxM[1], PtoAuxM[2]);
 	}
 	
@@ -620,15 +659,13 @@ void CCurvasDlg::Dibujar_Curva_Lagrange()
 
 //CURVA BEZIER
 
-double CCurvasDlg::f(int valor)
+int CCurvasDlg::f(int valor)
 {
 	int fo;
-	if (valor==0)
+	if (valor<=0)
 	{
 		fo = 1;
-	}
-	if (valor>0)
-	{
+	} else {
 		fo = valor * f(valor - 1);
 	}
 
@@ -655,8 +692,8 @@ void CCurvasDlg::Dibujar_Curva_Bezier()
 	PtoAux[1] = p3d[0][1];
 	PtoAux[2] = p3d[0][2];
 	PtoAux[3] = p3d[0][3];
-	PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-	PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+	PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+	PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
     pDC->MoveTo(PtoAuxM[1], PtoAuxM[2]);
 	//Curva
 	CPen LapizRojo(PS_SOLID, 1, RGB(255,255,0));
@@ -685,8 +722,8 @@ void CCurvasDlg::Dibujar_Curva_Bezier()
 			
 		}
 
-		PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-		PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+		PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+		PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
 		pDC->LineTo(PtoAuxM[1], PtoAuxM[2]);
 	}
 	
@@ -703,16 +740,16 @@ void CCurvasDlg::Dibujar_Poligonal()
 	PtoAux[1] = p3d[0][1];
 	PtoAux[2] = p3d[0][2];
 	PtoAux[3] = p3d[0][3];
-	PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-	PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+	PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+	PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
     pDC->MoveTo(PtoAuxM[1], PtoAuxM[2]);
 	//Poligono
 	CPen LapizVerde(PS_DOT, 1, RGB(0,0,0));
 	pDC->SelectObject(&LapizVerde);
 	for (int l=1; l<=n; l++)
 	{
-		PtoAuxM[1] = Cx + p3d[l][2] * cos(rad(auxb)) - p3d[l][1] * cos(rad(auxa));
-		PtoAuxM[2] = Cy - p3d[l][3] + p3d[l][2] * sin(rad(auxb)) + p3d[l][1] * sin(rad(auxa));
+		PtoAuxM[1] = static_cast<int>(Cx + p3d[l][2] * cos(rad(auxb)) - p3d[l][1] * cos(rad(auxa)));
+		PtoAuxM[2] = static_cast<int>(Cy - p3d[l][3] + p3d[l][2] * sin(rad(auxb)) + p3d[l][1] * sin(rad(auxa)));
 		pDC->LineTo(PtoAuxM[1], PtoAuxM[2]);
 	}
 }
