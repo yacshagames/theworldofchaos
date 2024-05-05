@@ -25,10 +25,10 @@ public:
 	double p[4][5];                 //Valores de los puntos en 3d
 	double p3d[4][5];               //Puntos transformados en 3d
 	double p2d[4][4];               //Puntos transformados en 2d
-	double pm[4][4];                //Puntos - Monitor 2d
+	int pm[4][4];                //Puntos - Monitor 2d
     
 	double e3d[4][5];               //Valores de los ejes en 3d
-	double em[4][4];                //Puntos - Monitor 2d
+	int em[4][4];                //Puntos - Monitor 2d
 
 	double pi;                      //Valor de Pi
 

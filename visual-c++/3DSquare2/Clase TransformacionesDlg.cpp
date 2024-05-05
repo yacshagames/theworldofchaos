@@ -1,5 +1,35 @@
-// Clase TransformacionesDlg.cpp : implementation file
-//
+/******************************************************************************
+:: 3D SQUARE 2 :: CUADRADO 3D 2 ::
+
+Model 2: A 3D square is plotted that supports translation, rotation, scaling,
+projection in the XY, XZ, YZ planes, and reflection with respect to X, Y, Z
+and the origin O
+
+Developed by:
+
+Original authors: Manuel Paredes
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 05-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Porting to VC++ 2017.
+	- Add credits and version history
+	- Translate GUI from spanish to english
+	- Warnings due to lack of static_cast are corrected
+
+  >> Version 1 - 10-IX-2000
+	- First version developed by Manuel Paredes
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "stdafx.h"
 #include "Clase Transformaciones.h"
@@ -232,8 +262,8 @@ void CClaseTransformacionesDlg::Transformar_puntos3d()
 
 	for (int i = 0; i <= n; i++)
 	{
-		pm[i][1] = Cx + p3d[i][2] * cos(rad(auxb)) - p3d[i][1] * cos(rad(auxa));
-		pm[i][2] = Cy - p3d[i][3] + p3d[i][2] * sin(rad(auxb)) + p3d[i][1] * sin(rad(auxa));
+		pm[i][1] = static_cast<int>(Cx + p3d[i][2] * cos(rad(auxb)) - p3d[i][1] * cos(rad(auxa)));
+		pm[i][2] = static_cast<int>(Cy - p3d[i][3] + p3d[i][2] * sin(rad(auxb)) + p3d[i][1] * sin(rad(auxa)));
 	}
 
 }
@@ -245,8 +275,8 @@ void CClaseTransformacionesDlg::Transformar_eje3d()
 
 	for (int i = 0; i <= 3; i++)
 	{
-		em[i][1] = Cx + e3d[i][2] * cos(rad(auxb)) - e3d[i][1] * cos(rad(auxa));
-		em[i][2] = Cy - e3d[i][3] + e3d[i][2] * sin(rad(auxb)) + e3d[i][1] * sin(rad(auxa));
+		em[i][1] = static_cast<int>(Cx + e3d[i][2] * cos(rad(auxb)) - e3d[i][1] * cos(rad(auxa)));
+		em[i][2] = static_cast<int>(Cy - e3d[i][3] + e3d[i][2] * sin(rad(auxb)) + e3d[i][1] * sin(rad(auxa)));
 	}
 
 }
