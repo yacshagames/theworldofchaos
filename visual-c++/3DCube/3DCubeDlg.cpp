@@ -1,8 +1,27 @@
 /******************************************************************************
-3D CUBE
+:: 3D CUBE :: CUBO 3D ::
+
 Rotate and translate a cube around the X, Y and Z axes
 
-Original author: This project was sent by a follower of the "The world of chaos" website
+Developed by:
+
+Original author: Amelia
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 06-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Porting to VC++ 2017.
+	- Added a new icon to the project
+	- Add credits and version history
+	- Translate GUI from spanish to english
+	- Warnings due to lack of static_cast are corrected
+
+  >> Version 1 - 21-I-2000
+	- First version developed by Amelia
 
 Warning!!!: These formulas may contain some errors, if you find them, let me
 know from the contact page of "The world of chaos", or suggest a
@@ -538,12 +557,12 @@ void C3DCubeDlg::Dibuja()
 	dibujo.SelectObject(&NewPen1);
 
 	// Dibuja Eje 3D
-	dibujo.MoveTo(ejec[0][1], ejec[0][2]);
-	dibujo.LineTo(ejec[1][1], ejec[1][2]);
-	dibujo.MoveTo(ejec[0][1], ejec[0][2]);
-	dibujo.LineTo(ejec[2][1], ejec[2][2]);
-	dibujo.MoveTo(ejec[0][1], ejec[0][2]);
-	dibujo.LineTo(ejec[3][1], ejec[3][2]);
+	dibujo.MoveTo(static_cast<int>(ejec[0][1]), static_cast<int>(ejec[0][2]));
+	dibujo.LineTo(static_cast<int>(ejec[1][1]), static_cast<int>(ejec[1][2]));
+	dibujo.MoveTo(static_cast<int>(ejec[0][1]), static_cast<int>(ejec[0][2]));
+	dibujo.LineTo(static_cast<int>(ejec[2][1]), static_cast<int>(ejec[2][2]));
+	dibujo.MoveTo(static_cast<int>(ejec[0][1]), static_cast<int>(ejec[0][2]));
+	dibujo.LineTo(static_cast<int>(ejec[3][1]), static_cast<int>(ejec[3][2]));
 
 	// Crea Pluma  
 	CPen NewPen2(PS_SOLID,
@@ -552,26 +571,26 @@ void C3DCubeDlg::Dibuja()
 	dibujo.SelectObject(&NewPen2);
 
 	// Dibuja cubo
-	dibujo.MoveTo(puntoc[0][1], puntoc[0][2]);
-	dibujo.LineTo(puntoc[1][1], puntoc[1][2]);
-	dibujo.LineTo(puntoc[2][1], puntoc[2][2]);
-	dibujo.LineTo(puntoc[3][1], puntoc[3][2]);
-	dibujo.LineTo(puntoc[4][1], puntoc[4][2]);
+	dibujo.MoveTo(static_cast<int>(puntoc[0][1]), static_cast<int>(puntoc[0][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[1][1]), static_cast<int>(puntoc[1][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[2][1]), static_cast<int>(puntoc[2][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[3][1]), static_cast<int>(puntoc[3][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[4][1]), static_cast<int>(puntoc[4][2]));
 
-	dibujo.MoveTo(puntoc[5][1], puntoc[5][2]);
-	dibujo.LineTo(puntoc[6][1], puntoc[6][2]);
-	dibujo.LineTo(puntoc[7][1], puntoc[7][2]);
-	dibujo.LineTo(puntoc[8][1], puntoc[8][2]);
-	dibujo.LineTo(puntoc[9][1], puntoc[9][2]);
+	dibujo.MoveTo(static_cast<int>(puntoc[5][1]), static_cast<int>(puntoc[5][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[6][1]), static_cast<int>(puntoc[6][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[7][1]), static_cast<int>(puntoc[7][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[8][1]), static_cast<int>(puntoc[8][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[9][1]), static_cast<int>(puntoc[9][2]));
 
-	dibujo.MoveTo(puntoc[0][1], puntoc[0][2]);
-	dibujo.LineTo(puntoc[5][1], puntoc[5][2]);
-	dibujo.MoveTo(puntoc[1][1], puntoc[1][2]);
-	dibujo.LineTo(puntoc[6][1], puntoc[6][2]);
-	dibujo.MoveTo(puntoc[2][1], puntoc[2][2]);
-	dibujo.LineTo(puntoc[7][1], puntoc[7][2]);
-	dibujo.MoveTo(puntoc[3][1], puntoc[3][2]);
-	dibujo.LineTo(puntoc[8][1], puntoc[8][2]);
+	dibujo.MoveTo(static_cast<int>(puntoc[0][1]), static_cast<int>(puntoc[0][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[5][1]), static_cast<int>(puntoc[5][2]));
+	dibujo.MoveTo(static_cast<int>(puntoc[1][1]), static_cast<int>(puntoc[1][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[6][1]), static_cast<int>(puntoc[6][2]));
+	dibujo.MoveTo(static_cast<int>(puntoc[2][1]), static_cast<int>(puntoc[2][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[7][1]), static_cast<int>(puntoc[7][2]));
+	dibujo.MoveTo(static_cast<int>(puntoc[3][1]), static_cast<int>(puntoc[3][2]));
+	dibujo.LineTo(static_cast<int>(puntoc[8][1]), static_cast<int>(puntoc[8][2]));
 }
 
 
