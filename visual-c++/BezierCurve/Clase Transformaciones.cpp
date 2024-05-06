@@ -1,5 +1,34 @@
-// Clase Transformaciones.cpp : Defines the class behaviors for the application.
-//
+/******************************************************************************
+:: BEZIER CURVE :: CURVA SPLINE ::
+
+Draw a Spline Curve
+
+Developed by:
+
+Original authors: Manuel Paredes
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 06-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Porting to VC++ 2017.
+	- Added a new icon to the project
+	- Add credits and version history
+	- Translate GUI from spanish to english
+	- Warnings due to lack of static_cast are corrected
+
+  >> Version 1 - 03-V-2000
+	- First version developed by Manuel Paredes
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "stdafx.h"
 #include "Clase Transformaciones.h"
