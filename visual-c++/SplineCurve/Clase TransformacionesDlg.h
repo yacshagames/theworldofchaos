@@ -27,7 +27,7 @@ public:
 	double p2d[8][5];               //Puntos transformados en 2d
 	double PtoAux[8];               //Vector Punto Auxiliar
 	double pm[8][5];                //Puntos - Monitor 2d
-	double PtoAuxM[8];              //Vector Puntos Monitor 2d
+	int PtoAuxM[8];					//Vector Puntos Monitor 2d
 
 	double Q[8][8][5];				//Arreglo Qs
 	double A[8][5];					//Vector As
@@ -37,7 +37,7 @@ public:
 	int densidad;					//densidad
     
 	double e3d[4][5];               //Valores de los ejes en 3d
-	double em[4][4];                //Puntos - Monitor 2d
+	int em[4][4];					//Puntos - Monitor 2d
 
 	double pi;                      //Valor de Pi
 
@@ -60,7 +60,7 @@ public:
 	void Transformar_puntos3d();                               //Transforma los puntos a 2D
 	void Transformar_eje3d();                                  //Transforma el eje a 2D
     double rad(double angulo);                                 //Conversion en radianes
-    double f(int valor);									   //Factorial
+    int f(int valor);									   //Factorial
 	double B(int k, double tt);                                //Bernstein
 	double N(int i, int k, double tt);                         //B-Spline
     void MatxMat();                                            //Matriz x Matriz

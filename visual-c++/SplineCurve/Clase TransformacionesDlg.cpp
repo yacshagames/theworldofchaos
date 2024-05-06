@@ -1,5 +1,34 @@
-// Clase TransformacionesDlg.cpp : implementation file
-//
+/******************************************************************************
+:: SPLINE CURVE :: CURVA SPLINE ::
+
+Draw a Spline Curve
+
+Developed by:
+
+Original authors: Manuel Paredes
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 06-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Porting to VC++ 2017.
+	- Added a new icon to the project
+	- Add credits and version history
+	- Translate GUI from spanish to english
+	- Warnings due to lack of static_cast are corrected
+
+  >> Version 1 - 02-VI-2000
+	- First version developed by Manuel Paredes
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "stdafx.h"
 #include "Clase Transformaciones.h"
@@ -286,8 +315,8 @@ void CClaseTransformacionesDlg::Transformar_eje3d()
 
   for (int i=0; i<=3; i++)
   {
-	  em[i][1] = Cx + e3d[i][2] * cos(rad(auxb)) - e3d[i][1] * cos(rad(auxa));
-	  em[i][2] = Cy - e3d[i][3] + e3d[i][2] * sin(rad(auxb)) + e3d[i][1] * sin(rad(auxa));
+	  em[i][1] = static_cast<int>(Cx + e3d[i][2] * cos(rad(auxb)) - e3d[i][1] * cos(rad(auxa)));
+	  em[i][2] = static_cast<int>(Cy - e3d[i][3] + e3d[i][2] * sin(rad(auxb)) + e3d[i][1] * sin(rad(auxa)));
   }
 
 }
@@ -297,15 +326,13 @@ double CClaseTransformacionesDlg::rad(double angulo)
 	return angulo*pi/180;
 }
 
-double CClaseTransformacionesDlg::f(int valor)
+int CClaseTransformacionesDlg::f(int valor)
 {
 	int fo;
-	if (valor==0)
+	if (valor<=0)
 	{
 		fo = 1;
-	}
-	if (valor>0)
-	{
+	}else{
 		fo = valor * f(valor - 1);
 	}
 
@@ -515,16 +542,16 @@ void CClaseTransformacionesDlg::Dibujar_Cuadrado()
 	PtoAux[1] = p3d[0][1];
 	PtoAux[2] = p3d[0][2];
 	PtoAux[3] = p3d[0][3];
-	PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-	PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+	PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+	PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
     pDC.MoveTo(PtoAuxM[1], PtoAuxM[2]);
 	//Poligono
 	CPen LapizVerde(PS_DOT, 1, RGB(0,0,255));
 	pDC.SelectObject(&LapizVerde);
 	for (int l=1; l<=n; l++)
 	{
-		PtoAuxM[1] = Cx + p3d[l][2] * cos(rad(auxb)) - p3d[l][1] * cos(rad(auxa));
-		PtoAuxM[2] = Cy - p3d[l][3] + p3d[l][2] * sin(rad(auxb)) + p3d[l][1] * sin(rad(auxa));
+		PtoAuxM[1] = static_cast<int>(Cx + p3d[l][2] * cos(rad(auxb)) - p3d[l][1] * cos(rad(auxa)));
+		PtoAuxM[2] = static_cast<int>(Cy - p3d[l][3] + p3d[l][2] * sin(rad(auxb)) + p3d[l][1] * sin(rad(auxa)));
 		pDC.LineTo(PtoAuxM[1], PtoAuxM[2]);
 	}
 	
@@ -533,8 +560,8 @@ void CClaseTransformacionesDlg::Dibujar_Cuadrado()
 	PtoAux[1] = p3d[0][1];
 	PtoAux[2] = p3d[0][2];
 	PtoAux[3] = p3d[0][3];
-	PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-	PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+	PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+	PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
     pDC.MoveTo(PtoAuxM[1], PtoAuxM[2]);
 	//Curva
 	CPen LapizRojo(PS_SOLID, 1, RGB(255,0,0));
@@ -566,8 +593,8 @@ void CClaseTransformacionesDlg::Dibujar_Cuadrado()
 			PtoAux[3] = (PtoAux[3] + (p3d[i][3] * N(i,korden,tt)));
 		}
 
-		PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-		PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+		PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+		PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
 		if (ka==0)
 		{
 			pDC.MoveTo(PtoAuxM[1], PtoAuxM[2]);
