@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.34729.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CuadradoTras", "CuadradoTras.vcxproj", "{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TranslatedSquare", "TranslatedSquare.vcxproj", "{05D560B2-A20A-4DBE-9A5B-093E0A7245DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
