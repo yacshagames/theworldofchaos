@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Spanish (Mexican) resources
+// Español (México) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESM)
-#ifdef _WIN32
 LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MEXICAN
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -27,18 +25,18 @@ LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MEXICAN
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -51,7 +49,7 @@ BEGIN
     "#pragma code_page(1252)\r\n"
     "#endif //_WIN32\r\n"
     "#include ""res\\Cuadrado3D.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
-    "#include ""l.esp\\afxres.rc""          // Standard components\r\n"
+    "//#include ""l.esp\\afxres.rc""          // Standard components\r\n"
     "#endif\r\n"
     "\0"
 END
@@ -66,74 +64,66 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\Cuadrado3D.ico"
-#endif    // Spanish (Mexican) resources
+IDR_MAINFRAME           ICON                    "res\\Cuadrado3D.ico"
+
+#endif    // Español (México) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Spanish (Modern) resources
+// Español (España, alfabetización internacional) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)
-#ifdef _WIN32
 LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MODERN
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUTBOX DIALOG 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Acerca de Cuadrado3D"
 FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "Cuadrado3D Versión 1.0",IDC_STATIC,40,10,119,8,
-                    SS_NOPREFIX
+    LTEXT           "Cuadrado3D Versión 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2000",IDC_STATIC,40,25,119,8
     DEFPUSHBUTTON   "Aceptar",IDOK,178,7,50,14,WS_GROUP
 END
 
 IDD_CUADRADO3D_DIALOG DIALOGEX 0, 0, 415, 314
-STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | 
-    WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "Cuadrado3D"
-FONT 8, "MS Sans Serif"
+CAPTION "3D Square"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "S&alir",IDCANCEL,358,31,50,14
+    DEFPUSHBUTTON   "&Exit",IDCANCEL,358,31,50,14
     PUSHBUTTON      "X",IDC_ROTARX,17,17,20,15
     PUSHBUTTON      "Y",IDC_ROTARY,37,17,20,15
     PUSHBUTTON      "Z",IDC_ROTARZ,57,17,20,15
-    CONTROL         "&Sentido antihorario",IDC_SENTIDO,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,12,37,74,10
-    CONTROL         "Centro",IDC_PIVOTE,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP,95,24,37,10
-    CONTROL         "Origen",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,95,34,37,
-                    10
+    CONTROL         "&Counter-clock wise",IDC_SENTIDO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,37,74,10
+    CONTROL         "Center",IDC_PIVOTE,"Button",BS_AUTORADIOBUTTON | WS_GROUP,95,24,37,10
+    CONTROL         "Origin",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,95,34,34,10
     PUSHBUTTON      "X",IDC_TRASLADARX,165,17,20,15,WS_GROUP
     PUSHBUTTON      "Y",IDC_TRASLADARY,185,17,20,15
     PUSHBUTTON      "Z",IDC_TRASLADARZ,205,17,20,15
-    CONTROL         "&Dirección negativa",IDC_DIRECCION,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,159,39,73,10
+    CONTROL         "&Negative direction",IDC_DIRECCION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,159,39,73,10
     PUSHBUTTON      "XY",IDC_REFLEJARXY,255,17,20,15
     PUSHBUTTON      "XZ",IDC_REFLEJARXZ,275,17,20,15
     PUSHBUTTON      "YZ",IDC_REFLEJARYZ,295,17,20,15
     PUSHBUTTON      "O",IDC_REFLEJARORIGEN,315,17,20,15
-    PUSHBUTTON      "Limpiar Reflexión",IDC_LIMPIARREFLEXION,266,35,62,14
-    PUSHBUTTON      "&Reiniciar",IDC_REINICIAR,358,10,50,14
+    PUSHBUTTON      "Clear Reflection",IDC_LIMPIARREFLEXION,266,35,62,14
+    PUSHBUTTON      "&Reset",IDC_REINICIAR,358,10,50,14
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,56,401,1
-    GROUPBOX        "Rotación alrededor de",IDC_STATIC,7,7,140,46
-    GROUPBOX        "Traslación en",IDC_STATIC,155,7,80,46
-    GROUPBOX        "Reflexión a través de",IDC_STATIC,241,7,101,46
-    LTEXT           "Pivote",IDC_STATIC,102,13,21,8
+    GROUPBOX        "Rotation around",IDC_STATIC,7,7,140,46
+    GROUPBOX        "Translation in",IDC_STATIC,155,7,80,46,BS_CENTER
+    GROUPBOX        "Reflection through",IDC_STATIC,241,7,101,46,BS_CENTER
+    LTEXT           "Pivot",IDC_STATIC,102,13,17,8
 END
 
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -156,15 +146,13 @@ BEGIN
     BEGIN
         BLOCK "0C0A04B0"
         BEGIN
-            VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "Aplicación MFC Cuadrado3D\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "Cuadrado3D\0"
-            VALUE "LegalCopyright", "Copyright (C) 2000\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "Cuadrado3D.EXE\0"
-            VALUE "ProductName", "Aplicación Cuadrado3D\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "FileDescription", "Aplicación MFC Cuadrado3D"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "Cuadrado3D"
+            VALUE "LegalCopyright", "Copyright (C) 2000"
+            VALUE "OriginalFilename", "Cuadrado3D.EXE"
+            VALUE "ProductName", "Aplicación Cuadrado3D"
+            VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -173,8 +161,6 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -182,7 +168,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -209,15 +195,26 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_CUADRADO3D_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "&Acerca de Cuadrado3D..."
 END
 
-#endif    // Spanish (Modern) resources
+#endif    // Español (España, alfabetización internacional) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
