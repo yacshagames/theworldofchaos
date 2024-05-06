@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.34729.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LAGRANGE", "LAGRANGE.vcxproj", "{D0B3045C-068C-4870-BA81-48F996783D3D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "B_spline", "B_spline.vcxproj", "{D0B3045C-068C-4870-BA81-48F996783D3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

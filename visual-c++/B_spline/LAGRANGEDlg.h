@@ -20,7 +20,7 @@ public:
 	double t[6];
 	double angulo[2];
 	double p[3][3];
-	double pc[2][2];
+	int pc[2][2];
 	double c[2];
 	double puntoaux[3];
 	double punto[3][3];

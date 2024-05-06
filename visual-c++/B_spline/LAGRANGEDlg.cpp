@@ -1,5 +1,34 @@
-// LAGRANGEDlg.cpp : implementation file
-//
+/******************************************************************************
+:: B-SPLINE CURVE :: CURVA B-SPLINE ::
+
+Draw a B-Spline Curve
+
+Developed by:
+
+Original author: Amelia
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 04-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Porting to VC++ 2017.
+	- Added a new icon to the project
+	- Add credits and version history
+	- Translate GUI from spanish to english
+	- Warnings due to lack of static_cast are corrected
+
+  >> Version 1 - 18-II-2000
+	- First version developed by Amelia
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "pch.h"
 #include "framework.h"
@@ -550,8 +579,8 @@ void CLAGRANGEDlg::Curva(double cx, double cy)
 		puntoaux[2] = puntoaux[2] + p[j][2] * n1;
 		puntoaux[3] = puntoaux[3] + p[j][3] * n1;
 	}
-	pc[1][1] = cx + (-puntoaux[1] * cos(angulo[0]) + puntoaux[2] * cos(angulo[1]));
-	pc[1][2] = cy + (puntoaux[1] * sin(angulo[0]) + puntoaux[2] * sin(angulo[1]) - puntoaux[3]);
+	pc[1][1] = static_cast<int>(cx + (-puntoaux[1] * cos(angulo[0]) + puntoaux[2] * cos(angulo[1])));
+	pc[1][2] = static_cast<int>(cy + (puntoaux[1] * sin(angulo[0]) + puntoaux[2] * sin(angulo[1]) - puntoaux[3]));
 	dibu.MoveTo(pc[1][1], pc[1][2]);
 
 	do
@@ -570,8 +599,8 @@ void CLAGRANGEDlg::Curva(double cx, double cy)
 			2,
 			RGB(255, 0, 0));
 		dibu.SelectObject(&NewPen2);
-		pc[1][1] = cx + (-puntoaux[1] * cos(angulo[0]) + puntoaux[2] * cos(angulo[1]));
-		pc[1][2] = cy + (puntoaux[1] * sin(angulo[0]) + puntoaux[2] * sin(angulo[1]) - puntoaux[3]);
+		pc[1][1] = static_cast<int>(cx + (-puntoaux[1] * cos(angulo[0]) + puntoaux[2] * cos(angulo[1])));
+		pc[1][2] = static_cast<int>(cy + (puntoaux[1] * sin(angulo[0]) + puntoaux[2] * sin(angulo[1]) - puntoaux[3]));
 		dibu.LineTo(pc[1][1], pc[1][2]);
 
 		tt = tt + 0.05;
@@ -594,8 +623,8 @@ void CLAGRANGEDlg::LimpiaCurva(double cx, double cy)
 		puntoaux[2] = puntoaux[2] + p[j][2] * n1;
 		puntoaux[3] = puntoaux[3] + p[j][3] * n1;
 	}
-	pc[1][1] = cx + (-puntoaux[1] * cos(angulo[0]) + puntoaux[2] * cos(angulo[1]));
-	pc[1][2] = cy + (puntoaux[1] * sin(angulo[0]) + puntoaux[2] * sin(angulo[1]) - puntoaux[3]);
+	pc[1][1] = static_cast<int>(cx + (-puntoaux[1] * cos(angulo[0]) + puntoaux[2] * cos(angulo[1])));
+	pc[1][2] = static_cast<int>(cy + (puntoaux[1] * sin(angulo[0]) + puntoaux[2] * sin(angulo[1]) - puntoaux[3]));
 	dibu.MoveTo(pc[1][1], pc[1][2]);
 
 	do
@@ -614,8 +643,8 @@ void CLAGRANGEDlg::LimpiaCurva(double cx, double cy)
 			2,
 			RGB(192, 192, 192));
 		dibu.SelectObject(&NewPen3);
-		pc[1][1] = cx + (-puntoaux[1] * cos(angulo[0]) + puntoaux[2] * cos(angulo[1]));
-		pc[1][2] = cy + (puntoaux[1] * sin(angulo[0]) + puntoaux[2] * sin(angulo[1]) - puntoaux[3]);
+		pc[1][1] = static_cast<int>(cx + (-puntoaux[1] * cos(angulo[0]) + puntoaux[2] * cos(angulo[1])));
+		pc[1][2] = static_cast<int>(cy + (puntoaux[1] * sin(angulo[0]) + puntoaux[2] * sin(angulo[1]) - puntoaux[3]));
 		dibu.LineTo(pc[1][1], pc[1][2]);
 
 		tt = tt + 0.05;
@@ -699,12 +728,12 @@ void CLAGRANGEDlg::Dibuja()
 	dibujo.SelectObject(&NewPen1);
 
 	// Dibujar Eje 3d en pantalla
-	dibujo.MoveTo(ejec[0][1], ejec[0][2]);
-	dibujo.LineTo(ejec[1][1], ejec[1][2]);
-	dibujo.MoveTo(ejec[0][1], ejec[0][2]);
-	dibujo.LineTo(ejec[2][1], ejec[2][2]);
-	dibujo.MoveTo(ejec[0][1], ejec[0][2]);
-	dibujo.LineTo(ejec[3][1], ejec[3][2]);
+	dibujo.MoveTo(static_cast<int>(ejec[0][1]), static_cast<int>(ejec[0][2]));
+	dibujo.LineTo(static_cast<int>(ejec[1][1]), static_cast<int>(ejec[1][2]));
+	dibujo.MoveTo(static_cast<int>(ejec[0][1]), static_cast<int>(ejec[0][2]));
+	dibujo.LineTo(static_cast<int>(ejec[2][1]), static_cast<int>(ejec[2][2]));
+	dibujo.MoveTo(static_cast<int>(ejec[0][1]), static_cast<int>(ejec[0][2]));
+	dibujo.LineTo(static_cast<int>(ejec[3][1]), static_cast<int>(ejec[3][2]));
 
 	Curva(c[1], c[2]);;
 
