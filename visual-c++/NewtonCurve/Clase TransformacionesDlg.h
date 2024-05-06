@@ -27,7 +27,7 @@ public:
 	double p2d[8][5];               //Puntos transformados en 2d
 	double PtoAux[8];               //Vector Punto Auxiliar
 	double pm[8][5];                //Puntos - Monitor 2d
-	double PtoAuxM[8];              //Vector Puntos Monitor 2d
+	int PtoAuxM[8];					//Vector Puntos Monitor 2d
 
 	double Q[8][8][5];				//Arreglo Qs
 	double A[8][5];					//Vector As
@@ -36,7 +36,7 @@ public:
 	int densidad;					//densidad
     
 	double e3d[4][5];               //Valores de los ejes en 3d
-	double em[4][4];                //Puntos - Monitor 2d
+	int em[4][4];					//Puntos - Monitor 2d
 
 	double pi;                      //Valor de Pi
 

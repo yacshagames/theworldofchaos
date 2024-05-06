@@ -1,5 +1,34 @@
-// Clase TransformacionesDlg.cpp : implementation file
-//
+/******************************************************************************
+:: NEWTON CURVE :: CURVA NEWTON ::
+
+Draw a Newton Curve
+
+Developed by:
+
+Original authors: Manuel Paredes
+Improvements added from version 2, thanks to Yacsha.
+
+HISTORY...
+
+  >> Version 2 - 06-V-2024
+	* Thanks to the collaboration of a follower of "the world of chaos",
+	  we obtained the first version. From which we have made the
+	  following changes:
+	- Porting to VC++ 2017.
+	- Added a new icon to the project
+	- Add credits and version history
+	- Translate GUI from spanish to english
+	- Warnings due to lack of static_cast are corrected
+
+  >> Version 1 - 02-VI-2000
+	- First version developed by Manuel Paredes
+
+Warning!!!: These formulas may contain some errors, if you find them, let me
+know from the contact page of "The world of chaos", or suggest a
+modification in the project's github repository
+https://github.com/yacshagames/elmundodelcaos
+
+******************************************************************************/
 
 #include "stdafx.h"
 #include "Clase Transformaciones.h"
@@ -283,8 +312,8 @@ void CClaseTransformacionesDlg::Transformar_eje3d()
 
   for (int i=0; i<=3; i++)
   {
-	  em[i][1] = Cx + e3d[i][2] * cos(rad(auxb)) - e3d[i][1] * cos(rad(auxa));
-	  em[i][2] = Cy - e3d[i][3] + e3d[i][2] * sin(rad(auxb)) + e3d[i][1] * sin(rad(auxa));
+	  em[i][1] = static_cast<int>(Cx + e3d[i][2] * cos(rad(auxb)) - e3d[i][1] * cos(rad(auxa)));
+	  em[i][2] = static_cast<int>(Cy - e3d[i][3] + e3d[i][2] * sin(rad(auxb)) + e3d[i][1] * sin(rad(auxa)));
   }
 
 }
@@ -423,8 +452,8 @@ void CClaseTransformacionesDlg::Dibujar_Cuadrado()
 	PtoAux[1] = p3d[0][1];
 	PtoAux[2] = p3d[0][2];
 	PtoAux[3] = p3d[0][3];
-	PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-	PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+	PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+	PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
     pDC.MoveTo(PtoAuxM[1], PtoAuxM[2]);
 
 	//Proceso de An
@@ -450,8 +479,8 @@ void CClaseTransformacionesDlg::Dibujar_Cuadrado()
 			PtoAux[3] = (PtoAux[3] + (A[i][3] * W(i,tt)));
 		}
 
-		PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-		PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+		PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+		PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
 		pDC.LineTo(PtoAuxM[1], PtoAuxM[2]);
 	}
 
@@ -459,8 +488,8 @@ void CClaseTransformacionesDlg::Dibujar_Cuadrado()
 	PtoAux[1] = p3d[0][1];
 	PtoAux[2] = p3d[0][2];
 	PtoAux[3] = p3d[0][3];
-	PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-	PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+	PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+	PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
     pDC.MoveTo(PtoAuxM[1], PtoAuxM[2]);
 	//Curva
 	CPen LapizRojo(PS_SOLID, 1, RGB(255,0,0));
@@ -484,8 +513,8 @@ void CClaseTransformacionesDlg::Dibujar_Cuadrado()
 			PtoAux[3] = (PtoAux[3] + (A[i][3] * W(i,tt)));
 		}
 
-		PtoAuxM[1] = Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa));
-		PtoAuxM[2] = Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa));
+		PtoAuxM[1] = static_cast<int>(Cx + PtoAux[2] * cos(rad(auxb)) - PtoAux[1] * cos(rad(auxa)));
+		PtoAuxM[2] = static_cast<int>(Cy - PtoAux[3] + PtoAux[2] * sin(rad(auxb)) + PtoAux[1] * sin(rad(auxa)));
 		pDC.LineTo(PtoAuxM[1], PtoAuxM[2]);
 	}
 	
