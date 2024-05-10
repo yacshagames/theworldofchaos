@@ -72,11 +72,6 @@ double tsen=0.099833, //sen(0.1)
 void main()
 {
 
- //coordenadas del origen de coordenadas ( en pixels )
- //en el plano 2D de la pantalla
- ox=250; //coordenada x
- oy=200; //coordenada y
-
   double p=20; //escala
   //se considera que 1 unidad = p pixels
 
@@ -92,8 +87,15 @@ void main()
 
  double x,y,z;
 
+ int maxx = 1024, maxy = 768;
+
  // Init WinBGI window
- initwindow(1024, 768, "The world of chaos in C++ - Unlimited Programming");
+ initwindow(maxx+10, maxy+10, "The world of chaos in C++ - Unlimited Programming");
+
+ //coordenadas del origen de coordenadas ( en pixels )
+//en el plano 2D de la pantalla
+ ox = maxx/2; //coordenada x
+ oy = maxy/2; //coordenada y 
 
 // DibujarEjes();
 
@@ -186,8 +188,8 @@ cleardevice();
   for( j=0;j<Yn;j++ )
   {
 
-   if( Malla[i][j][0] >0 && Malla[i][j][0] < 640 &&
-       Malla[i][j][1] >0 && Malla[i][j][1] < 480 )
+   if( Malla[i][j][0] >0 && Malla[i][j][0] < maxx &&
+       Malla[i][j][1] >0 && Malla[i][j][1] < maxy)
    {
     moveto(Malla[i][j][0],Malla[i][j][1]);
     n=i+1;
