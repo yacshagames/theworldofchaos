@@ -6,7 +6,8 @@
 //* INTERFAZ                                              *
 //*                                                       *
 //* Fecha: 05-Agosto-2019                                 *
-//* Autors: Yacsha y AndyLaTuquita                        *
+//* Autors: Yacsha and AndyLaTuquita                      *
+//* Web: www.theworldofchaos.com                          *
 //*********************************************************
 
 var out = null;// = document.getElementById('out');
