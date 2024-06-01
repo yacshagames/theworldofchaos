@@ -17,6 +17,15 @@
 
 // Conexión con repositorio MyJSON.com que guarda la base de datos
 // del proyecto de manera permanente en el siguiente link
+
+// ***********************************************************
+// NOTICE (01-VI-2024):
+// myjson.com closed in 2020, so the functionality of
+// serializing to an online server is not currently working,
+// but if you manage to access a server similar to myjson.com,
+// you can put the link to your repository in this place, so
+// that the Rest-APIs for serialization work with this new link
+// ***********************************************************
 var uriRepositorio = "https://api.myjson.com/bins/7i873";
 
 function SerializarBD(){
