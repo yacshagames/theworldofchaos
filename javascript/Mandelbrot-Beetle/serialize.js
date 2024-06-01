@@ -1,5 +1,5 @@
 //*********************************************************
-//* Escarabajo                                            *
+//* MANDELBROT BEETLE                                     *
 //* Diagrama el Fractal  del "Escarabajo de Mandelbrot"   *
 //* Lenguaje: Javascript                                  *
 //*                                                       *
@@ -11,7 +11,7 @@
 //* para la conexión vía los protocolos PUT y GET         *
 //*                                                       *
 //* Fecha: 05-Agosto-2019                                 *
-//* Autors: Yacsha y AndyLaTuquita                        *
+//* Autors: Yacsha and AndyLaTuquita                      *
 //* Web: www.theworldofchaos.com                          *
 //*********************************************************
 

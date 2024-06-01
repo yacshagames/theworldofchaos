@@ -1,5 +1,5 @@
 //*********************************************************
-//* Escarabajo                                            *
+//* MANDELBROT BEETLE                                     *
 //* Diagrama el Fractal  del "Escarabajo de Mandelbrot"   *
 //* Lenguaje: Javascript                                  *
 //*                                                       *

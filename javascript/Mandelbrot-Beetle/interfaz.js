@@ -1,5 +1,5 @@
 //*********************************************************
-//* Escarabajo                                            *
+//* MANDELBROT BEETLE                                     *
 //* Diagrama el Fractal  del "Escarabajo de Mandelbrot"   *
 //* Lenguaje: Javascript                                  *
 //*                                                       *
@@ -38,13 +38,13 @@ function Login()
 { 
     cls(); //limpia la pantalla       
 
-    println("Bienvenidos al Graficador del<br>'FRACTAL ESCARABAJO DE MANDELBROT<br>");
+    println("Welcome to the 'FRACTAL MANDELBROT BEETLE' Plotter");
     println("MENU");
-    printlnURL("1. Iniciar Sesión", "ILogin()");
-    printlnURL("2. Registrarse", "IRegistrarUsuario()");
-    printlnURL("3. Salir", "Salir()");
-
-    println("Escoja una opción");      
+    printlnURL("1. Login", "ILogin()");
+    printlnURL("2. Register", "IRegistrarUsuario()");
+    printlnURL("3. Exit", "Salir()");
+   
+    println("Choose an option");
 }
 
 
@@ -53,15 +53,15 @@ function ILogin()
     var sClave;
 
     cls(); //limpia la pantalla
-    println("Iniciar Sesión<br>");    
-    m_sNombre = prompt("Ingrese su nombre");
-    sClave = prompt("Ingrese su contraseña");
+    println("Login<br>");
+    m_sNombre  = prompt("Enter your name");
+    sClave = prompt("Enter your password");
     
     m_nIdUsuario = ValidarUsuario(m_sNombre, sClave);
     
     if (m_nIdUsuario==0) {
-
-        println("<br>Usuario o contraseña no válida<br>");
+   
+        println("<br>Invalid username or password<br>");
         pausa("Login()");        
     } else {        
         InterfazPrincipal();
@@ -73,13 +73,13 @@ function InterfazPrincipal()
    
     cls(); //limpia la pantalla
 
-    println("Bienvenido " + m_sNombre + "<br>");
-    println("Seleccione una opción:<br>");
-    printlnURL("1. Graficar nuevo fractal", "GraficarFractal(true)");
-    printlnURL("2. Graficar sus fractales favoritos", "InterfazPrincipal_GraficarFractal()");
-    printlnURL("3. Cerrar sesión", "Salir()");
+    println("Welcome " + m_sNombre  + "<br>");
+    println("Select an option:<br>");
+    printlnURL("1. Plot new fractal", "GraficarFractal(true)");
+    printlnURL("2. Plot your favorite fractals", "InterfazPrincipal_GraficarFractal()");
+    printlnURL("3. Logout", "Salir()");
 
-    println("Escoja una opción");  
+    println("Choose an option");  
 }
 
 function InterfazPrincipal_GraficarFractal()
@@ -93,11 +93,11 @@ function IRegistrarUsuario()
     var sClave;	
 
     cls(); //limpia la pantalla
-    println("Registro de Usuario<br>");
-    m_sNombre = prompt("Ingrese su nombre");
-    sClave = prompt("Ingrese su contraseña");
-
-    var cOp = confirm("Guardar (Si 'S' o No 'N')");
+    println("User Registration<br>");
+    m_sNombre = prompt("Enter your name");
+    sClave = prompt("Enter your password");
+   
+    var cOp = confirm("Save (Yes 'Y' or No 'N')");
     
     if (cOp){
 
@@ -114,17 +114,17 @@ function GraficarFractal( bMostrarInstrucciones) {
     if ( bMostrarInstrucciones ) {
         
         cls();//limpia la pantalla
-        println("INSTRUCCIONES:<br>");
-        println("...A continuación se graficará en una nueva ventana el fractal del 'Escarabajo de Mandelbrot'");
-        println("El Escarabajo es una imagen de zoom teoricamente 'infinito', ¡te atreves a encontrar los límites!...<br>");
-        println("1. Use click izquierdo para acercar y click derecho para alejar el zoom<br>");
-        println("2. Presione la tecla ENTER, ESC o el BOTÓN Guardar para culminar y guardar su imagen actual en fractales favoritos<br>");
+        println("INSTRUCTIONS:<br>");
+        println("...The 'Mandelbrot Beetle' fractal will then be graphed in a new window");
+        println("The Beetle is a theoretically 'infinite' zoom image, dare you find the limits!...<br>");
+        println("1. Use left click to zoom in and right click to zoom out<br>");
+        println("2. Press the ENTER key, ESC key or the Save BUTTON to finish and save your current image to favorite fractals<br>");
 
-        
 
-        println("¿Ha leido las instrucciones? (", false);
-        printlnURL("Si", "GraficarFractal_Display()", false);
-        println(" o ", false);
+
+        println("Have you read the instructions? (", false);
+        printlnURL("Yes", "GraficarFractal_Display()", false);
+        println(" or ", false);
         printlnURL("No", "InterfazPrincipal()", false);
         println(")");
 
@@ -160,23 +160,23 @@ function GuardarFractal1() {
 
     cls();//limpia la pantalla
 
-    var cOp = confirm("¿Desea guardar el fractal en favoritos?");   
-    
+    var cOp = confirm("Do you want to save the fractal to favorites?");
+
     if (cOp){
-
-        println("Guarda el fractal:");
-
-        sNombreFractal = prompt("Ingrese el nombre del fractal:");
-
-        sDescripcion = prompt("Ingrese una descripción para su fractal:");
-
-        GuardarFractal(m_nIdUsuario, sNombreFractal, sDescripcion, PlanoComplejo.xmin, PlanoComplejo.xmax, PlanoComplejo.ymin, PlanoComplejo.ymax);
-
-        println("<br>Su fractal ha sido guardado en la base de datos...<br>");    
-
+   
+    println("Save the fractal:");
+   
+    sNombreFractal = prompt("Enter the name of the fractal:");
+   
+    sDescripcion = prompt("Enter a description for your fractal:");
+   
+    GuardarFractal(m_nIdUsuario, sNombreFractal, sDescripcion, PlanoComplejo.xmin, PlanoComplejo.xmax, PlanoComplejo.ymin, PlanoComplejo.ymax);
+   
+    println("<br>Your fractal has been saved in the database...<br>");
+   
     }
-
-    pausa("InterfazPrincipal()");   
+   
+    pausa("InterfazPrincipal()");
 
 }
 
@@ -195,7 +195,7 @@ function ListarFractales1() {
 
     if (nFractales == 0) {
 
-        println("No existen fractales favoritos, por favor cree uno nuevo con la opción 'Graficar nuevo fractal'");	
+        println("There are no favorite fractals, please create a new one with the 'Plot new fractal' option");
         mFractal = null;
     }
     else {
@@ -207,7 +207,7 @@ function ListarFractales1() {
             println( " : '"+ mFractal.descripcion +  "'");				
         }
         
-        println("<br>Escoge una opción");      
+        println("<br>Choose an option");      
     }	
 
     pausa("InterfazPrincipal()");
@@ -224,7 +224,7 @@ function Salir()
 { 
     cls(); //limpia la pantalla       
 
-    println("<br>Gracias por usar Escarabajo...");
+    println("<br>Thank you for using Mandelbrot Beetle...");
     pausa("Login()"); 
 
     SerializarBD();
@@ -251,7 +251,7 @@ function cls(){
 }
 
 function pausa( jsFuncionDestinoURL ){
-    printlnURL("Presione AQUI para continuar . . .", jsFuncionDestinoURL );
+    printlnURL("Press HERE to continue . . .", jsFuncionDestinoURL );
 }
 
 function pad(num, size) {

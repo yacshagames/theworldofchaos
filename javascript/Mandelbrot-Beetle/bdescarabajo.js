@@ -1,5 +1,5 @@
 //*********************************************************
-//* Escarabajo                                            *
+//* MANDELBROT BEETLE                                     *
 //* Diagrama el Fractal  del "Escarabajo de Mandelbrot"   *
 //* Lenguaje: Javascript                                  *
 //*                                                       *
@@ -12,7 +12,8 @@
 //*   ver mas info en serialize.js                        *
 //*                                                       *
 //* Fecha: 05-Agosto-2019                                 *
-//* Autors: Yacsha y AndyLaTuquita                        *
+//* Autors: Yacsha and AndyLaTuquita                      *
+//* Web: www.theworldofchaos.com                          *
 //*********************************************************
 
 // Base de datos in-memory
