@@ -1,5 +1,5 @@
 /****************************************************************************
-:: N-ROOTS :: NREINAS :: 
+:: NQUEENS :: NREINAS :: 
 
 How can N queens be distributed on an N*N board without attacking each other?
 This program shows all the possible solutions. A solution with the
