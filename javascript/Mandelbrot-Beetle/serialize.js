@@ -1,19 +1,33 @@
-//*********************************************************
-//* MANDELBROT BEETLE                                     *
-//* Diagrama el Fractal  del "Escarabajo de Mandelbrot"   *
-//* Lenguaje: Javascript                                  *
-//*                                                       *
-//*  SERIALIZACIÓN DE LA BASE DE DATOS                    *
-//*                                                       *
-//* Tecnología: Javascript+jQuery                         *
-//* Conexión con repositorio MyJSON que                   *
-//* guarda la base de datos del proyecto. Se usa API REST *
-//* para la conexión vía los protocolos PUT y GET         *
-//*                                                       *
-//* Fecha: 05-Agosto-2019                                 *
-//* Autors: Yacsha and AndyLaTuquita                      *
-//* Web: www.theworldofchaos.com                          *
-//*********************************************************
+/***********************************************************************
+MANDELBROT BEETLE
+
+Plot the "Mandelbrot Beetle" Fractal
+
+Language: Javascript
+
+DATABASE SERIALIZATION
+
+Technology: Javascript+jQuery
+Connection to the MyJSON repository that stores the project database.
+REST API is used for the connection via the PUT and GET protocols
+
+Developed by:
+
+	- Yacsha
+    - AndyLaTuquita 
+
+Web: www.theworldofchaos.com   
+
+HISTORY...
+
+ >> Version 2 - 01-VI-2024
+    - Improvedment: The Interface is translated from Spanish to English
+    - Improvedment: Minor changes to description and credits
+
+>> Version 1 - 05-VIII-2019
+	- First version in Spanish
+
+***********************************************************************/
 
 // Conexión con repositorio MyJSON.com que guarda la base de datos
 // del proyecto de manera permanente en el siguiente link

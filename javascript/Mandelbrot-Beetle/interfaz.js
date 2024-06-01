@@ -1,14 +1,29 @@
-//*********************************************************
-//* MANDELBROT BEETLE                                     *
-//* Diagrama el Fractal  del "Escarabajo de Mandelbrot"   *
-//* Lenguaje: Javascript                                  *
-//*                                                       *
-//* INTERFAZ                                              *
-//*                                                       *
-//* Fecha: 05-Agosto-2019                                 *
-//* Autors: Yacsha and AndyLaTuquita                      *
-//* Web: www.theworldofchaos.com                          *
-//*********************************************************
+/***********************************************************************
+MANDELBROT BEETLE
+
+Plot the "Mandelbrot Beetle" Fractal
+
+Language: Javascript
+
+INTERFACE
+
+Developed by:
+
+	- Yacsha
+    - AndyLaTuquita 
+
+Web: www.theworldofchaos.com   
+
+HISTORY...
+
+ >> Version 2 - 01-VI-2024
+    - Improvedment: The Interface is translated from Spanish to English
+    - Improvedment: Minor changes to description and credits
+
+>> Version 1 - 05-VIII-2019
+	- First version in Spanish
+
+***********************************************************************/
 
 var out = null;// = document.getElementById('out');
 var m_sNombre = "";
