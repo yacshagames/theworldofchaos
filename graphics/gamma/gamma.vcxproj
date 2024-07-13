@@ -153,7 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GAMMA1.CPP" />
+    <ClCompile Include="gamma.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Grafxy.h" />
