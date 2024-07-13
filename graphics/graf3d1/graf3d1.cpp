@@ -1,21 +1,30 @@
 /***********************************************************************
- ::: 3D FUNCTION PLOTTER :::
+ ::: 3D FUNCTION PLOTTER ::: EXAMPLE 1 :::
+
+Rotates a 3D surface z=f(x,y) randomly around each of the three
+axes (X,Y,Z), modeling this function as a wireframe
+(like a mesh or grid...)
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
  >> Version 2 - 25-III-2024
 - Update graphics/graf3d0 - Porting to VC++ 2017 using winbgi
 
  >> Versión 1.0 15-V-2000
  - First version for Borland C++ 3.1 and Turbo C 3.0
- - Rota una superficie 3D z=f(x,y) aleatoriamente alrededor de cada uno
-   de los tres ejes (X,Y,Z), modelando esta función como una estructura
-   alámbrica (como una malla o cuadrícula..)
-
- :::Programado por:::
- José Luis De La Cruz Lázaro
- YACSHA - Software & Desing 2002
-  >> yacsha@elmundodelcaos.tk    
-  >> www.elmundodelcaos.tk -> EL MUNDO DEL CAOS - Unlimited Programming
-  >> www.foros3d.tk  -> Foros de discusión  Flash/ActionScript - C/C++
 
 ***********************************************************************/
 

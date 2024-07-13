@@ -1,31 +1,33 @@
 /*********************************************************************
-GRAF3D
+::: 3D FUNCTION PLOTTER ::: EXAMPLE 2 :::
+
+Rotates a 3D surface z=f(x,y) randomly around each of the three
+axes (X,Y,Z), modeling this function as a wireframe
+(like a mesh or grid...)
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
  >> Version 2 - 25-III-2024
 - Update graphics/graf3d1 - Porting to VC++ 2017 using winbgi
 
  >> Version 1.0 - 15-V-2000
  - First version for Borland C++ 3.1 and Turbo C 3.0
- - Rota una superficie 3D z=f(x,y) aleatoriamente alrededor de cada
-   uno de los tres ejes, modelando esta funcion como una estructura
-   al mbrica (como una malla o cuadr¡cula..)
 
-Programmed by:
- JOSE LUIS DE LA CRUZ LAZARO
+ *********************************************************************/
 
-  UNIVERSIDAD NACIONAL DE INGENIERIA
-  Facultad de Ingenier¡a El‚ctrica y Electr¢nica
-  Lima-Per£
-
-correos:
- jcruz@ec-red.com
- ramondc@hotmail.com
-Pagina Web ( EL MUNDO DEL CAOS ):
- http://www.geocities.com/joseluisdl
-
-Pagina Recomendada para consultar sobre el tema:
- http://www.upv.es/protel/usr/jotrofer/graficos/3d.htm
-*********************************************************************/
 //#include "iostream.h"
 #include "graphics.h"
 #include "conio.h"
