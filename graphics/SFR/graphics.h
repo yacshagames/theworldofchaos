@@ -353,6 +353,12 @@ void setrgbpalette( int colornum, int red, int green, int blue );
 #undef COLOR
 int COLOR(int r, int g, int b); // No longer a macro
 
+// Usage: setbkmode(TRANSPARENT) or setbkmode(OPAQUE).
+// By default WinBGI starts in OPAQUE, but the old turbo C and Borland C++
+// started in TRANSPARENT. But with this function you can switch
+// between one and the other
+void setbkmode(int mode);
+
 #ifdef __cplusplus
 };
 #endif

@@ -19,8 +19,8 @@ Pagina Web ( EL MUNDO DEL CAOS ):
 
 ***************************************************/
 #include <iostream> //cin y cout
-#include "conio.h" //clrscr() , getch()
 #include "graphics.h" 
+#include "conio.h" //clrscr() , getch()
 #include "RSF.h" //Reconocedor Sintactico de Funciones desde una cadena de texto
 #include "grafxy.h" //clase para graficar funciones bidimensionales
 

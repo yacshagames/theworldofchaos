@@ -5,13 +5,16 @@ Old Borland C++ and Turbo C functions. Not Standard
 
 The code of this library has been programmed by different authors,
 to whom I thank. I have only been in charge of organizing and
-grouping these functions in this library:
+grouping these functions in this library.
+
+Developed by:
 
 	JOSE LUIS DE LA CRUZ LAZARO
-	ramondc@hotmail.com
+	contact@theworldofchaos.com
 
 	YACSHA - Software & Desing
 	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
 
 HISTORY...
 
