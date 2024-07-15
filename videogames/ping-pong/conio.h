@@ -12,7 +12,7 @@ Developed by:
 	JOSE LUIS DE LA CRUZ LAZARO
 	contact@theworldofchaos.com
 
-	YACSHA - Software & Desing, since 1999, Lima – Perú
+	YACSHA - Software & Desing, since 1999, Lima-Peru
 	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
 	www.theworldofchaos.com
 
