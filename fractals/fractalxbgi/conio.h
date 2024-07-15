@@ -5,22 +5,25 @@ Old Borland C++ and Turbo C functions. Not Standard
 
 The code of this library has been programmed by different authors,
 to whom I thank. I have only been in charge of organizing and
-grouping these functions in this library:
+grouping these functions in this library.
+
+Developed by:
 
 	JOSE LUIS DE LA CRUZ LAZARO
-	ramondc@hotmail.com
+	contact@theworldofchaos.com
 
-	YACSHA - Software & Desing
+	YACSHA - Software & Desing, since 1999, Lima – Perú
 	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
 
 HISTORY...
 
 Version 3 - 01-IV-2024
-- wherex, wherey, textcolor, getch and kbhit functions are added
+- wherex, wherey, textcolor, cgetch and ckbhit functions are added
 - Comments are added to the declaration of each function
 - If WinBGI is not used, the 16 default colors are defined for
   console mode
-- The _getch and _kbhit functions are defined in console mode
+- The cgetch and ckbhit functions are defined in console mode
   (conio.h), so as not to cause the same conflict with the WinBGI
   getch and kbhit functions.
 
