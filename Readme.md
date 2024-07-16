@@ -1,14 +1,16 @@
-# The world of Chaos in C++ - Unlimited Programming (English)
+# The world of Chaos - Unlimited Programming (English)
 
-These are some of my mathematical programming projects, and some other programs that can help understand the C++ language, all of which include the source code, except for some where the executable is included.
+The World of Chaos project began in 1999, where I have shared with the community some of my mathematical programming projects and some other programs that can help understand the C++ language and other languages, all of which include the source code, except for some advanced projects where the executable is included for free, but you can purchase the source code to help you improve your programming skills.
 
 Perhaps the common theme of almost all programs is graphical programming, because it is the type of programming in which I develop and I always try to apply it at all levels. Little by little I will upload new programs that contain some interesting routines, especially from a graphic and mathematical point of view.
 
-I hope that these programs help improve your knowledge of the C and C++ language..., that would be my greatest satisfaction.
+I hope that these programs help you improve your programming knowledge, especially in the C++ language..., that would be my greatest satisfaction.
 
 ## Update 2024
 
-This section was in abandonware from 2003 to 2024, more than 20 years have passed and now I have decided to revive the old sources, so that they can be compiled by a modern and free compiler like the visual studio community. The old versions that only ran on two 16-bit computers can now be run on 64-bit computers.
+This section was in abandonware from 2003 to 2024, more than 20 years have passed and now I have decided to revive the old sources, so that they can be compiled by a modern and free compiler like the visual studio community. Old versions that only run on the 16-bit DOS operating system can now be run on 64-bit computers.
+
+> Please read the Readme file at the root of each sub-project folder, to see some instructions and the license terms.
 
 ## Table of Contents
 All the projects that I have created to date have been classified into the following sections:
@@ -23,39 +25,41 @@ Theory and a lot of information on how to make your own programs that graph frac
 Some mathematical utilities and applications, which can be added to your projects to facilitate mathematical calculations (matrices, 2D and 3D graphics, numerical methods, various programs: MCD, Nreinas, Hanoi, etc.)
 
 ### Graphic Programming
-All types of libraries that facilitate graphical programming in the DOS environment (Windows graphical environments, graphical mouse, PCX graphics, 2D and 3D programming, video effects, etc.)
+Libraries that facilitate graphical programming, with several examples of how it is used, using WinBGIDLL (Windows graphical environments, graphical mouse, PCX graphics, 2D and 3D programming, video effects, etc.), programming in the purest old style, only instead of using the old BGI library for DOS, we will use the WinBGIDLL library for Windows.
 
 ### The challenge
-If you want to practice C or C++, try solving some of these Challenges I created for the CWORLD discussion list.
+If you want to train yourself with C++ or another programming language, try solving some of these Challenges that I invented for the CWORLD discussion list in 1999. In this section little by little we will publish new challenges and we would also like you to send us your own challenges to the community.
 
 -----------------------------------------------------
 
-# El mundo del Caos en C++ - Unlimited Programming (EspaÒol)
+# El mundo del Caos - Unlimited Programming (Espa√±ol)
 
-Estos son algunos de mis proyectos de programacion matematica, y alguno que otro programa que puede ayudar a comprender el lenguaje C++, en todos se incluye el cÛdigo fuente, excepto por algunos donde se incluye el ejecutable.
+El proyecto de El mundo del Caos, ahora conocido como "The world of Chaos", inici√≥ en el a√±o 1999, donde he compartido con la comunidad algunos de mis proyectos de programaci√≥n matem√°tica y algunos otros programas que pueden ayudar a comprender el lenguaje C++ y otros lenguajes, todos los cuales incluyen el c√≥digo fuente, excepto algunos proyectos avanzados donde se incluye de manera gratuita el ejecutable, pero usted puede adquirir el c√≥digo fuente para que le ayude a mejorar sus habilidades de programaci√≥n.
 
-Tal vez el tema com˙n de casi todos los programas es la programaciÛn gr·fica, debido a que es el tipo de programaciÛn en que me desarrollo y siempre trato de aplicarlo a todo nivel. Poco a poco ire subiendo nuevos programas que contengan alguna rutina interesante, sobre todo desde el punto de vista gr·fico y matem·tico.
+Tal vez el tema com√∫n de casi todos los programas es la programaci√≥n gr√°fica, debido a que es el tipo de programaci√≥n en que me desarrollo y siempre trato de aplicarlo a todo nivel. Poco a poco ire subiendo nuevos programas que contengan alguna rutina interesante, sobre todo desde el punto de vista gr√°fico y matem√°tico.
 
-Espero que estos programas ayuden a mejorar sus conocimientos sobre el lenguaje C y C++..., esa serÌa mi mayor satisfacciÛn.
+Espero que estos programas te ayuden a mejorar sus conocimientos de programaci√≥n, sobre todo en el lenguaje C++..., esa ser√≠a mi mayor satisfacci√≥n.
 
-## ActualizaciÛn 2024
+## Actualizaci√≥n 2024
 
-Esta secciÛn estuvo en abandonaware desde el 2003 hasta el 2024, mas de 20 aÒos han pasado y ahora me he propuesto revivir los viejos fuentes, para que puedan ser compilados por un compilador moderno y gratuito como el visual studio community. Las viejas versiones que solo corrian en dos de 16 bits, ahora podr·n ser corridas en ordenadores de 64 bits.
+Esta secci√≥n estuvo en abandonaware desde el 2003 hasta el 2024, mas de 20 a√±os han pasado y ahora me he propuesto revivir los viejos fuentes, para que puedan ser compilados por un compilador moderno y gratuito como el visual studio community. Las viejas versiones que solo corrian en el sistema operativo DOS de 16 bits, ahora podr√°n ser ejecutadas en ordenadores de 64 bits.
+
+> Por favor leer el archivo Readme en la raiz de la carpeta de cada sub-proyecto, para ver algunas indicaciones y los t√©rminos de licencia.
 
 ## Tabla de contenido
 Todos los proyectos que he ido creando hasta la fecha los he clasificado en las siguientes secciones:
 
-### ProgramaciÛn de Videojuegos
-Encontrar·s algunos de mis mejores video juegos
+### Programaci√≥n de Videojuegos
+Encontrar√°s algunos de mis mejores video juegos
 
-### ProgramaciÛn de Fractales
-TeorÌa y mucha informaciÛn sobre como hacer tus propios programas que grafiquen fractales, adem·s de algunos programas ya terminados.
+### Programaci√≥n de Fractales
+Teor√≠a y mucha informaci√≥n sobre como hacer tus propios programas que grafiquen fractales, adem√°s de algunos programas ya terminados.
 
-### ProgramaciÛn Matem·tica y otros
-Algunas utilidades y aplicaciones matem·ticas, que se pueden agregar a sus proyectos facilitando los c·lculos matem·ticos ( matrices, gr·ficos 2D y 3D, mÈtodos numÈricos, programas varios: MCD, Nreinas, hanoi, etc..)
+### Programaci√≥n Matem√°tica y otros
+Algunas utilidades y aplicaciones matem√°ticas, que se pueden agregar a sus proyectos facilitando los c√°lculos matem√°ticos ( matrices, gr√°ficos 2D y 3D, m√©todos num√©ricos, programas varios: MCD, Nreinas, hanoi, etc..)
 
-### ProgramaciÛn Gr·fica
-Todo tipo de librerÌas que facilitan la programaciÛn gr·fica en entorno DOS ( Entornos gr·ficos de Ventanas, mouse gr·fico, gr·ficos PCX, programaciÛn 2D y 3D, efectos de video, etc )
+### Programaci√≥n Gr√°fica
+Librer√≠as que facilitan la programaci√≥n gr√°fica, con varios ejemplos de como se usa, usando WinBGIDLL ( Entornos gr√°ficos de Ventanas, mouse gr√°fico, gr√°ficos PCX, programaci√≥n 2D y 3D, efectos de video, etc ), programaci√≥n al mas puro estilo de la vieja, solo que en lugar de usar la vieja librer√≠a BGI para DOS, usaremos la librer√≠a WinBGIDLL para Windows.
 
 ### El Reto
-Si deseas entrenerte con el C o C++, intenta resolver algunos de estos Retos que inventÈ para la lista de discusiÛn CWORLD.
+Si deseas entrenerte con el C++ u otro lenguaje de programaci√≥n, intenta resolver algunos de estos Retos que invent√© para la lista de discusi√≥n CWORLD en 1999. En esta secci√≥n poco a poco iremos publicando nuevos retos y tambi√©n nos gustar√≠a que usted nos fuera enviado sus propios retos a la comunidad.
