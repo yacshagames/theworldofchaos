@@ -1,6 +1,6 @@
 # The world of Chaos - Unlimited Programming (English)
 
-The World of Chaos project began in 1999, where I have shared with the community some of my mathematical programming projects and some other programs that can help understand the C++ language and other languages, all of which include the source code, except for some advanced projects where the executable is included for free, but you can purchase the source code to help you improve your programming skills.
+[The World of Chaos](https://www.theworldofchaos.com) project began in 1999, where I have shared with the community some of my mathematical programming projects and some other programs that can help understand the C++ language and other languages, all of which include the source code, except for some advanced projects where the executable is included for free, but you can purchase the source code to help you improve your programming skills.
 
 Perhaps the common theme of almost all programs is graphical programming, because it is the type of programming in which I develop and I always try to apply it at all levels. Little by little I will upload new programs that contain some interesting routines, especially from a graphic and mathematical point of view.
 
@@ -30,11 +30,14 @@ Libraries that facilitate graphical programming, with several examples of how it
 ### The challenge
 If you want to train yourself with C++ or another programming language, try solving some of these Challenges that I invented for the CWORLD discussion list in 1999. In this section little by little we will publish new challenges and we would also like you to send us your own challenges to the community.
 
+## Project website
+For more information visit [TheWorldofChaos.com](https://www.theworldofchaos.com)
+
 -----------------------------------------------------
 
 # El mundo del Caos - Unlimited Programming (Español)
 
-El proyecto de El mundo del Caos, ahora conocido como "The world of Chaos", inició en el año 1999, donde he compartido con la comunidad algunos de mis proyectos de programación matemática y algunos otros programas que pueden ayudar a comprender el lenguaje C++ y otros lenguajes, todos los cuales incluyen el código fuente, excepto algunos proyectos avanzados donde se incluye de manera gratuita el ejecutable, pero usted puede adquirir el código fuente para que le ayude a mejorar sus habilidades de programación.
+El proyecto de [El mundo del Caos](https://www.theworldofchaos.com), ahora conocido como "The world of Chaos", inició en el año 1999, donde he compartido con la comunidad algunos de mis proyectos de programación matemática y algunos otros programas que pueden ayudar a comprender el lenguaje C++ y otros lenguajes, todos los cuales incluyen el código fuente, excepto algunos proyectos avanzados donde se incluye de manera gratuita el ejecutable, pero usted puede adquirir el código fuente para que le ayude a mejorar sus habilidades de programación.
 
 Tal vez el tema común de casi todos los programas es la programación gráfica, debido a que es el tipo de programación en que me desarrollo y siempre trato de aplicarlo a todo nivel. Poco a poco ire subiendo nuevos programas que contengan alguna rutina interesante, sobre todo desde el punto de vista gráfico y matemático.
 
@@ -63,3 +66,6 @@ Librerías que facilitan la programación gráfica, con varios ejemplos de como 
 
 ### El Reto
 Si deseas entrenerte con el C++ u otro lenguaje de programación, intenta resolver algunos de estos Retos que inventé para la lista de discusión CWORLD en 1999. En esta sección poco a poco iremos publicando nuevos retos y también nos gustaría que usted nos fuera enviado sus propios retos a la comunidad.
+
+## Página web del Proyecto
+Para mas información visite [TheWorldofChaos.com](https://www.theworldofchaos.com)
