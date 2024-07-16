@@ -1,3 +1,12 @@
+/*************************************************************************
+
+LICENSE
+
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+*************************************************************************/
+
 // Piramide3D.h : main header file for the PIRAMIDE3D application
 //
 

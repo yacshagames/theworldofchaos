@@ -1,11 +1,23 @@
 #pragma once
 
 /**********************************************************************
-VECTOR.H fue creado por JLDL-SOFTWARE UNI-FIEE
-Contiene las operaciones mas comunes echas con vectores en 3D y 2D
-NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
-	TODA CONFIANZA; PERO NO VAYA A BORRAR NADA DE LO QUE YA
-	ESTA ECHO!!!!!!
+VECTOR.H
+Contains the most common operations performed with vectors in 3D and 2D
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
 >> Version 2 - 22-III-2024
 	- Update: Porting to VC++ 2017 using winbgi
@@ -49,7 +61,7 @@ Version 1.0 -> 26/11/98
 		-> double arg(vector A)
 
 
-EJEMPLO:
+EXAMPLE:
 
 #include"vector.h"
 #include"conio.h"

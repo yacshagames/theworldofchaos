@@ -1,5 +1,22 @@
 /***********************************************************************
- ::: CONCATENEO DE CADENAS :::
+::: CHAIN ??CONCATENATION ::: CONCATENEO DE CADENAS :::
+
+ Cstring class that supports string concatenation, i.e.
+ which joins the contents of 2 chains and adds them to another destination chain.
+
+ I developed this library in the 2000s, and it was useful in compilers
+ old that did not support the STL, but now with the inclusion of the class
+ standard std::string, this library has been obsolete, but I am
+ leaving at the disposal of the community, as a didactic example of the
+ overloading of the + operator, on objects of a class
+
+ Example:
+
+ CString first("A sum of strings?"), second("Impossible!"), destination;
+ destination = first + second; //concatenate
+ destination.Write(); //write the destination on the screen
+
+------------------------------------------------------------------------------
 
  Clase Cstring que soporta concateneación de cadenas, es decir,
  que junta los contenidos de 2 cadenas y los añade a otra cadena destino.
@@ -16,19 +33,20 @@
  destino = primera + segunda; //concateneo
  destino.Escribir(); //escribe el destino en pantalla
 
-Programmed by:
+Developed by:
 
 	JOSE LUIS DE LA CRUZ LAZARO
-	ramondc@hotmail.com
+	contact@theworldofchaos.com
 
-	UNIVERSIDAD NACIONAL DE INGENIERIA
-	Faculty of Electrical and Electronic Engineering
-	Lima-Peru
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
 
-	YACSHA - Software & Desing
-	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
 
- HISTORY...
+HISTORY...
 
  >> Version 2 - 19-IV-2024
 	- Update math-and-others\concateo - Porting to VC++ 2017 using winbgi

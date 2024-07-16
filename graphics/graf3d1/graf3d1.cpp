@@ -10,8 +10,8 @@ Developed by:
 	JOSE LUIS DE LA CRUZ LAZARO
 	contact@theworldofchaos.com
 
-	YACSHA - Software & Desing
-	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
 	www.theworldofchaos.com
 
 LICENSE
@@ -23,7 +23,7 @@ HISTORY...
  >> Version 2 - 25-III-2024
 - Update graphics/graf3d0 - Porting to VC++ 2017 using winbgi
 
- >> Versión 1.0 15-V-2000
+ >> Version 1.0 - 15-V-2000
  - First version for Borland C++ 3.1 and Turbo C 3.0
 
 ***********************************************************************/

@@ -1,11 +1,26 @@
 #pragma once
 /*************************************************************************
-//CAJAS DE DIALOGO PERSONALIZADAS miembros p£blicos de CVentana
+CUSTOM DIALOG BOXES
+CVentana public members
 
-//Aqui he creado las ventanas t¡picas de una aplicaci¢n visual como son
-//la ventana de AcercaDe y la ventana de ingresar datos desde el teclado
-//(ingresar una cadena de texto)
+Here I have created the typical windows of a visual application such
+as the About window and the window for entering data from the keyboard
+(entering a text string).
 
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
 >> Version 2 - 24 - III - 2024
 - Update graphics / ventanas - Porting to VC++ 2017 using winbgi

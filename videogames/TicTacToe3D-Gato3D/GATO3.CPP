@@ -3,10 +3,18 @@
 GATOMANIA 3D
 TIC-TAC-TOE GAME ON A 4x4x4 CUBE
 
-programmed by:
- JOSE LUIS DE LA CRUZ LAZARO
- ramondc@hotmail.com
-Pagina Web ( EL MUNDO DEL CAOS )
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
 
 HISTORY...
 
@@ -191,7 +199,7 @@ void tablero::pintar_cuadricula(int color)
 	}
 }
 
-//Grafica un O ¢ X en el centro del elemento (x,y) de la cuadricula
+//Grafica un O ó X en el centro del elemento (x,y) de la cuadricula
 bool tablero::Marcar(int i, int j, int k, int figura)
 {
 	//figura = 0 "dibuja un O"
@@ -255,7 +263,7 @@ int Reiniciar()
 {	
 	cuadro(56 + 2 * X, 20 + 4 * Y, 56 + 6 * X, 50 + 4 * Y, 2);
 	setcolor(WHITE);
-	outtextxy(4 * X, 30 + 4 * Y, "Gatoman¡a en 3D");
+	outtextxy(4 * X, 30 + 4 * Y, "Gatomania en 3D");
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -301,7 +309,7 @@ int main()
 
 	////////////////////////////////
 	//Bucle principal
-	//Marca una X ¢ O utilizando el mouse
+	//Marca una X ó O utilizando el mouse
 
 
 	do

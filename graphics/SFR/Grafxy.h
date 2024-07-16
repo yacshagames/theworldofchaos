@@ -1,32 +1,35 @@
 /*********************************************************************
 GRAFXY.H
 
-Grafica puntos de una funci¢n en la pantalla, en la regi¢n del plano
-cartesiano especificada.
-Se toma a la pantalla como si fuera la regi¢n del plano cartesiano
-especificada.
+Plots points of a function on the screen, in the specified region
+of the Cartesian plane.
+The screen is taken as if it were the specified region of the
+Cartesian plane.
 
-programado por:
- JOSE LUIS DE LA CRUZ LAZARO
-correos:
- jcruz@ec-red.com
- ramondc@hotmail.com
-Pagina Web ( EL MUNDO DEL CAOS ):
- http://www.geocities.com/joseluisdl
+Developed by:
 
-NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
-	TODA CONFIANZA; PERO NO VAYA A BORRAR NADA DE LO QUE YA
-	ESTA ECHO!!!!!!
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
 >> Version 2 - 21-III-2024
 	- Update graphics/gxydemo - Porting to VC++ 2017 using winbgi
 
-Versi¢n 1.8 -> 24-Agosto-2000
--Se arregla parcialmente el error de que cuando la funci¢n se salia de la ventana
+Versión 1.8 -> 24-Agosto-2000
+-Se arregla parcialmente el error de que cuando la función se salia de la ventana
  marco y despues volvia entrar, se unia con una linea el punto de salida
  y el punto de entrada.
 
-Versi¢n 1.7 -> 15/Mayo/2000
+Versión 1.7 -> 15/Mayo/2000
 -Se dividio grafxy en:
  grafxy (grafxy basico) que contiene las funciones mas usadas.
  grafxya (grafxy avanzado) que contiene funciones que complementan a grafxy
@@ -38,7 +41,7 @@ Versi¢n 1.7 -> 15/Mayo/2000
 
 
 Version 1.6 -> 11/08/1999
--Se modifica la clase CRegionXY, a¤adiendo las variables miembro
+-Se modifica la clase CRegionXY, añadiendo las variables miembro
  (Imin,Jmin,Imax,Jmax) que representan las coordenadas de una
  pantalla virtual, donde se graficaran los puntos (estas coordenadas
  son en pixels).
@@ -48,12 +51,12 @@ Version 1.6 -> 11/08/1999
 
 Version 1.5 -> 25/07/99
 
-Se a¤ade la funcion Conectar() para conectar los puntos de la grafica
+Se añade la funcion Conectar() para conectar los puntos de la grafica
 
 Version 1.4 -> 23/05/99
 
 Se acoplo la cabecera ifuncade a grafxy, para graficar funciones instantaneamente
-Se a¤ade la funcion Ejes() para graficar los ejes
+Se añade la funcion Ejes() para graficar los ejes
 
 Version 1.3 -> 10/04/99
 
@@ -148,8 +151,8 @@ public:
 //NOTA: el valor de i y j se sobreescribiran
 void CRegionXY::transfor(int &i, int &j, double x, double y)
 {
-	i = Imin + (x - Xmin)*ki + 1;//Transformaci¢n de real a entero x-->i
-	j = Jmax - (y - Ymin)*kj + 1;//Transformaci¢n de real a entero y-->j
+	i = Imin + (x - Xmin)*ki + 1;//Transformación de real a entero x-->i
+	j = Jmax - (y - Ymin)*kj + 1;//Transformación de real a entero y-->j
 }
 
 //Grafica el PUNTO (x,y) en coordenadas reales sobre la region
@@ -171,7 +174,7 @@ void CRegionXY::punto(double x, double y, char color, char conectar = CONECTAR)
 			putpixel(i, j, color);  //pinta el punto en pantalla
 
 	}//else
-   //  moveto(i,j); //si el punto no se encuentra dentro de la ventana marco, solo se se mueve el cursor a esta posici¢n
+   //  moveto(i,j); //si el punto no se encuentra dentro de la ventana marco, solo se se mueve el cursor a esta posición
 
 }
 

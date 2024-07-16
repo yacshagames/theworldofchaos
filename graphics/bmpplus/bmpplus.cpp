@@ -1,29 +1,12 @@
-/***********************************************************************
- ::: BMPPlus :::
+/*************************************************************************
 
- >> Version 2 - 25-III-2024
-	- Update: Porting to VC++ 2017 using winbgi
-	- Load and fast plot a BMP and JPG using WinBGI
-	- Show BMP Data from header for bella.bmp
-	- Show BMP and JPG in original size and fit size using readimagefile
-	- Fix: The readimagefile parameters were defined well so as not to
-	  distort the image when displayed in the original size
-	- The drawing order of text and images is optimized, the text is
-	  always displayed first and then the images.
+LICENSE
 
-  >> Versión 1.0 8-IX-2000
- Similar al PCXPlus pero grafica mapas de bits (BMP) utilizando
- rutinas de dibujo a bajo nivel en las resoluciones de 320x200
- y 640x480 con 256 colores.
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
 
- :::Programado por:::
- José Luis De La Cruz Lázaro
- YACSHA - Software & Desing
-  >> ramondc@hotmail.com  
-  >> EL MUNDO DEL CAOS - Unlimited Programming
-  >> Foros de discusión  Flash/ActionScript - C/C++
+*************************************************************************/
 
-***********************************************************************/
 #include <iostream>
 #include "graphics.h"
 #include "bmpplus.h"

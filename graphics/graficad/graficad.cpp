@@ -1,12 +1,32 @@
 /****************************************************************
 GRAFICAD - Function Plotter for DOS
 
-JOSE LUIS DE LA CRUZ LAZARO UNI - FIEE
-ramondc@hotmail.com
+2D and 3D Function plotter.
 
->> Version 2 - 22 - III - 2024
-- Update: Porting to VC++ 2017 using winbgi
-- Unifies grafxy and grafxyz into a single program
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
+
+>> Version 2 - 22-III-2024
+	- Update: Porting to VC++ 2017 using winbgi
+	- Unifies grafxy (2D Plotter) and grafxyz (3D Plotter)
+	  into a single program
+
+>> Version 1 - 26-VI-1999
+	- First version for Borland C++ 3.1 and Turbo C 3.0
+	- GrafXY version 1.1 is developed
+	- GrafXYZ version 1.2 is developed
 
 ****************************************************************/
 

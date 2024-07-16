@@ -1,6 +1,20 @@
 /****************************************************************************
- IMGBGI
- Basado en las rutinas originales del PCXBGI y el BMPPlus.
+IMGBGI
+Based on the original PCXBGI and BMPPlus routines.
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
  >> Version 2 - 21-III-2024
 	- Porting to VC++ 2017 using winbgi
@@ -8,9 +22,9 @@
 	- Add IMAGETYPE to handle different types of images when drawing
 
  Version 1.4 - 30 Abril 2002
- -Luego de tanto tiempo sin actualizar el PCXBGI, decid¡ hacer algo
-  mas productivo, como un cargador de im genes universal, por el
-  momento incorpor‚ y optimiz‚ las rutinas de carga del PCXBGI y
+ -Luego de tanto tiempo sin actualizar el PCXBGI, decidí hacer algo
+  mas productivo, como un cargador de imágenes universal, por el
+  momento incorporé y optimizé las rutinas de carga del PCXBGI y
   el BMPPlus, para cargar ficheros PCX y BMP respectivamente.
 
  Version 1.3 - 29 Dic 1999
@@ -27,8 +41,6 @@
  Version 1.1 - 20 Set 1999
  CARGA UN PCX EN PANTALLA utilizando el controlador bgi SVGA256
 
- JOSE LUIS DE LA CRUZ LAZARO UNI-FIEE
-	ramondc@hotmail.com
 ****************************************************************************/
 #ifndef __IMGBGI_H
 #define __IMGBGI_H
@@ -54,7 +66,7 @@ public:
   IMG(); //constructor
   ~IMG(); //destructor
 
-  unsigned char paleta[256][3]; //Array que contendr  la paleta de colores
+  unsigned char paleta[256][3]; //Array que contendrá la paleta de colores
 			       // del IMG
 
  long ancho;
@@ -76,7 +88,7 @@ public:
   //Carga un BMP
   int leer_cabeceraBMP( const char * );
   int DibujarBMP( int, int );
-  //Detecta el tipo de imagen seg£n la extenci¢n del fichero
+  //Detecta el tipo de imagen según la extención del fichero
   int leer_cabecera( const std::string& );
   int Dibujar( int, int );
   int getRGBFromPalette(unsigned char cColor);
@@ -99,7 +111,7 @@ IMG::~IMG()
 {
 	 int i,j;
 
-	 //El c¢digo que sigue a continuaci¢n pasa el contenido del array "Paleta"
+	 //El código que sigue a continuación pasa el contenido del array "Paleta"
 	 //a la paleta de la VGA
 	 for (i=0;i<256;i++)
 	 {
@@ -115,9 +127,9 @@ void IMG::CorrerPaleta( void)
 
  int i,j;
  // Movemos 2 bits
- // hacia la derecha todos los bytes le¡dos en la paleta de la imagen.
+ // hacia la derecha todos los bytes leídos en la paleta de la imagen.
  // Los componentes RGB de la paleta se encuentran en los 6 bits
- // de mayor peso de los valores le¡dos del fichero
+ // de mayor peso de los valores leídos del fichero
  for(i=0;i<256;i++)
   for(j=0;j<3;j++)
     paleta[i][j]>>=2;

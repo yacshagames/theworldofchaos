@@ -1,24 +1,25 @@
 /***********************************************************************
- ::: DEFINIENDO NUESTRA PROPIA FUNCION ALEATORIA :::
+::: DEFINING OUR OWN RANDOM FUNCTION :::
 
-Tres formas diferentes de definir una función que retorne números
-aleatorios, al mismo estilo de la función random. Es una forma
-excelente de definir aleatorios si su compilador no dispone de
-la función random (no ANSI C )
+Three different ways to define a function that returns random numbers,
+in the same style as the random function. This is a great way to
+define random if your compiler does not have the random
+function (non-ANSI C).
 
-Programmed by:
+Developed by:
 
 	JOSE LUIS DE LA CRUZ LAZARO
-	ramondc@hotmail.com
+	contact@theworldofchaos.com
 
-	UNIVERSIDAD NACIONAL DE INGENIERIA
-	Faculty of Electrical and Electronic Engineering
-	Lima-Peru
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
 
-	YACSHA - Software & Desing
-	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
 
- HISTORY...
+HISTORY...
 
  >> Version 2 - 19-IV-2024
 	- Update math-and-others\aleator - Porting to VC++ 2017 using winbgi
@@ -41,7 +42,7 @@ int main()
 	do
 		N = (No++,       //Incrementamos la semilla
 			N = No * No,   // elevamos N al cuadrado
-			X = N / 100L, // quitamos las 2 £ltimas cifras
+			X = N / 100L, // quitamos las 2 últimas cifras
 			X - (X / 10000L) * 10000L); //quitamos las 2 primeras cifras
 	while (N < 1000); //mientras N<1000
 

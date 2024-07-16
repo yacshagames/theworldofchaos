@@ -11,10 +11,17 @@ Technology: HTML5 + Javascript 2d Canvas
 
 Developed by:
 
-	- Yacsha
+	- JOSE LUIS DE LA CRUZ LAZARO (Yacsha)
     - AndyLaTuquita 
+	contact@theworldofchaos.com
 
-Web: www.theworldofchaos.com   
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
 
 HISTORY...
 

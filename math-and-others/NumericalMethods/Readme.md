@@ -8,14 +8,11 @@ All the methods mentioned in this file come attached with the sources made in C+
 Developed by:
 
 	JOSE LUIS DE LA CRUZ LAZARO
-	ramondc@hotmail.com
+	contact@theworldofchaos.com
 
-	UNIVERSIDAD NACIONAL DE INGENIERIA
-	Faculty of Electrical and Electronic Engineering
-	Lima-Peru
-
-	YACSHA - Software & Desing
-	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
 
 **HISTORY...**
 

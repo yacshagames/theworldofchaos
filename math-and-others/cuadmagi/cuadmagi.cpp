@@ -1,6 +1,38 @@
 /***********************************************************************
  :::SUDOKU - CUADRADOS MAGICOS:::
 
+ Solution to the classic mathematical problem of the magic square
+ (odd order).
+ For those who do not know what it is, you have to place the first n
+ natural numbers (odd n) in an nxn matrix in such a way that the sum of
+ any row, column or diagonal must always be the same.
+
+ Example:
+
+ Magic Square of order 3:
+
+ 8 1 6
+ 3 5 7
+ 4 9 2
+
+ Sum = 15
+
+ >> GENERAL ALGORITHM
+
+ A way to easily construct magic squares of odd order.
+
+1. Let's take any arithmetic series, for convenience the series of natural
+   numbers, and place the number 1 in the central cell of the top row.
+2. The figure consecutive to any one must be placed in the cell that
+   follows it diagonally up and to the right.
+3. If by doing this you leave the square at the upper limit of its contour,
+   we will jump to the cell of the next column to the right and in its lower
+   row, if you leave it to the right, you continue through the first cell,
+   starting from the left, from the top row.
+4. When the next cell is occupied, the consecutive number in the series is
+   placed in the cell immediately below that of the preceding number, thus
+   beginning a new path in the diagonal direction.
+ 
  Solución al clásico problema matemático del cuadrado mágico (orden impar).
  Para los que no saben de que trata, se tiene que ubicar los n primeros
  numeros naturales (n impar) en una matriz de nxn de tal forma que la
@@ -35,19 +67,21 @@
    precedente, comenzando así un nuevo camino en la dirección de la
    diagonal.
 
-Programmed by:
+Developed by:
 
 	JOSE LUIS DE LA CRUZ LAZARO
-	ramondc@hotmail.com
+	contact@theworldofchaos.com
 
-	UNIVERSIDAD NACIONAL DE INGENIERIA
-	Faculty of Electrical and Electronic Engineering
-	Lima-Peru
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
 
-	YACSHA - Software & Desing
-	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
 
- HISTORY...
+HISTORY...
+
 
   >> Version 3 - 21-IV-2024
 	- Use setfill(' ') setw(4) in cout, to replace the old printf("%4d")

@@ -1,30 +1,32 @@
 #pragma once
 /******************************************************
 MOUSEBGI.H
-Rutinas para controlar el mouse:
+Routines to control the mouse using WinBGIDLL
 
-MODIFICADO POR:
-Jos‚ Luis De la Cruz L zaro
-correos:
- jcruz@ec-red.com
- ramondc@hotmail.com
+Developed by:
 
-P gina Web (El Mundo del Caos):
- http://www.geocities.com/joseluisdl
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
 
-ICQ: 46906401
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
 
- Universidad Nacional de Ingenier¡a
-  Facultad de Ingenier¡a El‚ctrica y Electr¢nica
- Lima - Per£
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
  >> Version 2 - 24-III-2024
 	- Update graphics/MouseBGI - Porting to VC++ 2017 using winbgi
-	- The entire library is migrated to the MouseBGI class, using 
+	- The code from version 1.x is discarded, and a new code compatible
+	  with the WinBGIDLL library is implemented
+ 	- The entire library is migrated to the MouseBGI class, using 
 	  the mouse functionalities of WinBGI
 
 Version 1.1a 06 - Agosto - 2000
--Ya pas¢ casi un a¤o desde que Silvia me dio el fuente original del
+-Ya pasó casi un año desde que Silvia me dio el fuente original del
  presente. Y pues eso merece nuevas mejoras...
 -Ahora se soporta el cursor estandar en el modo grafico
  320x200 256 colores, y tambien el cursor estandar en modo texto.
@@ -111,13 +113,13 @@ private:
 
 };
 
-//Estructura que almacena los eventos generados por el rat¢n y teclado
+//Estructura que almacena los eventos generados por el ratón y teclado
 struct Evento
 {
-	int x;	//posici¢n x del puntero del rat¢n
-	int y; //posici¢n y del puntero del rat¢n
-	MouseBGI::EVENTO evento; //Evento actual del rat¢n (ver definici¢n de codigos de Eventos m s abajo)
-	char tecla; //si se presiona alguna tecla desde el teclado, se almacena aqu¡ su codigo ASCII
+	int x;	//posición x del puntero del ratón
+	int y; //posición y del puntero del ratón
+	MouseBGI::EVENTO evento; //Evento actual del ratón (ver definición de codigos de Eventos más abajo)
+	char tecla; //si se presiona alguna tecla desde el teclado, se almacena aquí su codigo ASCII
 };
 
 

@@ -3,43 +3,56 @@
  ::: BMPPlus :::
  LOADS AN 8-BIT BMP (256 COLORS) AND PLOTS IT ON THE SCREEN
 
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
+
   >> Version 2 - 25-III-2024
 	- Update: Porting to VC++ 2017 using winbgi
 	- The old VIDEO class and the BMP class methods related to drawing and
 	  setting the palette are removed, since they were obsolete in Windows
 	- getRGBFromPalette is Added to convert a palette color into an RGB color,
-	  and use it in the WinBIG putpixel that requires an RGB color as a
+	  and use it in the WinBGI putpixel that requires an RGB color as a
 	  parameter and not a palette color like the old borland c or turbo c putpixel
 	- dibujarppp is optimized to plot pixel by pixel on the screen from a
 	  preloaded bitmap
 	- It is allowed to choose whether to read the bitmap (preloaded), since there
 	  are cases in which it will only be required to read the header
 	- Minor improvements in the definition of classes and member variables
+	- Load and fast plot a BMP and JPG using WinBGI
+	- Show BMP Data from header for bella.bmp
+	- Show BMP and JPG in original size and fit size using readimagefile
+	- Fix: The readimagefile parameters were defined well so as not to
+	  distort the image when displayed in the original size
+	- The drawing order of text and images is optimized, the text is
+	  always displayed first and then the images.
 
-  >> Versión 1.0 8-IX-2000
- Similar al PCXPlus pero grafica mapas de bits (BMP) utilizando
- rutinas de dibujo a bajo nivel en las resoluciones de 320x200
- y 640x480 con 256 colores.
-
- :::Programado por:::
- José Luis De La Cruz Lázaro
- YACSHA - Software & Desing
-  >> ramondc@hotmail.com   
-  >> www.elmundodelcaos.tk -> EL MUNDO DEL CAOS - Unlimited Programming
-  >> www.foros3d.tk  -> Foros de discusión  Flash/ActionScript - C/C++
+  >> Versi?n 1.0 8-IX-2000
+	- Similar al PCXPlus pero grafica mapas de bits (BMP) utilizando
+	  rutinas de dibujo a bajo nivel en las resoluciones de 320x200
+	  y 640x480 con 256 colores.
 
 ***********************************************************************/
 
 /*
-Español:
 BMP class developed by:
-   José Luis De la Cruz Lázaro - ramondc@hotmail.com
 
   Routines to control the paddle thanks to:
-   Emmanuel Garcés - Manolo_1981@yahoo.com
+   Emmanuel Garc?s - Manolo_1981@yahoo.com
 
   Information about the internal structure of the BMP, thanks to:
-   Fabián Sierra C. - magic_century@hotmail.com
+   Fabi?n Sierra C. - magic_century@hotmail.com
 
 Type is a 'magic number' used to check that the file is .bmp.
 size is the size of the bmp file including the header and bmp_info
@@ -71,41 +84,21 @@ final red. The pixels are in reverse order; They start on the last line.
 Spanish:
 
  Clase BMP desarrollada por:
-  José Luis De la Cruz Lázaro - webmaster@elmundodelcaos.cjb.net
-			      - ramondc@hotmail.com
 
  Rutinas para control de la paleta gracias a:
-  Emmanuel Garcés - Manolo_1981@yahoo.com
 
- Información acercade la estructura interna del BMP, gracias a:
-  Fabián Sierra C. - magic_century@hotmail.com
 
-Tipo es un 'número mágico' que se usa para comprobar que el archivo es .bmp.
-tamano es el tamaño del archivo bmp incluyendo la cabecera y bmp_info
-reservado no se usa normalmente (por lo menos hasta el año 2000 no se usaba).
 Desplazamiento es el desplazamiento de los datos con respecto al inicio del archivo.
-Es igual al tamaño de las estructuras de cabecera, cuando no hay paleta y
 cuando hay paleta se suman los bytes utilizados por la paleta.
 
-Bytes_en_cabecera es exactamente eso y a mi me parece un dato inútil.
 Planos es un campo que nunca he utilizado. Bits_por_pixel es importante;
-ya lo explicaré en detalle. Compresion... no tengo idea.
-Si me topo con un archivo con un valor anómalo en este campo,lo descarto.
-Los colores se generan en la pantalla usando una combinación de rojo,verde
 y azul. Al conjunto de combinaciones se le llama la paleta de colores.
-Un color es referenciado como un número.El rango del número depende de los
 bits usados para referenciarlo. Si es 1 bit, se permiten 2 colores.
 Si son 4, 16, etc. Para cada pixel se especifica su color. Entonces, el campo
-bits_por_pixel indica cuántos bits representan un pixel en la pantalla.
 Si vas leyendo pixel a pixel...
-Inmediatamente después de ambas cabeceras comienza la especificación de que
-componentes de rojo,verde y azul se usarán para cada color. El tamaño de esta
-sección se calcula sabiendo el número de colores y que se utilizan 4 bytes
 para especificar cada color; uno para el rojo, otro para el verde y otro para
 el azul; el otro no se utiliza, no se por que. Debes usar setpalette para
 especificar la paleta a usar.
-Dos datos.Los colores están invertidos en la paleta; primero el azul y al
-final el rojo. Los pixels están en orden inverso; comienzan en la última línea.
 */
 
 

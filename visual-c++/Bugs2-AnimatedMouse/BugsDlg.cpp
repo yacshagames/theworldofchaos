@@ -12,10 +12,21 @@ la cara del ratón, como un dibujo animado.
 
 Developed by:
 
-Original authors: Amelia
-Improvements added from version 2, thanks to Yacsha.
+	Original authors: Amelia
+	Improvements added from version 2, thanks to:
 
-HISTORY...
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY....
 
   >> Version 2 - 03-V-2024
 	* Thanks to the collaboration of a follower of "the world of chaos",

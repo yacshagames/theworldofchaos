@@ -1,3 +1,12 @@
+/*************************************************************************
+
+LICENSE
+
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+*************************************************************************/
+
 // Practica.h : main header file for the PRACTICA application
 //
 

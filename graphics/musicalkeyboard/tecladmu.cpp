@@ -3,35 +3,38 @@ Musical KEYBOARD
 
 A musical keyboard is simulated using the computer keyboard.
 
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
+
 >> Version 2 - 25-III-2024
 - Update graphics/tecladmu - Porting to VC++ 2017 using winbgi
 
-- Versi¢n 1.4 - 17 Julio del 2000
-  Se actualiza y optimiza los fuentes de la versi¢n anterior.
+- Versión 1.4 - 17 Julio del 2000
+  Se actualiza y optimiza los fuentes de la versión anterior.
 
-- Versi¢n 1.3 - 31 de Octubre de 1998
+- Versión 1.3 - 31 de Octubre de 1998
  *Se crea un algoritmo que calcula la frecuencia de cualquier nota
   musical en cualquier octava del teclado.
  *Se pinta un teclado en la pantalla, para poder visualizar
-  las notas que se est n presionando.
+  las notas que se están presionando.
  *Se imprime en pantalla las notas musicales que que se estan tocando.
 
-- Versi¢n 1.0-1.2 - Julio de 1998
+- Versión 1.0-1.2 - Julio de 1998
   Se simula un teclado musical utilizando el teclado del computador,
   cada tecla toca un sonido de diferente frecuencia.
 
-programado por:
- JOSE LUIS DE LA CRUZ LAZARO
-
-  UNIVERSIDAD NACIONAL DE INGENIERIA
-  Facultad de Ingenier¡a El‚ctrica y Electr¢nica
-  Lima-Per£
-
-correos:
- jcruz@ec-red.com
- ramondc@hotmail.com
-Pagina Web ( EL MUNDO DEL CAOS ):
- http://www.geocities.com/joseluisdl
 *********************************************************************/
 
 //#include"dos.h"
@@ -203,7 +206,7 @@ void TocarNotaMusical(char tecla1, char tecla2)
 	case 13:tocar(5, 6); break;//FA
 	}
 
-	if (!tecla1) //si se presion¢ teclas con codigo extendido
+	if (!tecla1) //si se presionó teclas con codigo extendido
 	{
 		switch (tecla2)
 		{

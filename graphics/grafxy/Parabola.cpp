@@ -1,16 +1,24 @@
 /**************************************************
 PARABOLA
-Grafica una parabola en la pantalla...
 
-Este programa es un demo de como utilizar GRAFXY.H
+Plot a parabola on the screen...
 
-programado por:
- JOSE LUIS DE LA CRUZ LAZARO
-correos:
- jcruz@ec-red.com
- ramondc@hotmail.com
-Pagina Web ( EL MUNDO DEL CAOS ):
- http://www.geocities.com/joseluisdl
+This program is a demo of how to use GRAFXY.H
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
  >> Version 2 - 21-III-2024
 	- Update graphics/gxydemo - Porting to VC++ 2017 using winbgi
@@ -29,31 +37,31 @@ int main()
 {
 	//se ingresa como argumento la ruta de la carpeta bgi
 	//autoini("");//inicia el modo grafico, por defecto 16 colores
-	initwindow(1024, 768, "El mundo del caos");
+	initwindow(1024, 768, "The World of Chaos");
 
 
-	//se declara la regiÂ¢n donde se graficarÂ  la funciÂ¢n
-	CRegionXY Region(-5,   //x mÂ¡nimo
-		5,   //x mÂ ximo
-		-3,  //y mÂ¡nimo
-		3); //y mÂ ximo
+	//se declara la regi¢n donde se graficar  la función
+	CRegionXY Region(-5,   //x mínimo
+		5,   //x máximo
+		-3,  //y mínimo
+		3); //y máximo
 
 	double x, //variable independiente
-		dx = 0.01; //particiÂ¢n mas pequeÂ¤a de x
+		dx = 0.01; //partición mas pequeña de x
 
 	Region.Ejes(); //grafica los ejes coordenados
 
-	//se varia x desde su valor mÂ¡nimo a su mÂ ximo, con una particiÂ¢n de dx
+	//se varia x desde su valor mínimo a su máximo, con una partición de dx
 	for (x = Region.xmin(); x < Region.xmax(); x += dx)
-		//grafica un punto de la funciÂ¢n
+		//grafica un punto de la función
 		Region.punto(x, // variable independiente
-			x*x, //funciÂ¢n f(x) a graficar (para este caso es una parÂ bola )
+			x*x, //función f(x) a graficar (para este caso es una parábola )
 			LIGHTGREEN, //color del trazo (verde claro)
-			CONECTAR); //argumento opcional; CONECTAR=conectar los puntos de la grÂ fica, si no se ingresa este argumento no se conecta los puntos
+			CONECTAR); //argumento opcional; CONECTAR=conectar los puntos de la gráfica, si no se ingresa este argumento no se conecta los puntos
 
 	getch();//pone una pausa
 
-	closegraph();//cierra el modo grÂ fico
+	closegraph();//cierra el modo gráfico
 
 	return 1;
 }

@@ -1,7 +1,22 @@
 #pragma once
 /***********************************************************************
- ::: BMPPlus :::
- LOADS AN 8-BIT BMP (256 COLORS) AND PLOTS IT ON THE SCREEN
+::: BMPPlus :::
+LOADS AN 8-BIT BMP (256 COLORS) AND PLOTS IT ON THE SCREEN
+ 
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
   >> Version 2 - 25-III-2024
 	- Update: Porting to VC++ 2017 using winbgi
@@ -21,21 +36,16 @@
  rutinas de dibujo a bajo nivel en las resoluciones de 320x200
  y 640x480 con 256 colores.
 
- :::Programado por:::
- José Luis De La Cruz Lázaro
- YACSHA - Software & Desing
-  >> ramondc@hotmail.com   
-  >> www.elmundodelcaos.tk -> EL MUNDO DEL CAOS - Unlimited Programming
-  >> www.foros3d.tk  -> Foros de discusión  Flash/ActionScript - C/C++
-
 ***********************************************************************/
 
 /*
 Español:
 BMP class developed by:
-   José Luis De la Cruz Lázaro - ramondc@hotmail.com
+   José Luis De la Cruz Lázaro
 
   Routines to control the paddle thanks to:
+   José Luis De la Cruz Lázaro
+
    Emmanuel Garcés - Manolo_1981@yahoo.com
 
   Information about the internal structure of the BMP, thanks to:
@@ -71,8 +81,10 @@ final red. The pixels are in reverse order; They start on the last line.
 Spanish:
 
  Clase BMP desarrollada por:
-  José Luis De la Cruz Lázaro - webmaster@elmundodelcaos.cjb.net
-			      - ramondc@hotmail.com
+  José Luis De la Cruz Lázaro
+
+ Rutinas para control de la paleta gracias a:
+  José Luis De la Cruz Lázaro
 
  Rutinas para control de la paleta gracias a:
   Emmanuel Garcés - Manolo_1981@yahoo.com
@@ -106,6 +118,7 @@ el azul; el otro no se utiliza, no se por que. Debes usar setpalette para
 especificar la paleta a usar.
 Dos datos.Los colores están invertidos en la paleta; primero el azul y al
 final el rojo. Los pixels están en orden inverso; comienzan en la última línea.
+
 */
 
 

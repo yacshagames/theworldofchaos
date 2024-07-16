@@ -1,16 +1,35 @@
 /***************************************************************************
-DBZ CARDS ( 16 Nov 1999 )
+MouseBGI
 
-EJEMPLO DE COMO CONTROLAR LAS RUTINAS DEL MOUSE EN EL MODO GRAFICO
-DE 256 COLORES
+Utility that allows to see the mouse cursor in bgi mode either in 16 colors
+or 256 colors, also uses event programming, similar to visual programming
+only in DOS, brings an example (DBZCARDS GOKU vs FREEZER) whoever puts more
+cards on the screen wins everything is done with left and right mouse clicks
 
-programado por:
-JOSE LUIS DE LA CRUZ LAZARO 
-ramondc@hotmail.com
-Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
+Spanish:
+Ejemplo de como controlar las rutinas del mouse en el modo grafico de
+256 colores
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
  >> Version 2 - 21-III-2024
 	- Update graphics/mousebgi - Porting to VC++ 2017 using winbgi
+	
+ >>	Version 1 - 16-XI-1999
+	- First version for Borland C++ 3.1 and Turbo C 3.0
 
 ***************************************************************************/
 
@@ -28,7 +47,7 @@ void WaitRetrace(void)
 {
  Espera el retrace horizontal, es decir el retorno horizontal
 del rayo en el CRT. Es conveniente ejecutarlo antes de dibujar en una
-animaci¢n para asegurar que los cambios se hagan durante el retrace delrayo
+animación para asegurar que los cambios se hagan durante el retrace delrayo
 
  asm{
   mov dx,3dah
@@ -131,7 +150,7 @@ int main()
 
 	//textcolor( GREEN+BLINK );
 
-	printf("DBZ CARDS -- programado por Jos‚ Luis De la Cruz L zaro\n\n");
+	printf("DBZ CARDS -- programado por Jose Luis De la Cruz Lazaro\n\n");
 
 	//getch();
 

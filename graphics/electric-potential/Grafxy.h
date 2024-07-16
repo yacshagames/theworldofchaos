@@ -1,20 +1,26 @@
 /*********************************************************************
 GRAFXY.H
 
-Grafica puntos de una funci¢n en la pantalla, en la regi¢n del plano
-cartesiano especificada.
-Se toma a la pantalla como si fuera la regi¢n del plano cartesiano
-especificada.
+Plot points of a function on the screen, in the specified Cartesian
+plane region.
 
-programado por:
- JOSE LUIS DE LA CRUZ LAZARO
-correos: 
- ramondc@hotmail.com
- Pagina Web ( EL MUNDO DEL CAOS ) 
+The screen is taken as if it were the specified region of the
+Cartesian plane.
 
-NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
-	TODA CONFIANZA; PERO NO VAYA A BORRAR NADA DE LO QUE YA
-	ESTA ECHO!!!!!!
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
 >> Version 2.1 - 30-III-2024
 	- The Grafxy class is improved to draw directly in memory, using
@@ -29,7 +35,7 @@ NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
 	  library. If rsf.h is not needed, its definition can be ignored.
 
 Version 1.8 -> 24-Agosto-2000
--Se arregla parcialmente el error de que cuando la funci¢n se salia de la ventana
+-Se arregla parcialmente el error de que cuando la función se salia de la ventana
  marco y despues volvia entrar, se unia con una linea el punto de salida
  y el punto de entrada.
 
@@ -47,14 +53,14 @@ Version 1.65 -> 20/09/1999
 - Graficar function is added: It allows graphing a function on the drawn axes,
   this function is processed from a text string using the syntactic
   function recognizer rsf.h
-- conver function is added: Converts a vector R of real coordinates to a vector M
+- conver function is added: Converts a vector R of real coordinates to a vector M 
   of integer coordinates, relative to the screen size
-- punto function is improved: Which now works with vectors: Draw a point that
+- punto function is improved: Which now works with vectors: Draw a point that 
   represents point P in the rectangular region specified by II and SD
   and paints it the color specified in color
 
 Version 1.6 -> 11/08/1999
--Se modifica la clase CRegionXY, a¤adiendo las variables miembro
+-Se modifica la clase CRegionXY, añadiendo las variables miembro
  (Imin,Jmin,Imax,Jmax) que representan las coordenadas de una
  pantalla virtual, donde se graficaran los puntos (estas coordenadas
  son en pixels).
@@ -64,12 +70,12 @@ Version 1.6 -> 11/08/1999
 
 Version 1.5 -> 25/07/99
 
-Se a¤ade la funcion Conectar() para conectar los puntos de la grafica
+Se añade la funcion Conectar() para conectar los puntos de la grafica
 
 Version 1.4 -> 23/05/99
 
 Se acoplo la cabecera ifuncade a grafxy, para graficar funciones instantaneamente
-Se a¤ade la funcion Ejes() para graficar los ejes
+Se añade la funcion Ejes() para graficar los ejes
 
 Version 1.3 -> 10/04/99
 
@@ -197,18 +203,18 @@ private:
 //NOTA: el valor de i y j se sobreescribiran
 void CRegionXY::transfor(int &i, int &j, double x, double y)
 {
-	i = Imin + (x - Xmin)*ki + 1;//Transformaci¢n de real a entero x-->i
-	j = Jmax - (y - Ymin)*kj + 1;//Transformaci¢n de real a entero y-->j
+	i = Imin + (x - Xmin)*ki + 1;//Transformación de real a entero x-->i
+	j = Jmax - (y - Ymin)*kj + 1;//Transformación de real a entero y-->j
 }
 
 
 //Convierte un vector R de coordenadas reales a un vector M de
-//coordenadas enteras, relativas al tama¤o de la pantalla
+//coordenadas enteras, relativas al tamaño de la pantalla
 //II=(0,0) SD=(getmaxx,getmaxy)
 //      |          |
 //    entero      entero
 //
-//Donde la pantalla representara a una regi¢n rectangular R donde
+//Donde la pantalla representara a una región rectangular R donde
 //las esquinas son los vectores de coordenadas reales II y SD;
 //II=InferiorIzquierda de la pantalla
 //SD=SuperiorDerecha de la pantalla

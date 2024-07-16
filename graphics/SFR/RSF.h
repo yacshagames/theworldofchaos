@@ -1,30 +1,37 @@
 /***************************************************************************
- RSF.H
- Reconocedor Sint ctico de Funciones desde una cadena de texto
+RSF.H
+Syntactic Function Recognizer from a text string
 
- LA CLASE CFUNCAD PERMITE EVALUAR UNA FUNCION F(X,Y,Z,...),
- DONDE LA FUNCION ES INGRESADA COMO UNA CADENA DE TEXTO.
+THE CFUNCAD CLASS ALLOWS YOU TO EVALUATE A FUNCTION F(X,Y,Z,...),
+WHERE THE FUNCTION IS ENTERED AS A TEXT STRING.
 
- *archivo fuente original gracias a Luis Serna
+*original source file thanks to Luis Serna
 
- *REVISADA Y MODIFICADA POR:
+Reviewed and modified by:
 
-  JOSE LUIS DE LA CRUZ LAZARO
- correos:
-  jcruz@ec-red.com
-  ramondc@hotmail.com
- Pagina Web ( EL MUNDO DEL CAOS ):
-  http://www.geocities.com/joseluisdl
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
 
-  HISTORIA:
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
 
-  versi¢n 1.3  24-Agosto-2000
-  -Se cambi¢ el nombre de IFUNCADE.H por el de RSF.H (Reconocedor
-   Sint ctico de Funciones).
-  -Se modific¢ la funci¢n real "f" miembro de CFunCad, para que acepte 3 variables
-   como m ximo.
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
 
-  versi¢n 1.2  11-Septiembre-1999
+HISTORY...
+
+>> Version 2 - 24-III-2024
+	- Update graphics/RSF - Porting to VC++ 2017 using winbgi
+
+   versión 1.3  24-Agosto-2000
+  -Se cambió el nombre de IFUNCADE.H por el de RSF.H (Reconocedor
+   Sintáctico de Funciones).
+  -Se modificó la función real "f" miembro de CFunCad, para que acepte 3 variables
+   como máximo.
+
+  versión 1.2  11-Septiembre-1999
   - Se modificaron las funciones para que acepten tanto variables
 	reales como variables complejas, utilizando funciones sobrecargadas
   - Se dio prioridad en el reconocimiento de la unidad imaginaria frente a
@@ -35,20 +42,20 @@
 	 contiene cualquier valor y luego f(x...) arroja cualquier valor.
 	 Dicha variable desconocida es reeemplazada por el valor de cero.
 
-  versi¢n 1.1  22-Mayo-1999
+  versión 1.1  22-Mayo-1999
   - Se adapto la funcion f(...,x,y,z)para
 	que acepte hasta un maximo de 3 variables
 
-  versi¢n 1.01  21-Mayo-1999
+  versión 1.01  21-Mayo-1999
   - Las funciones originales se adaptaron para que acepten variables complejas
   - Modificacion del reconocimiento de constantes y funciones
 	( PI, cos, sin ... ), con el objetivo de hacer mas corto el tiempo
 	empleado en dicho proceso.
   - Se agrego las funciones log y tan
 
-  versi¢n 1.00  16-Mayo-1999
-  -Se revis¢ y corrigi¢ algunos errores en los fuentes originales, ademas de
-   que se modific¢ algunas funciones para acelerar el proceso de evaluaci¢n.
+  versión 1.00  16-Mayo-1999
+  -Se revisó y corrigió algunos errores en los fuentes originales, ademas de
+   que se modificó algunas funciones para acelerar el proceso de evaluación.
 
 ***************************************************************************/
 

@@ -10,8 +10,8 @@ Developed by:
 	JOSE LUIS DE LA CRUZ LAZARO
 	contact@theworldofchaos.com
 
-	YACSHA - Software & Desing
-	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
 	www.theworldofchaos.com
 
 LICENSE
@@ -50,8 +50,8 @@ void DibujarEjes()
 
 
 //Espera el retrace horizontal, es decir el retorno horizontal
-//del rayo en el CRT( Tubo de rayos cat¢dicos del monitor).
-//Es conveniente ejecutarlo antes de dibujar en una animaci¢n
+//del rayo en el CRT( Tubo de rayos catódicos del monitor).
+//Es conveniente ejecutarlo antes de dibujar en una animación
 //para asegurar que los cambios se hagan durante el retrace del rayo
 /*void WaitRetrace()
 {

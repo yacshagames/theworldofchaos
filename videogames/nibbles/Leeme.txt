@@ -1,10 +1,19 @@
 Idea original de Microsoft.
 
-Programado en C++ por JOSE LUIS DE LA CRUZ LAZARO UNI-FIEE
+Developed by:
 
-Agradeceria sus sugerencias a: ramondc@hotmail.com
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
 
-Para mas información visite mi Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
 >> Version 7 - 21-III-2024
   - Update graphics/nibles - Porting to VC++ 2017 using winbgi
@@ -13,7 +22,7 @@ NIBBLES 6.1 BETA 29 Dic 1999
 Se añadio el uso del joystick para controlar al nibble del jugador 1, y al mismo tiempo tambien se lo puede controlar mediante el teclado...esto se debe gracias a las rutinas para controlar el joystick: joystick.h y calijoy.h ... que incluyo con los fuentes
 
 NIBBLES 6.0 BETA 26 Jun 1999
-Las versiones posteriores a la 5.6 han sido un fracaso, asi que decidi rehacer el juego desde cero con objetos (POO), lo cual me ha dado buen resultado (un codigo compacto y entendible), esta nueva version la he hecho BETA porque no le añadido todavia el editor de nuevas fases, no hay un tercer jugador y tambien porque todavia no termino de hacer los nuevos fondos de las fases, todo esto en lenguaje ensamblador...
+Las versiones posteriores a la 5.6 y antes de esta versión han sido un fracaso, asi que decidi rehacer el juego desde cero con objetos (POO), lo cual me ha dado buen resultado (un codigo compacto y entendible), esta nueva version la he hecho BETA porque no le añadido todavia el editor de nuevas fases, no hay un tercer jugador y tambien porque todavia no termino de hacer los nuevos fondos de las fases, todo esto en lenguaje ensamblador...
 
 NIBBLES 5.6 13 Jun 1998
 

@@ -8,8 +8,19 @@ B-spline cerrado.
 
 Developed by:
 
-Original authors: Eduardo Denegri y Sergio Dongo
-Improvements added from version 2, thanks to Yacsha.
+	Original authors: Eduardo Denegri y Sergio Dongo
+	Improvements added from version 2, thanks to:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
 
 HISTORY...
 

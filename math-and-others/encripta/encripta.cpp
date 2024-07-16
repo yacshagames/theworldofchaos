@@ -1,5 +1,54 @@
 /*************************************************************************
-:::ENCRIPTADOR GAUSSIANO:::
+::: GAUSSIAN ENCRYPTOR ::: ENCRIPTADOR GAUSSIANO :::
+
+Program that encrypts an ACSII text document, using the
+Gaussian function Pi(x) and the Primo(n) function
+
+Where:
+
+* Pi(x) is the number of primes less than or equal to a positive number x
+ For example Pi(4)= 2 ; Pi(20)=8
+* Prime(n) is the nth prime counted from 1
+ Ejm Prime(11)=29
+
+Algorithm:
+
+If "character" is ASCII then 0<=character<=255
+
+Then: character = prime + remainder
+
+prime is the smallest prime number immediately to character
+
+where prime = Prime( argument )
+
+and argument = Pi(character)
+
+So any number can be represented only by its argument (arg) and its
+remainder (res).
+
+ Example: if character='U' (character=85)
+
+ 85 = 83 + 2 = Prime(Pi(24)) + 2
+
+ Then: 85 is represented by -> arg=24 and res=2
+
+-Some Bugs fixed
+Arg and res are increased by 32 so their values ??are not between
+0 and 32 since fscanf does not read ASCII characters in said interval
+
+Then in the example:
+
+arg=32+24=56 (corresponding to ASCII '7')
+res=32+2=34 (corresponding to ACSII '"')
+
+NEXT PROJECTS
+-TIME-DEPENDENT ENCRYPTION PROGRAMS, THIS MEANS THAT THE DESTINATION
+ FILE ENCRYPTED AT 8:00am WILL BE DIFFERENT FROM ANOTHER DESTINATION
+ FILE ENCRYPTED AT 8:01am, EVEN THOUGH THE 2 ENCRYPTIONS COME FROM
+ THE SAME SOURCE FILE...
+
+--------------------------------------------------------------------------
+Spanish:
 
 Programa que encripta un documento de texto ACSII, utilizando la funcion
 Gaussiana Pi(x) y la funcion Primo(n)
@@ -47,19 +96,20 @@ PROXIMOS PROYECTOS
  ARCHIVO DESTINO ENCRIPTADO A LAS 8:01am, A PESAR DE QUE LAS 2
  ENCRIPTACIONES PROVIENEN DE UN MISMO ARCHIVO FUENTE...
 
- Programmed by:
+Developed by:
 
 	JOSE LUIS DE LA CRUZ LAZARO
-	ramondc@hotmail.com
+	contact@theworldofchaos.com
 
-	UNIVERSIDAD NACIONAL DE INGENIERIA
-	Faculty of Electrical and Electronic Engineering
-	Lima-Peru
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
 
-	YACSHA - Software & Desing
-	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
 
- HISTORY...
+HISTORY...
 
  >> Version 3 - 22-IV-2024
 	- The modern C++ ifstream and ofstream classes are used, instead

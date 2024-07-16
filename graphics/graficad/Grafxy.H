@@ -1,10 +1,22 @@
 /****************************************************************
 GRAFXY
 
-GRAFICADOR DE FUNCIONES EN 2D
+2D FUNCTION PLOTTER
 
-JOSE LUIS DE LA CRUZ LAZARO UNI-FIEE
-ramondc@hotmail.com
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
 >> Version 2 - 22-III-2024
 	- Update: Porting to VC++ 2017 using winbgi
@@ -46,8 +58,8 @@ void grafxy()
 
 	//setcolor(6);
 	SetConsoleTextAttribute(hConsole, 6);
-	cout << "Jos‚ Luis De la Cruz L zaro - UNI-FIEE -1999-" << endl;
-	cout << "Consultas y sugerencias a: ramondc@hotmail.com" << endl;
+	cout << "José Luis De la Cruz Lázaro - UNI-FIEE -1999-" << endl;
+	cout << "Consultas y sugerencias a: contact@theworldofchaos.com" << endl;
 	//setcolor(3);
 	SetConsoleTextAttribute(hConsole, 3);
 	cout << "Enter the function to plot:" << endl << endl;

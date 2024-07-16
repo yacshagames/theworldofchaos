@@ -1,19 +1,94 @@
-﻿/***************************************************************************
+/***************************************************************************
 NIBBLES
 
-JUEGO DE HABILIDAD ( 1 o 2 jugadores )
+SKILL GAME (1 or 2 players)
 
-programado por:
-JOSE LUIS DE LA CRUZ LAZARO
-ramondc@hotmail.com
-Pagina Web: http://www.geocities.com/joseluisdl/jldl.htm
+Developed by:
 
->> Version 7 21-III-2024
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
+
+>> Version 7 - 21-III-2024
   - Update graphics/nibles - Porting to VC++ 2017 using winbgi
 
-Version 6.1 ( 29 Dic 1999 )
- - se calibra el joystick en modo texto
- - se utiliza el joystick para controlar al nibble del jugador 1
+>> Version 6.1 - 29-XII-1999
+ - 	The use of the joystick was added to control the nibble of player 1,
+ 	and at the same time it can also be controlled using the keyboard...
+	this is due to the routines to control the joystick: joystick.h and
+	calijoy.h .. .which I include with the sources
+ 	* the joystick is calibrated in text mode
+ 	* the joystick is used to control player 1's nibble
+
+
+>> NIBBLES 6.0 BETA - 26-VI-1999
+Versions after 5.6 and before this version have been a failure,
+so I decided to remake the game from scratch with objects (OOP),
+which has given me good results (a compact and understandable code),
+I have made this new version BETA because it did not The editor for
+new phases has still been added, there is no third player and also
+because I have not yet finished making the new backgrounds for the
+phases, all this in assembly language...
+
+>> NIBBLES 5.6 - 13-VI-1998
+Well you won't believe it but this is one of my first programs in C++,
+so you will notice the excessive use of variables, also I didn't know
+objects yet, now I do... 20-VI-1999
+
+SMALL COMMENT
+It took me more than 3 months (my entire summer!) to do it, but after
+finishing this program I was already working on something in C++...
+
+INSTRUCTIONS
+
+For those who have never played the famous Nibbles in Basic, the objective
+is to eat all the numbers from 1 to 9 that appear on the screen, when you
+eat the latter you change the level (I recommend playing between 2 people,
+or three), NO YOU SHOULD CRASH, NOT EVEN WITH YOURSELVES
+YOU CAN'T GO BACK!!!!!
+
+MOVEMENTS
+  LEFT RIGHT UP DOWN
+PLAYER 1: LEFT RIGHT UP DOWN
+PLAYER 2: A D W S
+PLAYER 3: K ; O L
+
+USING THE PHASE EDITOR
+If you're bored of my pre-programmed phases, make your own:
+Choose option 4
+
+then edit the phase by moving with the keyboard, and changing color
+with the following keys:
+
+` = GRAY (cursor) with this key you can move without dirtying the screen
+1 = BLACK
+2 = RED
+
+Don't put another color!!!
+
+When you finish press enter.
+
+Then give it the following name: phase_n and press enter
+Where n is a number greater than 10, if you put a smaller n you could
+delete some of the preprogrammed phases.
+
+Well, this phase will be played in phase n (level n), so if you want to
+play it at the beginning, you just change the name of phase_1 to another
+name and your phase_n to phase_1.
+
+KNOWN BUGS
+
+Rather, I wouldn't say a bug, but rather a relief, because you have
+infinite lives (I'm not that cruel maybe...)
 
 ***************************************************************************/
 
@@ -406,7 +481,7 @@ int main()
 	cout << "\n\t\t\t (1) 1 JUGADOR";
 	cout << "\n\t\t\t (2) 2 JUGADORES";
 	cout << "\n\t\t\t (3) SALIR";
-	cout << "\n\n\t\t\tSeleccione una opci¢n :";
+	cout << "\n\n\t\t\tSeleccione una opcion :";
 	cin >> opcion;
 
 	if (opcion == 3) return 0;
@@ -421,7 +496,7 @@ int main()
 		<< "\n\n\t\t\tBABYS     : (de 1  a 35)"
 		<< "\n\n\t\t\tGENTE BIEN: (de 36 a 70)"
 		<< "\n\n\t\t\tVICIOSO   : (de 71 a 90)"
-		<< "\n\n\t\t\tDROGOS    : (m s 90)";
+		<< "\n\n\t\t\tDROGOS    : (mas de 90)";
 
 	gotoxy(20, 8);
 	cout << "Ingrese su Velocidad : ";

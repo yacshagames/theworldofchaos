@@ -1,32 +1,37 @@
 #pragma once
 /*****************************************************************************
 VENTANAS.H
-SIMULA UN ENTORNO GRAFICO SIMILAR A WINDOWS 98
+SIMULATES A GRAPHIC ENVIRONMENT SIMILAR TO WINDOWS 98
 
-programado por:
- JOSE LUIS DE LA CRUZ LAZARO
-correos:
- jcruz@ec-red.com
- ramondc@hotmail.com
-Pagina Web ( EL MUNDO DEL CAOS ):
- http://www.geocities.com/joseluisdl
+Developed by:
 
-HISTORIA...
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
  >> Version 2 - 24-III-2024
 	- Update graphics/ventanas - Porting to VC++ 2017 using winbgi
 
-Versi¢n 1.5  17-Agosto-2000
--Se agrega comentarios a casi todas las lineas de c¢digo.
+Versión 1.5  17-Agosto-2000
+-Se agrega comentarios a casi todas las lineas de código.
 -Se actualiza las cabeceras mousebgi.h y pcxbgi.h con otras versiones
  mas actuale, que son mas eficientes.
--Se borra c¢digo inservible
+-Se borra código inservible
 
 Version 1.4  17-Agosto-2000
--Se modific¢ la funci¢n miembro Mover_ventana de CVentana, para que al mover
- la ventana fuera de los l¡mites de la pantalla, no sucedan errores con la
- funci¢n putimage.
--Se agrego mas comentarios a las funciones y se borr¢ c¢digo inservible
+-Se modificó la función miembro Mover_ventana de CVentana, para que al mover
+ la ventana fuera de los límites de la pantalla, no sucedan errores con la
+ función putimage.
+-Se agrego mas comentarios a las funciones y se borró código inservible
 
 13/09/1999 version 1.3
 *Se creo la clase CCajaTexto, que crea una caja donde se puede ingresar texto
@@ -160,7 +165,7 @@ int CBoton::mostrar(Evento &raton)
 		if (mousemove(raton.x, raton.y))
 		{
 			mostrar(PRESIONADO);
-			delay(100); //para que se note el efecto de presionar se pone una peque¤a pausa
+			delay(100); //para que se note el efecto de presionar se pone una pequeña pausa
 			while (MouseBGI::mouseevent(raton.x, raton.y) == MouseBGI::EVENTO::LBUTTON_DOWN)//mientras no se suelte el boton
 				if (!mousemove(raton.x, raton.y))
 					mostrar(SIN_FOCO);

@@ -2,25 +2,31 @@
 /***********************************************************************************
  :: CMATRIX :::
  -- ALGEBRA OF MATRIXES -- ALGEBRA DE MATRICES --
+
+ This class provides elementary operations between matrices, such as the addition
+ of matrices, difference of matrices, negative of a matrix, multiplication of a
+ scalar by a matrix and multiplication of matrices. In addition to providing methods
+ to calculate the determinant, the inverse matrix, and the transposed matrix
  
  Esta clase provee de operaciones elementales entre matrices, como la suma de
  matrices, diferencia de matrices, negativo de una matriz, multiplicación de un
  escalar por una matriz y multiplicación de matrices. Además de que provee
  de métodos para calcular el determinante, la matriz inversa, y la matriz transpuesta.
 
- Programmed by:
+Developed by:
 
 	JOSE LUIS DE LA CRUZ LAZARO
-	ramondc@hotmail.com
+	contact@theworldofchaos.com
 
-	UNIVERSIDAD NACIONAL DE INGENIERIA
-	Faculty of Electrical and Electronic Engineering
-	Lima-Peru
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
 
-	YACSHA - Software & Desing
-	>> The World of chaos - EL MUNDO DEL CAOS - Unlimited Programming
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
 
- HISTORY...
+HISTORY...
 
  >> Version 2 - 29-IV-2024
 	- Update math-and-others\cmatrix - Porting to VC++ 2017
@@ -129,7 +135,7 @@
 	  sobre el uso de CMatrix
 
  >> Version 1.4.1 - 31-X-2000
-  	- InvGaussJordan1: Tercera versión de la implementación del
+	- InvGaussJordan1: Tercera versión de la implementación del
 	  algoritmo del cálculo de la matriz inversa por el método de Gauss-Jordan.
 	  Se mejora la forma en la que se realiza el pivoteo de la matriz ampliada.
 	- Este algoritmo se crea como un programa independiente llamado "Inversa"
@@ -162,16 +168,16 @@
  >> Version 1.3 - 06-VI-1999
 	- Se crea la clase CMatriz, como una clase para hacer algebra de matrices.
 	  Trabaja con las matrices como si fueran simples variables.
-	- Se implementaron los operadores básicos +, -, negativo de una matriz, 
+	- Se implementaron los operadores básicos +, -, negativo de una matriz,
 	  * escalar y * matricial
 	- Se agregaron InvGaussJordan2, InvCofact e DetCofact como funciones
 	  globales, para que se pueda hacer operaciones adicionales entre matrices.
 
 >> Version 0.4 - 28-II-1999
 	- InvGaussJordan3: Inicialmente llamado INVRECU (Inversa Recursiva):
-	  Segunda versión de la implementación del algoritmo del cálculo de la 
-	  matriz inversa por el método de Gauss-Jordan. Se toma como base 
-	  InvGaussJordan2, pero se inserta funciones recursivas en reemplazo de 
+	  Segunda versión de la implementación del algoritmo del cálculo de la
+	  matriz inversa por el método de Gauss-Jordan. Se toma como base
+	  InvGaussJordan2, pero se inserta funciones recursivas en reemplazo de
 	  algunos bucles. Esta función calcula la inversa de una matriz con
 	  funciones recursivas.
 
@@ -235,10 +241,10 @@ public:
 
 	//DEFINE LAS OPERACIONES ENTRE MATRICES
 	friend CMatrix operator -(const CMatrix &A); 		 //operacion -A  NEGATIVO DE UNA MATRIZ
-	friend CMatrix operator +(const CMatrix &A, const CMatrix &B); //operaci¢n A+B SUMA DE MATRICES
-	friend CMatrix operator -(const CMatrix &A, const CMatrix &B); //operaci¢n A-B RESTA DE MATRICES
-	friend CMatrix operator *(const double& k, const CMatrix &A);  //operaci¢n k*B (k es una constante)
-	friend CMatrix operator *(const CMatrix &A, const CMatrix &B);//operaci¢n A*B (Producto matricial)
+	friend CMatrix operator +(const CMatrix &A, const CMatrix &B); //operación A+B SUMA DE MATRICES
+	friend CMatrix operator -(const CMatrix &A, const CMatrix &B); //operación A-B RESTA DE MATRICES
+	friend CMatrix operator *(const double& k, const CMatrix &A);  //operación k*B (k es una constante)
+	friend CMatrix operator *(const CMatrix &A, const CMatrix &B);//operación A*B (Producto matricial)
 
 
 	// MÉTODOS

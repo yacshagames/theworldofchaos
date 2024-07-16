@@ -9,11 +9,25 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
-/*COMPLEJO.H fue creado por JLDL-SOFTWARE UNI-FIEE
-Contiene operaciones aritmeticas entre numeros complejos
-NOTA:	SI ALGUIEN QUIERE AGREGAR OTRA OPERACION MAS, HAGALO CON
-	TODA CONFIANZA; PERO NO VAYA A BORRAR NADA DE LO QUE YA
-	ESTA ECHO!!!!!!
+/***************************************************************************
+COMPLEX.H
+
+Contains arithmetic operations between complex numbers
+
+Developed by:
+
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
+
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
 
 >> Version 2 - 21-III-2024
 	- Update: Porting to VC++ 2017 using winbgi
@@ -116,7 +130,7 @@ getch();
 
 }
 
-*/
+***************************************************************************/
 
 
 //Esta es la clase complex

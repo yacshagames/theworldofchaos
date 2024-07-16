@@ -3,18 +3,20 @@ CONICS
 Program that plots conics in their general form
 AX^2+BXY+CY^2+DX+EY+F=0
 
-Programmed by:
- JOSE LUIS DE LA CRUZ LAZARO
+Developed by:
 
-  UNIVERSIDAD NACIONAL DE INGENIERIA
-  Faculty of Electrical and Electronic Engineering
-  Lima-Peru
+	JOSE LUIS DE LA CRUZ LAZARO
+	contact@theworldofchaos.com
 
-correos:
- ramondc@hotmail.com 
-Pagina Web ( EL MUNDO DEL CAOS )
+	YACSHA - Software & Desing, since 1999, Lima-Peru
+	>> The World of Chaos - EL MUNDO DEL CAOS - Unlimited Programming
+	www.theworldofchaos.com
 
- HISTORY...
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY....
 
  >> Version 2 - 26-III-2024
 	- Update graphics/conicas - Porting to VC++ 2017 using winbgi

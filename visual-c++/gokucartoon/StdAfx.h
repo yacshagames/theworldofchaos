@@ -1,3 +1,12 @@
+/*************************************************************************
+
+LICENSE
+
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+*************************************************************************/
+
 // stdafx.h : include file for standard system include files,
 //  or project specific include files that are used frequently, but
 //      are changed infrequently
