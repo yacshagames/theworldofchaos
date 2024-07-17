@@ -63,7 +63,7 @@ BEGIN
     DEFPUSHBUTTON   "Draw BSpline Curve",IDC_Dibujo,435,265,105,15
     DEFPUSHBUTTON   "Initial Values",IDC_Valinit,435,235,105,15
     LTEXT           "Functions",IDC_STATIC,425,215,110,13,SS_SUNKEN
-    DEFPUSHBUTTON   "Proyection",IDC_Proyeccion,435,300,105,14
+    DEFPUSHBUTTON   "Projection",IDC_Proyeccion,435,300,105,14
     LTEXT           "Values Projections",IDC_STATIC,5,290,75,13,SS_SUNKEN
     LTEXT           "Center",IDC_STATIC,85,290,25,15
     LTEXT           "Ro",IDC_STATIC,85,305,25,15
