@@ -1,10 +1,10 @@
 /*
- * Esto es muy facil.
- * Cual es el error?
+* This is very easy.
+* What is the error?
  */
 
-#include <stdio.h>
-
+#include <cstdio>
+#include <stdlib.h> 
 
 #define MAX_SIZE   32
 
@@ -18,9 +18,10 @@ int main(void)
 		buffer[i] = (i % 224) + ' ';
 
 	for (i = 0; i < MAX_SIZE; i++)
-		putchar(buffer[i]);
+		std::putchar(buffer[i]);
 
-	putchar('\n');
+	std::putchar('\n');
+
 	return 0;
 }
 

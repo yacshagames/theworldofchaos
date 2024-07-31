@@ -1,75 +1,71 @@
-/********************************************
-SOLUCION #3 AL RETO0012:
-   por:
-   Jos‚ Luis De la Cruz L zaro - 10/I/2001
-   jcruz@ec-red.com
-   http://www.geocities.com/joseluisdl
+ï»¿/********************************************
+SOLUTION #3 TO CHALLENGE0012:
+Programmed by:
+   Jose Luis De la Cruz Lazaro - 10-I-2001
+   contact@theworldofchaos.com
+   https://www.theworldofchaos.com
 ********************************************/
 
-//RETO0012
-/* Copyright (C) 2000 por David A. Capello */
+//CHALLENGE 0012
+//* Copyright (C) 2000 by David A. Capello - davidcapello.com */
 /*
- * El programa debe de dibujar 10 rect ngulos de un tama¤o que var¡a
- * siempre entre 1 a 10 tanto de ancho como de alto (10x10);
- * Ahora que pasa, hay un problema, los rect ngulos quieren aprobechar
- * el espacio al m ximo y no ponerse uno encima de otro, por lo que
- * la tarea ser  generar el algoritmo que busque la mejor posici¢n
- * para que se ubique el rect ngulo (ver la funci¢n `dibujar_rectangulo');
- */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <conio.h>
-
-
+* The program must draw 10 rectangles of a size that always
+* varies between 1 and 10 both in width and height(10x10);
+* Now what happens is that there is a problem, the rectangles
+* want to use the space to the maximum and not be on top of
+* each other, so the task will be to generate the algorithm
+* that looks for the best position for the rectangle to be
+* located(see the function `draw_rectangle');
+*/
+#include <iostream>
+#include <cstdlib> 
+#include <ctime>
+using std::cout;
 
 #define ANCHO   64
-#define ALTO    38 /* alto debe ser siempre par (ya que se dibujan
-			  de dos en dos las l¡neas) */
+#define ALTO    38 /* height must always be even (since the lines are drawn two by two) */
 
 
 
-char pantalla[ALTO][ANCHO]; /* modo de acceso: pantalla[y][x] */
+char pantalla[ALTO][ANCHO]; /* access mode: screen[y][x] */
 
 
 
-/* borra todo el buffer de la pantalla con 0 (ceros) */
+/* clear the entire screen buffer with 0 (zeros) */
 void borrar_pantalla()
 {
 	int x, y;
 
-	/* recorrer de arriba hacia abajo */
+	/* traverse from top to bottom */
 	for (y = 0; y < ALTO; y++)
-		/* recorrer de izquierda a derecha*/
+		/* traverse from left to right*/
 		for (x = 0; x < ANCHO; x++)
 			pantalla[y][x] = 0;
 }
 
 
 
-/* dibuja un rect ngulo del tama¤o dado en cualquier posici¢n de la
-   pantalla, eso s¡, no puede tapar zonas ya ocupadas por otros
-   rect ngulos */
-void dibujar_rectangulo(int alto, int ancho)
+/* draws a rectangle of the given size at any position
+on the screen, but it cannot cover areas already
+occupied by other rectangles */
+bool dibujar_rectangulo(int alto, int ancho)
 {
 	int x, y, comienzox, comienzoy;
 
-	/* AQUI DEBEN COMPLETAR USTEDES: ****************************************/
-	/* Deben realizar la funci¢n que busque posicionar
-	 * bien el rect ngulo en la pantalla como para que no
-	 * tape a los otros... si no, les dar  un error y
-	 * se acaba la ejecuci¢n;
+	/* HERE YOU MUST COMPLETE: ****************************************/
+	/* You must carry out the function that seeks to position
+	 * the rectangle on the screen so that it does not cover
+	 * the others... if not, it will give you an error and
+	 * the execution will end;
 	 *
-	 * NOTA: la funci¢n deber¡a de dibujar siempre bien,
-	 * por lo que esta propuesta del random no vale
-	 * ya que es al azar, y algunas veces anda y otras NO,
-	 * por lo que cualquier otra forma que utilice random
-	 * o generadores de n£meros aleatorios o pseudo-aleatorios
-	 * estar  err¢nea;
+	 * NOTE: the function should always draw correctly, so
+	 * this random proposal is not valid since it is random,
+	 * and sometimes it works and other times it DOESN'T,
+	 * so any other way that uses random or random or
+	 * pseudo-random number generators will be wrong;
 	 */
 
-	 //EL VIEJO METODO DE LA PRODUCTORIA
+	 // THE OLD METHOD OF PRODUCTION
 	int salir = 0, i, j;
 
 	for (y = 0; y <= ALTO - alto; y++) //se busca el punto de comienzo adecuado
@@ -94,80 +90,80 @@ void dibujar_rectangulo(int alto, int ancho)
 	//Si no se puede encajar un rect ngulo se muestra el siguiente mensaje
 	if (!salir)
 	{
-		printf("\n\nLA PANTALLA ES DEMASIADO PEQUE¥A PARA INSERTAR MAS RECTANGULOS\n");
-		getch();
-		exit(1);
+		cout << "\n\nLA PANTALLA ES DEMASIADO PEQUEÂ¥A PARA INSERTAR MAS RECTANGULOS\n";
+		return false;
 	}
 
 	comienzox = x;
 	comienzoy = y;
 
-	/* Y HASTA AQUI TERMINA SU TRABAJO **************************************/
+	/* AND THIS IS WHERE YOUR WORK ENDS ********************************/
 
 	if ((comienzox < 0) || (comienzox + ancho > ANCHO) ||
 		(comienzoy < 0) || (comienzoy + alto > ALTO)) {
-		printf("Lo siento, perdiste!, dibujaste fuera de los l¡mites de la pantalla\n");
-		getch();
-		exit(1);
+		cout << "Sorry, you lost! You drew outside the screen limits\n";
+		return false;
 	}
 
-	/* dibujarlo */
+	/* draw it */
 	for (y = comienzoy; y < comienzoy + alto; y++)
 		for (x = comienzox; x < comienzox + ancho; x++) {
 			if (pantalla[y][x]) {
-				printf("Lo siento, perdiste!, dibujaste encima de otro rect ngulo\n");
-				getch();
-				exit(1);
+				cout << "Sorry, you lost! Draw on top of another rectangle\n";
+				return false;
 			}
+
 			pantalla[y][x] = 1;
 		}
+
+	return true;
 }
 
 
 
-/* dibuja la pantalla completa */
+/* draw the full screen */
 void dibujar_pantalla()
 {
 	int x, y;
 
-	/* dibujar algo para separar del resto de las l¡neas */
-	printf("-------- [PANTALLA] --------\n");
+	/* draw something to separate from the rest of the lines */
+	cout << "-------- [SCREEN] --------\n";
 
-	/* dibujar la pantalla (NOTA: se van dibujan de a 2 l¡neas seguidas
-	   con los caracteres:
-		 'Û' (lleno), 'ß' (superior), 'Ü' (inferior), ' ' (vac¡o);
+	/* draw the screen (NOTE: 2 lines are drawn in a row
+	   with the characters:
+		 'â–ˆ' (full), 'â–€' (top), 'â–„' (lower), ' ' (empty);
 	*/
 	for (y = 0; y < ALTO; y += 2) {
-		putc((unsigned char)'³', stdout);
+		putc((unsigned char)'Â³', stdout);
 
-		/* dibujar dos l¡neas */
+		/* draw two lines */
 		for (x = 0; x < ANCHO; x++) {
-			/* primer l¡nea llena */
+			/* first line full */
 			if (pantalla[y][x]) {
-				/* segunda tambi‚n */
+				/* second too */
 				if (pantalla[y + 1][x])
 					putc((unsigned char)219, stdout);
-				/* segunda vac¡a */
+				/* second empty */
 				else
 					putc((unsigned char)223, stdout);
 			}
-			/* primer l¡nea vac¡a */
+			/* first empty line */
 			else {
-				/* pero segunda llena */
+				/* but second full */
 				if (pantalla[y + 1][x])
 					putc((unsigned char)220, stdout);
-				/* todo vac¡o */
+				/* all empty */
 				else
 					putc((unsigned char)32, stdout);
 			}
 		}
 
-		/* saltar a la pr¢xima l¡nea */
-		printf("³\n");
+		/* jump to next line */
+		cout << "Â³\n";
 	}
 
-	/* dibujar otro separador */
-	printf("----------------------------\n");
+	/* draw another separator */
+	cout << "----------------------------\n";
 }
 
 
@@ -176,36 +172,31 @@ int main()
 {
 	int c;
 
-	/* comenzar el generador de n£meros aleatorios */
-	srand(time(NULL));
+	/* start the random number generator */
+	srand((unsigned int)time(NULL));
 
-	/* borrar la pantalla */
+	/* clear screen */
 	borrar_pantalla();
 
-	/* dibujar diez rect ngulos */
+	/* draw ten rectangles */
 	for (c = 0; c < 10; c++)
-		dibujar_rectangulo((rand() % 10) + 1, (rand() % 10) + 1);
+		if (dibujar_rectangulo((rand() % 10) + 1, (rand() % 10) + 1)==false)
+			return 1;
 
-	/* dibujar totalmente la pantalla */
+	/* draw the entire screen */
 	dibujar_pantalla();
 
-	getch();
-
-	/* como lo anterior puede producir safadas, vamos a probar ahora
-	   la funci¢n con los l¡mites je je je :-) */
+	/* Since the above can cause problems, we will now test
+	   the function with the limits he he he :-) */
 	borrar_pantalla();
 	for (c = 0; c < 10; c++)
 		dibujar_rectangulo(10, 10);
 	dibujar_pantalla();
 
-	printf("GANASTE! Recuerda mandar el programa a <cworld@egroups.com> lo\n");
-	printf("antes posible para ganar, y adjunta el archivo .c (y £nicamente el\n");
-	printf("c¢digo fuente), cualquiera que mande un ejecutable ser  descalificado.\n");
-
-	getch();
+	cout << "YOU WON! If you liked this challenge remember to leave a comment\n";
+	cout << "in our guestbook www.theworldofchaos.com/contact/#guestbook and\n";
+	cout << "also thank the author of the challenge davidcapello.com\n\n";
+	cout << "Thank you\n";
 
 	return 0;
-
 }
-
-

@@ -1,10 +1,10 @@
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Copyright <<< nyder2000@yahoo.es >>>
-//III-2001
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+/********************************************
+SOLUTION #1 TO CHALLENGE0015:
+   by:
+   Jose Luis De la Cruz Lazaro - 29/VII/2024
+   contact@theworldofchaos.com
+   https://www.theworldofchaos.com
+********************************************/
 #include <iostream>
 #include <string>
 using std::cout;
@@ -54,37 +54,34 @@ int main()
 	//-----------------------------------------------------
 	// Solution:
 	//-----------------------------------------------------
-	int semana[6][7] = { 0 };	// Array to contain the calendar of the month.
-	int i, j, *p;				// Pointer that will handle the calendar array of the month.
+	int i, ini_pos, calendar_day = 0;
+	
+	// get the position of the current day in the calendar
+	ini_pos = ((day / 7)+1) * 7 + dw;	
+	
+	// get the position of the first day of the month in the calendar
+	int fdm = (ini_pos + 1 - day) % 7;
 
-	dw = dw - (day % 7 - 1);	// Key point of day 1 location
-	if (dw < 0)dw += 7;			// Correction, if necessary ;-)
+	// Print the calculated calendar
+	cout << ' ';
 
-	p = &semana[0][0]; // Location of the pointer over the month array.
-
-	for (i = 0; i < monthd; i++)	// Location of days in the array
-		*(p + dw + i) = i + 1;		// via pointer to first element.
-
-	for (j = 0; j < 6; j++) // Print cycle
-	{
-		for (i = 0; i < 7; i++)
-		{
-			if (semana[j][i] == 0)
-			{
-				cout << "   "; // If it is not a day of the month.
-			}
-			else
-			{
-				cout << std::setfill(' ') << std::setw(3) << semana[j][i];	// If it is a day of the month.
-				semana[j][i] = 0;
-			}
-		}
-		cout << "\n";
-	}	
+	for (i = 0; calendar_day < monthd; i++) {
+		
+		calendar_day = i - fdm + 1;
+		
+		// A line break is inserted every week
+		if (i > 0 && i % 7 == 0)
+			cout << std::endl << ' ';
+		
+		// The calendar days are inserted with a format
+		// of up to 2 spaces in front
+		if ( calendar_day >= 1 )
+			cout << std::setfill(' ') << std::setw(2) << calendar_day << ' ';
+		else
+			cout << "   ";
+	}
+	
 	//-----------------------------------------------------
 
 	return 0;
 }
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//nyder2000@yahoo.es

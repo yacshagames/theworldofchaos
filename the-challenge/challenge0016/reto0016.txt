@@ -1,27 +1,26 @@
-[El Reto] 0016
-Creado por: Antonio González Cruz
-Fecha: 17 de abril del 2001
+[The Challenge] 0016
+Created by: Antonio González Cruz
+Date: April 17, 2001
 
-Ahora propongo dar una solución de cómo resolver el "cuadrado magico"
+Now I propose to give a solution on how to solve the "magic square"
 p.e. N=3
 8	1	6
 3	5	7
 4	9	2
-suma = 15
+sum = 15
 
-para que en las verticales, horizontales y diagonales de longitud 3  (en
-este caso) sumen lo mismo, de la misma manera "saque" imprima la suma que
-debe de tener...
-El programa debe de resolver cuadrados de cualquier tamaño numero impar y
-mayor que 2...
+so that the vertical, horizontal and diagonal lines of length 3 (in this case) add up to the same, in the same way "take out" prints the sum that it should have...
+
+The program must solve squares of any size, odd number and greater than 2...
+
 p.e. N=5
 17	24	1	8	15
 23	5	7	14	16
 4	6	13	20	22
 10	12	19	21	3
 11	18	25	2	9
-suma  = 65
+sum  = 65
 
 JAntonio GC
 
-Pd. los puntos a evaluar son solucion,claridad y eficiencia....
+PS. The points to be evaluated are solution, clarity and efficiency....

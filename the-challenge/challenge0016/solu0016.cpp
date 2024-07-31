@@ -1,165 +1,171 @@
+Ôªø//
+// solu0016.cpp program. // Tested in TC and BC.
 //
-// Programa CUADRADO.CPP. // Testeado en TC y BC.
+// Solution to challenge 16, created by Antonio Gonzalez for C World.
 //
-// Soluci¢n al reto 16, creado por Antonio Gonz†lez para C World.
-//
-// Autor : Fabi†n Silva Pavez (CHILE), especialmente para el reto.
+// Author: Fabian Silva Pavez (CHILE), especially for the challenge.
 //
 //
-// Operaci¢n : Seleccione el orden y vea el cuadrado m†gico en
-// C:\CUADRADO.TXT, lo hice as° ya que la pantalla limita hasta 80x50.
+// Operation: Select the order and see the magic square in
+// C:\CUADRADO.TXT, I did it like this because the screen limits up to 80x50.
 //
 //
 
-#include <fstream.h>
-#include <iomanip.h>
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+using std::cout;
+using std::cin;
+using std::endl;
 
 class Cuadrado {
-      int **Cuad;             // El cuadrado m†gico
-      int
-	  n,                  // Orden del cuadrado
-	  Cifras;             // N£mero de cifras del mayor n¯ del cuadrado
-  public:
-      Cuadrado (int N);       // Constructor, s¢lo asigna memoria
-      ~Cuadrado();            // Destructor, libera la memoria
-      void Procesar();        // Genera el cuadrado m†gico
-      void Listar();          // Listar el cuadrado en el archivo
+	int **Cuad;             // The magic square
+	int	n,                  // Order of the square
+		Cifras;             // Number of digits of the largest number in the square
+public:
+	Cuadrado(int N);       // Constructor, only allocates memory
+	~Cuadrado();            // Destructor, frees the memory
+	void Procesar();        // Generate the magic square
+	void Listar();          // List the square in the file
 };
+
 Cuadrado::Cuadrado(int N) {
-      n=N;
-      Cuad = new int*[n];
-      for (int i=0; i<n; i++)
-	Cuad[i] = new int[n];
+	n = N;
+	Cuad = new int*[n];
+	for (int i = 0; i < n; i++)
+		Cuad[i] = new int[n];
 };
+
 Cuadrado::~Cuadrado() {
-      for (int i=0; i<n; i++)
-	  delete Cuad[i];
-      delete Cuad;
+	for (int i = 0; i < n; i++)
+		delete Cuad[i];
+	delete Cuad;
 };
+
 void Cuadrado::Procesar() {
-int i=0, j, X, Y;
-      X=n*n;                  // n^2 es el mayor n£mero, sirve para
-      while (X) {             // saber cuantos espacios se salta
-	  X/=10;              // entre cada n£mero del cuadrado al archivo
-	  i++;
-      };
-      Cifras = i;             // N£mero de cifras
-      for (i=0; i<n; i++)     // Avanza por fila
-      {
-	  X = (n/2 + i) % n;  // Ver algoritmo, al final de este archivo.
-	  Y = (X + 1) % n;
-	  for (j=0; j<n; j++)
-	      Cuad [(X - j + n)%n][(Y + j)%n] = i * n + j + 1;
-      };
+	int i = 0, j, X, Y;
+	X = n * n;                  // n^2 is the largest number, it is used for
+	while (X) {					// know how many spaces are skipped
+		X /= 10;				// between each number in the square to the file
+		i++;
+	};
+	Cifras = i;					// Number of digits
+	for (i = 0; i < n; i++)     // Move forward by row
+	{
+		X = (n / 2 + i) % n;	// See algorithm at the end of this file.
+		Y = (X + 1) % n;
+		for (j = 0; j < n; j++)
+			Cuad[(X - j + n) % n][(Y + j) % n] = i * n + j + 1;
+	};
 };
 void Cuadrado::Listar() {
-int i, j;
-fstream f;
+	int i, j;
 
-    f.open ("C:\\CUADRADO.TXT", ios::out);
+	std::ofstream f("square.txt", std::ofstream::out);	
 
-    f << "Cuadrado M†gico lado " << n << ", Suma = " << n*(n*n+1)/2 << endl;
-    f << "------------------------" << endl;
+	f << "Magic Square side" << n << ", Sum = " << n * (n*n + 1) / 2 << endl;
+	f << "------------------------" << endl;
 
-    for (i=0; i<n; i++) {
-	for (j=0; j<n; j++)
-	    f << setfill(' ') << setw(Cifras+1) << Cuad[i][j];
-	f << endl;
-    };
-    f.close();
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++)
+			f << std::setfill(' ') << std::setw(Cifras + 1) << Cuad[i][j];
+		f << endl;
+	};
+	f.close();
 };
-void main ()
+
+int main ()
 {
-unsigned int orden;
-Cuadrado *c;
+	unsigned int orden;
+	Cuadrado *c;
 
-     cout << "Ingrese un n£mero positivo n (n > 2, y n es impar): ";
-     cin >> orden;
+	cout << "Enter a positive number n (n > 2, and n is odd): ";
+	cin >> orden;
 
-     if (orden > 2 && orden%2)
-     {
-	 c = new Cuadrado(orden);
-	 c->Procesar();
-	 c->Listar();
-	 cout << "El cuadrado m†gico de orden " << orden;
-	 cout << " se encuentra en C:\\CUADRADO.TXT.";
-     }
-     else
-	 cout << "El numero " << orden << " no es > 2 o no es impar.";
-     asm { mov ah, 7; int 21h; }; // pausilla
+	if (orden > 2 && orden % 2)
+	{
+		c = new Cuadrado(orden);
+		c->Procesar();
+		c->Listar();
+		cout << "The magic square of order " << orden;
+		cout << " is located in square.txt.";
+	}
+	else
+		cout << "The number " << orden << " is not > 2 or is not odd.";
+	//asm{ mov ah, 7; int 21h; }; // pause-diddly
+	return 0;
 };
 
-/* ALGORITMO:
+/* ALGORITHM:
 
-Para n == 5
+For n == 5
 
-1. Cuadrado M†gino vac°o
+1. Empty Magnitude Square
 
-		€€€€€€€€€€€€€€€€€€€€€€€€€€€
-		€€   €€   €€   €€   €€   €€
-		€€€€€€€€€€€€€€€€€€€€€€€€€€€
-		€€   €€   €€   €€   €€   €€
-		€€€€€€€€€€€€€€€€€€€€€€€€€€€
-		€€   €€   €€   €€   €€   €€
-		€€€€€€€€€€€€€€€€€€€€€€€€€€€
-		€€   €€   €€   €€   €€   €€
-		€€€€€€€€€€€€€€€€€€€€€€€€€€€
-		€€   €€   €€   €€   €€   €€
-		€€€€€€€€€€€€€€€€€€€€€€€€€€€
-
-
-2. Generar las siguientes extensiones al cuadrado.
-3. Escribir los n£meros en forma escalonada, tal como se muestra.
-
-			  ±±±±±±±
-			  ±± 5 ±±
-		     ±±±±±±±±±±±±±±±±±
-		     ±± 4 ±±   ±± 10±±
-		€€€€€€€€€€€€€€€€€€€€€€€€€€€
-		€€ 3 €€   €€ 9 €€   €€ 16€€
-	   ±±±±±€€€€€€€€€€€€€€€€€€€€€€€€€€€±±±±±
-	   ±± 2 €€   €€ 8 €€   €€ 15€€   €€ 21±±
-      ±±±±±±±±±±€€€€€€€€€€€€€€€€€€€€€€€€€€€±±±±±±±±±±
-      ±± 1 ±±	€€ 7 €€   €€ 13€€   €€ 20€€   ±± 25±±
-      ±±±±±±±±±±€€€€€€€€€€€€€€€€€€€€€€€€€€€±±±±±±±±±±
-	   ±± 6 €€   €€ 12€€   €€ 19€€   €€ 24±±
-	   ±±±±±€€€€€€€€€€€€€€€€€€€€€€€€€€€±±±±±
-		€€ 11€€   €€ 18€€   €€ 23€€
-		€€€€€€€€€€€€€€€€€€€€€€€€€€€
-		     ±± 17±±   ±± 22±±
-		     ±±±±±±±±±±±±±±±±±
-			  ±± 21±±
-			  ±±±±±±±
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà
+				‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà
+				‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà
+				‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà
+				‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà
+				‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà   ‚ñà‚ñà
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà
 
 
-4. Mover las extensiones hasta su lado contrario,
-   ejemplo la extensi¢n izquierda
+2. Generate the following square extensions.
+3. Write the numbers in stepwise form, as shown.
 
-			  ±±±±±±±
-			  ±± 5 ±±
-		     ±±±±±±±±±±±±±±±±±
-		     ±± 4 ±±   ±± 10±±
-		€€€€€€€€€€€€€€€€€€€€€€€€€€€
-		€€ 3 €€   €€ 9 €€   €€ 16€€
-		€€€€€€€€€€€€€€€€€€€€≤≤≤≤≤≤≤±±±±±
-		€€   €€ 8 €€   €€ 15≤≤ 2 ≤≤ 21±±
-		€€€€€€€€€€€€€€€≤≤≤≤≤≤≤≤≤≤≤≤±±±±±±±±±±
-		€€ 7 €€   €€ 13≤≤ 1 ≤≤ 20≤≤   ±± 25±±
-		€€€€€€€€€€€€€€€≤≤≤≤≤≤≤≤≤≤≤≤±±±±±±±±±±
-		€€   €€ 12€€   €€ 19≤≤ 6 ≤≤ 24±±
-		€€€€€€€€€€€€€€€€€€€€≤≤≤≤≤≤≤±±±±±
-		€€ 11€€   €€ 18€€   €€ 23€€
-		€€€€€€€€€€€€€€€€€€€€€€€€€€€
-		     ±± 17±±   ±± 22±±
-		     ±±±±±±±±±±±±±±±±±
-			  ±± 21±±
-			  ±±±±±±±
+						  ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
+						  ‚ñí‚ñí 5 ‚ñí‚ñí
+					 ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
+					 ‚ñí‚ñí 4 ‚ñí‚ñí   ‚ñí‚ñí 10‚ñí‚ñí
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà
+				‚ñà‚ñà 3 ‚ñà‚ñà   ‚ñà‚ñà 9 ‚ñà‚ñà   ‚ñà‚ñà 16‚ñà‚ñà
+		   ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñí‚ñí‚ñí‚ñí‚ñí
+		   ‚ñí‚ñí 2 ‚ñà‚ñà   ‚ñà‚ñà 8 ‚ñà‚ñà   ‚ñà‚ñà 15‚ñà‚ñà   ‚ñà‚ñà 21‚ñí‚ñí
+	  ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
+	  ‚ñí‚ñí 1 ‚ñí‚ñí   ‚ñà‚ñà 7 ‚ñà‚ñà   ‚ñà‚ñà 13‚ñà‚ñà   ‚ñà‚ñà 20‚ñà‚ñà   ‚ñí‚ñí 25‚ñí‚ñí
+	  ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
+		   ‚ñí‚ñí 6 ‚ñà‚ñà   ‚ñà‚ñà 12‚ñà‚ñà   ‚ñà‚ñà 19‚ñà‚ñà   ‚ñà‚ñà 24‚ñí‚ñí
+		   ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñí‚ñí‚ñí‚ñí‚ñí
+				‚ñà‚ñà 11‚ñà‚ñà   ‚ñà‚ñà 18‚ñà‚ñà   ‚ñà‚ñà 23‚ñà‚ñà
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà
+					 ‚ñí‚ñí 17‚ñí‚ñí   ‚ñí‚ñí 22‚ñí‚ñí
+					 ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
+						  ‚ñí‚ñí 21‚ñí‚ñí
+						  ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
+						  
+4. Move the extensions to their opposite side,
+   for example the left extension
 
-5. Y as° sucesivamente, hasta completar el cuadrado.
+						  ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
+						  ‚ñí‚ñí 5 ‚ñí‚ñí
+					 ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
+					 ‚ñí‚ñí 4 ‚ñí‚ñí   ‚ñí‚ñí 10‚ñí‚ñí
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà
+				‚ñà‚ñà 3 ‚ñà‚ñà   ‚ñà‚ñà 9 ‚ñà‚ñà   ‚ñà‚ñà 16‚ñà‚ñà
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñí‚ñí‚ñí‚ñí‚ñí
+				‚ñà‚ñà   ‚ñà‚ñà 8 ‚ñà‚ñà   ‚ñà‚ñà 15‚ñì‚ñì 2 ‚ñì‚ñì 21‚ñí‚ñí
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
+				‚ñà‚ñà 7 ‚ñà‚ñà   ‚ñà‚ñà 13‚ñì‚ñì 1 ‚ñì‚ñì 20‚ñì‚ñì   ‚ñí‚ñí 25‚ñí‚ñí
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
+				‚ñà‚ñà   ‚ñà‚ñà 12‚ñà‚ñà   ‚ñà‚ñà 19‚ñì‚ñì 6 ‚ñì‚ñì 24‚ñí‚ñí
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñì‚ñí‚ñí‚ñí‚ñí‚ñí
+				‚ñà‚ñà 11‚ñà‚ñà   ‚ñà‚ñà 18‚ñà‚ñà   ‚ñà‚ñà 23‚ñà‚ñà
+				‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà
+					 ‚ñí‚ñí 17‚ñí‚ñí   ‚ñí‚ñí 22‚ñí‚ñí
+					 ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
+						  ‚ñí‚ñí 21‚ñí‚ñí
+						  ‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí‚ñí
 
-Para buscar la sucesi¢n hice:
+5. And so on, until the square is complete.
 
-n¯| Posicion
+To find the sequence I did:
+
+N¬∞| Position
 ------------
 1 : (2,3)                          = (5/2, 5/2+1)
 2 : (1,4) = ( (2-1+5)%5, (3+1)%5 )

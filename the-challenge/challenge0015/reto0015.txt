@@ -1,106 +1,94 @@
-Creador: Nyder Menéndez
-Fecha: 07/03/2001
+Autor: Nyder Menendez
+Date: 07-III-2001
 
-Bien... el reto que propongo... es el desarrollar...
-diferentes lógicas para obtener la salida en pantalla...
-(al menos la que se muestra...)
+Well... the challenge I propose... is to develop... different logics to obtain the output on the screen... (at least the one that is shown...)
 
-Les pido que utilicen (se que lo harán...)...
-toda la creatividad que puedan...
-y pueden incluso enviar más de una solución...
+I ask you to use (I know you will...)... all the creativity you can... and you can even send more than one solution...
 
-Les estoy dando...
-una forma de obtener ya el día de la semana...  (gratis  :-)
-de forma numérica... para poder utilizarlo...
-en la lógica...
+I am giving you... a way to get the day of the week now... (free :-) in numerical form... to be able to use it... in the logic...
 
-Todo es válido... (las librerías, funciones, etc...)
-pero como de costumbre...
-la portabilidad...
-puede ser un parámetro de evaluación...
-(aunque para mí la "portabilidad" es algo nuevo... :-)
+Everything is valid... (libraries, functions, etc...) but as usual... portability... can be an evaluation parameter... (although for me "portability" is something new... :-)
 
-El programa debe trabajar para cualquier fecha...
-día mes y año... (ya les doy la forma de hacerlo...)
-pero si ustedes quieren utilizar la suya...
-y esta funciona... pues bienvenida...
+The program must work for any date... day, month and year... (I'll give you the way to do it now...) but if you want to use yours... and this one works... then welcome...
 
-Para los que no la conozcan...
-bisiesto es una "Macro... con parámetros"...
-(al menos creo que así se llama...  :-)
+For those who don't know it... leap year is a "Macro... with parameters"... (at least I think that's what it's called... :-)
 
-Para poder presentar este reto...
-tuve que modificar algo el programita...
-original que había hecho...
-(Le quité algo así como el 95%)...
-Desde validación de entrada... etc. etc...
+In order to present this challenge... I had to modify the original little program that I had made... (I removed something like 95%)... From input validation... etc. etc...
 
-Espero que sea de provecho...
-y que sirva para aprender...
+I hope it's useful... and that it helps you learn...
 
-Cualquier pregunta... o aclaración adicional...
-Será un placer resolverla...
+Any questions... or additional clarifications... I'll be happy to answer them...
 
-Suerte...
+Good luck...
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#include <lo que ustedes quieran... o necesiten...>
+#include <iostream>
+#include <string>
+using std::cout;
+using std::cin;
 
-#define bisiesto(bs)    (!(bs%4)&&(bs%100)||!(bs%400))
+#include <whatever you want... or need...>
+
+#define leap_year(bs)    (!(bs%4)&&(bs%100)||!(bs%400))
 
 int main()
 {
- int anho, mes, dia, ds, mesd;
+	int year, month, day, dw, monthd;
 
- // Variable que contiene los meses del año para el calendario.
- char mesc[][20]={"       Enero","      Febrero","       Marzo",
- "       Abril","        Mayo","       Junio","       Julio",
- "       Agosto","     Septiembre","      Octubre","     Noviembre",
- "     Diciembre"};
+	// Variable containing the months of the year for the calendar.
+	std::string monthc[12] = {	"January", "February", "March",
+								"April", "May", "June", "July",
+								"August", "September", "October", "November",
+								"December" };
 
- printf("\ndía= "); //
- scanf("%i",&dia);  //
- printf("\nmes= "); //  Entrada de la Fecha
- scanf("%i",&mes);  //
- printf("\naño= "); //
- scanf("%i",&anho); //
+	// Date Entry
+	cout << "\nday= ";
+	cin >> day;
+	cout << "\nmonth= "; 
+	cin >> month;
+	cout << "\nyear= ";
+	cin >> year;
 
- ds=(((1461*((anho+4800)+((mes-14)/12)))>>2)      // Día de la semana
-    +((367*(mes-2-12*((mes-14)/12)))/12)          // Lunes = 0 ...
-    -(3*(((anho+4800)+((mes-14)/12)+100)/100)>>2) // Domingo = 6
-    +dia-32075L)%7;                               //
+	// Calculation of the day of the week for the entered date
+	// Monday = 0 ... Sunday = 6
+	dw = (((1461 * ((year + 4800) + ((month - 14) / 12))) >> 2)			
+		+ ((367 * (month - 2 - 12 * ((month - 14) / 12))) / 12)			
+		- (3 * (((year + 4800) + ((month - 14) / 12) + 100) / 100) >> 2)
+		+ day - 32075L) % 7;				
 
- switch(mes)
- {
-  case 1:case 3:case 5:case 7:case 8:case 10:      //
-  case 12:mesd=31;break;                           // Número de días
-  case 4:case 6:case 9:case 11:mesd=30;break;      // del mes...
-  case 2:mesd=28;if(bisiesto(anho)) mesd=29;break; //
- }
+	// Calculation of the number of days in the month...
+	switch (month)
+	{
+	case 1:case 3:case 5:case 7:case 8:case 10:
+	case 12:monthd = 31; break;
+	case 4:case 6:case 9:case 11:monthd = 30; break;
+	case 2:monthd = 28; if (leap_year(year)) monthd = 29; break;
+	}
 
- printf("\n\n %s",mesc[mes-1]); // Impresión del Título del mes.
- printf("\n Lu Ma Mi Ju Vi Sa Do\n"); // Encabezados de los días.
+	cout << "\n\n\t" << monthc[month - 1]; // Printing the Title of the month.
+	cout << "\n Mo Tu We Th Fr Sa Su\n";	 // Headings of the days.
 
- ...
+	...
 
- return (0);
+	return 0;
 }
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                La Salida en Pantalla sería algo como:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-día= 17
+                The screen output would be something like:
 
-mes= 3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+day= 17
 
-año= 1960
+month= 3
+
+year= 1960
 
 
-        Marzo
- Lu Ma Mi Ju Vi Sa Do
+        March
+ Mo Tu We Th Fr Sa Su
      1  2  3  4  5  6
   7  8  9 10 11 12 13
  14 15 16 17 18 19 20

@@ -1,9 +1,10 @@
 /*
- * Esto es muy facil.
- * Cual es el error?
+* This is very easy.
+* What is the error?
  */
 
-#include <stdio.h>
+#include <cstdio>
+#include <stdlib.h> 
 
 
 #define MAX_SIZE   32
@@ -12,7 +13,7 @@
 int main(void)
 {
 	// ERROR
-	short *buffer = malloc(sizeof(short) * MAX_SIZE);
+	short *buffer = (short*)malloc(sizeof(short) * MAX_SIZE);
 	int i;
 
 	for (i = 0; i < MAX_SIZE; i++)

@@ -1,32 +1,32 @@
-Propuesto por RiMS
-Posible RETO 0009  
+Proposed by RiMS
+Possible CHALLENGE 0009
 ----------------------
-(Omiti acentos)
+(I omitted accents)
 
-Este reto va a sonar un poco raro pero es bastante simple lo que pido, se trata de encriptar o comprimir sobre un archivo de texto ASCII comun y silvestre (Con salto de lineas DOS o UNIX indistintas) y realizar el proceso inverso utilizando el siguiente metodo:
+This challenge is going to sound a bit strange but what I'm asking is quite simple: it involves encrypting or compressing a common, wild ASCII text file (with DOS or UNIX line breaks) and performing the reverse process using the following method:
 
-Ya que los caracteres ASCII son 127 (o 128 segun quien lo explique), se codifican en 8 bits teniendo siempre el bit 7 en 0. por lo tanto para aprovechar ese bit se haran corrimientos cada ocho BYTES para que ocupen siete Bytes. Si da la casualidad de que el texto posee un numero de caracteres no divisible en forma entera por 8, simplemente se completan los otros bits del BYTE a 0 y se finaliza el proceso.
+Since there are 127 ASCII characters (or 128 depending on who explains it), they are encoded in 8 bits, always having bit 7 at 0. Therefore, to take advantage of that bit, shifts will be made every eight BYTES so that they occupy seven Bytes. If it happens that the text has a number of characters that is not divisible by 8, the other bits of the BYTE are simply filled with 0 and the process is finished.
 
-La forma de codificacion del programa seria completamente libre y solamente les puedo dar una sugerencia de como me gustaria que funcione:
-Desde el prompt escribir RETO0009 flag I:ArchivoEntrada O:ArchivoSalida
-por ejemplo:
-	RETO0009 C I:prueba.txt O:Salida.enc   (para comprimir el archivo prueba.txt y generar archivo salida.enc)
-	RETO0009 D I:Salida.enc O:prueba.txt   (para descomprimir el archivo salida.enc)
+The way the program is coded would be completely free and I can only give you a suggestion of how I would like it to work:
+From the prompt write RETO0009 flag I:InputFile O:OutputFile
+for example:
+	RETO0009 C I:prueba.txt O:Salida.enc (to compress the file prueba.txt and generate the file salida.enc)
+	RETO0009 D I:Salida.enc O:prueba.txt (to decompress the file salida.enc)
 
-Bueno, a ver si se entiende lo que pido con un ejemplo:
-"RETO0009 JE" es un texto ASCII de 11 caracteres (sin las comillas, obvio). 
+Well, let's see if you understand what I'm asking with an example:
+"RETO0009 JE" is an ASCII text of 11 characters (without the quotes, obviously).
 
-A nivel de bits se codificaria de la siguiente forma:
- R         E         T         O         0         0         0         9         espacio   J         E
+At bit level it would be coded as follows:
+ R         E         T         O         0         0         0         9         space     J         E
  82        69        84        79        48        48        48        57        32        74        69
  0101.0010 0100.0101 0101.0100 0101.1111 0011.0000 0011.0000 0011.0000 0011.1001 0010.0000 0100.1010 0100.0101
  *         *         *         *         *         *         *         *         *         *         *
-al sacarle cada 0 marcado con * deberia quedar como sigue:
+By removing each 0 marked with * it should look like this:
 
 1010.0101 0001.0110 1010.0101 1111.0110 0000.1100 0001.1000 0011.1001 0100.0001 0010.1010 0010.1000
 ^       ^        ^        ^        ^       ^        ^        ^        ^       ^        ^        ^^^
-R       E        T        O        0       0        0        9        espacio J        E        (relleno de 0 para completar BYTE)
+R       E        T        O        0       0        0        9        space   J        E        (padding 0 to complete BYTE)
 
-Espero que haya quedado claro y que no sea demasiado embrollado para que se enganche bastante gente... ah me olvidaba, de paso que comprime, verifique que el archivo sea ASCII puro. sino que cancele.
+I hope that it is clear and that it is not too confusing for a lot of people to get hooked... oh I forgot, by the way, it compresses, check that the file is pure ASCII. Otherwise, cancel.
 
-Estoy estudeando los metodo de calificacion ICE a ver si entiendo pero pido por favor si alguno que no participa me ayuda a calificar las respuestas porque sobre todo me parece que me va a ser dificultoso conectarme a internet en la semana...
+I am studying the ICE grading method to see if I understand but I ask please if someone who is not participating helps me grade the answers because above all it seems to me that it will be difficult for me to connect to the internet during the week...

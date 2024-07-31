@@ -1,17 +1,9 @@
 /*
- * Aqui hay algo no tan dificil, presten mucha atencion.
- * Cuales son los tres errores principales del programa?
- */
+* Here's something not so difficult, pay close attention.
+* What are the three main errors in the program?
+*/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <mem.h>
-
-
-#undef NULL
-#define NULL   0
-
-
+#include <iostream>
 
 typedef struct ELEMENTO
 {
@@ -31,7 +23,7 @@ typedef struct LISTA
 
 ELEMENTO *agregar_elemento_al_final(LISTA *lista, int a, int b, int c)
 {
-	ELEMENTO *nuevo, *posicion, *anterior;
+	ELEMENTO *nuevo, *posicion, *anterior=NULL;
 
 	posicion = lista->primero;
 	while (posicion) {
@@ -39,7 +31,7 @@ ELEMENTO *agregar_elemento_al_final(LISTA *lista, int a, int b, int c)
 		posicion = posicion->proximo;
 	}
 
-	nuevo = malloc(sizeof(ELEMENTO));
+	nuevo = new ELEMENTO;
 	if (!nuevo)
 		return NULL;
 
@@ -67,7 +59,7 @@ void borrar_elemento(LISTA *lista, ELEMENTO *elemento)
 	while (posicion) {
 		if (posicion == elemento) {
 			anterior->proximo = posicion->proximo;
-			free(elemento);
+			delete elemento;
 			lista->elementos--;
 			break;
 		}
@@ -82,7 +74,7 @@ LISTA *crear_lista(void)
 {
 	LISTA *lista;
 
-	lista = malloc(sizeof(LISTA));
+	lista = new LISTA;
 	if (!lista)
 		return NULL;
 
@@ -99,11 +91,11 @@ void borrar_lista(LISTA *lista)
 	ELEMENTO *posicion = lista->primero;
 
 	while (posicion) {
-		free(posicion);
+		delete posicion;
 		posicion = posicion->proximo;
 	}
 
-	free(lista);
+	delete lista;
 }
 
 
@@ -113,7 +105,7 @@ void imprimir_lista(LISTA *lista)
 	ELEMENTO *posicion = lista->primero;
 
 	while (posicion) {
-		printf("a=%d; b=%d; c=%d;\n", posicion->a, posicion->b, posicion->c);
+		std::cout << "a="<< posicion->a << " b=" << posicion->b << " c=" << posicion->c << std::endl;
 		posicion = posicion->proximo;
 	}
 }
@@ -125,7 +117,7 @@ int main(void)
 	LISTA *lista = crear_lista();
 	ELEMENTO *elemento;
 
-	printf("--\n");
+	std::cout << "--\n";
 
 	elemento =
 		agregar_elemento_al_final(lista, 20, 1, -5);

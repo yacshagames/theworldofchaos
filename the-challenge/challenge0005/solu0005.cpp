@@ -1,42 +1,55 @@
-/* RETO0005.C
- * ==========     cworld@egroups.com
- *
- * 1. (y fundamental): ¨Por que no puedes obtener el mensaje de ACERTASTE ?
- *                     ¨que es lo que falla y por que?
- * 2. (secundario):    Como habria que cambiar el programa para que funcione?
- *                     (es decir para que acepte 1.2 como solucion)
- *
- * Notas: Comprobado en TurboC++, BorlandC++ , DJGPP
- *
- *     (C) Antonio Romeral   3-Sept-2000
- */
+/* CHALLENGE0005.CPP
+* ========== cworld@egroups.com
+*
+* 1. (and fundamental): Why can't you get the SUCCESS message?
+* What is wrong and why?
+* 2. (secondary): How should the program be changed so that it works?
+* (i.e. so that it accepts 1.2 as a solution)
+*
+* Notes: Tested in TurboC++, BorlandC++ , DJGPP
+*
+* (C) Antonio Romeral 3-Sept-2000
+*/
 
-#include <stdio.h>
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::endl;
 
 int main()
 {
 	float  vfloat;
 	int exito = 0;
 
-	puts(" RETO0005.C   Adivina el numero secreto");
-	puts(" ==========   (por cierto, ese numero es 1.2)");
-	puts(" (c) Antonio Romeral   3- Sept - 2000\n");
+	cout << " CHALLENGE0005.CPP Guess the secret number" << endl;
+	cout << " ========== (by the way, that number is 1.2)" << endl;
+	cout << " (c) Antonio Romeral 3- Sept - 2000\n" << endl;
 
 	do {
-		puts("(Para rendirse introducir 0)");
-		printf("¨Cual es el numero decimal secreto (entre 1 y 2) ? El numero es: ");
-		scanf("%f", &vfloat);
-		printf("\n Has introducido el numero: %f ", vfloat);
+		cout << "(To give up enter 0)" << endl;
+		cout << "What is the secret decimal number (between 1 and 2)? The number is: ";
+		cin >> vfloat;
+		cout << "\n You have entered the number: " << vfloat;
 
-		if (vfloat == (float)1.2) { puts(">>> ACERTASTE !!!! "); exito = 1; break; }
-		else { puts(">>> NO ES ESE NUMERO. Intentalo de nuevo\n"); }
+		if (vfloat == (float)1.2) {
+			cout << ">>> YOU GOT IT RIGHT!!!! " << endl;
+			exito = 1;
+			break;
+		}
+		else {
+			cout << ">>> THIS IS NOT THE NUMBER. Please try again\n" << endl;
+		}
+
 	} while (vfloat);
 
-	puts("\n\n\n");
-	if (exito)  puts("PERFECTO. CONSEGUISTE LO IMPOSIBLE");
+	cout << "\n\n\n" << endl;
+
+	if (exito)
+		cout << "PERFECT. YOU ACHIEVED THE IMPOSSIBLE" << endl;
 	else {
-		puts("Intentalo en otra ocasion (¨que demonios pasa aqui?)");
-		puts("(atiende... la solucion es 1.2). Intentalo !!!");
+		cout << "Try again (what the hell is going on here?)" << endl;
+		cout << "(pay attention... the solution is 1.2). Try again!!!" << endl;
 	}
+
 	return 0;
 }

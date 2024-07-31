@@ -1,14 +1,17 @@
-/* Puedes encontrar el error? */
-/* Est  muy facil */
-/* Para resolverlo tienes que hacerles unos peque¤os cambios */
-#include<stdio.h>
-main()
+/* Can you find the error? */
+/* It's very easy */
+/* To solve it you have to make some small changes */
+
+#include <iostream>
+
+int main()
 {
 	int num1, num2;
-	long int result;
-	num1 = 500;
-	num2 = 300;
-	result = (long)num1*num2;
-	printf("Resultdo = %ld", result);
-	getch();
+	long long result;
+	num1 = 500000;
+	num2 = 300000;
+	result = (long long)num1 * num2;
+	std::cout << "Result = " << result;
+
+	return 0;
 }
