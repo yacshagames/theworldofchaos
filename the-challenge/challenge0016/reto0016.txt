@@ -1,0 +1,27 @@
+[El Reto] 0016
+Creado por: Antonio González Cruz
+Fecha: 17 de abril del 2001
+
+Ahora propongo dar una solución de cómo resolver el "cuadrado magico"
+p.e. N=3
+8	1	6
+3	5	7
+4	9	2
+suma = 15
+
+para que en las verticales, horizontales y diagonales de longitud 3  (en
+este caso) sumen lo mismo, de la misma manera "saque" imprima la suma que
+debe de tener...
+El programa debe de resolver cuadrados de cualquier tamaño numero impar y
+mayor que 2...
+p.e. N=5
+17	24	1	8	15
+23	5	7	14	16
+4	6	13	20	22
+10	12	19	21	3
+11	18	25	2	9
+suma  = 65
+
+JAntonio GC
+
+Pd. los puntos a evaluar son solucion,claridad y eficiencia....

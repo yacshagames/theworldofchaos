@@ -1,0 +1,89 @@
+Un saludo a todos/as
+
+Ahora que ya tenemos ganador al Reto 5, pero como el ganador no explico suficientemente en que consistia el problema,yo que lo cree, voy a dar yo la solucion.
+
+En primer lugar, simplificando el programa RETO0005.C:
+
+#include <stdio.h>
+
+int main()
+{
+  float  vfloat = 1.2;
+  
+  if( vfloat == 1.2 ) puts("ACERTASTE");
+
+  return 0;
+}
+
+
+La razon por la cual, a pesar de las apariencias, NO se cumple que vfloat == 1.2 (aunque antes se le ha asignado precisamente ese valor) y por tanto no aparece el mensaje "ACERTASTE" es que la constante 1.2 de la comparacion de igualdad es almacenada internamente como una constante double, mientras que el valor 1.2 almacenado en vfloat es de tipo float.
+
+Para realizar la comparacion la variable vfloat promociona a double, añadiendole los ceros que necesita, pero entonces su contenido es distinto al double almacenado como constante 1.2
+
+Entrando en mas detalles:
+
+Un numero decimal como (dec) 1.2034 = 1 + 2/10 + 0/100 + 3/1000 + 4/10000
+De forma analoga un numero "decimal" binario como  (bin) 1.1011 = (dec) 1 + 1/2 + 0/4 + 1/8 + 1/16 = (dec) 1.6875
+
+Los numeros float se almacenan en 4 Bytes en forma mantisa/exponente: (bin) 1.b1 b2 ... b23 x 2^m
+(donde m es un entero entre -127 y 127 , bi son 23 digitos binarios 0,1 )
+
+Los numeros double se almacenan en 8 Bytes en forma mantisa/exponente: (bin) 1.b1 b2 ... b52 x 2^n
+(donde n es un entero entre -1023 y 1023 , bi son 52 digitos binarios 0,1 )
+
+entonces resulta que (dec) 1.2 = (bin) 1.0011 0011 0011 ...  (repitiendo periodo 0011)
+Al almacenarlo en un float, se toman solo 23 digitos decimales binarios y se redondea el ultimo guardandose como:
+
+(bin) 1.0011 0011 0011 0011 0011 010 = (dec) 1.2000000476837158203125
+
+(fijarse como el ultimo bloque 0011 ... se redondea a 0100 y se toman los 3 digitos 010 que faltaban para 23 digitos )
+(Observar tambien como en realidad no se almacena el valor 1.2, sino uno muy proximo. Para comprobar esto ejecutar el siguiente programa:
+
+#include <stdio.h>
+
+int main()
+{
+  float  vfloat = 1.2;
+  
+  printf(" valor  vfloat: %40.37e ", vfloat);
+
+  return 0;
+}
+
+Segun compiladores, obtendreis el siguiente resultado:
+
+valor  vfloat: 1.2000000476837158200000000000000000000e+00
+
+Que demuestra que en realidad el valor 1.2 no ha sido almacenado con exactitud.
+(printf no da todas las cifras decimales)
+
+cuando este float promociona a double se añaden ceros al final y se almacenara con los siguientes 52 digitos binarios:
+
+(bin) 1.0011 0011 0011 0011 0011 0100 0000 0000 0000 0000 0000 0000 0000
+
+Mientras que la constante 1.2, almacenada internamente como double se guarda como:
+
+(bin) 1.0011 0011 0011 0011 0011 0011 0011 0011 0011 0011 0011 0011 0011 
+
+Y ya se ve que son distintos.
+
+Soluciones al problema
+======================
+
+  Se trata de conseguir que vfloat y la constante 1.2 se almacenen con el mismo tipo, evitando las conversiones implicitas.
+
+  Una solucion (la mas facil) es la del ganador Aurelio Marquez (enhorabuena), sustituir:
+
+if (vfloat == 1.2)
+
+por
+ 
+if (vfloat == (float)1.2) 
+
+La otra es hacer que la variable vfloat sea de tipo double, y no de tipo float.
+
+De hecho, teniendo en cuenta que todo acaba convirtiendose en double internamente, que la diferencia de espacio entre float (4 Bytes) y double (8 Bytes) es minima y que un double tiene mas precision, mi recomendacion seria usar preferentemente el tipo double sobre el float.
+
+Un saludos a todos y perdonad si me he "enrollado" demasiado, pienso que lo dicho podia ser de algun interes.
+
+Antonio Romeral ( 10 Septiembre 2000 )

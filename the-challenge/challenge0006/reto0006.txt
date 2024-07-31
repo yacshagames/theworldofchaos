@@ -1,0 +1,117 @@
+Los errores fundamentales de este programa son los siguientes:
+
+PRIMER ERROR
+============
+ *agregar_elemento_al_final(LISTA *lista, int a, int b, int c)
+No agrega un elemento al final de la lista.
+
+
+La linea 51:
+
+  if (!posicion)
+    lista->primero = nuevo;
+  else
+    anterior->proximo = nuevo;
+
+
+Debe ser sustituidas por:
+
+  if (!lista->elementos)        /* --- ESTA ES LA LINEA A CAMBIAR ---*/
+    lista->primero = nuevo;
+  else
+    anterior->proximo = nuevo;
+
+La razon es que antes de llegar aqui se ha ejecutado un:
+
+  while (posicion) {...}
+
+luego al llegar a la linea 51 SIEMPRE posicion==NULL
+Con lo que el nuevo elemento pasa a ser el PRIMERO Y UNICO de la lista
+
+SEGUNDO ERROR
+=============
+void borrar_elemento(LISTA *lista, ELEMENTO *elemento)
+
+No funciona bien cuando el elemento a borrar es el primero de la lista
+(Precisamente el del ejemplo)
+En ese caso: anterior == NULL y no tiene sentido anterior->proximo
+
+
+Deberia quedar asi:
+void borrar_elemento(LISTA *lista, ELEMENTO *elemento)
+{
+  ELEMENTO *posicion = lista->primero, *anterior = NULL;
+
+  while (posicion) {
+    if (posicion == elemento) {
+      if( !anterior ) lista->primero = posicion->proximo; /*--AÑADIDO--*/
+        else anterior->proximo = posicion->proximo;       /*--AÑADIDO ELSE */
+....
+
+
+TERCER ERROR
+============ (De este estoy menos seguro)
+Me parece que la funcion
+
+void borrar_lista(LISTA *lista)
+{
+  ELEMENTO *posicion = lista->primero;
+
+  while (posicion) {
+    free(posicion);
+    posicion = posicion->proximo;
+  }
+
+  free(lista);
+}
+
+Primero borra el elemento ( free(posicion) )
+pero esto liberara la memoria y DESPUES usa posicion->proximo
+pero esta variable ya ha sido liberada (¨?)
+
+Mi propuesta es la siguiente:
+
+void borrar_lista(LISTA *lista)
+{
+  ELEMENTO *posicion = lista->primero , *siguiente;     /* -- MODIFICADO */
+
+  while (posicion) {
+    siguiente = posicion->proximo;                      /* -- MODIFICADO */
+    free(posicion);                                     
+    posicion = siguiente;                               /* -- MODIFICADO */
+  }
+  free(lista);
+}
+
+Es decir, guardar en el puntero siguiente el valor de posicion->proximo
+ANTES de liberar el elemento
+
+
+Envio en fichero (SOL004.C) adjunto mis modificaciones.
+
+EXPLICACIONES
+=============
+
+Ya que se piden explicaciones de como se ha detectado el error, dare algunas cuantas.
+En primer lugar en main() tenemos:
+
+  elemento =
+  agregar_elemento_al_final(lista, 20, 1, -5);
+  agregar_elemento_al_final(lista, 10, 2, -6);
+ ...
+
+yo he intercalado llamadas a    imprimir_lista(lista);
+
+  elemento =
+  agregar_elemento_al_final(lista, 20, 1, -5);
+  imprimir_lista(lista);
+  agregar_elemento_al_final(lista, 10, 2, -6);
+  imprimir_lista(lista);
+....
+
+De esta manera me he dado cuenta que agregar_elemento... no funcionaba bien
+siempre dejaba la lista con unicamente el ultimo elemento a¤adido.
+(Es decir SIEMPRE lo a¤adia al principio y como unico)
+ha bastado entonces buscar el codigo que fallaba en esta funcion.
+
+Un saludo a todos. Antonio Romeral (29-Agosto-2000)

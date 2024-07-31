@@ -1,0 +1,32 @@
+Propuesto por RiMS
+Posible RETO 0009  
+----------------------
+(Omiti acentos)
+
+Este reto va a sonar un poco raro pero es bastante simple lo que pido, se trata de encriptar o comprimir sobre un archivo de texto ASCII comun y silvestre (Con salto de lineas DOS o UNIX indistintas) y realizar el proceso inverso utilizando el siguiente metodo:
+
+Ya que los caracteres ASCII son 127 (o 128 segun quien lo explique), se codifican en 8 bits teniendo siempre el bit 7 en 0. por lo tanto para aprovechar ese bit se haran corrimientos cada ocho BYTES para que ocupen siete Bytes. Si da la casualidad de que el texto posee un numero de caracteres no divisible en forma entera por 8, simplemente se completan los otros bits del BYTE a 0 y se finaliza el proceso.
+
+La forma de codificacion del programa seria completamente libre y solamente les puedo dar una sugerencia de como me gustaria que funcione:
+Desde el prompt escribir RETO0009 flag I:ArchivoEntrada O:ArchivoSalida
+por ejemplo:
+	RETO0009 C I:prueba.txt O:Salida.enc   (para comprimir el archivo prueba.txt y generar archivo salida.enc)
+	RETO0009 D I:Salida.enc O:prueba.txt   (para descomprimir el archivo salida.enc)
+
+Bueno, a ver si se entiende lo que pido con un ejemplo:
+"RETO0009 JE" es un texto ASCII de 11 caracteres (sin las comillas, obvio). 
+
+A nivel de bits se codificaria de la siguiente forma:
+ R         E         T         O         0         0         0         9         espacio   J         E
+ 82        69        84        79        48        48        48        57        32        74        69
+ 0101.0010 0100.0101 0101.0100 0101.1111 0011.0000 0011.0000 0011.0000 0011.1001 0010.0000 0100.1010 0100.0101
+ *         *         *         *         *         *         *         *         *         *         *
+al sacarle cada 0 marcado con * deberia quedar como sigue:
+
+1010.0101 0001.0110 1010.0101 1111.0110 0000.1100 0001.1000 0011.1001 0100.0001 0010.1010 0010.1000
+^       ^        ^        ^        ^       ^        ^        ^        ^       ^        ^        ^^^
+R       E        T        O        0       0        0        9        espacio J        E        (relleno de 0 para completar BYTE)
+
+Espero que haya quedado claro y que no sea demasiado embrollado para que se enganche bastante gente... ah me olvidaba, de paso que comprime, verifique que el archivo sea ASCII puro. sino que cancele.
+
+Estoy estudeando los metodo de calificacion ICE a ver si entiendo pero pido por favor si alguno que no participa me ayuda a calificar las respuestas porque sobre todo me parece que me va a ser dificultoso conectarme a internet en la semana...

@@ -1,0 +1,110 @@
+Creador: Nyder Menéndez
+Fecha: 07/03/2001
+
+Bien... el reto que propongo... es el desarrollar...
+diferentes lógicas para obtener la salida en pantalla...
+(al menos la que se muestra...)
+
+Les pido que utilicen (se que lo harán...)...
+toda la creatividad que puedan...
+y pueden incluso enviar más de una solución...
+
+Les estoy dando...
+una forma de obtener ya el día de la semana...  (gratis  :-)
+de forma numérica... para poder utilizarlo...
+en la lógica...
+
+Todo es válido... (las librerías, funciones, etc...)
+pero como de costumbre...
+la portabilidad...
+puede ser un parámetro de evaluación...
+(aunque para mí la "portabilidad" es algo nuevo... :-)
+
+El programa debe trabajar para cualquier fecha...
+día mes y año... (ya les doy la forma de hacerlo...)
+pero si ustedes quieren utilizar la suya...
+y esta funciona... pues bienvenida...
+
+Para los que no la conozcan...
+bisiesto es una "Macro... con parámetros"...
+(al menos creo que así se llama...  :-)
+
+Para poder presentar este reto...
+tuve que modificar algo el programita...
+original que había hecho...
+(Le quité algo así como el 95%)...
+Desde validación de entrada... etc. etc...
+
+Espero que sea de provecho...
+y que sirva para aprender...
+
+Cualquier pregunta... o aclaración adicional...
+Será un placer resolverla...
+
+Suerte...
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#include <lo que ustedes quieran... o necesiten...>
+
+#define bisiesto(bs)    (!(bs%4)&&(bs%100)||!(bs%400))
+
+int main()
+{
+ int anho, mes, dia, ds, mesd;
+
+ // Variable que contiene los meses del año para el calendario.
+ char mesc[][20]={"       Enero","      Febrero","       Marzo",
+ "       Abril","        Mayo","       Junio","       Julio",
+ "       Agosto","     Septiembre","      Octubre","     Noviembre",
+ "     Diciembre"};
+
+ printf("\ndía= "); //
+ scanf("%i",&dia);  //
+ printf("\nmes= "); //  Entrada de la Fecha
+ scanf("%i",&mes);  //
+ printf("\naño= "); //
+ scanf("%i",&anho); //
+
+ ds=(((1461*((anho+4800)+((mes-14)/12)))>>2)      // Día de la semana
+    +((367*(mes-2-12*((mes-14)/12)))/12)          // Lunes = 0 ...
+    -(3*(((anho+4800)+((mes-14)/12)+100)/100)>>2) // Domingo = 6
+    +dia-32075L)%7;                               //
+
+ switch(mes)
+ {
+  case 1:case 3:case 5:case 7:case 8:case 10:      //
+  case 12:mesd=31;break;                           // Número de días
+  case 4:case 6:case 9:case 11:mesd=30;break;      // del mes...
+  case 2:mesd=28;if(bisiesto(anho)) mesd=29;break; //
+ }
+
+ printf("\n\n %s",mesc[mes-1]); // Impresión del Título del mes.
+ printf("\n Lu Ma Mi Ju Vi Sa Do\n"); // Encabezados de los días.
+
+ ...
+
+ return (0);
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                La Salida en Pantalla sería algo como:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+día= 17
+
+mes= 3
+
+año= 1960
+
+
+        Marzo
+ Lu Ma Mi Ju Vi Sa Do
+     1  2  3  4  5  6
+  7  8  9 10 11 12 13
+ 14 15 16 17 18 19 20
+ 21 22 23 24 25 26 27
+ 28 29 30 31
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
