@@ -1,6 +1,7 @@
 /*******************************************/
-/* Solucionada por:                        */
+/* Solved by:                              */
 /* Copyright (C) 2000 por David A. Capello */
+/* Spanish solution                        */
 /*******************************************/
 
 #include <dos.h>
@@ -36,17 +37,17 @@ void imprimir_caracter(char chr, int x, int y, int repeticiones)
   y--;
 
   if ((x>=0) && (y>=0) && (x<80) && (y<25)) {
-    /* cambiar la posici¢n del cursor */
+	  /* change cursor position */
 
     regs.h.ah = 0x02;
     regs.h.bh = 0; /* page number */
-    /* positions relative to 0,0 origin */
+				   /* positions relative to 0.0 origin */
     regs.h.dh = y; /* row */
     regs.h.dl = x; /* column */
 
     int86(0x10, &regs, &regs);
 
-    /* escribir el texto en la posici¢n indicada anteriormente */
+    /* write the text in the position indicated above */
     regs.h.ah = 0x09;
     regs.h.al = chr; /* ASCII character to write */
     regs.h.bh = 0; /* display page */
@@ -78,7 +79,7 @@ void dibujar(void)
 
   borrar_pantalla();
 
-  /* primer animaci¢n */
+  /* first animation */
   for (i=0; i<=1000; i++) {
     j = 12 - 12 * i / 1000;
     imprimir_caracter(' ', 40, 12-j-1, strlen(msg[0]));
@@ -93,7 +94,7 @@ void dibujar(void)
     imprimir_cadena(msg[2], 46+j, 13);
   }
 
-  /* segunda animaci¢n */
+  /* second animation */
   for (i=0; i<=1000; i++) {
     j = 31 - 31 * i / 1000;
     imprimir_caracter(' ', 31-j-1, 14, 1);
@@ -131,9 +132,9 @@ int main(void)
 {
   int tecla = ' ';
 
-  /* ESC (27), para el programa */
+  /* ESC (27), for the program */
   while (tecla != 27) {
-    /* ESPACIO (32), dibuja la pantalla */
+	  /* SPACE(32), draw the screen */
     if (tecla == ' ')
       dibujar();
 

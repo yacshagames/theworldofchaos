@@ -1,111 +1,107 @@
-Estas son unas discusiones que surgieron mediante el desarrollo del Reto0014:
-
+ï»¿These are some discussions that arose through the development of Challenge0014:
 
 Message:
-   Date: Mon, 5 Mar 2001 16:39:58 -0500
-   From: "José Luis De la Cruz Lázaro" <jcruz@ec-red.com>
-Subject: [El Reto] 0014 - Final
+Date: Mon, 5 Mar 2001 16:39:58 -0500
+From: "JosÃ© Luis De la Cruz LÃ¡zaro" <jcruz@ec-red.com>
+Subject: [The Challenge] 0014 - Final
 
-Este mensaje es solo para Nyder:
+This message is only for Nyder:
 
- Solo quiero que me expliques una cosa, que dabas por sentada, es cierto que
-en algún momento había que intercambiar los valores de las variables a y b
-sin variable auxiliar, para esto tu escogiste el algoritmo de las cubetas
- que fue explicado en esta lista hace algún tiempo ), a saber:
+I just want you to explain one thing to me, which you took for granted, it is true that
+at some point you had to exchange the values â€‹â€‹of the variables a and b
+without an auxiliary variable, for this you chose the bucket algorithm
+which was explained in this list some time ago ), namely:
 
-a = a+b; //¿acá hay un error?
+a = a+b; //is there a mistake here?
 b = a-b;
 a = a-b;
 
-Como sabemos si a+b puede contener valores superiores al máximo permitido
-por el tipo int, por lo tanto se pierde 1 bit al hacer dicha suma y asignar
-este valor a "a", sin embargo al hacer b = a-b, parece como si no hubiera
-sucedido dicho efecto, es decir,  b contiene el valor de a, y por ende el
-programa se ejecuta satisfactoriamente. ¿Como explicas esto?
+As we know, a+b can contain values â€‹â€‹greater than the maximum allowed
+by the int type, therefore 1 bit is lost when doing this sum and assigning
+this value to "a", however, when doing b = a-b, it seems as if this effect had not
+occurred, that is, b contains the value of a, and therefore the
+program runs satisfactorily. How do you explain this?
 
-En el próximo mensaje envío la solución JUEZ.
+In the next message I will send the solution JUDGE.
 
-De todas formas por ser el ganador de este reto, ahora te toca proponer el
-siguiente Reto ( 0015 ). Espero tu reto en la lista.
+Anyway, as the winner of this challenge, now it is your turn to propose the
+next Challenge ( 0015 ). I hope your challenge is on the list.
 
-Un saludo.
+Regards
 
-          o  o José Luis De la Cruz Lázaro o   220KV of Chaos
+       o  o Jose Luis De la Cruz Lazaro   o   220KV of Chaos
      o       o  Visit my homepage:          o      o
-   o    o o    o EL MUNDO DEL CAOS            o   o o
-  o   o  o     o  www.geocities.com/joseluisdl  o    o  o
-  o    o     o     ICQ: 46906401                      o  o
+   o    o o    o THE WORLD OF CHAOS           o   o o
+  o   o  o     o   https://www.theworldofchaos.com   o  o
+  o    o     o                                   o    o  o
    o     o o     Chaos = Chaos & math ? C++ : ++C;        o
      o                                                     o
         o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
                     o  o   o   o   o   o
      o               o   o   o   o   o
    o   o      o
- o      o   o  o  o  o  o o oooo Universidad Nacional de Ingeniería
-          o     o                 Facultad de Ingeniería Eléctrica y
-                                             Electrónica
-                                 O  O  o ooo Lima - Perú ooo o o O  O
+ o      o   o  o  o  o  o o oooo      Yacsha Software & Desing
+                                 O  O  o ooo Lima - Peru ooo o o O  O
 
 
-Respuesta :
+
+Reply :
 
 Message:
-   Date: Tue, 6 Mar 2001 00:16:00 -0600
-   From: Nyder Menéndez <nyder2000@yahoo.es>
-Subject: Re:  [El Reto] 0014 - Final --->Respuesta...
+Date: Tue, 6 Mar 2001 00:16:00 -0600
+From: Nyder MenÃ©ndez <nyder2000@yahoo.es>
+Subject: Re: [The Challenge] 0014 - Final --->Reply...
 
-Saludos...
-(Aunque parezca redundancia...  :-)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->Solo quiero que me expliques una cosa, que dabas por sentada, es
->cierto que en algún momento había que intercambiar los valores de
->las variables a y b sin variable auxiliar, para esto tu escogiste
->el algoritmo de las cubetas que fue explicado en esta lista hace
->algún tiempo ), a saber:
+Greetings...
+(Although it may seem redundant... :-)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>I just want you to explain one thing to me, which you took for granted, it is
+>true that at some point you had to exchange the values â€‹â€‹of
+>the variables a and b without an auxiliary variable, for this you chose
+>the bucket algorithm that was explained in this list some time
+>ago), namely:
 
->a = a+b; //¿acá hay un error?
+>a = a+b; //is there a mistake here?
 >b = a-b;
 >a = a-b;
 
->Como sabemos si a+b puede contener valores superiores al máximo
->permitido por el tipo int, por lo tanto se pierde 1 bit al hacer
->dicha suma y asignar este valor a "a", sin embargo al hacer b = a-b,
->parece como si no hubiera sucedido dicho efecto, es decir, b contiene
->el valor de a, y por ende el programa se ejecuta satisfactoriamente.
->¿Como explicas esto?
+>As we know that a+b can contain values â€‹â€‹greater than the maximum
+>allowed by the int type, therefore 1 bit is lost when doing
+>this sum and assigning this value to "a", however when doing b = a-b,
+>it seems as if this effect had not occurred, that is, b contains
+>the value of a, and therefore the program runs satisfactorily.
+>How do you explain this?
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Bien..
-. no se si entendí bien la pregunta...
-pero vamos a tratar de explicarlo...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~~~
+Good.. . I don't know if I understood the question well...
+but let's try to explain it...
 
-(voy a tratar de explicarlo con números...
-o sea... matemáticamente...
-luego espero que me lo expliques...
-en bits... que de eso creo que entiendes...
-mejor que yo...  :-)
+(I'm going to try to explain it with numbers...
+I mean... mathematically...
+then I hope you explain it to me...
+in bits... because I think you understand that...
+better than me... :-)
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Supongamos, (para hacerlo más sencillo)...
-que los números enteros tuviesen un rango de          -21 a 20
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Let's suppose, (to make it simpler)...
+that the integers had a range from -21 to 20
 
-y demos dos números arbitrarios...                     15 y 8
+and let's give two arbitrary numbers... 15 and 8
 
-que están dentro del rango de -21 a 20...
-pero cuya suma... cae fuera de este rango...
+that are within the range from -21 to 20...
+but whose sum... falls outside this range...
 
-(como recordaremos el C no controla este tipo...
-de situaciones... ...esto corresponde al programador...
-o sea... nosotros...  :-)
+(as we remember C does not control this type of...
+situations... ...this is up to the programmer...
+i.e.... us... :-)
 
-Cuando el programa "suma" ambos valores... y se "topa"...
-con el valor máximo permitido...
-entonces el programa "hace" lo siguiente...
+When the program "adds" both values... and "hits"...
+the maximum value allowed...
+then the program "does" the following...
 
-(según puedo comprender...)
-
+(as far as I can understand...)
 
 int a,b;
 a=15;
@@ -113,194 +109,192 @@ b=8;
 
 a=a+b;
 
-//  a=   15 + (......................8........................)
-//  a=   15... +1    +1    +1    +1    +1     +1     +1     +1
-//             16... 17... 18... 19... 20... -21... -20... -19
+// a= 15 + (........................8........................)
+// a= 15... +1 +1 +1 +1 +1 +1 +1 +1
+// 16... 17... 18... 19... 20... -21... -20... -19
 //
-//  luego...
-//  a sería igual a -19
+// then...
+// a would be equal to -19
 
 b=a-b;
 
-//  b=   -19 - (.....................8........................)
-//  b=   -19...  -1     -1    -1    -1    -1    -1    -1    -1
-//              -20... -21... 20... 19... 18... 17... 16... 15
+// b= -19 - (.....................8........................)
+// b= -19... -1 -1 -1 -1 -1 -1 -1 -1
+// -20... -21... 20... 19... 18... 17... 16... 15
 //
-//  luego...
-//  b sería igual a 15... que era el valor original de "a"...
-//  lo cual corrige...el "error" provocado por el "desbordamiento"...
-//  si se le puede llamar así...
+// then...
+// b would be equal to 15... which was the original value of "a"...
+// which corrects... the "error" caused by the "overflow"...
+// if you can call it that...
 
-//  y por supuesto... con...
+// and of course... with...
 
 a=a-b;
 
-//  ocurriría lo mismo... solo que sería... un poquito más largo...
-//  y si lo deseas lo puedes comprobar...
-//  quedando finalmente "a" con un valor de 8...
-//  que era el valor anterior de b...
+// the same thing would happen... only it would be... a little longer...
+// and if you want you can check it...
+// finally leaving "a" with a value of 8...
+// which was the previous value of b...
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Esta sería "mi explicación"... dentro de la lógica...
-como la veo...
+This would be "my explanation"... within the logic...
+as I see it...
 
-Ahora... me gustaría ver... la explicación... con los bits...
+Now... I would like to see... the explanation... with the bits...
 
 :-)
 
-Por cierto... aún no he probado la solución...
-pero voy a analizarla en unos momentos...
-para aprender como es eso de los XOR...
-(para mí es material nuevo... aunque exista hace mucho... :-)
+By the way... I haven't tried the solution yet...
+but I'm going to look at it in a few moments...
+to learn what XOR is all about...
+(for me it's new material... even though it's been around for a long time... :-)
 
-pero me encanta aprender...
-tener nuevas herramientas para...
-aplicarlas en las lógicas...
-que a uno le toca desarrollar...
+but I love learning...
+having new tools to...
+apply them to the logics...
+that one has to develop...
 
 nyder2000@yahoo.es
 
-Respuesta:
+Reply:
 
 Message:
-   Date: Tue, 6 Mar 2001 10:31:31 -0500
-   From: "José Luis De la Cruz Lázaro" <jcruz@ec-red.com>
-Subject: RE:  [El Reto] 0014  - Respuesta a Nyder
+Date: Tue, 6 Mar 2001 10:31:31 -0500
+From: "JosÃ© Luis De la Cruz LÃ¡zaro" <jcruz@ec-red.com>
+Subject: RE: [The Challenge] 0014 - Reply to Nyder
 
-Hola Nyder
+Hello Nyder
 
->    From: Nyder Menéndez <nyder2000@yahoo.es>
+> From: Nyder MenÃ©ndez <nyder2000@yahoo.es>
 >
-> Esta sería "mi explicación"... dentro de la lógica...
-> como la veo...
+> This would be "my explanation"... within logic...
+> as I see it...
 
-Tu explicación fue excelente :-) , muy buena investigación sobre el
-tratamiento interno de los números enteros.
+Your explanation was excellent :-) , very good research on the
+internal treatment of integers.
 
-> Ahora... me gustaría ver... la explicación... con los bits...
+> Now... I would like to see... the explanation... with the bits...
 >
 > :-)
 
-Ya que lo pides, daré la respuesta pero desde el punto de vista binario:
+Since you ask, I will give the answer but from the binary point of view:
 
-En primer lugar esto no solo se cumple en C, se cumple en cualquier sistema
-electrónico digital, los procesadores están diseñados para trabajar con esta
-convención y por ende el software debe adaptarse a esta situación.
+First of all this is not only true in C, it is true in any digital electronic system, processors are designed to work with this
+convention and therefore the software must adapt to this situation.
 
-Para hacer la explicación más fácil, supongamos que un tipo "int" tenga 5
-bits, entonces tenemos, que el bit de mayor peso será el bit de signo ( 0 =
-"+" , 1 = "-" ), esto quiere decir que el número entero propiamente dicho,
-solo sería representado con 15 bits.
+To make the explanation easier, let's suppose that an "int" type has 5
+bits, then we have that the most important bit will be the sign bit ( 0 =
+"+" , 1 = "-" ), this means that the whole number itself,
+would only be represented with 15 bits.
 
-Por ejemplo el número 13 se define binariamente como:
+For example the number 13 is defined binary as:
 
- 0 1101
- | \  /
- | número
- +--- signo positivo
+0 1101
+| \ /
+| number
++--- positive sign
 
-Pero para -13 se definirá como sigue:
+But for -13 it will be defined as follows:
 
- 1 0011
- | \  /
- | número
- +--- signo negativo
+1 0011
+| \ /
+| number
++--- negative sign
 
-Se observa que: número = 0011 = 3 = 16 - 13 = 2^4 - 13
+It is observed that: number = 0011 = 3 = 16 - 13 = 2^4 - 13
 
-Es por esto que a esta convención se la llama "Complemento a 2", porque el
-número propio negativo , resulta ser el complemento aritmético con respecto
-a la potencia de 2 inmediata superior.
+This is why this convention is called "2's Complement", because the
+negative proper number turns out to be the arithmetic complement with respect
+to the next higher power of 2.
 
-Esto explica porque el rango de los números enteros para este caso será
-de -16 a 15 y no de -15 a 16.
+This explains why the range of integers in this case will be
+from -16 to 15 and not from -15 to 16.
 
-Después de esta pequeña introducción a la representación entera binaria,
-podré explicar porque no sucede el aparente error de desborde en la
-operación: a = (a + b) - b;
+After this brief introduction to the binary integer representation,
+I will be able to explain why the apparent overflow error does not occur in the
+operation: a = (a + b) - b;
 
-Suponiendo a=15 y b=3 del tipo "int" ( 5 bits ) definido anteriormente,
-entonces:
+Assuming a=15 and b=3 of the "int" type (5 bits) defined above,
+then:
 
-Al aplicar la suma binaria( es como sumar en base 10, pero el acarreo será
-un binario ):
+When applying the binary sum (it's like adding in base 10, but the carry will be
+a binary):
 
 15 = 01111
- 3 = 00011 +
-     -------
-     10010 = ¿18?
+3 = 00011 +
+-------
+10010 = 18?
 
-Con lo que vemos que la suma si funciona, porque si estuviéramos utilizando
-un tipo "int" mayor a 5 bits, 10010 = 18 = 15 + 3. Pero no es así, ya que de
-lo que explicamos anteriormente 10010 = -14.
+With which we see that the sum does work, because if we were using
+an "int" type greater than 5 bits, 10010 = 18 = 15 + 3. But it is not so, since
+from what we explained above 10010 = -14.
 
-Luego al aplicar la diferencia binaria:
+Then when applying the binary difference:
 
 -14 = 10010
-  3 = 00011 -
-      -------
-      01111 = 15
+3 = 00011 -
+-------
+01111 = 15
 
-Con lo que se observa que todo vuelve a la normalidad otra vez.
+With which we observe that everything returns to normal again.
 
-Como conclusión, se puede decir que los números negativos en un tipo "int",
-representan la continuación binaria de los números positivos, comportándose
-internamente como un "unsigned int".
+In conclusion, it can be said that negative numbers in an "int" type,
+represent the binary continuation of positive numbers, behaving
+internally like an "unsigned int".
 
-Espero que esta pequeña explicación haya saciado tu inquietud.
+I hope this little explanation has satisfied your concern.
 
-> Por cierto... aún no he probado la solución...
-> pero voy a analizarla en unos momentos...
-> para aprender como es eso de los XOR...
-> (para mí es material nuevo... aunque exista hace mucho... :-)
+> By the way... I haven't tried the solution yet...
+> but I'll look into it in a few moments...
+> to learn what XOR is all about...
+> (for me it's new material... even though it's been around for a long time... :-)
 
-El XOR tiene muchas aplicaciones al software y hardware, y su principal
-importancia radica en que es un operador directo e inverso a la vez, por
-ejemplo:
+XOR has many applications to software and hardware, and its main
+importance lies in the fact that it is both a direct and inverse operator, for
+example:
 
- (7^15)^7 = 15  que es análogo a: (7+15)-7 =15
+(7^15)^7 = 15 which is analogous to: (7+15)-7 =15
 
-Esta peculiaridad le otorga una mayor velocidad a los cálculos numéricos que
-hace el procesador, es por eso que cuando se quiere utilizar máscaras se
-prefiere utilizar el XOR, en lugar de operaciones aritméticas que demoran
-más tiempo y además producen desbordes.
+This peculiarity gives greater speed to the numerical calculations that the
+processor makes, that's why when you want to use masks you prefer to use XOR, instead of arithmetic operations that take
+more time and also produce overflows.
 
-Por ejemplo una máscara que es bien conocida, está presente cuando mueves
-una ventana en MS Windows, cierto que al desplazar la ventana, esta aparece
-representada solo por su marco, que es un simple rectángulo, si te fijas
-bien verás que los píxeles del rectángulo toman el color inverso del lugar
-donde estén, es decir, utilizan como mascara el color de la pantalla. Este
-es un viejo truco que sirve para visualizar siempre dicho rectángulo
-independientemente del color de su fondo. Y esto se hace con un simple XOR:
+For example, a well-known mask is present when you move
+a window in MS Windows. It is true that when you move the window, it appears
+represented only by its frame, which is a simple rectangle. If you look closely,
+you will see that the rectangle's pixels take the inverse color of the place
+where they are, that is, they use the color of the screen as a mask. This
+is an old trick that serves to always display said rectangle
+regardless of the color of its background. And this is done with a simple XOR:
 
-Donde "mascara" es un color "control", que va a controlar que la dispersión
-del tono de color, no varíe mucho con respecto a "mascara". Para el ejemplo
-mascara puede ser el color gris.
+Where "mask" is a "control" color, which will control that the dispersion
+of the color tone does not vary much with respect to "mask". For the example,
+mask can be the color gray.
 
-color = mascara^color //se halla el color del píxel del rectángulo
-//pintar el "color" del píxel
-color = mascara^color //se recupera el color de la pantalla para pintarlo
-después que se mueve el rectángulo de su posición.
+color = mask^color //find the color of the rectangle's pixel
+//paint the "color" of the pixel
+color = mask^color //recover the color of the screen to paint it
+after the rectangle is moved from its position.
 
-Un saludo... Suerte.
+Regards
+Good Luck
 
-          o  o José Luis De la Cruz Lázaro o   220KV of Chaos
+       o  o Jose Luis De la Cruz Lazaro   o   220KV of Chaos
      o       o  Visit my homepage:          o      o
-   o    o o    o EL MUNDO DEL CAOS            o   o o
-  o   o  o     o http://www.geocities.com/joseluisdl o  o
-  o    o     o     ICQ: 46906401                 o    o  o
+   o    o o    o THE WORLD OF CHAOS           o   o o
+  o   o  o     o   https://www.theworldofchaos.com   o  o
+  o    o     o                                   o    o  o
    o     o o     Chaos = Chaos & math ? C++ : ++C;        o
      o                                                     o
         o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
                     o  o   o   o   o   o
      o               o   o   o   o   o
    o   o      o
- o      o   o  o  o  o  o o oooo Universidad Nacional de Ingeniería
-          o     o                 Facultad de Ingeniería Eléctrica y
-                                             Electrónica
-                                 O  O  o ooo Lima - Perú ooo o o O  O
+ o      o   o  o  o  o  o o oooo      Yacsha Software & Desing
+                                 O  O  o ooo Lima - Peru ooo o o O  O
+
 
 
 

@@ -1,141 +1,143 @@
 /****************************************************************************
-El Reto 007
-creado por: José Luis De la Cruz Lázaro
-	    jcruz@ec-red.com
-            www.geocities.com/joseluisdl
-Fecha: 22 de Septiembre del 2000
+Challenge 007 - 22-IX-2000
+created by: Jose Luis De la Cruz Lazaro
+			contact@theworldofchaos.com
+			www.theworldofchaos.com
 
-Este programa es la recreación de un problema que tuve hace algún tiempo.
+This program is a recreation of a problem I had some time ago.
 
-El objetivo es sumar 2 matrices mediante una función Suma, donde las matrices
-son arreglos bidimensionales creados dinámicamente y su orden es
-ingresado desde el teclado.
+The objective is to add 2 matrices by means of a function Sum, where the matrices are two-dimensional arrays created dynamically and their order is entered from the keyboard.
 
-Pero resulta que el programa no muestra errores a la hora de compilar, talvez
-algunos warnings, pero al momento de ejecutar el exe, sucede alguno de los
-siguientes casos:
--El programa se cuelga desde el inicio;
--Muestra bien el resultado, pero al final se cuelga;
--Muestra bien el resultado, pero al final muestra el mensaje de error:
- Null pointer assignment.
--Muestra bien el resultado pero solo para matrices de orden pequeño;
+But it turns out that the program does not show errors when compiling, maybe some warnings, but at the moment of executing the exe, some of the following cases happen:
 
-PREGUNTAS:...
-Lo que se quiere en primer lugar es encontrar donde está el error y explicar
-porque que se cuelga. No se quiere que se de la solución para un compilador
-específico, esto lo digo, porque su solución puede correr en DJGPP, pero no
-en Borland C. Lo que se quiere es que la soluci¢n sea general.
+- The program hangs from the start;
+- It shows well the result, but at the end it hangs;
+- It shows the result well, but at the end it shows the error message: Null pointer assignment.
+-  The program displays the result well, but only for small order matrices;
 
-En segundo lugar, modificar el programa de tal forma que se pueda sumar
-las 2 matrices mas eficientemente.
+Questions
+1st. Find where the error is and explain why it crashes. You do not want to give the solution for a specific compiler, I say this, because your solution can run in DJGPP, but not in Borland C. What you want is that the solution is general.
 
-La tercera pregunta es: ¨Hasta que Orden ( de las matrices ), podría
-funcionar bien el programa, sin colgarse por falta de memoria?
-Explicar porque.
-Se debe cumplir que la soluci¢n de la pregunta 1 debe concordar con lo
-dicho en la pregunta 3.
+2nd. Modify the program in such a way that you can add the 2 matrices more efficiently.
 
-NOTA FINAL:
-Este programa ha sido probado en los siguientes compiladores para DOS:
-DJGPP 2.02, Borland C 3.1, Visual C++ 6 ( Win32 Console Application Project)
+3rd. Up to what order (of the matrices), could the program work well, without crashing due to lack of memory? Explain why.
+
+It must be fulfilled that the solution of question 1 must agree with what is said in question 3.
+
+       o  o Jose Luis De la Cruz Lazaro o   220KV of Chaos
+     o       o  Visit my homepage:          o      o
+   o    o o    o THE WORLD OF CHAOS           o   o o
+  o   o  o     o   https://www.theworldofchaos.com   o  o
+  o    o     o                                   o    o  o
+   o     o o     Chaos = Chaos & math ? C++ : ++C;        o
+     o                                                     o
+        o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
+                    o  o   o   o   o   o
+     o               o   o   o   o   o
+   o   o      o
+ o      o   o  o  o  o  o o oooo      Yacsha Software & Desing
+                                 O  O  o ooo Lima - Peru ooo o o O  O
+
 ****************************************************************************/
 
-#include <iostream.h>
-#include <stdlib.h>
+#include <iostream>
 #include <time.h>
+using std::cout;
+using std::cin;
 
-//Asigna Memoria a un puntero doble A
-void CrearMatriz( int **A, int Orden);
+//Assigns memory to a double pointer A
+void CreateMatrix(int **A, int Order);
 
-//Destruye la matriz cuadrada creada con CrearMatriz
-void DestruirMatriz( int **A, int Orden);
+//Destroys the square matrix created with CreateMatrix
+void DestroyMatrix(int **A, int Order);
 
-//Retorna la matriz suma de A y B
-int **Suma( int **A, int **B, int Orden );
+//Returns the sum matrix of A and B
+int **Sum(int **A, int **B, int Order);
 
-//Muestra la matriz A
-void MostrarMatriz( int **A, int Orden );
+//Displays the matrix A
+void ShowMatrix(int **A, int Orden);
 
-void main()
+int main()
 {
 
- //2 punteros dobles, se utilizaran para crear 2 arreglos bidimensionales
- //din micos
- int **a,**b;
+	//2 double pointers, will be used to create 2 dynamic two-dimensional arrays
+	int **a, **b;
 
- int i,j;
+	int i, j;
 
- int N;
+	int N;
 
- cout<<"\n\nIngrese el orden de las matrices: ";
- cin>>N;
+	cout << "\n\nEnter the order of the arrays: ";
+	cin >> N;
 
- CrearMatriz(a,N); //se crea din micamente una MATRIZ de orden N
- CrearMatriz(b,N); //se crea din micamente una MATRIZ de orden N
+	CreateMatrix(a, N); //a MATRIX of order N is created dynamically
+	CreateMatrix(b, N); //a MATRIX of order N is created dynamically
 
- srand(time(NULL)); //Inicializa el generador n£meros aleatorios,
-		    //dependiente del tiempo actual
+	srand(time(NULL)); //Initializes the random number generator, 
+					   //dependent on the current time
 
- for(i=0;i<N;i++)
-  for(j=0;j<N;j++)
-  {
-   a[i][j]=rand()%10; // a y b contienen n£meros naturales menores que 10
-   b[i][j]=rand()%10;
-  }
+	for (i = 0; i < N; i++)
+		for (j = 0; j < N; j++)
+		{
+			a[i][j] = rand() % 10; // a and b contain natural numbers less than 10
+			b[i][j] = rand() % 10;
+		}
 
- cout<<"\nContenido de matriz A:\n";
- MostrarMatriz(a,N); //se muestra la matriz A
+	cout << "\nContents of array A:\n";
+	ShowMatrix(a, N); //displays array A
 
- cout<<"\n\nContenido de matriz B:\n";
- MostrarMatriz(b,N); //se muestra la matriz B
+	cout << "\n\nContents of array B:\n";
+	ShowMatrix(b, N); //displays array B
 
- a=Suma(a, b, N); //se ejecuta la funci¢n suma y se asigna el resultado a la
-		  //matriz a
+	Sum(a, b, N);	//executes the sum function and assigns the result to the
+					//array a
 
- cout<<"\n\nLa suma matricial de A y B es:\n";
- MostrarMatriz(a,N); //se muestra la suma A+B
+	cout << "\n\nThe matrix sum of A and B is:\n";
+	ShowMatrix(a, N); //displays the sum A+B
 
- DestruirMatriz(a, N); //destruye A
- DestruirMatriz(b, N); //destruye B
+	DestroyMatrix(a, N); //destroys A
+	DestroyMatrix(b, N); //destroys B
 
+	return 0;
 }
 
-void CrearMatriz( int **A, int Orden)
+void CreateMatrix(int **A, int Orden)
 {
- for( int i=0; i<Orden; i++)
-  A[i] = new int[Orden];
+	for (int i = 0; i < Orden; i++)
+		A[i] = new int[Orden];
 }
 
-void DestruirMatriz( int **A, int Orden)
+void DestroyMatrix(int **A, int Orden)
 {
- for( int i=0; i<Orden; i++)
-  delete A[i];
+	for (int i = 0; i < Orden; i++)
+		delete A[i];
 }
 
-int **Suma( int **A, int **B, int Orden )
+int **Sum(int **A, int **B, int Orden)
 {
- int **C,i,j;
+	int **C, i, j;
 
- CrearMatriz(C,Orden);
+	CreateMatrix(C, Orden);
 
- for(i=0;i<Orden;i++)
-  for(j=0;j<Orden;j++)
-    C[i][j]=A[i][j]+B[i][j];
+	for (i = 0; i < Orden; i++)
+		for (j = 0; j < Orden; j++)
+			C[i][j] = A[i][j] + B[i][j];
 
- return C;
+	return C;
 }
 
-void MostrarMatriz( int **A, int Orden )
+void ShowMatrix(int **A, int Orden)
 {
- int i,j;
+	int i, j;
 
-  for(i=0;i<Orden;i++)
- {
-  cout<<"\n";
-  for(j=0;j<Orden;j++)
-    cout<<A[i][j]<<" ";
- }
+	for (i = 0; i < Orden; i++)
+	{
+		cout << "\n";
+		for (j = 0; j < Orden; j++)
+			cout << A[i][j] << " ";
+	}
 }
+
 
 
 

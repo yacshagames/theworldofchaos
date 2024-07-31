@@ -1,49 +1,38 @@
-Hola a todos los que siguen el Reto...
+Hello to all those following the Challenge...
 
-Tal y como lo prometí, aquí entrego la solución JUEZ completa al Reto 0010
- archivo adjunto ). Quisiera que me disculpen la demora, ya que debido a la
-falta de tiempo no la había comentado debidamente, ni había creado un
-ejemplo de aplicación. Esto lo digo porque para probar el funcionamiento de
-la función pdelay, lo hago haciendo la simulación de un reloj.
+As I promised, here I am giving the complete JUDGE solution to Challenge 0010 (attached file). I would like to be excused for the delay, since due to lack of time I had not commented on it properly, nor had I created an application example. I say this because to test the operation of the pdelay function, I do it by simulating a clock.
 
 **********************************************
-SOLUCION JUEZ AL RETO0010:
-Programado por:
-   José Luis De la Cruz Lázaro - 20/XII/2000
-   jcruz@e...
-   http://www.geocities.com/joseluisdl
+JUDGE SOLUTION TO CHALLENGE0010 - 20/XII/2000
+created by: Jose Luis De la Cruz Lazaro
+			contact@theworldofchaos.com
+			www.theworldofchaos.com
 **********************************************
 
-La idea es muy simple, contar cuantos incrementos de un contador
-de tipo entero suceden en 1 milisegundo.
+The idea is very simple, to count how many increments of an integer counter occur in 1 millisecond.
 
-A dichos incrementos les denominé subticks, debido a que un tick
-puede ser divido en un número entero de subticks, y mejor aun,
-1 milisegundo tiene también un número entero de subticks,
-el cual se tiene calcular por métodos estadísticos.
+I called these increments subticks, because a tick can be divided into an integer number of subticks, and better yet, 1 millisecond also has an integer number of subticks, which must be calculated by statistical methods.
 
-El número de "subticks por milisegundo" depende principalmente del
-compilador que se use y de la velocidad del procesador, por lo que
-es necesario implementar una función que cuente cuantos subticks
-existen en 1 tick ( SubTicks() ) y otra que calcule el promedio
-de en un cierto número de ensayos, del resultado arrojado por SubTicks()
-( esto lo hace SubTicksMedio() ).
+The number of "subticks per millisecond" depends mainly on the compiler used and the speed of the processor, so it is necessary to implement a function that counts how many subticks exist in 1 tick ( SubTicks() ) and another that calculates the average of the result returned by SubTicks() over a certain number of trials (this is done by SubTicksAverage() ).
 
-Una vez calculado el número de "subticks por milisegundo", recién
-se podría utilizar pdelay ya que bastaría una interpolación lineal
-( o regla de tres simple ), para determinar el número de subticks
-en t miliseguntos ( T ), y poner una pausa ejecutando un bucle
-que tendría T pasos.
+Once the number of "subticks per millisecond" has been calculated, pdelay can then be used, since a linear interpolation (or simple rule of three) would be enough to determine the number of subticks in t milliseconds ( T ), and to pause by executing a loop that would have T steps.
 
-PORTABILIDAD DE pdelay(): ANSI C
-Funciones necesarias para su uso: Subticks() y SucTicksMedio()
-Variable global necesaria: SubTicks_por_ms
+PORTABILITY OF pdelay(): ANSI C
+Functions required for its use: Subticks() and SucTicksMedio()
+Global variable required: SubTicks_per_ms
 
-Un saludo...
+Regards
 
-José Luis De la Cruz Lázaro
-Página Web (El Mundo del Caos): http://www.geocities.com/joseluisdl
-ICQ: 46906401
- Universidad Nacional de Ingeniería
-  Facultad de Ingeniería Eléctrica y Electrónica
- Lima - Perú
+       o  o Jose Luis De la Cruz Lazaro   o   220KV of Chaos
+     o       o  Visit my homepage:          o      o
+   o    o o    o THE WORLD OF CHAOS           o   o o
+  o   o  o     o   https://www.theworldofchaos.com   o  o
+  o    o     o                                   o    o  o
+   o     o o     Chaos = Chaos & math ? C++ : ++C;        o
+     o                                                     o
+        o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
+                    o  o   o   o   o   o
+     o               o   o   o   o   o
+   o   o      o
+ o      o   o  o  o  o  o o oooo      Yacsha Software & Desing
+                                 O  O  o ooo Lima - Peru ooo o o O  O

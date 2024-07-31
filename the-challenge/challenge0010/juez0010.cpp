@@ -1,88 +1,70 @@
+
 /********************************************
-SOLUCION JUEZ AL RETO0010:
 
-Programado por:
-   Jos‚ Luis De la Cruz L zaro - 20/XII/2000
-   jcruz@ec-red.com
-   http://www.geocities.com/joseluisdl
+Hello to all those following the Challenge...
 
-ENUNCIADO:
+As I promised, here I am giving the complete JUDGE solution to Challenge 0010 (attached file). I would like to be excused for the delay, since due to lack of time I had not commented on it properly, nor had I created an application example. I say this because to test the operation of the pdelay function, I do it by simulating a clock.
 
-¨COMO HACER UNA PAUSA DURANTE UN TIEMPO INFERIOR A 55ms?
+**********************************************
+JUDGE SOLUTION TO CHALLENGE0010 - 20/XII/2000
+created by: Jose Luis De la Cruz Lazaro
+			contact@theworldofchaos.com
+			www.theworldofchaos.com
+**********************************************
 
-donde:
-  ms = milisegundos = mil‚simas de segundo.
+The idea is very simple, to count how many increments of an integer counter occur in 1 millisecond.
 
-  El tiempo ingresado debe ser un n£mero entero de milisegundos.
+I called these increments subticks, because a tick can be divided into an integer number of subticks, and better yet, 1 millisecond also has an integer number of subticks, which must be calculated by statistical methods.
 
-ACLARACIONES:
-  Como sabemos, la funci¢n delay, gettime, etc; dependen del procesador de
-  tiempo de nuestra PC ( Timer), el cual trabaja con unidades de tiempo
-  llamados ticks, donde cada tick equivale aproximadamente a 55ms. La pregunta
-  es como se dise¤ar¡a una funci¢n que ponga una pausa durante 1ms, 2ms,
-  3ms,...,55ms, 56ms, 57ms, 58ms,... en adelante ; y claro... tambi‚n hacer la
-  codificaci¢n en C/C++.
+The number of "subticks per millisecond" depends mainly on the compiler used and the speed of the processor, so it is necessary to implement a function that counts how many subticks exist in 1 tick ( SubTicks() ) and another that calculates the average of the result returned by SubTicks() over a certain number of trials (this is done by SubTicksAverage() ).
 
-  Para estandarizar las respuestas, la funci¢n debe tener la siguiente
-  declaraci¢n:
+Once the number of "subticks per millisecond" has been calculated, pdelay can then be used, since a linear interpolation (or simple rule of three) would be enough to determine the number of subticks in t milliseconds ( T ), and to pause by executing a loop that would have T steps.
 
-DECLARACION:
-  //Precision Delay
-  //mseg = n£mero entero de milisegundos
-  void pdelay( unsigned mseg );
+PORTABILITY OF pdelay(): ANSI C
+Functions required for its use: Subticks() and SucTicksMedio()
+Global variable required: SubTicks_per_ms
 
-SOLUCION:
-La idea es muy simple, contar cuantos incrementos de un contador
-de tipo entero suceden en 1 milisegundo.
+Regards
 
-A dichos incrementos les denomin‚ subticks, debido a que un tick
-puede ser divido en un n£mero entero de subticks, y mejor aun,
-1 milisegundo tiene tambi‚n un n£mero entero de subticks,
-el cual se tiene calcular por m‚todos estad¡sticos.
-
-El n£mero de "subticks por milisegundo" depende principalmente del
-compilador que se use y de la velocidad del procesador, por lo que
-es necesario implementar una funci¢n que cuente cuantos subticks
-existen en 1 tick ( SubTicks() ) y otra que calcule el promedio
-de en un cierto n£mero de ensayos, del resultado arrojado por SubTicks()
-( esto lo hace SubTicksMedio() ).
-
-Una vez calculado el n£mero de "subticks por milisegundo", reci‚n
-se podria utilizar pdelay ya que bastar¡a una interpolaci¢n lineal
-( o regla de tres simple ), para determinar el n£mero de subticks
-en t miliseguntos ( T ), y poner una pausa ejecutando un bucle
-que tendr¡a T pasos.
-
-PORTABILIDAD DE pdelay(): ANSI C
-Funciones necesarias para su uso: Subticks() y SucTicksMedio()
-Variable global necesaria: SubTicks_por_ms
-
+	   o  o José Luis De la Cruz Lázaro o   220KV of Chaos
+	 o       o  Visit my homepage:          o      o
+   o    o o    o EL MUNDO DEL CAOS            o   o o
+  o   o  o     o   https://www.theworldofchaos.com   o  o
+  o    o     o                                   o    o  o
+   o     o o     Chaos = Chaos & math ? C++ : ++C;        o
+	 o                                                     o
+		o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
+					o  o   o   o   o   o
+	 o               o   o   o   o   o
+   o   o      o
+ o      o   o  o  o  o  o o oooo      Yacsha Software & Desing
+								 O  O  o ooo Lima - Perú ooo o o O  O
 
 ********************************************/
 //NECESARIAS
-#include <stdio.h> //printf scanf
-#include <time.h>  //clock()
-
-//OPCIONAL ( solo para el ejemplo de Simulaci¢n de un reloj )
-#include <conio.h> //clrscr() getch() kbhit() gotoxy()
+#include <iostream>
+#include <time.h>
+using std::cout;
+using std::cin;
+using std::endl;
 
 unsigned long SubTicks()
 {
- clock_t inicio=clock();  //reseteo de cronometro
- unsigned long i=0;
- while( clock()==inicio )i++; //cuenta el n£mero de subticks de 1 solo tick
- return i; //retorna el n£mero de subticks en 1 tick
+	clock_t inicio = clock();  //reseteo de cronometro
+	unsigned long i = 0;
+	while (clock() == inicio)i++; //cuenta el n£mero de subticks de 1 solo tick
+	return i; //retorna el n£mero de subticks en 1 tick
 }
 
 //Retorna la media del n£mero de SubTicks de 1 tick ( 55ms )
-unsigned long SubTicksMedio( int NumMuestras )
+unsigned long SubTicksMedio(int NumMuestras)
 {
- unsigned long S=0;
+	unsigned long S = 0;
 
- for(int i=0;i<NumMuestras;i++)
-  S+=SubTicks();
+	for (int i = 0; i < NumMuestras; i++)
+		S += SubTicks();
 
- return S/NumMuestras;
+	return S / NumMuestras;
 }
 
 //Contiene el n£mero de Subticks por milisegundo
@@ -90,72 +72,73 @@ unsigned long SubTicks_por_ms;
 
 //Precision Delay
 //mseg = n£mero entero de milisegundos
-void pdelay( unsigned mseg )
+void pdelay(unsigned mseg)
 {
- unsigned long i=0, //contador de subticks
-	     T = SubTicks_por_ms*mseg; //subticks transcurridos en "mseg" milisegundos
- while( ++i<T ) clock();//cuenta el n£mero de subticks ocurridos
-                        //considerando el tiempo que dura en
-                        //ejecutarse la funci¢n clock(), debido a que
-                        //esta funci¢n se utiliz¢ para contar los subticks
+	unsigned long i = 0, //contador de subticks
+		T = SubTicks_por_ms * mseg; //subticks transcurridos en "mseg" milisegundos
+	while (++i < T) clock();//cuenta el n£mero de subticks ocurridos
+						   //considerando el tiempo que dura en
+						   //ejecutarse la funci¢n clock(), debido a que
+						   //esta funci¢n se utiliz¢ para contar los subticks
 }
 
 void main(void)
 {
-  clrscr();
 
-  int NumMuestras;
-  printf("**********************************************\n");
-  printf("* C lculo estadistico del n£mero de subticks *\n");
-  printf("*    que da el procesador por milisegundo    *\n");
-  printf("**********************************************\n");
-  printf("\nIngrese el n£mero de muestras ( Sugerencia = 100 ) : ");
-  scanf("%i", &NumMuestras);
+	int NumMuestras;
+	cout << "**********************************************\n";
+	cout << "* Calculo estadistico del numero de subticks *\n";
+	cout << "*    que da el procesador por milisegundo    *\n";
+	cout << "**********************************************\n";
+	cout << "\nIngrese el numero de muestras ( Sugerencia = 100 ) : ";
+	cin >> NumMuestras;
 
-  printf("\n\nEspere un momento por favor\n");
-  printf("Mientras se calcula el numero de subticks que\n");
-  printf("entrega el procesador por milisegundo...");
+	cout << "\n\nEspere un momento por favor\n";
+	cout << "Mientras se calcula el numero de subticks que\n";
+	cout << "entrega el procesador por milisegundo...";
 
-  SubTicks_por_ms = SubTicksMedio( NumMuestras )/55L;
+	SubTicks_por_ms = SubTicksMedio(NumMuestras) / 55L;
 
-  printf("\n\nC lculo terminado!!!");
-  printf("\n\nN£mero de subticks por milisegundo promedio = %u", SubTicks_por_ms);
-  printf("\n\nPresione cualquier tecla para continuar...");
-  getch();
+	cout << "\n\nCalculo terminado!!!";
+	cout << "\n\nNumero de subticks por milisegundo promedio = " << SubTicks_por_ms;
+	cout << "\n\nIngrese 1 para continuar...";
+	int n;
+	cin >> n;
 
-  //EJEMPLO DEL USO DE PDELAY
-  clrscr();
+	//EJEMPLO DEL USO DE PDELAY
 
-  printf("Ejemplo del uso de pdelay()\n\n");
-  //Prueba para 1 segundo
-  clock_t tini = clock();
-  pdelay(1000);
-  printf("Tiempo transcurrido con el reloj de la BIOS : %f milisegundos", (float)(clock()-tini)/CLOCKS_PER_SEC)*1000 ;
 
-  //Simulaci¢n de un Reloj, pero no es tan precisa porque parece que
-  //el tiempo conjunto de operaci¢n de kbhit() gotoxy() y prinft()
-  //atraza mucho el reloj
-  //ES MAS NOTORIO EN DJGPP QUE EN BORLAND C 3.1...muy curioso...
-  printf("\n\nPresione cualquier tecla para SALIR...\n\n");
-  printf("Simulando un Reloj:\n\n");
-  printf("Segundos transcurridos = 0");
+	cout << "Ejemplo del uso de pdelay()\n\n";
+	//Prueba para 1 segundo
+	clock_t tini = clock();
+	pdelay(1000);
+	cout << "Tiempo transcurrido con el reloj de la BIOS : " << ((double)(clock() - tini) / CLOCKS_PER_SEC)*1000.0 << " milisegundos";
 
-  unsigned ms=0,s=0;
+	//Simulaci¢n de un Reloj, pero no es tan precisa porque parece que
+	//el tiempo conjunto de operaci¢n de kbhit() gotoxy() y prinft()
+	//atraza mucho el reloj
+	//ES MAS NOTORIO EN DJGPP QUE EN BORLAND C 3.1...muy curioso...
+	cout << "\n\nPresione cualquier tecla para SALIR...\n\n";
+	cout << "Simulando un Reloj:\n\n";
+	cout << "Segundos transcurridos:" << endl;
 
-  while( !kbhit() )
-  {
-   ms++;
+	unsigned int ms = 0, s = 0;
 
-   pdelay(1); //pausa de 1 milisegundo
+	while (true)
+	{
+		ms++;
 
-   if( ms==1000) //cada 1000ms transcurre 1 segundo
-   {
-    gotoxy(26,9);
-    printf("%u",++s);
-    ms=0;
-   }
+		pdelay(1); //pausa de 1 milisegundo
 
-  }
+		if (ms == 1000) //cada 1000ms transcurre 1 segundo
+		{
+			cout << (++s) << endl;
+			ms = 0;
+		}
+
+		if (s == 11)
+			break;
+	}
 
 }
 

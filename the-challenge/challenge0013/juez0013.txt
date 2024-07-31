@@ -1,7 +1,21 @@
-Hola seguidores del RETO:
+Hello CHALLENGE followers:
 
-Acá envío la solución JUEZ, para que vean lo sencillo que era.., solo era poner la estrella en un fichero de texto, y luego leer y mostrarla en el programa, al mas puro estilo de cargar un archivo gráfico PCX o BMP. Aunque podría haber otras respuestas, como poner la estrella dentro del código, en un arreglo estático, pero esto es un gasto innecesario de memoria y además el código ocupa mas espacio.
+Here I am sending the JUDGE solution, so you can see how simple it was... it was just putting the star in a text file, and then reading and displaying it in the program, in the purest style of loading a PCX or BMP graphic file. Although there could be other answers, such as putting the star inside the code, in a static array, but this is an unnecessary waste of memory and the code also takes up more space.
 
-NOTA: Para correr bien el programa deben copiar el ejecutable en la misma carpeta del fichero estrella.txt.
+NOTE: To run the program correctly you must copy the executable into the same folder as the star.txt file.
 
-Un Saludo.
+Regards
+
+       o  o Jose Luis De la Cruz Lazaro   o   220KV of Chaos
+     o       o  Visit my homepage:          o      o
+   o    o o    o THE WORLD OF CHAOS           o   o o
+  o   o  o     o   https://www.theworldofchaos.com   o  o
+  o    o     o                                   o    o  o
+   o     o o     Chaos = Chaos & math ? C++ : ++C;        o
+     o                                                     o
+        o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
+                    o  o   o   o   o   o
+     o               o   o   o   o   o
+   o   o      o
+ o      o   o  o  o  o  o o oooo      Yacsha Software & Desing
+                                 O  O  o ooo Lima - Peru ooo o o O  O

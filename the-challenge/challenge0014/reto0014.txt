@@ -1,66 +1,56 @@
-___________________________________________
- El Reto 0014
- creado por: José Luis De la Cruz Lázaro
-	    jcruz@ec-red.com
-	    www.geocities.com/joseluisdl
- Fecha: 20 de Febrero del 2000
-___________________________________________
+ï»¿Challenge 014 - 20-II-2001
+created by: 	Jose Luis De la Cruz Lazaro
+				contact@theworldofchaos.com
+				www.theworldofchaos.com
 
-Este reto no es tan difícil como sus predecesores, pero también
-tiene su maña. Lo bueno de este reto es que no se necesita tener
-un compilador a la mano para responderlo, razón por la que creo,
-los retos anteriores no eran muy respondidos.
+This challenge is not as difficult as its predecessors, but it also has its tricks. The good thing about this challenge is that you don't need to have a compiler at hand to answer it, which is why, I think, the previous challenges were not answered very often.
 
-El reto consiste en que el programa entregue la comparación de 2
-números enteros ingresados por teclado, para esto se provee de
-código fuente ya escrito, por lo que solo falta el código que
-compare los valores ingresados para luego mostrar
-los respectivos resultados.
+The challenge consists of the program providing the comparison of 2 integers entered by keyboard, for this, source code is provided already written, so the only thing missing is the code that compares the entered values â€‹â€‹and then shows the respective results.
 
-Solo se debe implementar la LINEA DE CODIGO UTIL(*) que está
-punteada, sin tocar el código que ya está escrito.
+You only have to implement the USEFUL CODE LINE (*) that is dotted, without touching the code that is already written.
 
-(*) Una línea de código útil en C, es la línea de código entre
-    dos "punto y coma" consecutivos.
+(*) A useful line of code in C is the line of code between two consecutive "semicolons".
 
-Y para que no se la lleven tan fácil, no se puede utilizar if, switch, break, while, do, for y  ?: .
-No se puede declarar mas variables de las que ya están declaradas.
+And so that they don't get away with it so easily, you can't use if, switch, break, while, do, for and ?: .
+You can't declare more variables than those that are already declared.
 
-//CODIGO FUENTE A COMPLETAR
+//SOURCE CODE TO COMPLETE
 
-#include <stdio.h>
+#include <iostream>
+using std::cout;
+using std::cin;
 
 void main()
 {
  int a,b;
 
- printf( "\n\nIngrese número entero A: ");
- scanf( "%i", &a );
- printf( "\nIngrese número entero B: ");
- scanf( "%i", &b );
+ cout << "\n\nEnter integer A: ";
+ cin >> a;
+ cout << "\nEnter integer B: ";
+ cin >> b;
 
- ............ ; //solo completar código aquí
+ ............ ; //just complete code here
 
  if( a==b )
-  printf("\n\nSon números iguales.");
- else
-  printf("\n\nEl mayor es %i y el menor es %i.", a, b );
+	 cout << "\n\nThey are equal numbers."; 
+ else 
+	 cout << "\n\nThe largest is " << a << " and the smallest is " << b << ".";
 }
 
-Mucha Suerte.
 
-          o  o José Luis De la Cruz Lázaro o   220KV of Chaos
+Good luck.
+
+       o  o Jose Luis De la Cruz Lazaro   o   220KV of Chaos
      o       o  Visit my homepage:          o      o
-   o    o o    o EL MUNDO DEL CAOS            o   o o
-  o   o  o     o  www.geocities.com/joseluisdl  o    o  o
-  o    o     o     ICQ: 46906401                      o  o
+   o    o o    o THE WORLD OF CHAOS           o   o o
+  o   o  o     o   https://www.theworldofchaos.com   o  o
+  o    o     o                                   o    o  o
    o     o o     Chaos = Chaos & math ? C++ : ++C;        o
      o                                                     o
         o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
                     o  o   o   o   o   o
      o               o   o   o   o   o
    o   o      o
- o      o   o  o  o  o  o o oooo Universidad Nacional de Ingeniería
-          o     o                 Facultad de Ingeniería Eléctrica y
-                                             Electrónica
-                                 O  O  o ooo Lima - Perú ooo o o O  O
+ o      o   o  o  o  o  o o oooo      Yacsha Software & Desing
+                                 O  O  o ooo Lima - Peru ooo o o O  O
+

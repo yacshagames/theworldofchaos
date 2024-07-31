@@ -1,42 +1,35 @@
-Solucionado el 5 de Marzo del 2001.
+Solved on March 5, 2001.
 
-Hola de nuevo seguidores de el Reto
+Hello again followers of the Challenge
 
-Aquí envío la solución Juez del Reto 0014:
+Here I send the solution Judge of Challenge 0014:
 
- a =  ( a^=b, b = (a^b)*( (a^b)<b ) + b*( (a^b)>=b ), a^b ); //solución JUEZ
+ a =  ( a^=b, b = (a^b)*( (a^b)<b ) + b*( (a^b)>=b ), a^b ); //solution JUDGE
 
-Donde lo único resaltante creo que es, que en vez de utilizar el método de
-las cubetas, como lo hicieron todos los participantes, se utilizó el método
-del XOR ( or excusivo ), para intercambiar las variables a y b, sin variable
-auxiliar.
+Where the only thing that stands out, I think, is that instead of using the bucket method, as all the participants did, the XOR method (exclusive OR) was used to exchange the variables a and b, without an auxiliary variable.
 
 a = a^b;
 b = a^b;
 a = a^b;
 
-Pero esta solución es adaptable al otro método, esto es como sigue:
+But this solution is adaptable to the other method, this is as follows:
 
- a =  ( a+=b, b = (a-b)*( (a-b)<b ) + b*( (a-b)>=b ), a-b ); // solución
-alternativa
+ a =  ( a+=b, b = (a-b)*( (a-b)<b ) + b*( (a-b)>=b ), a-b ); // alternative solution
 
-Un Saludo.
+Regards.
 
-PD: Envío el programa completo de la solución como un adjunto.
+PS: I am sending the complete program of the solution as an attachment.
 
-
-          o  o José Luis De la Cruz Lázaro o   220KV of Chaos
+       o  o Jose Luis De la Cruz Lazaro   o   220KV of Chaos
      o       o  Visit my homepage:          o      o
-   o    o o    o EL MUNDO DEL CAOS            o   o o
-  o   o  o     o http://www.geocities.com/joseluisdl o  o
-  o    o     o     ICQ: 46906401                 o    o  o
+   o    o o    o THE WORLD OF CHAOS           o   o o
+  o   o  o     o   https://www.theworldofchaos.com   o  o
+  o    o     o                                   o    o  o
    o     o o     Chaos = Chaos & math ? C++ : ++C;        o
      o                                                     o
         o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
                     o  o   o   o   o   o
      o               o   o   o   o   o
    o   o      o
- o      o   o  o  o  o  o o oooo Universidad Nacional de Ingeniería
-          o     o                 Facultad de Ingeniería Eléctrica y
-                                             Electrónica
-                                 O  O  o ooo Lima - Perú ooo o o O  O
+ o      o   o  o  o  o  o o oooo      Yacsha Software & Desing
+                                 O  O  o ooo Lima - Peru ooo o o O  O

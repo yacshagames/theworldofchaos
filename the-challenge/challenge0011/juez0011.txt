@@ -1,28 +1,30 @@
-Hola de nuevo seguidores del Reto...
+Hello again Challenge followers...
 
-Aquí está la solución JUEZ completa que prometí.
+Here is the complete JUDGE solution that I promised.
 
-Antes, quiero decir que todos los participantes al presente Reto estuvieron
-diciendo una falacia todo el tiempo..., pues como van a decir que "El
-Lenguaje C++ ¡¡¡Es el Mejor!!!", cuando su solución es en C, no tiene
-sentido..., estas son las contradicciones de la vida!!! :(
+Before, I want to say that all the participants in this Challenge were saying a fallacy the whole time..., well how are they going to say that "The C++ Language is the Best!!!", when their solution is in C, it doesn't make sense..., these are the contradictions of life!!! :(
 
-Es por eso, y no podía ser de otra forma, la solución JUEZ tiene que ser
-escrita en C++. Pues aquí esta la solución ( archivo adjunto ).
+That's why, and it couldn't be any other way, the JUEZ solution has to be written in C++. Well, here is the solution (attached file).
 
-Sobre su portabilidad, es no ANSI y funciona solo en MS-DOS.
+As for portability, it is not ANSI and only works using the conio.h and WinBGIDLL library.
 
-Algo que quiero comentar es que hubo una cosa curiosa, que para imprimir una
-cadena de texto con cout en DJGPP necesita añadir el caracter nueva línea
-"\n" al final de la cadena, pero al hacer esto el programa ya no mostraba el
-efecto tal y como es, así que para forzar al que el programa corra en djgpp,
-adjunto otra solución con printf en lugar de cout, lo cual no me gusta mucho
-ya que lo que se quería era utilizar "Solo C++", pero lo envío de todas
-formas...
+Any suggestion, doubt or comment can be made on the list itself or to my email.
 
-Cualquier sugerencia, duda o comentario pueden hacerlo en la lista misma o a
-mi correo.
+AND MERRY CHRISTMAS AND HAPPY NEW YEAR TO ALL...
 
-Y FELIZ NAVIDAD Y PROSPERO AÑO NUEVO PARA TODOS...
+Regards
 
-Saludos...
+       o  o Jose Luis De la Cruz Lazaro   o   220KV of Chaos
+     o       o  Visit my homepage:          o      o
+   o    o o    o THE WORLD OF CHAOS           o   o o
+  o   o  o     o   https://www.theworldofchaos.com   o  o
+  o    o     o                                   o    o  o
+   o     o o     Chaos = Chaos & math ? C++ : ++C;        o
+     o                                                     o
+        o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
+                    o  o   o   o   o   o
+     o               o   o   o   o   o
+   o   o      o
+ o      o   o  o  o  o  o o oooo      Yacsha Software & Desing
+                                 O  O  o ooo Lima - Peru ooo o o O  O
+

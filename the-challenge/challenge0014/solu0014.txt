@@ -1,84 +1,55 @@
-Solucionado por Nyder Menéndez
-   Date: Mon, 26 Feb 2001 21:26:58 -0000
-   From: nyder2000@yahoo.es
-Subject: [El Reto]0014 - Solución
+Solved by Nyder Menendez
+Date: Mon, 26 Feb 2001 21:26:58 -0000
+From: nyder2000@yahoo.es
+Subject: [The Challenge]0014 - Solution
 
-Ok... vamos a la carga nuevamente...
+Ok... let's go again...
 
-(Trabajito pequeño...  tuve que bajar el DJGPP
-e instalarlo... para ver de que se trataba...
-pero bueno... siempre es bueno aprender...
-y como estamos en "Carnavales"...
-hay un poquito de tiempo libre...  :-)
+(Small job... I had to download DJGPP and install it... to see what it was about... but hey... it's always good to learn... and since we're in "Carnivals"... there's a little free time... :-)
 
-A menos que se te ocurra otra limitante...
-o que el reto sea para resolverlo por un...
-método determinado...
-(para lo cual sería bueno dar una guía...  :-)
+Unless you can think of another limitation... or the challenge is to solve it by a... specific method... (for which it would be good to give a guide... :-)
 
-Según mis investigaciones (documentación...)
-la coma ',' es un "operador"...
-corríjanme si me equivoco...
+According to my research (documentation...) the comma ',' is an "operator"... correct me if I'm wrong...
 
-y como operador aparece en la lista del...
-orden de precedencia... por lo cual...
-debería (a menos que digan lo contrario...)
-poder utilizarse dentro de la línea de código útil...
+and as an operator it appears in the list of... order of precedence... so... it should (unless they say otherwise...) be able to be used within the useful line of code...
 
-y creo... a menos que esté equivocado...
-que eso fue lo que se quizo decir al enunciar...
-lo siguiente...
+and I think... unless I'm mistaken... that was what was meant by stating... the following...
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
->> Si nos vamos por la definición de línea de código útil que se dio
->> en los fundamentos de este reto, también es válido poner cualquier
->> cantidad de líneas de código, porque no sólo el ';' es un separador
->> de sentencias, sino también lo es la ','.
+>> If we go by the definition of a useful line of code that was given in the foundations of this challenge, it is also valid to put any number of lines of code, because not only is the ';' a statement separator, but so is the ','. Very true, <<"this is allowed">>. That is a difference between a useful line of code and a statement.
 
-Muy cierto, <<"esto es permitido">>. Esa es una diferencia entre 
-línea de código útil y sentencia.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+So... after several attempts... to understand the precedence logic... of both compilers... (TC 3.0 and DJGPP)... the simplest solution... IMHO... would be the following...
 
-De forma que... luego de varios intentos...
-por comprender las lógicas de precedencia...
-de ambos compiladores... (TC 3.0 y DJGPP)...
-la solución más sencilla.... IMHO.....
-
-sería la siguiente...
-
-#include <stdio.h>
+#include <iostream>
+using std::cout;
+using std::cin;
 
 void main()
 {
  int a,b;
 
- printf( "\n\nIngrese número entero A: ");
- scanf( "%i", &a );
- printf( "\nIngrese número entero B: ");
- scanf( "%i", &b );
+ cout << "\n\nEnter integer A: ";
+ cin >> a;
+ cout << "\nEnter integer B: ";
+ cin >> b;
 
  a=a+b,a=a-(b=(((a-b)>=b)*b)+((b>(a-b))*(a-b)));
 
  if( a==b )
-  printf("\n\nSon números iguales.");
- else
-  printf("\n\nEl mayor es %i y el menor es %i.", a, b );
+	 cout << "\n\nThey are equal numbers."; 
+else 
+	 cout << "\n\nThe largest is " << a << " and the smallest is " << b << ".";
 }
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-La cual pude probar... en ambos compiladores...
-y funcionó... pero... si dicen que no se puede...
-utilizar el operador coma ','... entonces... ni modo...
-solo avisen... y tratemos otras soluciones...
-
-Por cierto... los paréntesis...  :-)
-
+Which I was able to test... in both compilers... and it worked... but... if they say that you can't... use the comma operator ','... then... no way... just let me know... and we'll try other solutions... By the way... the parentheses... :-)
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,28 +66,16 @@ Por cierto... los paréntesis...  :-)
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Esa forma de "trabajar" la precedencia de ambos compiladores... es...
-muy interesante... parece que utilizan en un punto determinado...
-precedencias inversas... y lo que me parece interpretar...
+That way of "working" the precedence of both compilers... is... very interesting... it seems that they use at a certain point... reverse precedences... and what I seem to interpret... is that those of Borland... threw it away... (they failed...) since the parentheses... in this case... are evaluated from right to left ( <--- ) ... and yet... internally... the other parentheses... (it seems complicated, doesn't it?)... :-) are evaluated from left to right... ( ---> )...
 
-es que los de la Borland... la botaron... (fallaron...)
-puesto que los paréntesis... en este caso...
-son evaluados de derecha a izquierda ( <--- ) ... y sin embargo...
-internamente... los otros paréntesis... (parece enredado no?)...  :-)
-los evalúa de izquierda a derecha... ( ---> )...
+(To understand what I am saying you would have to... try all the possible options that I made... or... imagine them... :-)
 
-(Para entender lo que estoy diciendo tendrían que...
-probar todas las posibles opciones que hice....  o...
-imaginárselas....  :-)
+and that of "left to right... and then right to left... is a lack of consistency... if I don't understand I'm wrong...
 
-y eso de "izquierda a derecha... y luego derecha a izquierda...
-es una falta de consistencia... si no me equivoco...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Bueno... espero no haberlos aburrido...
-que sigan gozando de los carnavales...  :-)
+Well... I hope I haven't bored you... keep enjoying the carnivals... :-)
 
 nyder2000@yahoo.es
 

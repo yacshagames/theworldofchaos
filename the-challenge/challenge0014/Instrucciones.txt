@@ -1,25 +1,19 @@
-Instrucciones de EL RETO
+Instructions for THE CHALLENGE
 
-Este Reto lo propuse para la lista de programación de C/C++ CWORLD. Si desea ver los demás retos o suscribirse a la lista puede visitar:
+This Challenge was proposed for the now defunct C/C++ programming list CWORLD (https://web.archive.org/web/20011102010617/http://www.ciudadfutura.com/cworld/retos_anteriores.htm) in 1999.
 
- http://www.ciudadfutura.com/cworld/elreto.htm
+To make it more interesting, I suggest you first try to solve it on your own. And only when you can't go on, look at the solution.
 
-Para que sea mas interesante le sugiero que primero intente resolverlo por sus propios medios. Y solo cuando ya no pueda seguir, mirar la solución.
+Included Files:
 
-Archivos Incluidos:
+challengexxxx.*    -> Original statement
+judgexxxx.txt -> JUDGE Solution (the solution I used to correct the participants)
+judgexxxx.cpp -> Attached Source Code of the JUDGE solution (optional)
+soluxxxx.cpp -> Solution sent by the winning participant (doesn't always exist)
+discuxxxx.txt -> Some important discussions that arose during the development of the challenge (optional)
 
-retoxxxx.*    -> Enunciado Original
-juezxxxx.txt  -> Solución JUEZ ( la solución que utilicé
-                  para corregir a los participantes )
-juezxxxxax.*  -> Código Fuente Adjunto de la
-                  solución JUEZ ( opcional )
-soluxxxx.c    -> Solución enviada por el participante
-                  ganador ( no siempre existe )
-discuxxxx.txt -> Algunas discusiones importantes surgidas
-                  durante el desarrollo del reto (opcional)
+Good luck.
 
-Suerte.
-
-José Luis De la Cruz Lázaro
-email: jcruz@ec-red.com
-WEB: EL MUNDO DEL CAOS -> http://www.geocities.com/joseluisdl
+Jose Luis De la Cruz Lazaro
+email: contact@theworldofchaos.com
+WEB: THE WORLD OF CHAOS - EL MUNDO DEL CAOS -> www.theworldofchaos.com

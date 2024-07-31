@@ -1,0 +1,65 @@
+Challenge 010 - 19-X-2000
+created by: 	Jose Luis De la Cruz Lazaro
+		contact@theworldofchaos.com
+		www.theworldofchaos.com
+		
+The problem is simple, just enter a number «x», then evaluate «f(x)» and display this result on the screen. Where the function
+f(x) is defined as follows:
+
+f(x) = { 2sen(x/2)(cos(x/2))^2 , x<0
+         1/4*sen(2*x)*sec(x/2) , 0<=x<2
+         exp(x)*tan(x/2)       , x>2    }
+Note: ^2 means squared.
+
+To achieve the above, I attach an incomplete program. In this program you can see some dotted lines ( ……. ) that must be completed with code.
+
+Source Code
+#include <iostream>
+using std::cout;
+using std::cin;
+
+.......
+
+double f( double x )
+{
+        return .......
+}
+
+int main() {
+	double x;
+	cout << "\Enter X: ";
+	cin >> x;
+
+        .......
+
+	cout << "\nResult: f( "<< x <<" ): " << f(x);
+	
+	return 0;
+}
+
+Problem Conditions
+These conditions must be respected, otherwise your solution will be disqualified.
+
+Do not modify the code that is already written, only the dotted lines must be completed.
+You cannot declare more functions, the only function declared in the program must be:
+double f(double x).
+You cannot use the if statement.
+In the dotted lines that appear inside the function: double f(double x) you cannot use any type of conditional statement or operator.
+The evaluation of the function f(x) must be done only within the function:
+double f(double x) , nowhere else in the program.
+
+AND FINALLY I CAN ONLY SAY …. BEST OF LUCK AND MAY THE BEST CODE WIN….
+
+       o  o Jose Luis De la Cruz Lazaro o   220KV of Chaos
+     o       o  Visit my homepage:          o      o
+   o    o o    o THE WORLD OF CHAOS           o   o o
+  o   o  o     o   https://www.theworldofchaos.com   o  o
+  o    o     o                                   o    o  o
+   o     o o     Chaos = Chaos & math ? C++ : ++C;        o
+     o                                                     o
+        o  o  o o o  FRACTALS UNLIMITED ooo o  o  o  o  o   o
+                    o  o   o   o   o   o
+     o               o   o   o   o   o
+   o   o      o
+ o      o   o  o  o  o  o o oooo      Yacsha Software & Desing
+                                 O  O  o ooo Lima - Peru ooo o o O  O

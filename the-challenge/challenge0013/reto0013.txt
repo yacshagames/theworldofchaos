@@ -1,17 +1,16 @@
-[El Reto] 0013
-creado por: José Luis De la Cruz Lázaro
-              jcruz@ec-red.com
-            www.geocities.com/joseluisdl
-Fecha: 17 de enero del 2001
+Challenge 013 - 17-I-2001
+created by: 	Jose Luis De la Cruz Lazaro
+		contact@theworldofchaos.com
+		www.theworldofchaos.com
 
-Lo que se pide es graficar la siguiente estrella en modo texto, en C o C++.
+What is requested is to graph the following star in console mode:
 
                o
              o   o
             o     o
 o   o   o  o       o  o   o   o
-  o         ¡­FELIZ          o
-     o      NAVIDAD!     o
+  o          MERRY          o
+     o     CHRISTMAS!    o
        o     2000      o
          o           o
         o      o      o
@@ -19,11 +18,8 @@ o   o   o  o       o  o   o   o
           o         o
       o                 o
 
-Solo se pide que la letra "I" de la palabra NAVIDAD este en el centro de la
-pantalla.( por ejm si trabajamos en una pantalla de 80 columnas y 25 líneas
-el centro será el punto 40,12 )
+The only thing that is required is that the letter "I" of the word CHRISTMAS is in the center of the screen. For example, if we work on a screen with 80 columns and 25 lines, the center will be point 40, 12
 
-Hasta aquí es sencillo, pero para que no se la lleven tan fácil no se puede
-utilizar "conio.h"... :)
+So far it's simple, but to make it easier for them to get away with it, you can't use "conio.h"... :)
 
 

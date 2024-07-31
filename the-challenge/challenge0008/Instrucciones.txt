@@ -1,18 +1,19 @@
 Instructions for THE CHALLENGE
 
-This Challenge was proposed for the now defunct C/C++ programming list CWORLD (https://web.archive.org/web/20010211051805/http://www.ciudadfutura.com/cworld/retos_anteriores.htm) in 1999.
+This Challenge was proposed for the now defunct C/C++ programming list CWORLD (https://web.archive.org/web/20011102010617/http://www.ciudadfutura.com/cworld/retos_anteriores.htm) in 1999.
 
 To make it more interesting, I suggest you first try to solve it on your own. And only when you can't go on, look at the solution.
 
 Included Files:
 
+challengexxxx.*    -> Original statement
 judgexxxx.txt -> JUDGE Solution (the solution I used to correct the participants)
-judge-solutionxxxx.cpp -> Attached Source Code of the JUDGE solution (optional)
-solutionxxxx.cpp -> Solution sent by the winning participant (doesn't always exist)
+judgexxxx.cpp -> Attached Source Code of the JUDGE solution (optional)
+soluxxxx.cpp -> Solution sent by the winning participant (doesn't always exist)
 discuxxxx.txt -> Some important discussions that arose during the development of the challenge (optional)
 
 Good luck.
 
-José Luis De la Cruz Lázaro
+Jose Luis De la Cruz Lazaro
 email: contact@theworldofchaos.com
 WEB: THE WORLD OF CHAOS - EL MUNDO DEL CAOS -> www.theworldofchaos.com

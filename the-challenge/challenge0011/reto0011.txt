@@ -1,11 +1,10 @@
-[El Reto] 0011
-creado por: José Luis De la Cruz Lázaro
-              jcruz@ec-red.com
-            www.geocities.com/joseluisdl
-Fecha: 15 de Diciembre del 2000
+Challenge 011 - 15-XII-2000
+created by: 	Jose Luis De la Cruz Lazaro
+		contact@theworldofchaos.com
+		www.theworldofchaos.com
 
-Es solo un sencillo efecto visual en modo texto, el cual trata de varias palabras desplazándose simultáneamente sobre la pantalla, para al final formar una oración. Para ilustrar esto, adjunto un archivo ejecutable del programa terminado.
+It's just a simple visual effect in text mode, which involves several words scrolling simultaneously on the screen, to eventually form a sentence. To illustrate this, I'm attaching an executable file of the finished program.
 
-Lo que se quiere es la codificación de este efecto, la cual puede ser en C o C++ y claro está. Debe ser portable en DOS.
+What is requested is the coding of this text effect for console mode.
 
-Tal vez lo que mas interese en este reto, es que el código fuente debe ser lo mas pequeño y optimizado posible y según esto evaluaré al ganador.
+Perhaps the most interesting thing in this challenge is that the source code must be as small and optimized as possible and according to this I will evaluate the winner.
