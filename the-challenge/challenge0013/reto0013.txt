@@ -18,7 +18,7 @@ o   o   o  o       o  o   o   o
           o         o
       o                 o
 
-The only thing that is required is that the letter "I" of the word CHRISTMAS is in the center of the screen. For example, if we work on a screen with 80 columns and 25 lines, the center will be point 40, 12
+The only thing that is required is that the letter "S" of the word CHRISTMAS is in the center of the screen. For example, if we work on a screen with 80 columns and 25 lines, the center will be point 40, 12
 
 So far it's simple, but to make it easier for them to get away with it, you can't use "conio.h"... :)
 

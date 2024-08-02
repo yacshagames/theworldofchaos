@@ -4,7 +4,7 @@
  */
 
 #include <cstdio>
-#include <stdlib.h> 
+#include <cstdlib> 
 
 
 #define MAX_SIZE   32
@@ -13,16 +13,16 @@
 int main(void)
 {
 	// ERROR
-	short *buffer = (short*)malloc(sizeof(short) * MAX_SIZE);
+	short *buffer = (short*)std::malloc(sizeof(short) * MAX_SIZE);
 	int i;
 
 	for (i = 0; i < MAX_SIZE; i++)
 		buffer[i] = (i % 224) + ' ';
 
 	for (i = 0; i < MAX_SIZE; i++)
-		putchar(buffer[i]);
+		std::putchar(buffer[i]);
 
-	putchar('\n');
+	std::putchar('\n');
 	return 0;
 }
 

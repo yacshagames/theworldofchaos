@@ -9,7 +9,7 @@ The challenge consists of the program providing the comparison of 2 integers ent
 
 You only have to implement the USEFUL CODE LINE (*) that is dotted, without touching the code that is already written.
 
-(*) A useful line of code in C is the line of code between two consecutive "semicolons".
+(*) A useful line of code in C++ is the line of code between two consecutive "semicolons".
 
 And so that they don't get away with it so easily, you can't use if, switch, break, while, do, for and ?: .
 You can't declare more variables than those that are already declared.

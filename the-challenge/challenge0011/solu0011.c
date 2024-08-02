@@ -4,6 +4,15 @@
 /* Spanish solution                        */
 /*******************************************/
 
+/********************************************************************************
+Update 2024:
+Although this solution was the winner in 2000, it is currently obsolete since
+it only works on x86 processors of the time, since it uses assembly language and
+the int86 C routines that are currently obsolete, it would be good for the
+reader to analyze it as general knowledge, of how this routine worked to directly
+manipulate the text mode video port of the screen, in pure old-school style.
+********************************************************************************/
+
 #include <dos.h>
 #include <stdio.h>
 #include <string.h>

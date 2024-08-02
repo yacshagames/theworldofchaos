@@ -9,7 +9,7 @@
 * located(see the function `draw_rectangle');
 */
 #include <iostream>
-#include <cstdlib> 
+#include <cstdio>
 #include <ctime>
 using std::cout;
 
@@ -95,7 +95,7 @@ void dibujar_pantalla()
 		 '█' (full), '▀' (top), '▄' (lower), ' ' (empty);
 	*/
 	for (y = 0; y < ALTO; y += 2) {
-		putc((unsigned char)'³', stdout);
+		std::putc((unsigned char)'³', stdout);
 
 		/* draw two lines */
 		for (x = 0; x < ANCHO; x++) {
@@ -103,19 +103,19 @@ void dibujar_pantalla()
 			if (pantalla[y][x]) {
 				/* second too */
 				if (pantalla[y + 1][x])
-					putc((unsigned char)219, stdout);
+					std::putc((unsigned char)219, stdout);
 				/* second empty */
 				else
-					putc((unsigned char)223, stdout);
+					std::putc((unsigned char)223, stdout);
 			}
 			/* first empty line */
 			else {
 				/* but second full */
 				if (pantalla[y + 1][x])
-					putc((unsigned char)220, stdout);
+					std::putc((unsigned char)220, stdout);
 				/* all empty */
 				else
-					putc((unsigned char)32, stdout);
+					std::putc((unsigned char)32, stdout);
 			}
 		}
 

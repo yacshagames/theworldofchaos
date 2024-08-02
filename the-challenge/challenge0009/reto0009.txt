@@ -8,10 +8,10 @@ This challenge is going to sound a bit strange but what I'm asking is quite simp
 Since there are 127 ASCII characters (or 128 depending on who explains it), they are encoded in 8 bits, always having bit 7 at 0. Therefore, to take advantage of that bit, shifts will be made every eight BYTES so that they occupy seven Bytes. If it happens that the text has a number of characters that is not divisible by 8, the other bits of the BYTE are simply filled with 0 and the process is finished.
 
 The way the program is coded would be completely free and I can only give you a suggestion of how I would like it to work:
-From the prompt write RETO0009 flag I:InputFile O:OutputFile
+From the prompt write CHALLENGE0009 flag InputFile OutputFile
 for example:
-	RETO0009 C I:prueba.txt O:Salida.enc (to compress the file prueba.txt and generate the file salida.enc)
-	RETO0009 D I:Salida.enc O:prueba.txt (to decompress the file salida.enc)
+	CHALLENGE0009 C test.txt Output.enc (to compress the file test.txt and generate the file output.enc)
+	CHALLENGE0009 D Output.enc test.txt (to decompress the file output.enc)
 
 Well, let's see if you understand what I'm asking with an example:
 "RETO0009 JE" is an ASCII text of 11 characters (without the quotes, obviously).

@@ -4,14 +4,14 @@
  */
 
 #include <cstdio>
-#include <stdlib.h> 
+#include <cstdlib> 
 
 #define MAX_SIZE   32
 
 
 int main(void)
 {
-	short *buffer = malloc(MAX_SIZE);
+	short *buffer = std::malloc(MAX_SIZE);
 	int i;
 
 	for (i = 0; i < MAX_SIZE; i++)
