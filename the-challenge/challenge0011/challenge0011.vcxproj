@@ -152,7 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="juez0011.cpp" />
+    <ClCompile Include="judge0011.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="conio.h" />
