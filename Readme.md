@@ -25,10 +25,10 @@ Theory and a lot of information on how to make your own programs that graph frac
 Some mathematical utilities and applications, which can be added to your projects to facilitate mathematical calculations (matrices, 2D and 3D graphics, numerical methods, various programs: MCD, Nreinas, Hanoi, etc.)
 
 ### Graphic Programming
-Libraries that facilitate graphical programming, with several examples of how it is used, using WinBGIDLL (Windows graphical environments, graphical mouse, PCX graphics, 2D and 3D programming, video effects, etc.), programming in the purest old style, only instead of using the old BGI library for DOS, we will use the WinBGIDLL library for Windows.
+Programs and libraries that facilitate graphical programming, so instead of using the old BGI library for DOS we will use the WinBGIDLL library for Windows. In this section you will find several examples of how to use the WinBGIDLL library, such as graphical Windows environments, graphical mouse, BMP, JPG, PCX images, 2D and 3D programming, video effects, etc; programming in the purest old school style.
 
 ### The challenge
-If you want to train yourself with C++ or another programming language, try solving some of these Challenges that I invented for the CWORLD discussion list in 1999. In this section little by little we will publish new challenges and we would also like you to send us your own challenges to the community.
+If you want to have fun with C++ or another programming language, try to solve some of these Challenges that a group of C/C++ enthusiasts invented for the CWORLD discussion list in 1999. In this section we will gradually publish new challenges and we would also like you to send us your own challenges to the community.
 
 ## Project website
 For more information visit [TheWorldofChaos.com](https://www.theworldofchaos.com)
@@ -41,7 +41,7 @@ El proyecto de [El mundo del Caos](https://www.theworldofchaos.com), ahora conoc
 
 Tal vez el tema común de casi todos los programas es la programación gráfica, debido a que es el tipo de programación en que me desarrollo y siempre trato de aplicarlo a todo nivel. Poco a poco ire subiendo nuevos programas que contengan alguna rutina interesante, sobre todo desde el punto de vista gráfico y matemático.
 
-Espero que estos programas te ayuden a mejorar sus conocimientos de programación, sobre todo en el lenguaje C++..., esa sería mi mayor satisfacción.
+Espero que estos programas le ayuden a mejorar sus conocimientos de programación, sobre todo en el lenguaje C++..., esa sería mi mayor satisfacción.
 
 ## Actualización 2024
 
@@ -62,10 +62,10 @@ Teoría y mucha información sobre como hacer tus propios programas que grafique
 Algunas utilidades y aplicaciones matemáticas, que se pueden agregar a sus proyectos facilitando los cálculos matemáticos ( matrices, gráficos 2D y 3D, métodos numéricos, programas varios: MCD, Nreinas, hanoi, etc..)
 
 ### Programación Gráfica
-Librerías que facilitan la programación gráfica, con varios ejemplos de como se usa, usando WinBGIDLL ( Entornos gráficos de Ventanas, mouse gráfico, gráficos PCX, programación 2D y 3D, efectos de video, etc ), programación al mas puro estilo de la vieja, solo que en lugar de usar la vieja librería BGI para DOS, usaremos la librería WinBGIDLL para Windows.
+Programas y librerías que facilitan la programación gráfica, olo que en lugar de usar la vieja librería BGI para DOS usaremos la librería WinBGIDLL para Windows. En esta sección encontrará varios ejemplos de como usar la librería WinBGIDLL, como entornos gráficos de Ventanas, mouse gráfico, imágenes BMP, JPG, PCX, programación 2D y 3D, efectos de video, etc; programación al mas puro estilo de la vieja escuela.
 
 ### El Reto
-Si deseas entrenerte con el C++ u otro lenguaje de programación, intenta resolver algunos de estos Retos que inventé para la lista de discusión CWORLD en 1999. En esta sección poco a poco iremos publicando nuevos retos y también nos gustaría que usted nos fuera enviado sus propios retos a la comunidad.
+Si deseas entretenerte con el C++ u otro lenguaje de programación, intenta resolver algunos de estos Retos que inventamos un grupo de amigos entusiastas del C/C++ para la lista de discusión CWORLD en 1999. En esta sección poco a poco iremos publicando nuevos retos y también nos gustaría que usted nos fuera enviado sus propios retos a la comunidad.
 
 ## Página web del Proyecto
 Para mas información visite [TheWorldofChaos.com](https://www.theworldofchaos.com)
