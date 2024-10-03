@@ -62,7 +62,7 @@ Teoría y mucha información sobre como hacer tus propios programas que grafique
 Algunas utilidades y aplicaciones matemáticas, que se pueden agregar a sus proyectos facilitando los cálculos matemáticos ( matrices, gráficos 2D y 3D, métodos numéricos, programas varios: MCD, Nreinas, hanoi, etc..)
 
 ### Programación Gráfica
-Programas y librerías que facilitan la programación gráfica, olo que en lugar de usar la vieja librería BGI para DOS usaremos la librería WinBGIDLL para Windows. En esta sección encontrará varios ejemplos de como usar la librería WinBGIDLL, como entornos gráficos de Ventanas, mouse gráfico, imágenes BMP, JPG, PCX, programación 2D y 3D, efectos de video, etc; programación al mas puro estilo de la vieja escuela.
+Programas y librerías que facilitan la programación gráfica, solo que en lugar de usar la vieja librería BGI para DOS usaremos la librería WinBGIDLL para Windows. En esta sección encontrará varios ejemplos de como usar la librería WinBGIDLL, como entornos gráficos de Ventanas, mouse gráfico, imágenes BMP, JPG, PCX, programación 2D y 3D, efectos de video, etc; programación al mas puro estilo de la vieja escuela.
 
 ### El Reto
 Si deseas entretenerte con el C++ u otro lenguaje de programación, intenta resolver algunos de estos Retos que inventamos un grupo de amigos entusiastas del C/C++ para la lista de discusión CWORLD en 1999. En esta sección poco a poco iremos publicando nuevos retos y también nos gustaría que usted nos fuera enviado sus propios retos a la comunidad.
