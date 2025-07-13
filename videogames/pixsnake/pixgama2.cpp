@@ -2,21 +2,71 @@
 //Villalvazo Juan
 //2010
 
+/*
 #include<stdio.h>
 #include<conio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<dos.h>
+*/
+/////////////////////////////////////////////////////////
+// Encabezados actualizados al C++ moderno
+/////////////////////////////////////////////////////////
+#include "graphics.h"
+#include "conio.h"
+#include <ctime> // acceso al moderno C++ Date and Time
+#include <stdio.h>
+
+//////////////////////////////////////////////////////////
+// Funciones y deficiones no compatibles directamente 
+// con WinBGIDLL y que necesitan adaptarse para ser
+// implementadas correctamente
+//////////////////////////////////////////////////////////
+#define _NOCURSOR 0
+#define BLINK 0
+
+void _setcursortype(int tipo_cursor) {
+	// Falta implementar
+}
+
+void clreol() {
+	clrscr();
+}
+
+void cprintf(const char* format, ...) {
+	// Falta implementar
+}
+
+void textbackground(int color) {
+	// Falta implementar
+}
+
+void gets(char* buffer){
+	gets_s(buffer, 5);
+}
+
+//////////////////////////////////////////////////////////
+// A partir de aquí el código original ha tratado de
+// no ser modificado en lo posible
+// para mantener la mágia del programador original
+//////////////////////////////////////////////////////////
+
 #define up 72
 #define down 80
 #define left 75
 #define right 77
 #define esc 27
 
+int m[50][80], cantidad = 0, opt = 0, i, j, col, 
+sx = 40, sy = 9, ren, a = 0, ax = 0,
+velocidad = 0, truco = 0, gameover = 0,
+nivel = 1, ci = 1, ri = 1, rf = 30, cf = 80,
+op = 0, op2 = 0, __y1 = 0, x1 = 0,
+band = 0, limite = 100, canibal = 0;
 
+// habilitar
+//struct time t;
 
-int m[50][80], cantidad = 0, opt = 0, i, j, col, sx = 40, sy = 9, ren, a = 0, ax = 0, velocidad = 0, truco = 0, gameover = 0, nivel = 1, ci = 1, ri = 1, rf = 30, cf = 80, op = 0, op2 = 0, y1 = 0, x1 = 0, band = 0, limite = 100, canibal = 0;
-struct time t;
 typedef struct cuerpo {
 
 	int x;
@@ -43,17 +93,17 @@ void dinamicos(void);
 void puertac(void);
 void puertaa(void);
 void puertal(void);
-void restart(void);
+//void restart(void); // Función no implementada en el código Original
 void pantfinal(void);
 /////////////////////////////////////////
 
 
-void main(void)
+int main(void)
 {
 
 	char cont[3];
 	int pa = 0, pc = 0, continu = 0;
-
+	
 	do
 
 	{
@@ -64,9 +114,18 @@ void main(void)
 		switch (opt)
 		{
 
-		case 1: gettime(&t); t.ti_sec = 0; t.ti_hour = 0; t.ti_min = 0;
-			t.ti_hund = 0; settime(&t);
+		case 1: 
+
+			// habilitar
+			/*gettime(&t);
+			t.ti_sec = 0;
+			t.ti_hour = 0;
+			t.ti_min = 0;
+			t.ti_hund = 0;
+			settime(&t);*/
+
 			_setcursortype(_NOCURSOR);
+
 			////////////inicializar la metriz///////////////////
 
 			for (i = 0; i < 50; i++)
@@ -263,7 +322,12 @@ void main(void)
 				pantfinal();
 
 			}
-			cantidad = 0; opt = 0; i = 0; j = 0; a = 0, col = 0; ren = 0; velocidad = 0; truco = 0; gameover = 0; nivel = 1; ci = 10; ri = 10; rf = 40; cf = 70; sy = 18; sx = 40; op = 0; op2 = 0; y1 = 0; x1 = 0; band = 0, limite = 100, pa = 0, pc = 0, opt = 0, continu = 0;
+
+			cantidad = 0; opt = 0; i = 0; j = 0; a = 0, col = 0; 
+			ren = 0; velocidad = 0; truco = 0; gameover = 0;
+			nivel = 1; ci = 10; ri = 10; rf = 40; cf = 70; sy = 18;
+			sx = 40; op = 0; op2 = 0; __y1 = 0; x1 = 0;
+			band = 0, limite = 100, pa = 0, pc = 0, opt = 0, continu = 0;
 
 			///////Para limpiar a la serpiente XD///////////////
 			while (temp->sig != NULL)
@@ -281,7 +345,7 @@ void main(void)
 		case 2:
 
 			gotoxy(15, 28); cprintf("Salir?");
-			gotoxy(15, 30); cprintf("SI:1NO:2 \n:"); flushall(); gets(cont);
+			gotoxy(15, 30); cprintf("SI:1NO:2 \n:"); _flushall(); gets(cont);
 			continu = atoi(cont);
 			clrscr();
 			break;
@@ -289,14 +353,8 @@ void main(void)
 
 	} while (continu != 1);
 
-
+	return 1;
 }
-
-
-
-
-
-
 
 
 
@@ -386,7 +444,7 @@ void pantfinal()
 		_setcursortype(_NOCURSOR);
 		gotoxy(10, 5); cprintf("SE TE ACABO LA VIDA!!!");
 		gotoxy(10, 10); cprintf("MAXIMO PUNTAJE:%d", band); delay(1500);
-		gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); flushall(); gets(dummy);
+		gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); _flushall(); gets(dummy);
 	}
 	else
 	{
@@ -396,7 +454,7 @@ void pantfinal()
 			_setcursortype(_NOCURSOR);
 			gotoxy(10, 5); cprintf("FELICITACIONES GANASTE!!!");
 			gotoxy(10, 10); cprintf("MAXIMO PUNTAJE:%d", band); delay(1500);
-			gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); flushall(); gets(dummy);
+			gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); _flushall(); gets(dummy);
 		}
 		else
 
@@ -406,7 +464,7 @@ void pantfinal()
 				_setcursortype(_NOCURSOR);
 				gotoxy(10, 5); cprintf("USTED SALIO DEL JUEGO :(");
 				gotoxy(10, 10); cprintf("MAXIMO PUNTAJE:%d", band); delay(1500);
-				gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); flushall(); gets(dummy);
+				gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); _flushall(); gets(dummy);
 			}
 			else
 			{
@@ -414,7 +472,7 @@ void pantfinal()
 				_setcursortype(_NOCURSOR);
 				gotoxy(10, 5); cprintf("GAME OVER TOCASTE PARTES INDEVIDAS XD!!!");
 				gotoxy(10, 10); cprintf("MAXIMO PUNTAJE:%d", band); delay(1500);
-				gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); flushall(); gets(dummy);
+				gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); _flushall(); gets(dummy);
 				canibal = 0;
 			}
 
@@ -446,7 +504,7 @@ int inicio(void)
 		} while (xx < 81);
 		gotoxy(1, 55); cprintf("RIVERJUEGOS-->:");
 		xx = 1;
-		flushall(); gets(opi);
+		_flushall(); gets(opi);
 		opti = atoi(opi);
 	} while (opti == 0);
 
@@ -492,7 +550,8 @@ void dinamicos(void)
 {
 	textcolor(WHITE); gotoxy(15, 48); cprintf("Nivel:%d", nivel);
 	textcolor(WHITE); gotoxy(33, 48); cprintf("Puntuacion:%d ", band);
-	textcolor(WHITE); gettime(&t); gotoxy(55, 48); cprintf("Tiempo:  %2d:%2d:%2d:%2d", t.ti_hour, t.ti_min, t.ti_sec, t.ti_hund);
+	// habilitar
+	//textcolor(WHITE); gettime(&t); gotoxy(55, 48); cprintf("Tiempo:  %2d:%2d:%2d:%2d", t.ti_hour, t.ti_min, t.ti_sec, t.ti_hund);
 }
 /*******************************************************************/
 
