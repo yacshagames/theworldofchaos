@@ -12,10 +12,10 @@
 /////////////////////////////////////////////////////////
 // Encabezados actualizados al C++ moderno
 /////////////////////////////////////////////////////////
-#include "graphics.h"
-#include "conio.h"
-#include <ctime> // acceso al moderno C++ Date and Time
+#include "conio.h" // gotoxy, clrscr
 #include <stdio.h>
+#include <conio.h> // _kbhit, _getch
+#include <chrono>
 
 //////////////////////////////////////////////////////////
 // Funciones y deficiones no compatibles directamente 
@@ -29,20 +29,12 @@ void _setcursortype(int tipo_cursor) {
 	// Falta implementar
 }
 
-void clreol() {
-	clrscr();
-}
-
-void cprintf(const char* format, ...) {
-	// Falta implementar
-}
-
 void textbackground(int color) {
 	// Falta implementar
 }
 
-void gets(char* buffer){
-	gets_s(buffer, 5);
+void delay(int msec) {
+	Sleep(msec);
 }
 
 //////////////////////////////////////////////////////////
@@ -57,27 +49,28 @@ void gets(char* buffer){
 #define right 77
 #define esc 27
 
+char smiley[2] = { 2, '\n' };
+
 int m[50][80], cantidad = 0, opt = 0, i, j, col, 
-sx = 40, sy = 9, ren, a = 0, ax = 0,
-velocidad = 0, truco = 0, gameover = 0,
-nivel = 1, ci = 1, ri = 1, rf = 30, cf = 80,
+sx = 40, sy = 18,//sx = 40, sy = 9,
+ren, a = 0, ax = 0,
+velocidad = 0, truco = 0, gameover = 0, nivel = 1,
+ci = 10, ri = 10, rf = 41, cf = 72, //ci = 1, ri = 1, rf = 30, cf = 80,
 op = 0, op2 = 0, __y1 = 0, x1 = 0,
 band = 0, limite = 100, canibal = 0;
 
 // habilitar
 //struct time t;
+std::chrono::time_point<std::chrono::steady_clock>  t;
 
-typedef struct cuerpo {
-
+struct cuerpo {
 	int x;
-
 	int y;
+	cuerpo *sig;
+	cuerpo *ant;
+};
 
-	struct cuerpo *sig;
-	struct cuerpo *ant;
-}body;
-
-typedef body *snake;
+typedef cuerpo* snake;
 
 snake cabeza;
 snake princi = NULL;
@@ -101,7 +94,7 @@ void pantfinal(void);
 int main(void)
 {
 
-	char cont[3];
+	//char cont[3]; // no se usa esta variable
 	int pa = 0, pc = 0, continu = 0;
 	
 	do
@@ -115,14 +108,8 @@ int main(void)
 		{
 
 		case 1: 
-
-			// habilitar
-			/*gettime(&t);
-			t.ti_sec = 0;
-			t.ti_hour = 0;
-			t.ti_min = 0;
-			t.ti_hund = 0;
-			settime(&t);*/
+		
+			t = std::chrono::steady_clock::now();
 
 			_setcursortype(_NOCURSOR);
 
@@ -151,20 +138,20 @@ int main(void)
 				limite--;
 				if (band == 10)
 				{
-					band = band + 50; gotoxy(23, 7); textcolor(WHITE + BLINK); cprintf("Bienvenido al segundo nivel!"); gotoxy(32, 6); clreol();
-					asteriscos(cantidad + 16); velocidad = 10;
+					band = band + 50; gotoxy(23, 6); textcolor(LIGHTMAGENTA + BLINK); printf("Bienvenido al segundo nivel!"); //gotoxy(32, 6); clreol();
+					asteriscos(cantidad + 16); velocidad = 50;					
 					nivel = 2;
 				}
 				if (band == 75)
 				{
-					band = band + 50; gotoxy(23, 7); textcolor(WHITE + BLINK); cprintf("Bienvenido al tercel nivel!"); gotoxy(32, 6); clreol();
-					asteriscos(cantidad + 20); velocidad = 40;
+					band = band + 50; gotoxy(23, 6); textcolor(LIGHTCYAN + BLINK); printf("Bienvenido al tercel nivel!"); //gotoxy(32, 6); clreol();
+					asteriscos(cantidad + 20); velocidad = 100;					
 					nivel = 3;
 				}
 				if (band == 145)
 				{
-					band = band + 50; gotoxy(23, 7); textcolor(WHITE + BLINK); cprintf("Tu puedes! ultimo nivel :D"); gotoxy(32, 6); clreol();
-					asteriscos(cantidad + 100); velocidad = 70;
+					band = band + 50; gotoxy(23, 6); textcolor(LIGHTGREEN + BLINK); printf("Tu puedes! ultimo nivel :D"); //gotoxy(32, 6); clreol();
+					asteriscos(cantidad + 100); velocidad = 150;					
 					nivel = 4;
 				}
 				if (band == 220)
@@ -197,13 +184,6 @@ int main(void)
 					pa = 1; pc = 1;
 				}
 
-
-
-
-
-
-
-
 				////////////////////////////////////////////////////////////
 
 
@@ -232,15 +212,22 @@ int main(void)
 
 
 				///////////////////////////Imprimir snake/////////////////////////////////////
+				
+				gotoxy(princi->x, princi->y); printf(smiley); delay((200 - velocidad) + truco);
 
-				gotoxy(princi->x, princi->y); cprintf("@"); delay((200 - velocidad) + truco);
 
-
-				gotoxy(cola->x, cola->y); cprintf(" "); a = a + 1;
+				gotoxy(cola->x, cola->y); printf(" "); a = a + 1;
 				///////////////////////////////////////////////////////////////////////
 				//////////////////////////por si se come a si misma//////////////////////////////
 
-				aux = princi->ant->ant;
+
+				// Se corrige bug que cerraba el programa en el caso que
+				// princi->ant sea NULL
+				if (princi->ant)
+					aux = princi->ant->ant;
+				else
+					aux = NULL;
+
 				while (aux != NULL)
 				{
 					if (princi->x == aux->x&&princi->y == aux->y)
@@ -270,44 +257,72 @@ int main(void)
 				   */
 				   /////////////////////////////////////////////////////////////////////////
 
-				dinamicos();
+				dinamicos();			
 
-				if (kbhit())
+				if (_kbhit()) {
+					op = toupper(_getch());
 
-					op = getch();
-				switch (op)
-				{
-				case up: if (sy > 30) { sy--; cabeza->y = sy; }
-						 else { gameover = 1; op = 27; }
-						 break;
-				case down: if (sy < 10) { sy++; cabeza->y = sy; }
-						   else { gameover = 1; op = 27; }
-						   break;
-				case left: if (sx > 80) { sx--; cabeza->x = sx; }
-						   else { gameover = 1; op = 27; }
-						   break;
-				case right: if (sx < 10) { sx++; cabeza->x = sx; }
-							else { gameover = 1; op = 27; }
-							break;
-
-
-
-				case '1': if (truco == 0)
-				{
-					truco = 120;
+					if( op > 128)
+						op = toupper(_getch());
+					
 				}
+		
+				switch (op) {
 
-						  op = 0; break;
+				case up: 
+					
+					if (sy < rf) {
+						sy--; 
+						cabeza->y = sy;
+					} else {
+						gameover = 1;
+						op = 27;
+					}						 
+					break;
+				case down: 
 
-				case '2':
-					velocidad = velocidad + 20;
+					if (sy > ri) {
+						sy++; 
+						cabeza->y = sy;
+					} else { 
+						gameover = 1;
+						op = 27;
+					}
+					break;
+				case left: 
+					if (sx < cf) {
+						sx--;
+						cabeza->x = sx;
+					} else {
+						gameover = 1;
+						op = 27;
+					}
+					break;
+				case right: 
+					if (sx > ci) {
+						sx++;
+						cabeza->x = sx;
+					} else {
+						gameover = 1;
+						op = 27;
+					}
+					break;
+
+				case '1': 
+					if (truco == 0)
+						truco = 120;
+
 					op = 0; break;
 
+				case '2':
+					velocidad = velocidad + 100;
+					op = 0; 
+					break;
+
 				}
 
 
-
-				gotoxy(0, 0); cprintf("VIDA RESTANTE:%d ", limite);
+				gotoxy(0, 0); printf("VIDA RESTANTE:%d ", limite);
 				if (limite < 1)//12.5 ciclos son aprox 1 seg en un procesador de 2 gigahertz
 				{
 					op = 27;
@@ -324,9 +339,10 @@ int main(void)
 			}
 
 			cantidad = 0; opt = 0; i = 0; j = 0; a = 0, col = 0; 
-			ren = 0; velocidad = 0; truco = 0; gameover = 0;
-			nivel = 1; ci = 10; ri = 10; rf = 40; cf = 70; sy = 18;
-			sx = 40; op = 0; op2 = 0; __y1 = 0; x1 = 0;
+			ren = 0; velocidad = 0; truco = 0; gameover = 0; nivel = 1; 
+			//ci = 10; ri = 10; rf = 41; cf = 70;
+			sx = 40; sy = 18;
+			op = 0; op2 = 0; __y1 = 0; x1 = 0;
 			band = 0, limite = 100, pa = 0, pc = 0, opt = 0, continu = 0;
 
 			///////Para limpiar a la serpiente XD///////////////
@@ -344,9 +360,9 @@ int main(void)
 
 		case 2:
 
-			gotoxy(15, 28); cprintf("Salir?");
-			gotoxy(15, 30); cprintf("SI:1NO:2 \n:"); _flushall(); gets(cont);
-			continu = atoi(cont);
+			gotoxy(15, 28); printf("Salir?");
+			gotoxy(15, 30); printf("SI:1 NO:2:");
+			continu = _getch() == '1' ? 1 : 2;
 			clrscr();
 			break;
 		}
@@ -362,39 +378,37 @@ int main(void)
 void fondo()
 {
 	textbackground(BLACK); clrscr();
-
+	
 	for (col = ci; col < cf; col++)
 	{
-		gotoxy(col, ri); cprintf("Í");
-		gotoxy(col, rf); cprintf("Í");
+		gotoxy(col, ri); printf("Í");
+		gotoxy(col, rf); printf("Í");
 	}
 	for (ren = ri; ren < rf; ren++)
 	{
-		gotoxy(ci, ren); cprintf("º");
-		gotoxy(cf, ren); cprintf("º");
+		gotoxy(ci, ren); printf("º");
+		gotoxy(cf, ren); printf("º");
 
 	}
 
+	gotoxy(ci, ri); printf("É");
+	gotoxy(ci, rf); printf("È");
+	gotoxy(cf, ci); printf("»");
+	gotoxy(cf, rf); printf("¼");
 
-
-
-	gotoxy(10, 10); cprintf("É");
-	gotoxy(10, 30); cprintf("È");
-	gotoxy(80, 10); cprintf("»");
-	gotoxy(80, 30); cprintf("¼");
-
-	gotoxy(32, 1); cprintf("AYUDA");
-	gotoxy(13, 3); cprintf("Pulsar 1=Truco:Disminuir velocidad(puede utilizarlo una vez)");
-	gotoxy(13, 4); cprintf("Pulsar 2=Truco:Aumentar velocidad (Bajo su propio riesgo!!!)");
-	gotoxy(1, 10); cprintf("CONTROLES");
-	gotoxy(1, 14); cprintf("=ARRIBA");
-	gotoxy(1, 15); cprintf("=ABAJO");
-	gotoxy(1, 16); cprintf(">=DELANTE");
-	gotoxy(1, 17); cprintf("<=ATRAS");
-	gotoxy(35, 9); cprintf("PIXSNAKE 2010");
-	gotoxy(71, 22); cprintf("OBJETIVO:");
-	gotoxy(71, 23); cprintf("TENER 220");
-	gotoxy(72, 24); cprintf(" PUNTOS  ");;
+	gotoxy(32, 1); printf("AYUDA");
+	gotoxy(13, 3); printf("Pulsar 1=Truco:Disminuir velocidad(puede utilizarlo una vez)");
+	gotoxy(13, 4); printf("Pulsar 2=Truco:Aumentar velocidad (Bajo su propio riesgo!!!)");
+	gotoxy(1, 10); printf("CONTROLES");
+	gotoxy(1, 14); printf("=ARRIBA");
+	gotoxy(1, 15); printf("=ABAJO");
+	gotoxy(1, 16); printf(">=DELANTE");
+	gotoxy(1, 17); printf("<=ATRAS");
+	textcolor(LIGHTGREEN);
+	gotoxy(35, 6); printf("PIXSNAKE 2010");
+	gotoxy(cf + 2, 22); printf("OBJETIVO:");
+	gotoxy(cf + 2, 23); printf("TENER 220");
+	gotoxy(cf + 3, 24); printf(" PUNTOS  ");
 
 }
 /***********Funcion asteriscos*********************************/
@@ -412,7 +426,25 @@ void asteriscos(int n)
 			r = random(29) + 11;
 
 
-			if ((r == 17 && (c >= 19 && c <= 60)) || (r == 18 && (c >= 19 && c <= 60)) || (r == 19 && (c >= 19 && c <= 60)) || (r == 20 && (c >= 19 && c <= 60)) || (r == 21 && (c >= 35 && c <= 44)) || (r == 21 && (c >= 35 && c <= 44)) || (r == 22 && (c >= 35 && c <= 44)) || (r == 23 && (c >= 35 && c <= 44)) || (r == 24 && (c >= 35 && c <= 44)) || (r == 25 && (c >= 35 && c <= 44)) || (r == 26 && (c >= 35 && c <= 44)) || (r == 27 && (c >= 35 && c <= 44)) || (r == 28 && (c >= 35 && c <= 44)))/*||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||()||())*/
+			if ((r == 17 && (c >= 19 && c <= 60)) ||
+				(r == 18 && (c >= 19 && c <= 60)) ||
+				(r == 19 && (c >= 19 && c <= 60)) ||
+				(r == 20 && (c >= 19 && c <= 60)) ||
+				(r == 21 && (c >= 35 && c <= 44)) ||
+				(r == 21 && (c >= 35 && c <= 44)) ||
+				(r == 22 && (c >= 35 && c <= 44)) ||
+				(r == 23 && (c >= 35 && c <= 44)) ||
+				(r == 24 && (c >= 35 && c <= 44)) ||
+				(r == 25 && (c >= 35 && c <= 44)) ||
+				(r == 26 && (c >= 35 && c <= 44)) ||
+				(r == 27 && (c >= 35 && c <= 44)) ||
+				(r == 28 && (c >= 35 && c <= 44)))
+				/*||()||()||()||()||()||()||()||()||
+				()||()||()||()||()||()||()||()||()||
+				()||()||()||()||()||()||()||()||()||
+				()||()||()||()||()||()||()||()||()||
+				()||()||()||()||()||()||()||()||()||
+				()||())*/
 			{
 
 				pass = 0;//Para asegurarme que los asteriscos no aparezcan en el muro
@@ -425,7 +457,7 @@ void asteriscos(int n)
 
 		color = random(13) + 2;
 		gotoxy(c, r); textcolor(color);
-		cprintf("*");
+		printf("*");
 		m[r - 1][c - 1] = color;
 	}
 }
@@ -435,16 +467,14 @@ void asteriscos(int n)
 
 void pantfinal()
 {
-	char dummy[5];
-
 
 	if (limite < 10)
 	{
 		clrscr();
 		_setcursortype(_NOCURSOR);
-		gotoxy(10, 5); cprintf("SE TE ACABO LA VIDA!!!");
-		gotoxy(10, 10); cprintf("MAXIMO PUNTAJE:%d", band); delay(1500);
-		gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); _flushall(); gets(dummy);
+		gotoxy(10, 5); printf("SE TE ACABO LA VIDA!!!");
+		gotoxy(10, 10); printf("MAXIMO PUNTAJE:%d", band); delay(1500);
+		gotoxy(15, 30); printf("Pulse ENTER para continuar!"); _getch();
 	}
 	else
 	{
@@ -452,9 +482,9 @@ void pantfinal()
 		{
 			clrscr();
 			_setcursortype(_NOCURSOR);
-			gotoxy(10, 5); cprintf("FELICITACIONES GANASTE!!!");
-			gotoxy(10, 10); cprintf("MAXIMO PUNTAJE:%d", band); delay(1500);
-			gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); _flushall(); gets(dummy);
+			gotoxy(10, 5); printf("FELICITACIONES GANASTE!!!");
+			gotoxy(10, 10); printf("MAXIMO PUNTAJE:%d", band); delay(1500);
+			gotoxy(15, 30); printf("Pulse ENTER para continuar!"); _getch();
 		}
 		else
 
@@ -462,17 +492,17 @@ void pantfinal()
 			{
 				clrscr();
 				_setcursortype(_NOCURSOR);
-				gotoxy(10, 5); cprintf("USTED SALIO DEL JUEGO :(");
-				gotoxy(10, 10); cprintf("MAXIMO PUNTAJE:%d", band); delay(1500);
-				gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); _flushall(); gets(dummy);
+				gotoxy(10, 5); printf("USTED SALIO DEL JUEGO :(");
+				gotoxy(10, 10); printf("MAXIMO PUNTAJE:%d", band); delay(1500);
+				gotoxy(15, 30); printf("Pulse ENTER para continuar!"); _getch();
 			}
 			else
 			{
 				clrscr();
 				_setcursortype(_NOCURSOR);
-				gotoxy(10, 5); cprintf("GAME OVER TOCASTE PARTES INDEVIDAS XD!!!");
-				gotoxy(10, 10); cprintf("MAXIMO PUNTAJE:%d", band); delay(1500);
-				gotoxy(15, 30); cprintf("Pulse ENTER para continuar!"); _flushall(); gets(dummy);
+				gotoxy(10, 5); printf("GAME OVER TOCASTE PARTES INDEVIDAS XD!!!");
+				gotoxy(10, 10); printf("MAXIMO PUNTAJE:%d", band); delay(1500);
+				gotoxy(15, 30); printf("Pulse ENTER para continuar!"); _getch();
 				canibal = 0;
 			}
 
@@ -485,27 +515,25 @@ void pantfinal()
 
 int inicio(void)
 {
-	char opi[2];
 	int xx = 1, opti = 0;
 	do {
 		clrscr();
 		printf("Selecciona opcion\n1.-Juego Nuevo\n2.-Salir\n");
-
 		do {
-			gotoxy(xx, 5); printf("---****---*****--*----*-..######..##....##....###....##....##.########"); delay(4);
-			gotoxy(xx, 6); printf("---*---*----*-----*--*--.##....##.###...##...##.##...##...##..##......"); delay(4);
-			gotoxy(xx, 7); printf("---*---*----*------**---.##.......####..##..##...##..##..##...##......"); delay(4);
-			gotoxy(xx, 8); printf("---****-----*------**---..######..##.##.##.##.....##.#####....######.."); delay(4);
-			gotoxy(xx, 9); printf("---*--------*-----*--*--.......##.##..####.#########.##..##...##......"); delay(4);
-			gotoxy(xx, 10); printf("---*--------*----*----*-.##....##.##...###.##.....##.##...##..##......"); delay(4);
-			gotoxy(xx, 11); printf("---*------*****-*------*..######..##....##.##.....##.##....##.########"); delay(4);
+			gotoxy(xx, 5); printf("---****---*****--*----*-..######..##....##....###....##....##.########"); delay(1);
+			gotoxy(xx, 6); printf("---*---*----*-----*--*--.##....##.###...##...##.##...##...##..##......"); delay(1);
+			gotoxy(xx, 7); printf("---*---*----*------**---.##.......####..##..##...##..##..##...##......"); delay(1);
+			gotoxy(xx, 8); printf("---****-----*------**---..######..##.##.##.##.....##.#####....######.."); delay(1);
+			gotoxy(xx, 9); printf("---*--------*-----*--*--.......##.##..####.#########.##..##...##......"); delay(1);
+			gotoxy(xx, 10); printf("---*--------*----*----*-.##....##.##...###.##.....##.##...##..##......"); delay(1);
+			gotoxy(xx, 11); printf("---*------*****-*------*..######..##....##.##.....##.##....##.########"); delay(1);
 
 			xx++;
-		} while (xx < 81);
-		gotoxy(1, 55); cprintf("RIVERJUEGOS-->:");
+		} while (xx < 120);
+		gotoxy(1, 13); printf("RIVERJUEGOS-->:");
 		xx = 1;
-		_flushall(); gets(opi);
-		opti = atoi(opi);
+		opti = _getch()=='1' ? 1 : 2;
+		
 	} while (opti == 0);
 
 	return opti;
@@ -516,7 +544,7 @@ int inicio(void)
 
 void crea(void)
 {
-	cabeza = (snake)malloc(sizeof(body));
+	cabeza = (snake)malloc(sizeof(cuerpo));
 	cabeza->x = sx;
 	cabeza->y = sy;
 	cabeza->sig = NULL;
@@ -548,10 +576,24 @@ void crea(void)
 
 void dinamicos(void)
 {
-	textcolor(WHITE); gotoxy(15, 48); cprintf("Nivel:%d", nivel);
-	textcolor(WHITE); gotoxy(33, 48); cprintf("Puntuacion:%d ", band);
-	// habilitar
-	//textcolor(WHITE); gettime(&t); gotoxy(55, 48); cprintf("Tiempo:  %2d:%2d:%2d:%2d", t.ti_hour, t.ti_min, t.ti_sec, t.ti_hund);
+	textcolor(WHITE); gotoxy(15, 48); printf("Nivel:%d", nivel);
+	textcolor(WHITE); gotoxy(33, 48); printf("Puntuacion:%d ", band);
+	
+	// Mejora en la obtención del tiempo usando el moderno y mas preciso chrono
+	// disponible desde C++11
+	auto elapsed_time =  std::chrono::steady_clock::now() - t;
+	auto h = std::chrono::duration_cast<std::chrono::hours>(elapsed_time);
+	elapsed_time -= h;
+	auto m = std::chrono::duration_cast<std::chrono::minutes>(elapsed_time);
+	elapsed_time -= m;
+	auto s = std::chrono::duration_cast<std::chrono::seconds>(elapsed_time);
+	elapsed_time -= s;
+	auto msec = std::chrono::duration_cast<std::chrono::milliseconds>(elapsed_time);	
+	textcolor(WHITE); gotoxy(55, 48); printf("Tiempo:  %2d:%2d:%2d:%2d", 
+		static_cast<int>(h.count()), 
+		static_cast<int>(m.count()), 
+		static_cast<int>(s.count()), 
+		static_cast<int>(msec.count()));
 }
 /*******************************************************************/
 
