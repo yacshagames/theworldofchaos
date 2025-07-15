@@ -213,7 +213,7 @@ int main(void)
 
 				///////////////////////////Imprimir snake/////////////////////////////////////
 				
-				gotoxy(princi->x, princi->y); printf(smiley); delay((200 - velocidad) + truco);
+				gotoxy(princi->x, princi->y); printf(smiley); delay((201 - velocidad) + truco);
 
 
 				gotoxy(cola->x, cola->y); printf(" "); a = a + 1;
