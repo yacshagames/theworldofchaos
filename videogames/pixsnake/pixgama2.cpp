@@ -57,7 +57,7 @@ ren, a = 0, ax = 0,
 velocidad = 0, truco = 0, gameover = 0, nivel = 1,
 ci = 10, ri = 10, rf = 41, cf = 72, //ci = 1, ri = 1, rf = 30, cf = 80,
 op = 0, op2 = 0, __y1 = 0, x1 = 0,
-band = 0, limite = 100, canibal = 0;
+band = 0, limite = 100, canibal = 0, op_ant = 0;
 
 // habilitar
 //struct time t;
@@ -260,13 +260,44 @@ int main(void)
 				dinamicos();			
 
 				if (_kbhit()) {
-					op = toupper(_getch());
+					
+					// Se guarda la tecla presiona anteriormente
+					op_ant = op;
 
-					if( op > 128)
-						op = toupper(_getch());
+					op = _getch();
+
+					// Si op>128 se está ingresando un caracter extendido como son las flechas
+					// caso contrario se está ingresando una tecla alfanumérica del teclado
+					if (op > 128) {
+
+						// Se detecta que flecha se ha presionado
+						op = _getch();
+					}
 					
 				}
-		
+
+				switch (op) {
+				case '1':
+					if (truco == 0)
+						truco = 120;
+
+					// Se corrige bug que hacía que la snake muriera luego de presionar el truco:
+					// Se recupera la tecla anteriormente presionada
+					// para que el snake siga avanzando después de activar el truco
+					op = op_ant; 
+					break;
+
+				case '2':
+					if( velocidad <=100 ) // Se valida que la velocidad aumente hasta un tope de 200
+						velocidad = velocidad + 100;
+					
+					// Se corrige bug que hacía que la snake muriera luego de presionar el truco:
+					// Se recupera la tecla anteriormente presionada
+					// para que el snake siga avanzando después de activar el truco
+					op = op_ant;
+					break;
+				}
+
 				switch (op) {
 
 				case up: 
@@ -307,20 +338,7 @@ int main(void)
 						op = 27;
 					}
 					break;
-
-				case '1': 
-					if (truco == 0)
-						truco = 120;
-
-					op = 0; break;
-
-				case '2':
-					velocidad = velocidad + 100;
-					op = 0; 
-					break;
-
 				}
-
 
 				gotoxy(0, 0); printf("VIDA RESTANTE:%d ", limite);
 				if (limite < 1)//12.5 ciclos son aprox 1 seg en un procesador de 2 gigahertz
@@ -527,6 +545,11 @@ int inicio(void)
 			gotoxy(xx, 9); printf("---*--------*-----*--*--.......##.##..####.#########.##..##...##......"); delay(1);
 			gotoxy(xx, 10); printf("---*--------*----*----*-.##....##.##...###.##.....##.##...##..##......"); delay(1);
 			gotoxy(xx, 11); printf("---*------*****-*------*..######..##....##.##.....##.##....##.########"); delay(1);
+
+			// Se permite ingresar las opciones mientras la intro está en curso
+			// para evitar estar esperando que culmine la intro
+			if (_kbhit())
+				break;
 
 			xx++;
 		} while (xx < 120);
