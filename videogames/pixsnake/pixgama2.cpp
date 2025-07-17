@@ -1,14 +1,35 @@
-//final numero 2
-//Villalvazo Juan
-//2010
+/***********************************************************************
+ ::: PIXSNAKE :::
 
-/*
-#include<stdio.h>
-#include<conio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<dos.h>
-*/
+Snake game with slightly different game mechanics that will
+bring you interesting challenges
+
+Developed by:
+
+	Copyright (c) 2010, Juan Villalvazo (Original Autor) for his final project 2
+				  2025, Jose Luis de la Cruz Lazaro (Yacsha)
+				  (contact@theworldofchaos.com) (Porting to Visual C++ 2017)
+
+	- Vida de Programador - Juan Villalvazo ::
+	  https://www.youtube.com/c/JuanVillalvazoChannel ::
+	  https://www.juanvillalvazo.com
+	- YACSHA - Software & Desing :: The World of Chaos -
+	  EL MUNDO DEL CAOS - Unlimited Programming ::
+	  https://www.theworldofchaos.com
+
+LICENSE
+	This file is released under the terms of the BSD 3-Clause License.
+	Read LICENSE.txt file for more information.
+
+HISTORY...
+
+ >> Version 2 - 15-VII-2025
+	- Update videogames/pixsnake - Porting to VC++ 2017 using winbgi
+
+>> Version 1 - 2010
+	- First version for Turbo C 3.0 by Juan Villalvazo
+***********************************************************************/
+
 /////////////////////////////////////////////////////////
 // Encabezados actualizados al C++ moderno
 /////////////////////////////////////////////////////////
@@ -59,8 +80,6 @@ ci = 10, ri = 10, rf = 41, cf = 72, //ci = 1, ri = 1, rf = 30, cf = 80,
 op = 0, op2 = 0, __y1 = 0, x1 = 0,
 band = 0, limite = 100, canibal = 0, op_ant = 0;
 
-// habilitar
-//struct time t;
 std::chrono::time_point<std::chrono::steady_clock>  t;
 
 struct cuerpo {
@@ -94,7 +113,6 @@ void pantfinal(void);
 int main(void)
 {
 
-	//char cont[3]; // no se usa esta variable
 	int pa = 0, pc = 0, continu = 0;
 	
 	do
